@@ -1,0 +1,30 @@
+[core]
+	excludesfile = ~/.gitignore_global
+	editor = vim
+[user]
+	name = Giuseppe Carlino
+	email = g.carlino@simularia.it
+[push]
+	default = simple
+[commit]
+	template = /Users/beps/.stCommitMsg
+[difftool]
+	prompt = false
+[merge]
+	tool = vimdiff
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[color]
+	ui = auto
+[diff]
+	tool = gvimdiff
+[pull]
+	rebase = false
+[init]
+	defaultBranch = main

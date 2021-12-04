@@ -1,0 +1,13 @@
+*~
+*.swp
+*.swo
+.DS_Store
+._.DS_Store
+
+*.o
+*.exe
+*.pyc
+.AppleDouble
+
+.vscode/
+.vimspector.json
