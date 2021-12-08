@@ -18,7 +18,7 @@ See [documentation](https://www.gnu.org/software/stow/) for more information.
 2. Clone repository as:
 
 ```{sh}
-$ git clone git@github.com:gcarlino/dotfiles.git ${HOME}/.dotfiles
+git clone https://github.com/gcarlino/dotfiles.git ${HOME}/.dotfiles
 ```
 
 3. Use `stow` to install **dotfiles**, as:
