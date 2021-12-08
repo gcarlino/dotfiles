@@ -1,4 +1,4 @@
-# Managing dotfile with GNU stow
+# Managing dotfiles with GNU stow
 
 1. Install `GNU stow` for linux
 

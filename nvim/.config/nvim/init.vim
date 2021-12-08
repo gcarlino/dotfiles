@@ -1,5 +1,6 @@
-" General setup {{{
+"z General setup {{{
 set completeopt=menu,menuone,noselect
+set autoindent
 set mouse=a
 set splitright
 set splitbelow
@@ -19,8 +20,12 @@ set cmdheight=1
 set shortmess+=c
 set signcolumn=yes
 set updatetime=750
-set scrolloff=8
+set scrolloff=4
 set cursorline
+" Do not insert two spaces after a '.', '?' and '!' with a join command.
+set nojoinspaces
+set showcmd
+filetype plugin indent on
 
 set foldlevel=20
 set foldmethod=expr
@@ -33,6 +38,8 @@ let mapleader = " "
 " Plugins {{{
 " vim-plug PlugInstall PlugClean PlugUpdate            
 call plug#begin('~/.config/nvim/site/plugged')
+    " PlugInstall PlugClean PlugUpdate
+    "
     " LSP
     " Installati a mano i server di:
     "   R:       install.packages("languageserver")
@@ -43,6 +50,8 @@ call plug#begin('~/.config/nvim/site/plugged')
     "   BASH:    npm install bash-language-server
     Plug 'neovim/nvim-lspconfig'
     Plug 'onsails/lspkind-nvim'
+    " Plug 'williamboman/nvim-lsp-installer'
+
 
     " Completion
     Plug 'hrsh7th/cmp-nvim-lsp'
@@ -60,9 +69,10 @@ call plug#begin('~/.config/nvim/site/plugged')
     Plug 'nvim-telescope/telescope.nvim'
     Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
     Plug 'kyazdani42/nvim-tree.lua'
+    Plug 'sudormrfbin/cheatsheet.nvim'
 
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-    
+
     " Status Line
     Plug 'hoob3rt/lualine.nvim'
     Plug 'kyazdani42/nvim-web-devicons'
@@ -71,11 +81,14 @@ call plug#begin('~/.config/nvim/site/plugged')
     Plug 'tpope/vim-fugitive'
     " Plug 'itchyny/vim-gitbranch'
     Plug 'sindrets/diffview.nvim'
+    Plug 'lewis6991/gitsigns.nvim'
+
     "
     " Debug
     Plug 'puremourning/vimspector'
     Plug 'szw/vim-maximizer'
     "
+    Plug 'windwp/nvim-autopairs'
     Plug 'lukas-reineke/virt-column.nvim'
     Plug 'sainnhe/edge'
     Plug 'christoomey/vim-tmux-navigator'
@@ -89,6 +102,7 @@ call plug#begin('~/.config/nvim/site/plugged')
     Plug 'adamheins/vim-highlight-match-under-cursor'
     Plug 'tpope/vim-surround'
     Plug 'tjdevries/astronauta.nvim'
+    Plug 'GustavoKatel/sidebar.nvim'
     if has("mac")
         Plug 'rizzatti/dash.vim'
     end
@@ -100,7 +114,7 @@ call plug#end()
 " Enables 24-bit RGB color in the TUI
 if (has("termguicolors"))
     set termguicolors
-    set background = "light"
+    " set background = "light"
 endif
 if (has("gui_vimr"))
     set background = "light"
@@ -137,6 +151,7 @@ EOF
 
 " }}}
 
+" Various {{{
 " Edit config file
 nnoremap <leader>v :e $MYVIMRC<CR>
 nnoremap <leader>V :so $MYVIMRC<CR>
@@ -154,19 +169,18 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-" Shortcut for buffer
-" nnoremap <Leader>b :buffers<CR>:buffer<Space>
-
 " Change current directory to working file path
 nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
 
 " Highlight syntax inside markdown
 let g:markdown_fenced_languages = ['html', 'python', 'vim', 'r', 'sh']
+" }}}
 
-" szw/vim-maximizer
+" szw/vim-maximizer {{{
 nnoremap <leader>m :MaximizerToggle!<CR>
+" }}}
 
-" puremourning/vimspector
+" puremourning/vimspector {{{
 let g:vimspector_enable_mappings = 'HUMAN'
 nnoremap <leader>dd :call vimspector#Launch()<CR>
 nnoremap <leader>dx :call vimspector#Reset()<CR>
@@ -177,10 +191,12 @@ nnoremap <leader>do :VimspectorShowOutput
 nmap <leader>dj <Plug>VimSpctorStepInto
 nmap <leader>dk <Plug>VimSpctorStepOut
 nmap <leader>dl <Plug>VimSpctorStepOver
+" }}}
 
-" tpope/vim-commentary 
+" tpope/vim-commentary {{{
 nnoremap <leader>/ :Commentary<CR>
 vnoremap <leader>/ :Commentary<CR>
+" }}}
 
 " Mac specific {{{
 if has("mac")
@@ -192,7 +208,7 @@ if has("mac")
 end
 " }}}
 
-" kassio/neoterm
+" kassio/neoterm {{{
 " let g:neoterm_default_mod = 'vertical'
 " let g:neoterm_size = 60
 let g:neoterm_default_mod = 'belowright'
@@ -201,12 +217,18 @@ let g:neoterm_autoinsert = 1
 nnoremap <c-q> :Ttoggle<CR>
 inoremap <c-q> <Esc>:Ttoggle<CR>
 tnoremap <c-q> <c-\><c-n>:Ttoggle<CR>
+" }}}
 
-" sbdchd/neoformat
+" sbdchd/neoformat {{{
 nnoremap <leader>F :Neoformat prettier<CR>
+" }}}
 
-" tpope/vim-fugitive
-nnoremap <leader>gg :G<CR>
+" Plug 'GustavoKatel/sidebar.nvim' {{{
+lua << EOF
+require("sidebar-nvim").setup({})
+EOF
+nnoremap <leader>sb <cmd>SidebarNvimToggle<CR>
+" }}}
 
 " hoob3rt/lualine.nvim {{{
 lua << EOF
@@ -311,6 +333,18 @@ lspconfig.ccls.setup {
 EOF
 " }}}
 
+" kabouzeid/nvim-lspinstall {{{
+" lua << EOF
+" require'lspinstall'.setup() -- important
+" local servers = require'lspinstall'.installed_servers()
+" for _, server in pairs(servers) do
+"   require'lspconfig'[server].setup{
+"     capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+"   }
+" end
+" EOF
+" " }}}
+    
 " hrsh7th/nvim-cmp {{{
 lua <<EOF
 
@@ -427,7 +461,7 @@ nnoremap <leader>r :NvimTreeRefresh<CR>
 nnoremap <leader>n :NvimTreeFindFile<CR>
 " }}}
 
-" Config Telescope {{{
+" nvim-telescope/telescope {{{
 lua <<EOF
 local actions = require('telescope.actions')
 
@@ -435,30 +469,17 @@ local actions = require('telescope.actions')
 
 require('telescope').setup {
     defaults = {
-        -- Default configuration for telescope goes here:
-        -- config_key = value,
-        -- file_sorter = require('telescope.sorters').get_fzy_sorter,
         prompt_prefix = '> ',
         -- prompt_prefix = "🔍 ",
         color_devicons = true,
         initial_mode = "insert",
-
-        --[[
-        -- Default previewers
-        file_previewer = require('telescope.previewers').vim_buffer_cat.new,
-        grep_previewer = require('telescope.previewers').vim_buffer_vimgrep.new,
-        qflist_previewer = require('telescope.previewers').vim_buffer_qflist.new,
-        ]]--
-
+        -- file_ignore_patterns = { "" },
         mappings = {
             i = {
-                -- map actions.which_key to <C-h> (default: <C-/>)
-                -- actions.which_key shows the mappings for your picker,
-                -- e.g. git_{create, delete, ...}_branch for the git_branches picker
                 -- ["<c-x>"] = false,
                 ["<C-h>"] = "which_key",
                 -- ["<c-q>"] = actions.send_to_qflist,
-                -- ["<esc>"] = actions.close,
+                ["<esc>"] = actions.close,
             },
         }
     },
@@ -470,40 +491,22 @@ require('telescope').setup {
                 preview_width = 0.75,
             },
         },
-        -- Default configuration for builtin pickers goes here:
-        -- picker_name = {
-        --   picker_config_key = value,
-        --   ...
-        -- }
-        -- Now the picker_config_key will be applied every time you call this
-        -- builtin picker
+        buffers = {
+            show_all_buffers = true,
+            show_last_used = true,
+        }
     },
     extensions = {
-        -- Your extension configuration goes here:
-        -- extension_name = {
-        --   extension_config_key = value,
-        -- }
-        -- please take a look at the readme of the extension you want to configure
-        --     fzy_native = {
-        --         override_generic_sorter = false,
-        --         override_file_sorter = true,
-        --     }
+        fzf = {
+            fuzzy = true,
+            override_generic_sorter = false,
+            override_file_sorter = true,
+            case_mode = "smart_case",
+        },
     }
 }
-
 -- nvim-telescope/telescope-fzf-native.nvim
 require('telescope').load_extension('fzf')
-
--- Search notes
-M = {}
-M.search_notes = function() 
-    require('telescope.builtin').live_grep({
-        cwd = "~/Simularia/Notes",
-        prompt_title = "~ Simulara Notes 🗒  ~",
-        layout_strategy = "vertical",
-    })
-end
-return M
 EOF
 
 nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
@@ -513,12 +516,13 @@ nnoremap <leader>fs <cmd>lua require('telescope.builtin').grep_string()<cr>
 nnoremap <leader><space> <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <leader>ft <cmd>lua require('telescope.builtin').git_files()<cr>
 nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
-nnoremap <leader>fn <cmd>lua M.search_notes()<cr>
+
+" Search for Simularia notes
+nnoremap <leader>fn <cmd>lua require('telescope.builtin').live_grep( {cwd = "~/Simularia/Notes", prompt_title = "~ Simularia Notes ~", layout_strategy = "vertical" } )<cr>
 
 " Telescope LSP commands
 nnoremap <leader>lr <cmd>lua require('telescope.builtin').lsp_references()<cr>
 " }}}
-
 
 " sindrets/diffview {{{
 lua <<EOF
@@ -631,17 +635,35 @@ require'diffview'.setup {
 EOF
 " }}}
 
+" lewis6991/gitsigns.nvim {{{
+lua << EOF
+    require('gitsigns').setup({})
+EOF
+" }}} 
+
+" windwp/nvim-autopairs {{{
+lua << EOF
+    require('nvim-autopairs').setup()
+EOF
+" }}}
+
 " Autocmd {{{
 
 " Highlight on yank
 autocmd TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=150, on_visual=true}
 
+" listchars
 set listchars=tab:▸\ ,trail:·,precedes:←,extends:→,eol:↲,nbsp:␣
 autocmd InsertEnter * set list
 autocmd VimEnter,BufEnter,InsertLeave * set nolist
 autocmd BufNewFile,BufRead *.md,*.mdx,*.markdown :set filetype=markdown
+
+" Fold method for init.vim
+" https://vi.stackexchange.com/questions/3814/is-there-a-best-practice-to-fold-a-vi         mrc-file
+autocmd FileType vim setlocal foldmethod=marker foldlevel=0 foldcolumn=3
 " }}}
 
+" Fortran specific {{{
 " Fix issues with Fortran77
 " let g:fortran_fixed_source = 1
 " autocmd FileType fortran setlocal commentstring=C\ %s
@@ -652,6 +674,4 @@ autocmd BufNewFile,BufRead *.md,*.mdx,*.markdown :set filetype=markdown
 " autocmd FileType Fortran77 setlocal commentstring=C\ %s
 " autocmd Filetype Fortran77 let g:fortran_fixed_source=1
 " autocmd Filetype Fortran77 let b:commentary_startofline=1
-
-" https://vi.stackexchange.com/questions/3814/is-there-a-best-practice-to-fold-a-vimrc-file
-" vim: filetype=vim foldmethod=marker foldlevel=0 foldcolumn=3
+" }}}
