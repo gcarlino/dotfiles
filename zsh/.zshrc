@@ -93,6 +93,7 @@ export LC_ALL=en_US.UTF-8
 alias rm='rm -i'
 alias mv='mv -i'
 alias vim='nvim'
+alias view='mvim -R'
 alias vi='nvim'
 alias view='nvim -R'
 alias less='less -FRX'
