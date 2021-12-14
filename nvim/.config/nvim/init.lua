@@ -93,7 +93,6 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 --[[
-set incsearch
 set diffopt+=vertical
 set nobackup
 set nowritebackup
@@ -105,7 +104,7 @@ set nojoinspaces
 set showcmd
 --]]
 
-vim.o.hlsearch = true
+-- vim.o.hlsearch = true
 vim.wo.number = true
 vim.wo.relativenumber = true
 vim.wo.cursorline = true
@@ -254,6 +253,15 @@ vim.api.nvim_set_keymap('n', '<leader>do', ':VimspectorShowOutput', {noremap = t
 vim.api.nvim_set_keymap('n', '<leader>dj', ':VimSpectorStepInto',  {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>dk', ':VimSpectorStepOut', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>dl', ':VimSpectorStepOver', {noremap = true, silent = true})
+
+-- mnemonic 'di' = 'debug inspect' (pick your own, if you prefer!)
+-- for normal mode - the word under the cursor
+-- for visual mode, the visually selected text
+vim.cmd([[
+nmap <Leader>di <Plug>VimspectorBalloonEval
+xmap <Leader>di <Plug>VimspectorBalloonEval
+]])
+
 -- }}}
 
 -- tpope/vim-commentary {{{
@@ -265,7 +273,7 @@ vim.api.nvim_set_keymap('v', '<leader>/', ':Commentary<CR>', {noremap = true})
 vim.g.neoterm_default_mod = 'belowright'
 vim.g.neoterm_size = 18
 vim.g.neoterm_autoinsert = 1
-vim.api.nvim_set_keymap('n', '<c-q>', ':Ttoggle<CR>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<c-q>', ":<c-u>exec v:count.'Ttoggle'<CR>", {noremap = true})
 vim.api.nvim_set_keymap('i', '<c-q>', '<Esc>:Ttoggle<CR>', {noremap = true})
 vim.api.nvim_set_keymap('t', '<c-q>', '<c-\\><c-n>:Ttoggle<CR>', {noremap = true})
 -- }}}
