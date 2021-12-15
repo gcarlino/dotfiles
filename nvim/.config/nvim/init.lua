@@ -50,8 +50,10 @@ require('packer').startup(function()
     use 'nvim-treesitter/nvim-treesitter'
 
     -- Status Line
-    use 'hoob3rt/lualine.nvim'
-    use 'kyazdani42/nvim-web-devicons'
+    use {
+      'nvim-lualine/lualine.nvim',
+      requires = {'kyazdani42/nvim-web-devicons', opt = true}
+    }
 
     -- Git
     use 'tpope/vim-fugitive'
@@ -130,6 +132,7 @@ vim.g.termguicolors = true
 -- sainnhe/edge
 vim.g.edge_style = 'aura'
 vim.g.edge_enable = 1
+vim.g.edge_enable_italic = 1
 vim.g.edge_disable_italic_comment = 1
 vim.cmd [[ colorscheme edge ]]
 -- if vim.fn.has("gui_vimr") then
@@ -177,34 +180,11 @@ end
 
 -- hoob3rt/lualine.nvim {{{
 require'lualine'.setup {
-  options = {
-    icons_enabled = true,
-    theme = 'onedark',
-    component_separators = { left = '', right = ''},
-    section_separators = { left = '', right = ''},
-    disabled_filetypes = {},
-    always_divide_middle = true,
-  },
-  sections = {
-    lualine_a = {'mode'},
-    lualine_b = {'branch', 'diff',
-                  {'diagnostics', sources={'nvim_diagnostic'} }
-                  },
-    lualine_c = {'filename'},
-    lualine_x = {'encoding', 'fileformat', 'filetype'},
-    lualine_y = {'progress'},
-    lualine_z = {'location'}
-  },
-  inactive_sections = {
-    lualine_a = {},
-    lualine_b = {},
-    lualine_c = {'filename'},
-    lualine_x = {'location'},
-    lualine_y = {},
-    lualine_z = {}
-  },
-  tabline = {},
-  extensions = {'nvim-tree'}
+    -- Default config (see help)
+    options = {
+        theme = 'edge'
+    },
+    extensions = {'nvim-tree'}
 }
 -- }}}
 
