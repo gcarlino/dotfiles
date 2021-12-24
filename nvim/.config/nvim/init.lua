@@ -143,14 +143,12 @@ vim.cmd [[ colorscheme edge ]]
 
 -- Make it obvious where 80 characters is
 vim.wo.colorcolumn = '80'
--- highlight ColorColumn ctermbg=none guibg=none
--- highlight ColorColumn guibg=#181818
 
 -- lukas-reineke/virt-column.nvim
-require("virt-column").setup {
-    char = "│",
-}
--- }}}
+vim.cmd [[
+highlight VirtuColumn guifg=#00FF00
+]]
+require("virt-column").setup()
 
 -- Various {{{
 -- Edit config file
