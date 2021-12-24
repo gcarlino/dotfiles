@@ -127,7 +127,9 @@ vim.o.scrolloff = 4
 -- }}}
 
 -- Colors {{{
-vim.g.termguicolors = true
+-- vim.g.termguicolors = true
+-- vim.o.termguicolors = true
+vim.cmd [[ set termguicolors ]]
 
 -- sainnhe/edge
 vim.g.edge_style = 'aura'
@@ -164,6 +166,14 @@ vim.api.nvim_set_keymap('n', '<C-K>', '<C-W><C-K>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<C-L>', '<C-W><C-L>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<C-H>', '<C-W><C-H>', {noremap = true})
 
+-- Move lines around
+vim.api.nvim_set_keymap('n', '<M-j>', ':m .+1<CR>==', {noremap = true})
+vim.api.nvim_set_keymap('n', '<M-k>', ':m .-2<CR>==', {noremap = true})
+vim.api.nvim_set_keymap('i', '<M-j>', '<ESC>:m .+1<CR>==gi', {noremap = true})
+vim.api.nvim_set_keymap('i', '<M-k>', '<ESC>:m .-2<CR>==gi', {noremap = true})
+vim.api.nvim_set_keymap('v', '<M-j>', ":m '>+1<CR>gv==gv", {noremap = true})
+vim.api.nvim_set_keymap('v', '<M-k>', ":m '<-2<CR>gv==gv", {noremap = true})
+
 -- Change current directory to working file path
 vim.api.nvim_set_keymap('n', '<leader>cd', ':cd %:p:h<CR>:pwd<CR>', {noremap = true })
 
@@ -173,7 +183,7 @@ vim.g.markdown_fenced_languages = { 'html', 'python', 'vim', 'r', 'sh' }
 
 -- Mac specific {{{
 if vim.fn.has('mac') then
-    vim.api.nvim_set_keymap('n', '<leader>k', ':silent !open -a "Marked 2.app" %:p<CR>', {noremap = true})
+    vim.api.nvim_set_keymap('n', '<leader>k', ':silent !open -a "Marked 2.app" %<CR>', {noremap = true, silent = true})
     vim.api.nvim_set_keymap('n', '<leader>d', '<Plug>DashSearch', {silent = true})
 end
 -- }}}
@@ -701,6 +711,19 @@ autocmd FileType lua setlocal foldmethod=marker foldlevel=0 foldcolumn=3
 -- autocmd Filetype Fortran77 let g:fortran_fixed_source=1
 -- autocmd Filetype Fortran77 let b:commentary_startofline=1
 --]]
+vim.cmd [[
+let s:extfname = expand("%:e")
+if s:extfname ==? "f90"
+  let fortran_free_source=1
+  unlet! fortran_fixed_source
+else
+  let fortran_fixed_source=1
+  unlet! fortran_free_source
+    autocmd FileType fortran setlocal commentstring=C\ %s
+    let b:commentary_startofline = 1
+endif
+
+]]
 -- }}}
 
 -- listchars {{{
