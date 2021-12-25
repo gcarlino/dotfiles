@@ -130,6 +130,7 @@ vim.o.scrolloff = 4
 -- vim.g.termguicolors = true
 -- vim.o.termguicolors = true
 vim.cmd [[ set termguicolors ]]
+vim.o.background = 'light'
 
 -- sainnhe/edge
 vim.g.edge_style = 'aura'
@@ -149,6 +150,7 @@ vim.cmd [[
 highlight VirtuColumn guifg=#00FF00
 ]]
 require("virt-column").setup()
+-- }}}
 
 -- Various {{{
 -- Edit config file
@@ -425,7 +427,7 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- Enable the following language servers
-local servers = {'pyright', 'html', 'r_language_server', 'fortls', 'yamlls', 'bashls' }
+local servers = {'pyright', 'html', 'r_language_server', 'yamlls', 'bashls' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
@@ -433,28 +435,27 @@ for _, lsp in ipairs(servers) do
   }
 end
 
--- FIXME ccls
---[[
-local lspconfig = require'lspconfig'
-lspconfig.ccls.setup {
-    -- compilationDatabaseDirectory = "build";
-    index = {
-        threads = 0;
-    };
-    clang = {
-        excludeArgs = {"-frounding-math"} ;
-    };
-}
-]]--
+-- custom server configurations
 
--- Example custom server
+require('lspconfig').fortls.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    cmd = { 'fortls' },
+    filetypes = { "fortran" },
+    settings = {
+        notifyInit = true,
+        lowercaseIntrinsics = true,
+        enableCodeActions = true
+    }
+}
+
 -- Make runtime files discoverable to the server
 local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, 'lua/?.lua')
 table.insert(runtime_path, 'lua/?/init.lua')
 
 require('lspconfig').sumneko_lua.setup {
-  cmd = { '/usr/local/bin/lua-language-server' },
+  cmd = { 'lua-language-server' },
   on_attach = on_attach,
   capabilities = capabilities,
   settings = {
@@ -703,24 +704,19 @@ autocmd FileType lua setlocal foldmethod=marker foldlevel=0 foldcolumn=3
 -- autocmd FileType fortran setlocal commentstring=C\ %s
 -- let b:commentary_startofline = 1
 --
--- Sfortunatamente abbiamo dei file .f90 che sono in Fortran77
 -- autocmd BufNewFile,BufRead *.f :set filetype=Fortran77,Fortran
 -- autocmd FileType Fortran77 setlocal commentstring=C\ %s
 -- autocmd Filetype Fortran77 let g:fortran_fixed_source=1
 -- autocmd Filetype Fortran77 let b:commentary_startofline=1
---]]
 vim.cmd [[
-let s:extfname = expand("%:e")
-if s:extfname ==? "f90"
-  let fortran_free_source=1
-  unlet! fortran_fixed_source
-else
-  let fortran_fixed_source=1
-  unlet! fortran_free_source
-    autocmd FileType fortran setlocal commentstring=C\ %s
-    let b:commentary_startofline = 1
-endif
-
+    augroup Fortran77
+        autocmd!
+        autocmd BufNewFile,BufRead *.f :set filetype=Fortran77
+        autocmd FileType Fortran77 setlocal commentstring=C\ %s
+        autocmd Filetype Fortran77 let g:fortran_fixed_source=1
+        autocmd Filetype Fortran77 let b:commentary_startofline=1
+    augroup end
+    doautoall Fortran77 FileType Loaded-Buffer
 ]]
 -- }}}
 
