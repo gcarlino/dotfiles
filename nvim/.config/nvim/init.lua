@@ -23,8 +23,8 @@ require('packer').startup(function()
     --   Python:  npm install -g pyright
     --   Fortran: pip install -U fortran-language-server
     --   HTML:    npm install -g vscode-langservers-extracted
-    --   YAML:    npm install yaml-language-server
-    --   BASH:    npm install bash-language-server
+    --   YAML:    brew install yaml-language-server
+    --   BASH:    brew install bash-language-server
 	--   LUA:     brew install lua-language-server
     use 'neovim/nvim-lspconfig'
     use 'onsails/lspkind-nvim'
@@ -90,8 +90,13 @@ end)
 
 -- General setup {{{
 
+local opts = { noremap = true, silent = true }
+
+-- is mac?
+local is_mac = vim.fn.has('mac')
+
 -- Remap space as leader key
-vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('', '<Space>', '<Nop>', opts)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
@@ -183,7 +188,7 @@ vim.g.markdown_fenced_languages = { 'html', 'python', 'vim', 'r', 'sh' }
 --}}}
 
 -- Mac specific {{{
-if vim.fn.has('mac') then
+if is_mac then
     vim.api.nvim_set_keymap('n', '<leader>k', ':silent !open -a "Marked 2.app" %<CR>', {noremap = true, silent = true})
     vim.api.nvim_set_keymap('n', '<leader>d', '<Plug>DashSearch', {silent = true})
 end
@@ -281,8 +286,7 @@ vim.api.nvim_set_keymap('n', '<leader>fb', '<cmd>SidebarNvimToggle<CR>', {norema
 
 -- nvim-telescope/telescope {{{
 
--- local actions = require('telescope.actions')
--- require('telescope').load_extension('fzy')
+local actions = require('telescope.actions')
 
 require('telescope').setup {
     defaults = {
@@ -292,7 +296,7 @@ require('telescope').setup {
             i = {
                 -- ["<c-x>"] = false,
                 ["<C-h>"] = "which_key",
-                ["<esc>"] = require('telescope.actions').close,
+                ["<esc>"] = actions.close,
             },
         }
     },
@@ -309,37 +313,46 @@ require('telescope').setup {
 		    show_last_used = true,
 	    },
     },
-	-- extensions = {
-	-- 	fzf = {
-	-- 		fuzzy = true,
-	-- 		override_generic_sorter = false,
-	-- 		override_file_sorter = true,
-	-- 		case_mode = "smart_case",
-	-- 	},
-	-- }
 }
+
 -- nvim-telescope/telescope-fzf-native.nvim
 require('telescope').load_extension('fzf')
 
+vim.api.nvim_set_keymap('n', '<leader><space>', [[<cmd>lua require('telescope.builtin').buffers()<CR>]], opts)
+vim.api.nvim_set_keymap('n', '<leader>ss', [[<cmd>lua require('telescope.builtin').file_browser({hidden = true })<CR>]], opts)
+vim.api.nvim_set_keymap('n', '<leader>sf', [[<cmd>lua require('telescope.builtin').find_files()<CR>]], opts)
+vim.api.nvim_set_keymap('n', '<leader>sb', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>]], opts)
+vim.api.nvim_set_keymap('n', '<leader>sh', [[<cmd>lua require('telescope.builtin').help_tags()<CR>]], opts)
+vim.api.nvim_set_keymap('n', '<leader>sw', [[<cmd>lua require('telescope.builtin').grep_string()<CR>]], opts)
+vim.api.nvim_set_keymap('n', '<leader>sg', [[<cmd>lua require('telescope.builtin').live_grep()<CR>]], opts)
+vim.api.nvim_set_keymap('n', '<leader>st', [[<cmd>lua require('telescope.builtin').tags()<CR>]], opts)
+vim.api.nvim_set_keymap('n', '<leader>so', [[<cmd>lua require('telescope.builtin').tags{ only_current_buffer = true }<CR>]], opts)
+vim.api.nvim_set_keymap('n', '<leader>?', [[<cmd>lua require('telescope.builtin').oldfiles()<CR>]], opts)
 
-vim.api.nvim_set_keymap('n', '<leader><space>', [[<cmd>lua require('telescope.builtin').buffers()<CR>]], { noremap = true, silent = true } )
-vim.api.nvim_set_keymap('n', '<leader>sf', [[<cmd>lua require('telescope.builtin').find_files()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>ss', [[<cmd>lua require('telescope.builtin').file_browser({hidden = true })<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sb', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sh', [[<cmd>lua require('telescope.builtin').help_tags()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>st', [[<cmd>lua require('telescope.builtin').tags()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sd', [[<cmd>lua require('telescope.builtin').grep_string()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sp', [[<cmd>lua require('telescope.builtin').live_grep()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>so', [[<cmd>lua require('telescope.builtin').tags{ only_current_buffer = true }<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>?', [[<cmd>lua require('telescope.builtin').oldfiles()<CR>]], { noremap = true, silent = true })
+-- Telescope for git
+vim.api.nvim_set_keymap('n', '<leader>gf', [[<cmd>lua require('telescope.builtin').git_files()<CR>]], opts)
+vim.api.nvim_set_keymap('n', '<leader>gc', [[<cmd>lua require('telescope.builtin').git_commits()<CR>]], opts)
+vim.api.nvim_set_keymap('n', '<leader>gb', [[<cmd>lua require('telescope.builtin').git_bcommits()<CR>]], opts)
+vim.api.nvim_set_keymap('n', '<leader>gs', [[<cmd>lua require('telescope.builtin').git_status()<CR>]], opts)
+vim.api.nvim_set_keymap('n', '<leader>gh', [[<cmd>lua require('telescope.builtin').git_stash()<CR>]], opts)
+
 
 -- Search for Simularia notes
--- nnoremap <leader>fn <cmd>lua require('telescope.builtin').live_grep( {cwd = "~/Simularia/Notes", prompt_title = "~ Simularia Notes ~", layout_strategy = "vertical" } )<cr>
-vim.api.nvim_set_keymap('n', '<leader>sn', [[<cmd>lua require('telescope.builtin').live_grep( {cwd = "~/Simularia/Notes", prompt_title = "~ Simularia Notes ~", layout_strategy = "vertical"})<CR>]], {noremap = true})
+if is_mac then
+    vim.api.nvim_set_keymap('n', '<leader>sn', [[<cmd>lua require('my_telescope').search_mynotes()<CR>]], opts)
+end
+
+-- Search nvim dotfiles
+vim.api.nvim_set_keymap('n', '<leader>en', [[<cmd>lua require('my_telescope').edit_nvim()<CR>]], opts)
+
+-- Search dotfiles
+vim.api.nvim_set_keymap('n', '<leader>ed', [[<cmd>lua require('my_telescope').edit_dotfiles()<CR>]], opts)
+
 
 -- Telescope LSP commands
+--
 -- nnoremap <leader>ls <cmd>lua require('telescope.builtin').lsp_references()<cr>
--- vim.api.nvim_set_keymap('n', '<leader>ls', [[<cmd>lua require('telescope.builtin').lsp_references()<cr>]], {noremap = true})
+vim.api.nvim_set_keymap('n', '<leader>ls', [[<cmd>lua require('telescope.builtin').lsp_references()<cr>]], {noremap = true})
 -- }}}
 
 -- Treesitter configuration {{{
@@ -402,7 +415,6 @@ local on_attach = function(_, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   -- See `:help vim.lsp.*` for documentation on any of the below functions
-  local opts = { noremap = true, silent = true }
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
