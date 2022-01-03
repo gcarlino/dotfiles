@@ -65,6 +65,7 @@ require('packer').startup(function()
     use 'puremourning/vimspector'
     use 'szw/vim-maximizer'
     --
+    use 'chentau/marks.nvim'
     use 'windwp/nvim-autopairs'
     use 'lukas-reineke/virt-column.nvim'
     use 'sainnhe/edge'
@@ -684,7 +685,12 @@ require'diffview'.setup {
     },
   },
 }
+-- }}}
 
+-- chentau/marks.nvim {{{
+require'marks'.setup {
+    default_mappings = true,
+}
 -- }}}
 
 -- windwp/nvim-autopairs {{{
