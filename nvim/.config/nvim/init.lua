@@ -51,8 +51,8 @@ require('packer').startup(function()
 
     -- Status Line
     use {
-      'nvim-lualine/lualine.nvim',
-      requires = {'kyazdani42/nvim-web-devicons', opt = true}
+        'nvim-lualine/lualine.nvim',
+        requires = {'kyazdani42/nvim-web-devicons', opt = true}
     }
 
     -- Git
@@ -60,6 +60,9 @@ require('packer').startup(function()
     -- use 'itchyny/vim-gitbranch'
     use 'lewis6991/gitsigns.nvim'
     use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
+
+    -- R
+    use 'jalvesaq/Nvim-R'
 
     -- Debug
     use 'puremourning/vimspector'
@@ -98,7 +101,7 @@ local is_mac = vim.fn.has('mac')
 -- Remap space as leader key
 vim.api.nvim_set_keymap('', '<Space>', '<Nop>', opts)
 vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+vim.g.maplocalleader = ';'
 
 --[[
 set diffopt+=vertical
@@ -133,10 +136,8 @@ vim.o.scrolloff = 4
 -- }}}
 
 -- Colors {{{
--- vim.g.termguicolors = true
--- vim.o.termguicolors = true
 vim.cmd [[ set termguicolors ]]
-vim.o.background = 'light'
+-- vim.g.background = 'light'
 
 -- sainnhe/edge
 vim.g.edge_style = 'aura'
@@ -144,18 +145,15 @@ vim.g.edge_enable = 1
 vim.g.edge_enable_italic = 1
 vim.g.edge_disable_italic_comment = 1
 vim.cmd [[ colorscheme edge ]]
--- if vim.fn.has("gui_vimr") then
---    vim.o.background = 'light'
--- end
 
--- Make it obvious where 80 characters is
-vim.wo.colorcolumn = '80'
+-- -- Make it obvious where 80 characters is
+-- vim.wo.colorcolumn = '80'
 
--- lukas-reineke/virt-column.nvim
-vim.cmd [[
-highlight VirtuColumn guifg=#00FF00
-]]
-require("virt-column").setup()
+-- -- lukas-reineke/virt-column.nvim
+-- vim.cmd [[
+-- highlight VirtuColumn guifg=#00FF00
+-- ]]
+-- require("virt-column").setup { }
 -- }}}
 
 -- Various {{{
@@ -747,3 +745,13 @@ vim.cmd [[
 ]]
 -- }}}
 
+-- jalvesaq/Nvim-R {{{
+-- " autocmd VimLfave * if exists("g:SendCmdToR") && string(g:SendCmdToR) != "function('SendCmdToR_fake')" | call RQuit("nosave") | endif
+-- " R output is highlighted using current :colorscheme
+-- Enable syntax folding
+vim.cmd [[
+let rout_follow_colorscheme = 1
+let r_syntax_folding = 1
+set nofoldenable
+]]
+-- }}}
