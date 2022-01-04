@@ -66,9 +66,12 @@ require('packer').startup( function()
     use 'hrsh7th/cmp-buffer'
     use 'hrsh7th/cmp-path'
     use 'hrsh7th/cmp-cmdline'
+    use 'hrsh7th/nvim-cmp'
+    use 'kdheepak/cmp-latex-symbols'
+
+    -- Snippet
     use 'L3MON4D3/LuaSnip'
     use 'saadparwaiz1/cmp_luasnip'
-    use 'hrsh7th/nvim-cmp'
 
     -- Telescope
     use 'nvim-lua/popup.nvim'
@@ -230,6 +233,7 @@ require('gitsigns').setup {
 
 -- szw/vim-maximizer {{{
 vim.api.nvim_set_keymap('n', '<leader>m', ':MaximizerToggle!<CR>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<C-W><C-m>', ':MaximizerToggle!<CR>', {noremap = true})
 -- }}}
 
 -- puremourning/vimspector {{{
@@ -526,6 +530,7 @@ cmp.setup({
       { name = "luasnip" },
       { name = "path" },
       { name = "cmdline" },
+      { name = "latex_symbols" },
       { name = "buffer" , keyword_length = 4}
     }),
 
@@ -535,9 +540,10 @@ cmp.setup({
             menu = {
                 buffer = "[buf]",
                 nvim_lsp = "[LSP]",
-                nvim_lua = "[api]",
+                nvim_lua = "[lua]",
                 path = "[path]",
                 luasnip = "[snip]",
+                latex_symbols = "[Latex]",
                 cmdline = "[cmd]",
                 },
             },
@@ -549,31 +555,15 @@ cmp.setup({
     }
   })
 
-  --[[
-  -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline('/', {
-    sources = {
-      { name = 'buffer' }
-    }
-  })
-
-  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline(':', {
-      completion = {
-          autocomplete = false,
-          keyword_length = 3,
-      },
-
+-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline(':', {
     sources = cmp.config.sources({
-      { name = 'path' }
+        { name = 'path' }
     }, {
-      { name = 'cmdline',
-        max_item_count = 20,
-        keyword_length = 3,
-      }
+        { name = 'cmdline',
+            keyword_length = 3}
     })
-  })
---]]
+})
 -- }}}
 
 -- kyazdani42/nvim-tree.lua {{{
