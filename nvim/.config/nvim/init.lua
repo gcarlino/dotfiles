@@ -104,7 +104,6 @@ require('packer').startup( function()
 
     -- Various
     use 'chentau/marks.nvim'
-    use 'windwp/nvim-autopairs'
     use 'lukas-reineke/virt-column.nvim'
     -- use 'christoomey/vim-tmux-navigator'
     use 'kassio/neoterm'
@@ -139,7 +138,7 @@ vim.cmd [[ colorscheme edge ]]
 -- }}}
 
 -- Various {{{
--- Edit config file
+-- Edit this config file
 vim.api.nvim_set_keymap('n', '<leader>v', ':e $MYVIMRC<CR>', {noremap = true})
 
 -- No highlight
@@ -164,21 +163,23 @@ vim.api.nvim_set_keymap('n', '<leader>cd', ':cd %:p:h<CR>:pwd<CR>', {noremap = t
 
 -- Highlight syntax inside markdown
 vim.g.markdown_fenced_languages = { 'html', 'python', 'vim', 'r', 'sh' }
-
--- Highlight on yank
-vim.cmd [[
-    augroup YankHighlight
-        autocmd!
-        autocmd TextYankPost * silent! lua vim.highlight.on_yank()
-    augroup end
-]]
 -- }}}
 
 -- Mac specific {{{
 if is_mac then
+    -- Open file with Marked 2
     vim.api.nvim_set_keymap('n', '<leader>k', ':silent !open -a "Marked 2.app" %<CR>', {noremap = true, silent = true})
+    -- Search word in Dash
     vim.api.nvim_set_keymap('n', '<leader>d', '<Plug>DashSearch', {silent = true})
 end
+-- }}}
+
+-- lukas-reineke/virt-column.nvim {{{
+-- vim.wo.colorcolumn = '80'
+-- vim.cmd [[
+-- highlight VirtuColumn guifg=#00FF00
+-- ]]
+require("virt-column").setup { }
 -- }}}
 
 -- hoob3rt/lualine.nvim {{{
@@ -191,22 +192,23 @@ require'lualine'.setup {
 }
 -- }}}
 
--- lukas-reineke/virt-column.nvim {{{
-require("virt-column").setup { }
--- vim.wo.colorcolumn = '80'
--- vim.cmd [[
--- highlight VirtuColumn guifg=#00FF00
--- ]]
+-- Highlight on yank {{{
+vim.cmd [[
+    augroup YankHighlight
+        autocmd!
+        autocmd TextYankPost * silent! lua vim.highlight.on_yank()
+    augroup end
+]]
 -- }}}
 
 -- lukas-reineke/indent-blankline.nvim {{{
 require("indent_blankline").setup {
-    indent_blankline_char = "│",
-    indent_blankline_filetype_exclude = { 'help', 'packer' },
-    indent_blankline_buftype_exclude = { 'terminal', 'nofile' },
-    indent_blankline_show_trailing_blankline_indent = false
+indent_blankline_char = "│",
+indent_blankline_filetype_exclude = { 'help', 'packer' },
+indent_blankline_buftype_exclude = { 'terminal', 'nofile' },
+indent_blankline_show_trailing_blankline_indent = false
 }
--- }}}
+--}}}
 
 -- lewis6991/gitsigns.nvim {{{
 require('gitsigns').setup {
@@ -565,7 +567,8 @@ cmp.setup({
       }
     })
   })
---]]
+]]--
+
 -- }}}
 
 -- kyazdani42/nvim-tree.lua {{{
@@ -688,10 +691,6 @@ require'diffview'.setup {
 require'marks'.setup {
     default_mappings = true,
 }
--- }}}
-
--- windwp/nvim-autopairs {{{
--- require('nvim-autopairs').setup()
 -- }}}
 
 -- Fold method for init.lua {{{
