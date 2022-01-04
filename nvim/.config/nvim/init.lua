@@ -1,3 +1,34 @@
+-- General setup {{{
+local opts = { noremap = true, silent = true }
+
+-- Remap space as leader key
+vim.api.nvim_set_keymap('', '<Space>', '<Nop>', opts)
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ';'
+
+vim.wo.number = true
+vim.wo.relativenumber = true
+vim.wo.cursorline = true
+vim.o.mouse = 'a'
+vim.o.breakindent = true
+vim.o.ignorecase = true
+vim.o.smartcase = true
+vim.o.updatetime = 250
+vim.wo.signcolumn = 'auto'
+vim.o.expandtab = true
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4
+vim.o.ignorecase = true
+vim.o.smartcase = true
+vim.o.splitright = true
+vim.o.splitbelow = true
+vim.o.scrolloff = 4
+vim.o.diffopt = 'internal,filler,closeoff,vertical'
+
+-- is mac?
+local is_mac = vim.fn.has('mac')
+-- }}}
+
 -- Plugins {{{
 
 -- Install packer
@@ -15,7 +46,7 @@ vim.cmd [[
 ]]
 
 local use = require('packer').use
-require('packer').startup(function()
+require('packer').startup( function()
 
     -- LSP
     -- Installati a mano i server di:
@@ -40,7 +71,6 @@ require('packer').startup(function()
     use 'hrsh7th/nvim-cmp'
 
     -- Telescope
-    -- use 'nvim-lua/plenary.nvim'
     use 'nvim-lua/popup.nvim'
     use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
     use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
@@ -60,6 +90,7 @@ require('packer').startup(function()
     -- use 'itchyny/vim-gitbranch'
     use 'lewis6991/gitsigns.nvim'
     use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
+    use 'airblade/vim-gitgutter'
 
     -- R
     use 'jalvesaq/Nvim-R'
@@ -67,72 +98,32 @@ require('packer').startup(function()
     -- Debug
     use 'puremourning/vimspector'
     use 'szw/vim-maximizer'
-    --
+
+    -- Color schemes
+    use 'sainnhe/edge'
+
+    -- Various
     use 'chentau/marks.nvim'
     use 'windwp/nvim-autopairs'
     use 'lukas-reineke/virt-column.nvim'
-    use 'sainnhe/edge'
-    use 'christoomey/vim-tmux-navigator'
+    -- use 'christoomey/vim-tmux-navigator'
     use 'kassio/neoterm'
     use 'tpope/vim-commentary'
-    use 'tpope/vim-unimpaired'
-    use 'sbdchd/neoformat'
-    use 'airblade/vim-gitgutter'
+    -- use 'tpope/vim-unimpaired'
+    -- use 'sbdchd/neoformat'
     use 'lukas-reineke/indent-blankline.nvim'
     use 'mechatroner/rainbow_csv'
     use 'adamheins/vim-highlight-match-under-cursor'
     use 'tpope/vim-surround'
-    use 'tjdevries/astronauta.nvim'
+    -- use 'tjdevries/astronauta.nvim'
     use 'GustavoKatel/sidebar.nvim'
-    if vim.fn.has("mac") then
+
+    -- Mac specific
+    if is_mac then
         use 'rizzatti/dash.vim'
     end
 
-end)
--- }}}
-
--- General setup {{{
-
-local opts = { noremap = true, silent = true }
-
--- is mac?
-local is_mac = vim.fn.has('mac')
-
--- Remap space as leader key
-vim.api.nvim_set_keymap('', '<Space>', '<Nop>', opts)
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ';'
-
---[[
-set diffopt+=vertical
-set nobackup
-set nowritebackup
-set cmdheight=1
-set shortmess+=c
-set signcolumn=yes
--- Do not insert two spaces after a '.', '?' and '!' with a join command.
-set nojoinspaces
-set showcmd
---]]
-
--- vim.o.hlsearch = true
-vim.wo.number = true
-vim.wo.relativenumber = true
-vim.wo.cursorline = true
-vim.o.mouse = 'a'
-vim.o.breakindent = true
-vim.o.ignorecase = true
-vim.o.smartcase = true
-vim.o.updatetime = 250
-vim.wo.signcolumn = 'yes'
-vim.o.expandtab = true
-vim.o.tabstop = 4
-vim.o.shiftwidth = 4
-vim.o.ignorecase = true
-vim.o.smartcase = true
-vim.o.splitright = true
-vim.o.splitbelow = true
-vim.o.scrolloff = 4
+end )
 -- }}}
 
 -- Colors {{{
@@ -145,20 +136,10 @@ vim.g.edge_enable = 1
 vim.g.edge_enable_italic = 1
 vim.g.edge_disable_italic_comment = 1
 vim.cmd [[ colorscheme edge ]]
-
--- -- Make it obvious where 80 characters is
--- vim.wo.colorcolumn = '80'
-
--- -- lukas-reineke/virt-column.nvim
--- vim.cmd [[
--- highlight VirtuColumn guifg=#00FF00
--- ]]
--- require("virt-column").setup { }
 -- }}}
 
 -- Various {{{
 -- Edit config file
--- nnoremap <leader>v :e $MYVIMRC<CR>
 vim.api.nvim_set_keymap('n', '<leader>v', ':e $MYVIMRC<CR>', {noremap = true})
 
 -- No highlight
@@ -183,7 +164,15 @@ vim.api.nvim_set_keymap('n', '<leader>cd', ':cd %:p:h<CR>:pwd<CR>', {noremap = t
 
 -- Highlight syntax inside markdown
 vim.g.markdown_fenced_languages = { 'html', 'python', 'vim', 'r', 'sh' }
---}}}
+
+-- Highlight on yank
+vim.cmd [[
+    augroup YankHighlight
+        autocmd!
+        autocmd TextYankPost * silent! lua vim.highlight.on_yank()
+    augroup end
+]]
+-- }}}
 
 -- Mac specific {{{
 if is_mac then
@@ -202,23 +191,22 @@ require'lualine'.setup {
 }
 -- }}}
 
--- Highlight on yank {{{
-vim.cmd [[
-    augroup YankHighlight
-        autocmd!
-        autocmd TextYankPost * silent! lua vim.highlight.on_yank()
-    augroup end
-]]
+-- lukas-reineke/virt-column.nvim {{{
+require("virt-column").setup { }
+-- vim.wo.colorcolumn = '80'
+-- vim.cmd [[
+-- highlight VirtuColumn guifg=#00FF00
+-- ]]
 -- }}}
 
 -- lukas-reineke/indent-blankline.nvim {{{
 require("indent_blankline").setup {
-indent_blankline_char = "│",
-indent_blankline_filetype_exclude = { 'help', 'packer' },
-indent_blankline_buftype_exclude = { 'terminal', 'nofile' },
-indent_blankline_show_trailing_blankline_indent = false
+    indent_blankline_char = "│",
+    indent_blankline_filetype_exclude = { 'help', 'packer' },
+    indent_blankline_buftype_exclude = { 'terminal', 'nofile' },
+    indent_blankline_show_trailing_blankline_indent = false
 }
---}}}
+-- }}}
 
 -- lewis6991/gitsigns.nvim {{{
 require('gitsigns').setup {
@@ -577,8 +565,7 @@ cmp.setup({
       }
     })
   })
-]]--
-
+--]]
 -- }}}
 
 -- kyazdani42/nvim-tree.lua {{{
