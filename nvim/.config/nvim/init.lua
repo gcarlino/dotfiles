@@ -138,7 +138,7 @@ vim.cmd [[ colorscheme edge ]]
 -- }}}
 
 -- Various {{{
--- Edit this config file
+-- Edit config file
 vim.api.nvim_set_keymap('n', '<leader>v', ':e $MYVIMRC<CR>', {noremap = true})
 
 -- No highlight
@@ -163,23 +163,30 @@ vim.api.nvim_set_keymap('n', '<leader>cd', ':cd %:p:h<CR>:pwd<CR>', {noremap = t
 
 -- Highlight syntax inside markdown
 vim.g.markdown_fenced_languages = { 'html', 'python', 'vim', 'r', 'sh' }
+
+-- Highlight on yank
+vim.cmd [[
+    augroup YankHighlight
+        autocmd!
+        autocmd TextYankPost * silent! lua vim.highlight.on_yank()
+    augroup end
+]]
+-- }}}
+
+-- listchars {{{
+vim.cmd [[
+    set listchars=tab:▸\ ,trail:·,precedes:←,extends:→,eol:↲,nbsp:␣
+    autocmd InsertEnter * set list
+    autocmd VimEnter,BufEnter,InsertLeave * set nolist
+    autocmd BufNewFile,BufRead *.md,*.mdx,*.markdown :set filetype=markdown
+]]
 -- }}}
 
 -- Mac specific {{{
 if is_mac then
-    -- Open file with Marked 2
     vim.api.nvim_set_keymap('n', '<leader>k', ':silent !open -a "Marked 2.app" %<CR>', {noremap = true, silent = true})
-    -- Search word in Dash
     vim.api.nvim_set_keymap('n', '<leader>d', '<Plug>DashSearch', {silent = true})
 end
--- }}}
-
--- lukas-reineke/virt-column.nvim {{{
--- vim.wo.colorcolumn = '80'
--- vim.cmd [[
--- highlight VirtuColumn guifg=#00FF00
--- ]]
-require("virt-column").setup { }
 -- }}}
 
 -- hoob3rt/lualine.nvim {{{
@@ -192,23 +199,22 @@ require'lualine'.setup {
 }
 -- }}}
 
--- Highlight on yank {{{
-vim.cmd [[
-    augroup YankHighlight
-        autocmd!
-        autocmd TextYankPost * silent! lua vim.highlight.on_yank()
-    augroup end
-]]
+-- lukas-reineke/virt-column.nvim {{{
+require("virt-column").setup { }
+-- vim.wo.colorcolumn = '80'
+-- vim.cmd [[
+-- highlight VirtuColumn guifg=#00FF00
+-- ]]
 -- }}}
 
 -- lukas-reineke/indent-blankline.nvim {{{
 require("indent_blankline").setup {
-indent_blankline_char = "│",
-indent_blankline_filetype_exclude = { 'help', 'packer' },
-indent_blankline_buftype_exclude = { 'terminal', 'nofile' },
-indent_blankline_show_trailing_blankline_indent = false
+    indent_blankline_char = "│",
+    indent_blankline_filetype_exclude = { 'help', 'packer' },
+    indent_blankline_buftype_exclude = { 'terminal', 'nofile' },
+    indent_blankline_show_trailing_blankline_indent = false
 }
---}}}
+-- }}}
 
 -- lewis6991/gitsigns.nvim {{{
 require('gitsigns').setup {
@@ -567,8 +573,7 @@ cmp.setup({
       }
     })
   })
-]]--
-
+--]]
 -- }}}
 
 -- kyazdani42/nvim-tree.lua {{{
@@ -719,15 +724,6 @@ vim.cmd [[
         autocmd Filetype Fortran77 let b:commentary_startofline=1
     augroup end
     doautoall Fortran77 FileType Loaded-Buffer
-]]
--- }}}
-
--- listchars {{{
-vim.cmd [[
-    set listchars=tab:▸\ ,trail:·,precedes:←,extends:→,eol:↲,nbsp:␣
-    autocmd InsertEnter * set list
-    autocmd VimEnter,BufEnter,InsertLeave * set nolist
-    autocmd BufNewFile,BufRead *.md,*.mdx,*.markdown :set filetype=markdown
 ]]
 -- }}}
 
