@@ -57,6 +57,8 @@ require('packer').startup( function()
     --   YAML:    brew install yaml-language-server
     --   BASH:    brew install bash-language-server
 	--   LUA:     brew install lua-language-server
+    --   LATEX:   brew install texlab
+    --   cmake:   pip3 install cmake-language-server
     use 'neovim/nvim-lspconfig'
     use 'onsails/lspkind-nvim'
 
@@ -438,7 +440,7 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- Enable the following language servers
-local servers = {'pyright', 'html', 'r_language_server', 'yamlls', 'bashls' }
+local servers = {'pyright', 'html', 'r_language_server', 'yamlls', 'bashls', 'texlab', 'cmake' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
