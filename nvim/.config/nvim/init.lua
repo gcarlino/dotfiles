@@ -24,9 +24,6 @@ vim.o.splitright = true
 vim.o.splitbelow = true
 vim.o.scrolloff = 4
 vim.o.diffopt = 'internal,filler,closeoff,vertical'
-
--- is mac?
-local is_mac = vim.fn.has('mac')
 -- }}}
 
 -- Plugins {{{
@@ -123,7 +120,7 @@ require('packer').startup( function()
     use 'GustavoKatel/sidebar.nvim'
 
     -- Mac specific
-    if is_mac then
+    if vim.fn.has('mac') == 1 then
         use 'rizzatti/dash.vim'
     end
 
@@ -188,7 +185,7 @@ vim.cmd [[
 -- }}}
 
 -- Mac specific {{{
-if is_mac then
+if vim.fn.has('mac') == 1 then
     vim.api.nvim_set_keymap('n', '<leader>k', ':silent !open -a "Marked 2.app" %<CR>', {noremap = true, silent = true})
     vim.api.nvim_set_keymap('n', '<leader>d', '<Plug>DashSearch', {silent = true})
 end
