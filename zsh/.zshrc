@@ -4,7 +4,8 @@ export ZSH=/Users/beps/.oh-my-zsh
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="gallifrey"
+# ZSH_THEME="gallifrey"
+ZSH_THEME="robbyrussell"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -71,7 +72,7 @@ source $ZSH/oh-my-zsh.sh
 test -e ${HOME}/.iterm2_shell_integration.zsh && \
     source ${HOME}/.iterm2_shell_integration.zsh
 # enable shell integration in tmux
-# export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES
+export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES
 
 iterm2_print_uptime() {
     iterm2_set_user_var uptime uptime
@@ -166,6 +167,6 @@ export BAT_THEME=GitHub
 
 # FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_OPTS='--height 50% --layout=reverse --border'
+export FZF_DEFAULT_OPTS='--height 50% --layout=reverse --border --inline-info'
 export FZF_DEFAULT_COMMAND='fd --type f'
 
