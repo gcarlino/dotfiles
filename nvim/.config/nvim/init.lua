@@ -14,7 +14,7 @@ vim.o.breakindent = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
 vim.o.updatetime = 250
-vim.wo.signcolumn = 'auto'
+vim.wo.signcolumn = 'yes'
 vim.o.expandtab = true
 vim.o.tabstop = 4
 vim.o.shiftwidth = 4
@@ -724,29 +724,22 @@ autocmd FileType lua setlocal foldmethod=marker foldlevel=0 foldcolumn=3
 -- }}}
 
 -- Fortran specific {{{
---[[
--- Fix issues with Fortran77
--- let g:fortran_fixed_source = 1
--- autocmd FileType fortran setlocal commentstring=C\ %s
--- let b:commentary_startofline = 1
---
--- autocmd BufNewFile,BufRead *.f :set filetype=Fortran77,Fortran
--- autocmd FileType Fortran77 setlocal commentstring=C\ %s
--- autocmd Filetype Fortran77 let g:fortran_fixed_source=1
--- autocmd Filetype Fortran77 let b:commentary_startofline=1
 vim.cmd [[
     augroup Fortran77
         autocmd!
         autocmd BufNewFile,BufRead *.f :set filetype=Fortran77
+        autocmd BufNewFile,BufRead *.f :set syntax=Fortran
         autocmd FileType Fortran77 setlocal commentstring=C\ %s
         autocmd Filetype Fortran77 let g:fortran_fixed_source=1
         autocmd Filetype Fortran77 let b:commentary_startofline=1
+        autocmd Filetype Fortran77 set tabstop=6 
+        autocmd Filetype Fortran77 set shiftwidth=6
     augroup end
     doautoall Fortran77 FileType Loaded-Buffer
 ]]
 -- }}}
 
--- jalvesaq/Nvim-R {{{
+-- jalvesazq/Nvim-R {{{
 -- " autocmd VimLfave * if exists("g:SendCmdToR") && string(g:SendCmdToR) != "function('SendCmdToR_fake')" | call RQuit("nosave") | endif
 -- " R output is highlighted using current :colorscheme
 -- Enable syntax folding
