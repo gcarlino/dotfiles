@@ -71,6 +71,7 @@ require('packer').startup( function()
     -- Snippet
     use 'L3MON4D3/LuaSnip'
     use 'saadparwaiz1/cmp_luasnip'
+    use 'rafamadriz/friendly-snippets'
 
     -- Telescope
     use 'nvim-lua/popup.nvim'
@@ -335,7 +336,7 @@ vim.api.nvim_set_keymap('n', '<leader>gh', [[<cmd>lua require('telescope.builtin
 
 
 -- Search for Simularia notes
-if is_mac then
+if vim.fn.has("mac") == 1 then
     vim.api.nvim_set_keymap('n', '<leader>sn', [[<cmd>lua require('my_telescope').search_mynotes()<CR>]], opts)
 end
 
@@ -498,6 +499,12 @@ require('lspconfig').sumneko_lua.setup {
 local lspkind = require('lspkind')
 lspkind.init()
 
+local has_words_before = function()
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+
+local luasnip = require('luasnip')
 local cmp = require('cmp')
 cmp.setup({
 
@@ -520,7 +527,26 @@ cmp.setup({
             c = cmp.mapping.close(),
         }),
         ['<CR>'] = cmp.mapping.confirm({ select = true }),
-        ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 's' }),
+        ["<Tab>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_next_item()
+          elseif luasnip.expand_or_jumpable() then
+            luasnip.expand_or_jump()
+          elseif has_words_before() then
+            cmp.complete()
+          else
+            fallback()
+          end
+        end, { "i", "s" }),
+        ["<S-Tab>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_prev_item()
+          elseif luasnip.jumpable(-1) then
+            luasnip.jump(-1)
+          else
+            fallback()
+          end
+        end, { "i", "s" }),
     },
 
     sources = cmp.config.sources({
@@ -563,7 +589,11 @@ cmp.setup.cmdline(':', {
             keyword_length = 3}
     })
 })
+
+-- Load snippets
+require('luasnip.loaders.from_vscode').lazy_load()
 -- }}}
+
 
 -- kyazdani42/nvim-tree.lua {{{
 local nvim_tree = require 'nvim-tree'
