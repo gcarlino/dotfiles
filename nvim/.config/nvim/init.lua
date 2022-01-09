@@ -77,6 +77,7 @@ require('packer').startup( function()
     use 'nvim-lua/popup.nvim'
     use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
     use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+    use { "nvim-telescope/telescope-file-browser.nvim" }
     use 'kyazdani42/nvim-tree.lua'
     use 'sudormrfbin/cheatsheet.nvim'
 
@@ -315,9 +316,11 @@ require('telescope').setup {
 
 -- nvim-telescope/telescope-fzf-native.nvim
 require('telescope').load_extension('fzf')
+-- nvim-telescope/telescope-file-browser.nvim
+require("telescope").load_extension "file_browser"
 
+vim.api.nvim_set_keymap('n', '<leader>ss', "<cmd>lua require('telescope').extensions.file_browser.file_browser()<CR>", opts)
 vim.api.nvim_set_keymap('n', '<leader><space>', [[<cmd>lua require('telescope.builtin').buffers()<CR>]], opts)
-vim.api.nvim_set_keymap('n', '<leader>ss', [[<cmd>lua require('telescope.builtin').file_browser({hidden = true })<CR>]], opts)
 vim.api.nvim_set_keymap('n', '<leader>sf', [[<cmd>lua require('telescope.builtin').find_files()<CR>]], opts)
 vim.api.nvim_set_keymap('n', '<leader>sb', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>]], opts)
 vim.api.nvim_set_keymap('n', '<leader>sh', [[<cmd>lua require('telescope.builtin').help_tags()<CR>]], opts)
