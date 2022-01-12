@@ -131,7 +131,24 @@ end )
 
 -- Colors {{{
 vim.cmd [[ set termguicolors ]]
--- vim.g.background = 'light'
+
+local _dark = function ()
+    vim.o.background = 'dark'
+end
+
+local _light = function ()
+    vim.o.background = 'light'
+end
+
+_toggleBackground = function ()
+    local _background = vim.api.nvim_get_option('background')
+    if (_background == 'light') then
+        _dark()
+    else
+        _light()
+    end
+end
+vim.api.nvim_set_keymap('n', '<leader>b', ':lua _toggleBackground()<CR>', {noremap = true})
 
 -- sainnhe/edge
 vim.g.edge_style = 'aura'
