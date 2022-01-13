@@ -148,7 +148,7 @@ _toggleBackground = function ()
         _light()
     end
 end
-vim.api.nvim_set_keymap('n', '<leader>b', ':lua _toggleBackground()<CR>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<leader>b', ':lua _toggleBackground()<CR>', opts)
 
 -- sainnhe/edge
 vim.g.edge_style = 'aura'
@@ -160,10 +160,10 @@ vim.cmd [[ colorscheme edge ]]
 
 -- Various {{{
 -- Edit config file
-vim.api.nvim_set_keymap('n', '<leader>v', ':e $MYVIMRC<CR>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<leader>v', ':e $MYVIMRC<CR>', opts)
 
 -- No highlight
-vim.api.nvim_set_keymap('n', '<CR>', ':noh<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<CR>', ':noh<CR>', opts)
 
 -- Move in split navigations
 vim.api.nvim_set_keymap('n', '<C-J>', '<C-W><C-J>', {noremap = true})
@@ -205,7 +205,7 @@ vim.cmd [[
 
 -- Mac specific {{{
 if vim.fn.has('mac') == 1 then
-    vim.api.nvim_set_keymap('n', '<leader>k', ':silent !open -a "Marked 2.app" %<CR>', {noremap = true, silent = true})
+    vim.api.nvim_set_keymap('n', '<leader>k', ':silent !open -a "Marked 2.app" %<CR>', {silent = true})
     vim.api.nvim_set_keymap('n', '<leader>d', '<Plug>DashSearch', {silent = true})
 end
 -- }}}
