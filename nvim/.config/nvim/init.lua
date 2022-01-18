@@ -764,8 +764,10 @@ vim.cmd [[
 -- " R output is highlighted using current :colorscheme
 -- Enable syntax folding
 vim.cmd [[
+let R_assign_map = '<M-->'
 let rout_follow_colorscheme = 1
 let r_syntax_folding = 1
 set nofoldenable
+autocmd VimLeave * if exists("g:SendCmdToR") && string(g:SendCmdToR) != "function('SendCmdToR_fake')" | call RQuit("nosave") | endif
 ]]
 -- }}}
