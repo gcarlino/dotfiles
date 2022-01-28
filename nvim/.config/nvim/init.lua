@@ -29,26 +29,17 @@ vim.o.diffopt = 'internal,filler,closeoff,vertical'
 -- Plugins {{{
 
 -- Install packer
-local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
-
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-  vim.fn.execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
+local fn = vim.fn
+local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+if fn.empty(fn.glob(install_path)) > 0 then
+  packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
 end
 
-vim.cmd [[
-  augroup Packer
-    autocmd!
-    autocmd BufWritePost init.lua PackerCompile
-  augroup end
-]]
-
-local use = require('packer').use
-require('packer').startup( function()
-
+require('packer').startup(function(use)
     -- LSP
     -- Installati a mano i server di:
     --   R:       install.packages("languageserver")
-    --   Python:  npm install -g pyright
+    --   Python:  npm install -g pyright / pip install pyright
     --   Fortran: pip install -U fortran-language-server
     --   HTML:    npm install -g vscode-langservers-extracted
     --   YAML:    brew install yaml-language-server
@@ -92,9 +83,9 @@ require('packer').startup( function()
     -- Git
     use 'tpope/vim-fugitive'
     -- use 'itchyny/vim-gitbranch'
-    use 'lewis6991/gitsigns.nvim'
+    use { 'lewis6991/gitsigns.nvim', requires = 'nvim-lua/plenary.nvim' }
     use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
-    use 'airblade/vim-gitgutter'
+    -- use 'airblade/vim-gitgutter'
 
     -- R
     use 'jalvesaq/Nvim-R'
@@ -105,6 +96,7 @@ require('packer').startup( function()
 
     -- Color schemes
     use 'sainnhe/edge'
+    use 'https://github.com/rakr/vim-one'
 
     -- Various
     use 'chentau/marks.nvim'
@@ -126,11 +118,23 @@ require('packer').startup( function()
         use 'rizzatti/dash.vim'
     end
 
-end )
+  if packer_bootstrap then
+    require('packer').sync()
+  end
+
+end)
+
+vim.cmd([[
+  augroup Packer
+    autocmd!
+    autocmd BufWritePost init.lua PackerCompile
+  augroup end
+]])
+
 -- }}}
 
 -- Colors {{{
-vim.cmd [[ set termguicolors ]]
+vim.cmd([[ set termguicolors ]])
 
 local _dark = function ()
     vim.o.background = 'dark'
@@ -151,11 +155,12 @@ end
 vim.api.nvim_set_keymap('n', '<leader>b', ':lua _toggleBackground()<CR>', opts)
 
 -- sainnhe/edge
-vim.g.edge_style = 'aura'
-vim.g.edge_enable = 1
-vim.g.edge_enable_italic = 1
-vim.g.edge_disable_italic_comment = 1
-vim.cmd [[ colorscheme edge ]]
+-- vim.g.edge_style = 'aura'
+-- vim.g.edge_enable = 1
+-- vim.g.edge_enable_italic = 1
+-- vim.g.edge_disable_italic_comment = 1
+-- vim.cmd [[ colorscheme edge ]]
+vim.cmd [[ colorscheme one ]]
 -- }}}
 
 -- Various {{{
@@ -239,13 +244,47 @@ require("indent_blankline").setup {
 
 -- lewis6991/gitsigns.nvim {{{
 require('gitsigns').setup {
-	signs = {
-		add = {hl = 'GitGutterAdd', text = '+'},
-		change = {hl = 'GitGutterChange', text = '~'},
-		delete = {hl = 'GitGuttereDelete', text = '_' },
-		topdelete = { hl = 'GitGutterDelete', text = '‾' },
-		changedelete = { hl = 'GitGutterChange', text = '~' },
-	},
+  signs = {
+    add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
+    change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+    delete       = {hl = 'GitSignsDelete', text = '_', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+    topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+    changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+  },
+  signcolumn = true,  -- Toggle with `:Gitsigns toggle_signs`
+  numhl      = false, -- Toggle with `:Gitsigns toggle_numhl`
+  linehl     = false, -- Toggle with `:Gitsigns toggle_linehl`
+  word_diff  = false, -- Toggle with `:Gitsigns toggle_word_diff`
+  watch_gitdir = {
+    interval = 1000,
+    follow_files = true
+  },
+  attach_to_untracked = true,
+  current_line_blame = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
+  current_line_blame_opts = {
+    virt_text = true,
+    virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
+    delay = 1000,
+    ignore_whitespace = false,
+  },
+  current_line_blame_formatter_opts = {
+    relative_time = false
+  },
+  sign_priority = 6,
+  update_debounce = 100,
+  status_formatter = nil, -- Use default
+  max_file_length = 40000,
+  preview_config = {
+    -- Options passed to nvim_open_win
+    border = 'single',
+    style = 'minimal',
+    relative = 'cursor',
+    row = 0,
+    col = 1
+  },
+  yadm = {
+    enable = false
+  },
 }
 -- }}}
 
@@ -270,10 +309,9 @@ vim.api.nvim_set_keymap('n', '<leader>dl', ':VimSpectorStepOver', {noremap = tru
 -- for normal mode - the word under the cursor
 -- for visual mode, the visually selected text
 vim.cmd([[
-nmap <Leader>di <Plug>VimspectorBalloonEval
-xmap <Leader>di <Plug>VimspectorBalloonEval
+    nmap <Leader>i <Plug>VimspectorBalloonEval
+    xmap <Leader>i <Plug>VimspectorBalloonEval
 ]])
-
 -- }}}
 
 -- tpope/vim-commentary {{{
@@ -311,7 +349,7 @@ require('telescope').setup {
         mappings = {
             i = {
                 -- ["<c-x>"] = false,
-                ["<C-h>"] = "which_key",
+                -- ["<C-h>"] = "which_key",
                 ["<esc>"] = actions.close,
             },
         }
@@ -624,7 +662,6 @@ vim.api.nvim_set_keymap('n', '<leader>n', ':NvimTreeFindFile<CR>', {noremap = tr
 -- }}}
 
 -- sindrets/diffview {{{
-
 local cb = require'diffview.config'.diffview_callback
 
 require'diffview'.setup {
@@ -739,7 +776,7 @@ require'marks'.setup {
 
 -- Fold method for init.lua {{{
 vim.cmd [[
-autocmd FileType lua setlocal foldmethod=marker foldlevel=0 foldcolumn=3
+    autocmd FileType lua setlocal foldmethod=marker foldlevel=0 foldcolumn=3
 ]]
 -- }}}
 
@@ -752,22 +789,22 @@ vim.cmd [[
         autocmd BufNewFile,BufRead *.f :set syntax=fortran
         autocmd FileType Fortran77 setlocal commentstring=C\ %s
         autocmd Filetype Fortran77 let b:commentary_startofline=1
-        autocmd Filetype Fortran77 set tabstop=6 
-        autocmd Filetype Fortran77 set shiftwidth=6
+        autocmd Filetype Fortran77 set tabstop=6
+        autocmd Filetype Fortran77 set softtabstop=3
+        autocmd Filetype Fortran77 set shiftwidth=3
     augroup end
     doautoall Fortran77 FileType Loaded-Buffer
+    autocmd FileType fortran setlocal shiftwidth=2 softtabstop=2 expandtab
+
 ]]
 -- }}}
 
 -- jalvesazq/Nvim-R {{{
--- " autocmd VimLfave * if exists("g:SendCmdToR") && string(g:SendCmdToR) != "function('SendCmdToR_fake')" | call RQuit("nosave") | endif
--- " R output is highlighted using current :colorscheme
--- Enable syntax folding
 vim.cmd [[
-let R_assign_map = '<M-->'
-let rout_follow_colorscheme = 1
-let r_syntax_folding = 1
-set nofoldenable
-autocmd VimLeave * if exists("g:SendCmdToR") && string(g:SendCmdToR) != "function('SendCmdToR_fake')" | call RQuit("nosave") | endif
+    let R_assign_map = '<M-->'
+    let rout_follow_colorscheme = 1
+    let r_syntax_folding = 1
+    set nofoldenable
+    autocmd VimLeave * if exists("g:SendCmdToR") && string(g:SendCmdToR) != "function('SendCmdToR_fake')" | call RQuit("nosave") | endif
 ]]
 -- }}}
