@@ -295,15 +295,15 @@ vim.api.nvim_set_keymap('n', '<C-W><C-m>', ':MaximizerToggle!<CR>', {noremap = t
 
 -- puremourning/vimspector {{{
 vim.g.vimspector_enable_mappings = 'HUMAN'
-vim.api.nvim_set_keymap('n', '<leader>dd', ':call vimspector#Launch()<CR>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>dx', ':call vimspector#Reset()<CR>',  {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>de', ':VimspectorEval',  {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>dw', ':VimspectorWatch', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>do', ':VimspectorShowOutput', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>dd', ':call vimspector#Launch()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<leader>dx', ':call vimspector#Reset()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<leader>de', ':VimspectorEval', opts)
+vim.api.nvim_set_keymap('n', '<leader>dw', ':VimspectorWatch', opts)
+vim.api.nvim_set_keymap('n', '<leader>do', ':VimspectorShowOutput', opts)
 
-vim.api.nvim_set_keymap('n', '<leader>dj', ':VimSpectorStepInto',  {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>dk', ':VimSpectorStepOut', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>dl', ':VimSpectorStepOver', {noremap = true, silent = true})
+-- vim.api.nvim_set_keymap('n', '<leader>dj', ':VimSpectorStepInto', opts)
+-- vim.api.nvim_set_keymap('n', '<leader>dk', ':VimSpectorStepOut', opts)
+-- vim.api.nvim_set_keymap('n', '<leader>dl', ':VimSpectorStepOver', opts)
 
 -- mnemonic 'di' = 'debug inspect' (pick your own, if you prefer!)
 -- for normal mode - the word under the cursor
@@ -652,7 +652,6 @@ cmp.setup.cmdline(':', {
 require('luasnip.loaders.from_vscode').lazy_load()
 -- }}}
 
-
 -- kyazdani42/nvim-tree.lua {{{
 local nvim_tree = require 'nvim-tree'
 nvim_tree.setup()
@@ -781,7 +780,7 @@ vim.cmd [[
 -- }}}
 
 -- Fortran specific {{{
-vim.cmd [[
+vim.cmd([[
     augroup Fortran77
         autocmd!
         autocmd BufNewFile,BufRead *.f :set filetype=Fortran77
@@ -794,9 +793,10 @@ vim.cmd [[
         autocmd Filetype Fortran77 set shiftwidth=3
     augroup end
     doautoall Fortran77 FileType Loaded-Buffer
-    autocmd FileType fortran setlocal shiftwidth=2 softtabstop=2 expandtab
 
-]]
+    autocmd FileType fortran setlocal tabstop=2
+    autocmd FileType fortran setlocal shiftwidth=2 
+]])
 -- }}}
 
 -- jalvesazq/Nvim-R {{{
