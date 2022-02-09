@@ -112,6 +112,7 @@ require('packer').startup(function(use)
     use 'tpope/vim-surround'
     -- use 'tjdevries/astronauta.nvim'
     use 'GustavoKatel/sidebar.nvim'
+    use 'https://github.com/godlygeek/tabular'
 
     -- Mac specific
     if vim.fn.has('mac') == 1 then
