@@ -136,6 +136,7 @@ vim.cmd([[
 
 -- Colors {{{
 vim.cmd([[ set termguicolors ]])
+vim.o.background = "light"
 
 local _dark = function ()
     vim.o.background = 'dark'
@@ -387,7 +388,7 @@ vim.api.nvim_set_keymap('n', '<leader>so', [[<cmd>lua require('telescope.builtin
 vim.api.nvim_set_keymap('n', '<leader>?', [[<cmd>lua require('telescope.builtin').oldfiles()<CR>]], opts)
 
 -- Telescope for git
-vim.api.nvim_set_keymap('n', '<leader>gf', [[<cmd>lua require('telescope.builtin').git_files()<CR>]], opts)
+-- vim.api.nvim_set_keymap('n', '<leader>gf', [[<cmd>lua require('telescope.builtin').git_files()<CR>]], opts)
 vim.api.nvim_set_keymap('n', '<leader>gc', [[<cmd>lua require('telescope.builtin').git_commits()<CR>]], opts)
 vim.api.nvim_set_keymap('n', '<leader>gb', [[<cmd>lua require('telescope.builtin').git_bcommits()<CR>]], opts)
 vim.api.nvim_set_keymap('n', '<leader>gs', [[<cmd>lua require('telescope.builtin').git_status()<CR>]], opts)
@@ -783,29 +784,32 @@ vim.cmd [[
 -- Fortran specific {{{
 vim.cmd([[
     augroup Fortran77
-        autocmd!
-        autocmd BufNewFile,BufRead *.f :set filetype=Fortran77
-        autocmd Filetype Fortran77 let g:fortran_fixed_source=1
-        autocmd BufNewFile,BufRead *.f :set syntax=fortran
-        autocmd FileType Fortran77 setlocal commentstring=C\ %s
-        autocmd Filetype Fortran77 let b:commentary_startofline=1
-        autocmd Filetype Fortran77 set tabstop=6
-        autocmd Filetype Fortran77 set softtabstop=3
-        autocmd Filetype Fortran77 set shiftwidth=3
+    autocmd!
+    autocmd BufNewFile,BufRead *.f :set filetype=Fortran77
+    autocmd BufNewFile,BufRead *.f :set syntax=fortran
+    autocmd Filetype Fortran77 let g:fortran_fixed_source=1
+    autocmd FileType Fortran77 setlocal commentstring=C\ %s
+    autocmd Filetype Fortran77 let b:commentary_startofline=1
+    autocmd Filetype Fortran77 set tabstop=6
+    autocmd Filetype Fortran77 set softtabstop=3
+    autocmd Filetype Fortran77 set shiftwidth=3
     augroup end
-    doautoall Fortran77 FileType Loaded-Buffer
+    doautoall Fortran77 FileType Loaded-Buffer,BufRead
 
+    augroup customFortran
     autocmd FileType fortran setlocal tabstop=2
     autocmd FileType fortran setlocal shiftwidth=2 
+    augroup end
 ]])
+vim.api.nvim_set_keymap('n', '<leader>ff', ':set syntax=fortran<CR>', opts)
 -- }}}
 
 -- jalvesazq/Nvim-R {{{
-vim.cmd [[
+vim.cmd([[
     let R_assign_map = '<M-->'
     let rout_follow_colorscheme = 1
     let r_syntax_folding = 1
     set nofoldenable
     autocmd VimLeave * if exists("g:SendCmdToR") && string(g:SendCmdToR) != "function('SendCmdToR_fake')" | call RQuit("nosave") | endif
-]]
+]])
 -- }}}
