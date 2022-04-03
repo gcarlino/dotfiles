@@ -24,6 +24,10 @@ vim.o.splitright = true
 vim.o.splitbelow = true
 vim.o.scrolloff = 4
 vim.o.diffopt = 'internal,filler,closeoff,vertical'
+
+-- Copy to system clipboard
+vim.api.nvim_set_option("clipboard","unnamed")
+
 -- }}}
 
 -- Plugins {{{
@@ -36,6 +40,8 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 require('packer').startup(function(use)
+    use 'wbthomason/packer.nvim'
+
     -- LSP
     -- Installati a mano i server di:
     --   R:       install.packages("languageserver")
@@ -74,6 +80,7 @@ require('packer').startup(function(use)
 
     use 'nvim-treesitter/nvim-treesitter'
 
+    use 'simrat39/symbols-outline.nvim'
     -- Status Line
     use {
         'nvim-lualine/lualine.nvim',
@@ -128,7 +135,7 @@ end)
 vim.cmd([[
   augroup Packer
     autocmd!
-    autocmd BufWritePost init.lua PackerCompile
+    autocmd BufWritePost init.lua source <afile> | PackerCompile
   augroup end
 ]])
 
@@ -136,7 +143,7 @@ vim.cmd([[
 
 -- Colors {{{
 vim.cmd([[ set termguicolors ]])
-vim.o.background = "light"
+-- vim.o.background = "light"
 
 local _dark = function ()
     vim.o.background = 'dark'
@@ -498,7 +505,7 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- Enable the following language servers
-local servers = {'pyright', 'html', 'r_language_server', 'yamlls', 'bashls', 'texlab', 'cmake' }
+local servers = {'pyright', 'html', 'r_language_server', 'yamlls', 'bashls', 'texlab', 'cmake'}
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
