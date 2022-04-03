@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/beps/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -89,7 +89,9 @@ alias view='mvim -R'
 alias vi='nvim'
 alias view='nvim -R'
 alias less='less -FRX'
-alias ls='lsd'
+if type "lsd" > /dev/null ; then
+    alias ls="lsd"
+fi
 
 alias ll='ls -Flh'
 alias lt='ls --tree'
