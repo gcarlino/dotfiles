@@ -6,6 +6,7 @@ export ZSH=/Users/beps/.oh-my-zsh
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 # ZSH_THEME="gallifrey"
 ZSH_THEME="robbyrussell"
+# ZSH_THEME="daveverwer"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -68,16 +69,6 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-# iterm shell integration
-test -e ${HOME}/.iterm2_shell_integration.zsh && \
-    source ${HOME}/.iterm2_shell_integration.zsh
-# enable shell integration in tmux
-export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES
-
-iterm2_print_uptime() {
-    iterm2_set_user_var uptime uptime
-}
-
 export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -99,7 +90,10 @@ alias vi='nvim'
 alias view='nvim -R'
 alias less='less -FRX'
 alias ls='lsd'
+
 alias ll='ls -Flh'
+alias lt='ls --tree'
+
 # alias l='clear&&pwd&&ls -FGlh'
 alias tree='tree -C'
 # alias cat='bat --paging=never'
@@ -136,6 +130,9 @@ export HOMEBREW_NO_ANALYTICS=1
 
 # PATH to R personal library
 #export R_LIBS_USER=$HOME/Library/R/4.x/library
+#
+# Add hostname to prompt
+PROMPT="%{$fg[green]%}%m%{$reset_color%} ${PROMPT}"
 
 # enable spell check
 setopt correct
