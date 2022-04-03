@@ -649,7 +649,6 @@ initial_window_height 600
 #: as number of cells instead of pixels.
 
 # enabled_layouts *
-enabled_layouts Horizontal,*
 
 #: The enabled window layouts. A comma separated list of layout names.
 #: The special value all means all layouts. The first listed layout
@@ -714,13 +713,11 @@ window_padding_width 0 0 1
 #: only the bottom and right edges.
 
 # active_border_color #00ff00
-active_border_color none
 
 #: The color for the border of the active window. Set this to none to
 #: not draw borders around the active window.
 
 # inactive_border_color #cccccc
-inactive_border_color #555555
 
 #: The color for the border of inactive windows
 
@@ -729,8 +726,7 @@ inactive_border_color #555555
 #: The color for the border of inactive windows in which a bell has
 #: occurred
 
-# inactive_text_alpha 1.00
-inactive_text_alpha 0.66
+# inactive_text_alpha 1.0
 
 #: Fade the text in inactive windows by the specified amount (a number
 #: between zero and one, with zero being fully faded).
@@ -891,7 +887,6 @@ tab_bar_style powerline
 #: the tab_bar_style.
 
 # tab_powerline_style angled
-tab_powerline_style slanted
 
 #: The powerline separator style between tabs in the tab bar when
 #: using powerline as the tab_bar_style, can be one of: angled,
@@ -1632,8 +1627,6 @@ macos_show_window_title_in window
 #::  to the working directory of the current window using::
 
 #::      map ctrl+alt+enter    launch --cwd=current
-map cmd+d new_window_with_cwd
-map cmd+shift+d new_window
 
 #::  You can open a new window that is allowed to control kitty via
 #::  the kitty remote control facility by prefixing the command line
@@ -1667,8 +1660,6 @@ map cmd+shift+d new_window
 #: Next window
 
 # map kitty_mod+] next_window
-map cmd+] next_window
-map cmd+[ previous_window
 
 #: Previous window
 
@@ -1768,8 +1759,6 @@ map cmd+[ previous_window
 
 # map kitty_mod+t new_tab
 # map cmd+t       new_tab
-map cmd+t new_tab_with_cwd
-map cmd+shift+t new_tab
 
 #: Close tab
 
@@ -1800,15 +1789,6 @@ map cmd+shift+t new_tab
 
 #:     map ctrl+alt+1 goto_tab 1
 #:     map ctrl+alt+2 goto_tab 2
-map cmd+1 goto_tab 1
-map cmd+2 goto_tab 2
-map cmd+3 goto_tab 3
-map cmd+4 goto_tab 4
-map cmd+5 goto_tab 5
-map cmd+6 goto_tab 6
-map cmd+7 goto_tab 7
-map cmd+8 goto_tab 8
-map cmd+9 goto_tab 9
 
 #: Just as with new_window above, you can also pass the name of
 #: arbitrary commands to run when using new_tab and use
@@ -2087,16 +2067,8 @@ map cmd+9 goto_tab 9
 
 #: }}}
 
-# jump to the beginning and end of word
-map alt+letf send_text all \x1b\x62
-map alt+right send_text all \x1b\x66
-
-# jump to beginning and end of line
-map cmd+left send_text all \x01
-map cmd+right send_text all \x05
-
 
 # BEGIN_KITTY_THEME
-# Dracula
+# Atom
 include current-theme.conf
 # END_KITTY_THEME
