@@ -100,6 +100,9 @@ alias lt='ls --tree'
 alias tree='tree -C'
 # alias cat='bat --paging=never'
 
+# kitty ssh
+alias s='kitty +kitten ssh'
+
 alias airport='/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport'
 
 # Remove unused docker images:
@@ -169,3 +172,5 @@ export BAT_THEME=GitHub
 export FZF_DEFAULT_OPTS='--height 50% --layout=reverse --border --inline-info'
 export FZF_DEFAULT_COMMAND='fd --type f'
 
+# Default editor
+export EDITOR=vim
