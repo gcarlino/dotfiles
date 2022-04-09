@@ -55,11 +55,9 @@ plugins=(
     aliases
     colored-man-pages
     isodate
-    marked2
     nmap
     rsync
     sudo
-    macos
     zsh-autosuggestions
     zsh-syntax-highlighting
 )
@@ -103,7 +101,6 @@ alias tree='tree -C'
 # kitty ssh
 alias s='kitty +kitten ssh'
 
-alias airport='/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport'
 
 # Remove unused docker images:
 alias docker-clean-images='docker images | grep none | awk "{print \$3}" | xargs docker rmi'
