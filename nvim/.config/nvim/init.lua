@@ -109,7 +109,8 @@ require('packer').startup(function(use)
     use 'chentau/marks.nvim'
     use 'lukas-reineke/virt-column.nvim'
     -- use 'christoomey/vim-tmux-navigator'
-    use 'kassio/neoterm'
+    -- use 'kassio/neoterm'
+    use {"akinsho/toggleterm.nvim"}
     use 'tpope/vim-commentary'
     -- use 'tpope/vim-unimpaired'
     -- use 'sbdchd/neoformat'
@@ -230,7 +231,7 @@ require'lualine'.setup {
     options = {
         theme = 'edge'
     },
-    extensions = {'nvim-tree'}
+    extensions = {'nvim-tree', 'toggleterm'}
 }
 -- }}}
 
@@ -329,12 +330,18 @@ vim.api.nvim_set_keymap('v', '<leader>/', ':Commentary<CR>', {noremap = true})
 -- }}}
 
 -- kassio/neoterm {{{
-vim.g.neoterm_default_mod = 'belowright'
-vim.g.neoterm_size = 18
-vim.g.neoterm_autoinsert = 1
-vim.api.nvim_set_keymap('n', '<c-q>', ":<c-u>exec v:count.'Ttoggle'<CR>", {noremap = true})
-vim.api.nvim_set_keymap('i', '<c-q>', '<Esc>:Ttoggle<CR>', {noremap = true})
-vim.api.nvim_set_keymap('t', '<c-q>', '<c-\\><c-n>:Ttoggle<CR>', {noremap = true})
+-- vim.g.neoterm_default_mod = 'belowright'
+-- vim.g.neoterm_size = 18
+-- vim.g.neoterm_autoinsert = 1
+-- vim.api.nvim_set_keymap('n', '<c-q>', ":<c-u>exec v:count.'Ttoggle'<CR>", {noremap = true})
+-- vim.api.nvim_set_keymap('i', '<c-q>', '<Esc>:Ttoggle<CR>', {noremap = true})
+-- vim.api.nvim_set_keymap('t', '<c-q>', '<c-\\><c-n>:Ttoggle<CR>', {noremap = true})
+-- }}}
+
+-- use akinsho/toggleterm.nvim {{{
+require("toggleterm").setup{
+  open_mapping = [[<c-q>]],
+}
 -- }}}
 
 -- sbdchd/neoformat {{{
