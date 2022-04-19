@@ -411,14 +411,40 @@ vim.api.nvim_set_keymap('n', '<leader>gh', [[<cmd>lua require('telescope.builtin
 
 -- Search for Simularia notes
 if vim.fn.has("mac") == 1 then
-    vim.api.nvim_set_keymap('n', '<leader>sn', [[<cmd>lua require('my_telescope').search_mynotes()<CR>]], opts)
+    vim.api.nvim_set_keymap("n","<leader>sn", "", {
+        noremap = true,
+        callback = function()
+            require('telescope.builtin').live_grep {
+                -- path_display = "tail",
+                cwd = "~/Simularia/Notes",
+                prompt_title = "~ (Not only) Simularia Notes ~",
+                layout_strategy = "horizontal",
+            }
+        end,
+    })
 end
 
 -- Search nvim dotfiles
-vim.api.nvim_set_keymap('n', '<leader>en', [[<cmd>lua require('my_telescope').edit_nvim()<CR>]], opts)
+vim.api.nvim_set_keymap('n', '<leader>en', "", {
+    callback = function() 
+        require('telescope.builtin').find_files {
+            cwd = "~/.dotfiles/nvim/.config/nvim/",
+            prompt_title = "~ Edit nvim ~",
+            layout_strategies = "horizontal",
+        }
+    end
+})
 
 -- Search dotfiles
-vim.api.nvim_set_keymap('n', '<leader>ed', [[<cmd>lua require('my_telescope').edit_dotfiles()<CR>]], opts)
+vim.api.nvim_set_keymap('n', '<leader>ed', "", {
+    callback = function()
+        require('telescope.builtin').git_files {
+            cwd = "~/.dotfiles/",
+            prompt_title = "~ Edit dotfiles ~",
+            layout_strategies = "horizontal",
+        }
+    end
+})
 
 
 -- Telescope LSP commands
