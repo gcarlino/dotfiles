@@ -1,29 +1,36 @@
 -- General setup {{{
 local opts = { noremap = true, silent = true }
 
--- Remap space as leader key
+-- Remap space as leader key and ; as local leader
 vim.api.nvim_set_keymap('', '<Space>', '<Nop>', opts)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ';'
 
+-- Line numbers
 vim.wo.number = true
 vim.wo.relativenumber = true
+
 vim.wo.cursorline = true
+-- Enable mouse mode
 vim.o.mouse = 'a'
+-- Enable break indent
 vim.o.breakindent = true
+-- Case insensitive search unless /C or capital in search
 vim.o.ignorecase = true
 vim.o.smartcase = true
+
+-- Decrease update time
 vim.o.updatetime = 250
 vim.wo.signcolumn = 'yes'
+
 vim.o.expandtab = true
 vim.o.tabstop = 4
 vim.o.shiftwidth = 4
-vim.o.ignorecase = true
-vim.o.smartcase = true
-vim.o.splitright = true
 vim.o.splitbelow = true
 vim.o.scrolloff = 4
 vim.o.diffopt = 'internal,filler,closeoff,vertical'
+--Save undo history
+vim.opt.undofile = true
 
 -- Copy to system clipboard
 vim.api.nvim_set_option("clipboard","unnamed")
@@ -33,13 +40,13 @@ vim.api.nvim_set_option("clipboard","unnamed")
 -- Plugins {{{
 
 -- Install packer
-local fn = vim.fn
-local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-if fn.empty(fn.glob(install_path)) > 0 then
-  packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+local install_path = vim.fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+  Packer_bootstrap = vim.fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
 end
 
 require('packer').startup(function(use)
+    -- Package manager
     use 'wbthomason/packer.nvim'
 
     -- LSP
@@ -50,7 +57,7 @@ require('packer').startup(function(use)
     --   HTML:    npm install -g vscode-langservers-extracted
     --   YAML:    brew install yaml-language-server
     --   BASH:    brew install bash-language-server
-	--   LUA:     brew install lua-language-server
+    --   LUA:     brew install lua-language-server
     --   LATEX:   brew install texlab
     --   cmake:   pip3 install cmake-language-server
     use 'neovim/nvim-lspconfig'
@@ -102,7 +109,7 @@ require('packer').startup(function(use)
     use 'szw/vim-maximizer'
 
     -- Color schemes
-    use 'sainnhe/edge'
+    -- use 'sainnhe/edge'
     use 'https://github.com/rakr/vim-one'
 
     -- Various
@@ -127,50 +134,43 @@ require('packer').startup(function(use)
         use 'rizzatti/dash.vim'
     end
 
-  if packer_bootstrap then
-    require('packer').sync()
-  end
+    if Packer_bootstrap then
+        require('packer').sync()
+    end
+end
+)
 
-end)
-
-vim.cmd([[
-  augroup Packer
-    autocmd!
-    autocmd BufWritePost init.lua source <afile> | PackerCompile
-  augroup end
-]])
-
+local packer_group = vim.api.nvim_create_augroup('Packer', { clear = true })
+vim.api.nvim_create_autocmd('BufWritePost', {
+    command = 'source <afile> | PackerCompile',
+    group = packer_group,
+    pattern = 'init.lua'
+})
 -- }}}
 
 -- Colors {{{
-vim.cmd([[ set termguicolors ]])
--- vim.o.background = "light"
+vim.o.termguicolors = true
 
-local _dark = function ()
-    vim.o.background = 'dark'
-end
-
-local _light = function ()
-    vim.o.background = 'light'
-end
-
-_toggleBackground = function ()
-    local _background = vim.api.nvim_get_option('background')
-    if (_background == 'light') then
-        _dark()
-    else
-        _light()
-    end
-end
-vim.api.nvim_set_keymap('n', '<leader>b', ':lua _toggleBackground()<CR>', opts)
+vim.api.nvim_set_keymap("n", "<leader>b", "", {
+    noremap = true,
+    callback = function()
+        local _background = vim.api.nvim_get_option("background")
+        if (_background == "light") then
+            vim.o.background = "dark"
+        else
+            vim.o.background = "light"
+        end
+    end,
+    desc = "Toggle background color"
+})
 
 -- sainnhe/edge
 -- vim.g.edge_style = 'aura'
 -- vim.g.edge_enable = 1
 -- vim.g.edge_enable_italic = 1
 -- vim.g.edge_disable_italic_comment = 1
--- vim.cmd [[ colorscheme edge ]]
-vim.cmd [[ colorscheme one ]]
+-- vim.cmd([[ colorscheme edge ]])
+vim.cmd([[colorscheme one]])
 -- }}}
 
 -- Various {{{
@@ -201,21 +201,37 @@ vim.api.nvim_set_keymap('n', '<leader>cd', ':cd %:p:h<CR>:pwd<CR>', {noremap = t
 vim.g.markdown_fenced_languages = { 'html', 'python', 'vim', 'r', 'sh' }
 
 -- Highlight on yank
-vim.cmd [[
-    augroup YankHighlight
-        autocmd!
-        autocmd TextYankPost * silent! lua vim.highlight.on_yank()
-    augroup end
-]]
+local yankHighlightGroup = vim.api.nvim_create_augroup("YankHighlight", {clear = true})
+vim.api.nvim_create_autocmd("TextYankPost", {
+    callback = function()
+       vim.highlight.on_yank()
+    end,
+    group = yankHighlightGroup,
+    pattern = "*"
+})
 -- }}}
 
 -- listchars {{{
-vim.cmd [[
-    set listchars=tab:▸\ ,trail:·,precedes:←,extends:→,eol:↲,nbsp:␣
-    autocmd InsertEnter * set list
-    autocmd VimEnter,BufEnter,InsertLeave * set nolist
-    autocmd BufNewFile,BufRead *.md,*.mdx,*.markdown :set filetype=markdown
-]]
+vim.opt.listchars = {
+    tab = '▸ ',
+    trail = '·',
+    precedes = '←',
+    extends = '→',
+    eol = '↲',
+    nbsp = '␣'
+}
+vim.api.nvim_create_autocmd("InsertEnter", {
+    pattern = "*",
+    callback = function ()
+        vim.opt.list = true
+    end
+})
+vim.api.nvim_create_autocmd({"VimEnter", "BufEnter", "InsertLeave"}, {
+    pattern = "*",
+    callback = function ()
+        vim.opt.list = false
+    end
+})
 -- }}}
 
 -- Mac specific {{{
@@ -227,16 +243,15 @@ end
 
 -- hoob3rt/lualine.nvim {{{
 require'lualine'.setup {
-    -- Default config (see help)
     options = {
-        theme = 'edge'
+        theme = 'onedark'
     },
     extensions = {'nvim-tree', 'toggleterm'}
 }
 -- }}}
 
 -- lukas-reineke/virt-column.nvim {{{
-require("virt-column").setup { }
+-- require("virt-column").setup { }
 -- vim.wo.colorcolumn = '80'
 -- vim.cmd [[
 -- highlight VirtuColumn guifg=#00FF00
@@ -318,10 +333,8 @@ vim.api.nvim_set_keymap('n', '<leader>do', ':VimspectorShowOutput', opts)
 -- mnemonic 'di' = 'debug inspect' (pick your own, if you prefer!)
 -- for normal mode - the word under the cursor
 -- for visual mode, the visually selected text
-vim.cmd([[
-    nmap <Leader>i <Plug>VimspectorBalloonEval
-    xmap <Leader>i <Plug>VimspectorBalloonEval
-]])
+vim.api.nvim_set_keymap('n', '<leader>i', ':Plug>VimspectorBalloonEval<CR>', opts)
+vim.api.nvim_set_keymap('x', '<leader>i', ':Plug>VimspectorBalloonEval<CR>', opts)
 -- }}}
 
 -- tpope/vim-commentary {{{
