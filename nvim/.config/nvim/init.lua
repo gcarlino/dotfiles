@@ -27,10 +27,14 @@ vim.o.expandtab = true
 vim.o.tabstop = 4
 vim.o.shiftwidth = 4
 vim.o.splitbelow = true
+vim.o.splitright = true
 vim.o.scrolloff = 4
 vim.o.diffopt = 'internal,filler,closeoff,vertical'
+
 --Save undo history
 vim.opt.undofile = true
+
+vim.o.autoread = true
 
 -- Copy to system clipboard
 vim.api.nvim_set_option("clipboard","unnamed")
@@ -106,6 +110,7 @@ require('packer').startup(function(use)
 
     -- Debug
     use 'puremourning/vimspector'
+    use 'nvim-telescope/telescope-vimspector.nvim'
     use 'szw/vim-maximizer'
 
     -- Color schemes
@@ -151,19 +156,6 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 -- Colors {{{
 vim.o.termguicolors = true
 
-vim.api.nvim_set_keymap("n", "<leader>b", "", {
-    noremap = true,
-    callback = function()
-        local _background = vim.api.nvim_get_option("background")
-        if (_background == "light") then
-            vim.o.background = "dark"
-        else
-            vim.o.background = "light"
-        end
-    end,
-    desc = "Toggle background color"
-})
-
 -- sainnhe/edge
 -- vim.g.edge_style = 'aura'
 -- vim.g.edge_enable = 1
@@ -187,8 +179,8 @@ vim.api.nvim_set_keymap('n', '<C-L>', '<C-W><C-L>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<C-H>', '<C-W><C-H>', {noremap = true})
 
 -- Move lines around
-vim.api.nvim_set_keymap('n', '<M-j>', ':m .+1<CR>==', {noremap = true})
 vim.api.nvim_set_keymap('n', '<M-k>', ':m .-2<CR>==', {noremap = true})
+vim.api.nvim_set_keymap('n', '<M-j>', ':m .+1<CR>==', {noremap = true})
 vim.api.nvim_set_keymap('i', '<M-j>', '<ESC>:m .+1<CR>==gi', {noremap = true})
 vim.api.nvim_set_keymap('i', '<M-k>', '<ESC>:m .-2<CR>==gi', {noremap = true})
 vim.api.nvim_set_keymap('v', '<M-j>', ":m '>+1<CR>gv==gv", {noremap = true})
@@ -260,10 +252,12 @@ require'lualine'.setup {
 
 -- lukas-reineke/indent-blankline.nvim {{{
 require("indent_blankline").setup {
-    indent_blankline_char = "│",
-    indent_blankline_filetype_exclude = { 'help', 'packer' },
+    show_current_context = true,
+    show_current_context_start = true,
+    -- indent_blankline_char = "│",
+    indent_blankline_filetype_exclud = { 'help', 'packer' },
     indent_blankline_buftype_exclude = { 'terminal', 'nofile' },
-    indent_blankline_show_trailing_blankline_indent = false
+    show_end_of_line = true,
 }
 -- }}}
 
@@ -320,21 +314,23 @@ vim.api.nvim_set_keymap('n', '<C-W><C-m>', ':MaximizerToggle!<CR>', {noremap = t
 
 -- puremourning/vimspector {{{
 vim.g.vimspector_enable_mappings = 'HUMAN'
-vim.api.nvim_set_keymap('n', '<leader>dd', ':call vimspector#Launch()<CR>', opts)
+vim.g.vimspector_variables_display_mode = 'full'
+-- vim.api.nvim_set_keymap('n', '<leader>dd', ':call vimspector#Launch()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<leader>dd', ':Telescope vimspector configurations<CR>', opts)
 vim.api.nvim_set_keymap('n', '<leader>dx', ':call vimspector#Reset()<CR>', opts)
 vim.api.nvim_set_keymap('n', '<leader>de', ':VimspectorEval', opts)
 vim.api.nvim_set_keymap('n', '<leader>dw', ':VimspectorWatch', opts)
 vim.api.nvim_set_keymap('n', '<leader>do', ':VimspectorShowOutput', opts)
 
--- vim.api.nvim_set_keymap('n', '<leader>dj', ':VimSpectorStepInto', opts)
--- vim.api.nvim_set_keymap('n', '<leader>dk', ':VimSpectorStepOut', opts)
--- vim.api.nvim_set_keymap('n', '<leader>dl', ':VimSpectorStepOver', opts)
+vim.api.nvim_set_keymap('n', '<leader>dj', ':VimSpectorStepInto', opts)
+vim.api.nvim_set_keymap('n', '<leader>dk', ':VimSpectorStepOut', opts)
+vim.api.nvim_set_keymap('n', '<leader>dl', ':VimSpectorStepOver', opts)
 
 -- mnemonic 'di' = 'debug inspect' (pick your own, if you prefer!)
 -- for normal mode - the word under the cursor
 -- for visual mode, the visually selected text
-vim.api.nvim_set_keymap('n', '<leader>i', ':Plug>VimspectorBalloonEval<CR>', opts)
-vim.api.nvim_set_keymap('x', '<leader>i', ':Plug>VimspectorBalloonEval<CR>', opts)
+vim.api.nvim_set_keymap('n', '<leader>i', '<Plug>VimspectorBalloonEval', opts)
+vim.api.nvim_set_keymap('x', '<leader>i', '<Plug>VimspectorBalloonEval', opts)
 -- }}}
 
 -- tpope/vim-commentary {{{
@@ -402,6 +398,8 @@ require('telescope').setup {
 require('telescope').load_extension('fzf')
 -- nvim-telescope/telescope-file-browser.nvim
 require("telescope").load_extension "file_browser"
+-- Integration for vimspector with telescope
+require("telescope").load_extension("vimspector")
 
 vim.api.nvim_set_keymap('n', '<leader>ss', "<cmd>lua require('telescope').extensions.file_browser.file_browser()<CR>", opts)
 vim.api.nvim_set_keymap('n', '<leader><space>', [[<cmd>lua require('telescope.builtin').buffers()<CR>]], opts)
@@ -881,6 +879,11 @@ vim.cmd([[
     autocmd FileType fortran setlocal tabstop=2
     autocmd FileType fortran setlocal shiftwidth=2 
     augroup end
+
+    augroup FortranCUDA
+      autocmd!
+      autocmd BufNewFile,BufRead *.cuf :set filetype=fortran
+    augroup end
 ]])
 vim.api.nvim_set_keymap('n', '<leader>ff', ':set syntax=fortran<CR>', opts)
 -- }}}
@@ -893,4 +896,29 @@ vim.cmd([[
     set nofoldenable
     autocmd VimLeave * if exists("g:SendCmdToR") && string(g:SendCmdToR) != "function('SendCmdToR_fake')" | call RQuit("nosave") | endif
 ]])
+-- }}}
+--
+-- Toggle color {{{
+vim.api.nvim_set_keymap("n", "<leader>b", "", {
+    noremap = true,
+    callback = function()
+        local _background = vim.api.nvim_get_option("background")
+        if (_background == "light") then
+            vim.o.background = "dark"
+            require'lualine'.setup {
+                options = {
+                    theme = 'onedark'
+                },
+            }
+        else
+            vim.o.background = "light"
+            require'lualine'.setup {
+                options = {
+                    theme = 'onelight'
+                },
+            }
+        end
+    end,
+    desc = "Toggle background color"
+})
 -- }}}
