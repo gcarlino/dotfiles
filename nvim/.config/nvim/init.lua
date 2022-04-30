@@ -10,6 +10,7 @@ vim.g.maplocalleader = ';'
 vim.wo.number = true
 vim.wo.relativenumber = true
 
+-- Highlight the text line of the cursor
 vim.wo.cursorline = true
 -- Enable mouse mode
 vim.o.mouse = 'a'
@@ -34,11 +35,8 @@ vim.o.diffopt = 'internal,filler,closeoff,vertical'
 --Save undo history
 vim.opt.undofile = true
 
-vim.o.autoread = true
-
 -- Copy to system clipboard
 vim.api.nvim_set_option("clipboard","unnamed")
-
 -- }}}
 
 -- Plugins {{{
@@ -73,8 +71,8 @@ require('packer').startup(function(use)
     use 'hrsh7th/cmp-buffer'
     use 'hrsh7th/cmp-path'
     use 'hrsh7th/cmp-cmdline'
-    use 'hrsh7th/nvim-cmp'
-    use 'kdheepak/cmp-latex-symbols'
+    use {'hrsh7th/nvim-cmp',
+        requires = {'kdheepak/cmp-latex-symbols'}}
 
     -- Snippet
     use 'L3MON4D3/LuaSnip'
@@ -114,14 +112,10 @@ require('packer').startup(function(use)
     use 'szw/vim-maximizer'
 
     -- Color schemes
-    -- use 'sainnhe/edge'
-    use 'https://github.com/rakr/vim-one'
+    use 'https://github.com/sainnhe/edge'
 
     -- Various
     use 'chentau/marks.nvim'
-    use 'lukas-reineke/virt-column.nvim'
-    -- use 'christoomey/vim-tmux-navigator'
-    -- use 'kassio/neoterm'
     use {"akinsho/toggleterm.nvim"}
     use 'tpope/vim-commentary'
     -- use 'tpope/vim-unimpaired'
@@ -151,18 +145,6 @@ vim.api.nvim_create_autocmd('BufWritePost', {
     group = packer_group,
     pattern = 'init.lua'
 })
--- }}}
-
--- Colors {{{
-vim.o.termguicolors = true
-
--- sainnhe/edge
--- vim.g.edge_style = 'aura'
--- vim.g.edge_enable = 1
--- vim.g.edge_enable_italic = 1
--- vim.g.edge_disable_italic_comment = 1
--- vim.cmd([[ colorscheme edge ]])
-vim.cmd([[colorscheme one]])
 -- }}}
 
 -- Various {{{
@@ -212,6 +194,7 @@ vim.opt.listchars = {
     eol = '↲',
     nbsp = '␣'
 }
+
 vim.api.nvim_create_autocmd("InsertEnter", {
     pattern = "*",
     callback = function ()
@@ -233,30 +216,46 @@ if vim.fn.has('mac') == 1 then
 end
 -- }}}
 
+-- Set colors {{{
+vim.o.termguicolors = true
+
+-- sainnhe/edge
+vim.g.edge_style = 'aura'
+vim.g.edge_enable = 1
+-- vim.g.edge_enable_italic = 1
+vim.g.edge_disable_italic_comment = 1
+vim.g.edge_better_performance = 1
+vim.cmd([[ colorscheme edge ]])
+-- }}}
+
 -- hoob3rt/lualine.nvim {{{
 require'lualine'.setup {
     options = {
-        theme = 'onedark'
+        theme = 'edge'
     },
     extensions = {'nvim-tree', 'toggleterm'}
 }
 -- }}}
 
--- lukas-reineke/virt-column.nvim {{{
--- require("virt-column").setup { }
--- vim.wo.colorcolumn = '80'
--- vim.cmd [[
--- highlight VirtuColumn guifg=#00FF00
--- ]]
+-- Toggle color {{{
+vim.api.nvim_set_keymap("n", "<leader>b", "", {
+    noremap = true,
+    callback = function()
+        local _background = vim.api.nvim_get_option("background")
+        if (_background == "light") then
+            vim.o.background = "dark"
+        else
+            vim.o.background = "light"
+        end
+    end,
+    desc = "Toggle background color"
+})
 -- }}}
 
 -- lukas-reineke/indent-blankline.nvim {{{
 require("indent_blankline").setup {
     show_current_context = true,
     show_current_context_start = true,
-    -- indent_blankline_char = "│",
-    indent_blankline_filetype_exclud = { 'help', 'packer' },
-    indent_blankline_buftype_exclude = { 'terminal', 'nofile' },
     show_end_of_line = true,
 }
 -- }}}
@@ -339,12 +338,12 @@ vim.api.nvim_set_keymap('v', '<leader>/', ':Commentary<CR>', {noremap = true})
 -- }}}
 
 -- kassio/neoterm {{{
--- vim.g.neoterm_default_mod = 'belowright'
--- vim.g.neoterm_size = 18
--- vim.g.neoterm_autoinsert = 1
--- vim.api.nvim_set_keymap('n', '<c-q>', ":<c-u>exec v:count.'Ttoggle'<CR>", {noremap = true})
--- vim.api.nvim_set_keymap('i', '<c-q>', '<Esc>:Ttoggle<CR>', {noremap = true})
--- vim.api.nvim_set_keymap('t', '<c-q>', '<c-\\><c-n>:Ttoggle<CR>', {noremap = true})
+vim.g.neoterm_default_mod = 'belowright'
+vim.g.neoterm_size = 18
+vim.g.neoterm_autoinsert = 1
+vim.api.nvim_set_keymap('n', '<c-q>', ":<c-u>exec v:count.'Ttoggle'<CR>", {noremap = true})
+vim.api.nvim_set_keymap('i', '<c-q>', '<Esc>:Ttoggle<CR>', {noremap = true})
+vim.api.nvim_set_keymap('t', '<c-q>', '<c-\\><c-n>:Ttoggle<CR>', {noremap = true})
 -- }}}
 
 -- use akinsho/toggleterm.nvim {{{
@@ -459,7 +458,7 @@ vim.api.nvim_set_keymap('n', '<leader>ed', "", {
 
 
 -- Telescope LSP commands
---
+
 -- nnoremap <leader>ls <cmd>lua require('telescope.builtin').lsp_references()<cr>
 vim.api.nvim_set_keymap('n', '<leader>ls', [[<cmd>lua require('telescope.builtin').lsp_references()<cr>]], {noremap = true})
 -- }}}
@@ -625,6 +624,11 @@ cmp.setup({
       end,
     },
 
+    window = {
+        -- completion = cmp.config.window.bordered(),
+        -- documentation = cmp.config.window.bordered(),
+    },
+
     mapping = {
         ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), {'i', 'c'}),
         ["<C-u>"] = cmp.mapping(cmp.mapping.scroll_docs(4), {'i', 'c'}),
@@ -667,11 +671,11 @@ cmp.setup({
       { name = "path" },
       { name = "cmdline" },
       { name = "latex_symbols" },
-      { name = "buffer" , keyword_length = 4}
+      { name = "buffer" , keyword_length = 3}
     }),
 
     formatting = {
-        format = lspkind.cmp_format {
+        format = lspkind.cmp_format({
             with_text = true,
             menu = {
                 buffer = "[buf]",
@@ -681,9 +685,9 @@ cmp.setup({
                 luasnip = "[snip]",
                 latex_symbols = "[Latex]",
                 cmdline = "[cmd]",
-                },
             },
-        },
+        }),
+    },
 
     experimental = {
         native_menu = false,
@@ -693,11 +697,11 @@ cmp.setup({
 
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources({
-        { name = 'path' }
-    }, {
+        { name = 'path' },
         { name = 'cmdline',
-            keyword_length = 3}
+            keyword_length = 2}
     })
 })
 
@@ -896,29 +900,4 @@ vim.cmd([[
     set nofoldenable
     autocmd VimLeave * if exists("g:SendCmdToR") && string(g:SendCmdToR) != "function('SendCmdToR_fake')" | call RQuit("nosave") | endif
 ]])
--- }}}
---
--- Toggle color {{{
-vim.api.nvim_set_keymap("n", "<leader>b", "", {
-    noremap = true,
-    callback = function()
-        local _background = vim.api.nvim_get_option("background")
-        if (_background == "light") then
-            vim.o.background = "dark"
-            require'lualine'.setup {
-                options = {
-                    theme = 'onedark'
-                },
-            }
-        else
-            vim.o.background = "light"
-            require'lualine'.setup {
-                options = {
-                    theme = 'onelight'
-                },
-            }
-        end
-    end,
-    desc = "Toggle background color"
-})
 -- }}}
