@@ -564,7 +564,7 @@ require('lspconfig').fortls.setup {
     on_attach = on_attach,
     capabilities = capabilities,
     cmd = { 'fortls' },
-    filetypes = { "fortran" },
+    filetypes = { "fortran", "Fortran77" },
     settings = {
         notifyInit = true,
         lowercaseIntrinsics = true,
