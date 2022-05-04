@@ -229,6 +229,10 @@ vim.g.edge_better_performance = 1
 vim.cmd([[ colorscheme edge ]])
 -- }}}
 
+--- Python setup {{{
+vim.g.python3_host_prog = '/Users/beps/.virtualenvs/neovim3/bin/python3'
+--}}}
+
 -- hoob3rt/lualine.nvim {{{
 require'lualine'.setup {
     options = {
@@ -358,7 +362,10 @@ vim.api.nvim_set_keymap('n', '<leader>F', ':Neoformat prettier<CR>', {noremap = 
 -- }}}
 
 -- GustavoKatel/sidebar.nvim {{{
-require("sidebar-nvim").setup({})
+require("sidebar-nvim").setup({
+    sections = { "datetime", "git", "symbols", "diagnostics" },
+    hide_statusline = true,
+})
 -- nnoremap <leader>sb <cmd>SidebarNvimToggle<CR>
 vim.api.nvim_set_keymap('n', '<leader>fb', '<cmd>SidebarNvimToggle<CR>', {noremap = true})
 -- }}}
@@ -865,6 +872,8 @@ require'marks'.setup {
 vim.cmd [[
     autocmd FileType lua setlocal foldmethod=marker foldlevel=0 foldcolumn=3
 ]]
+vim.o.foldmethod = 'expr'
+vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
 -- }}}
 
 -- Fortran specific {{{
