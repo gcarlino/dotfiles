@@ -118,6 +118,7 @@ require('packer').startup(function(use)
     use 'chentau/marks.nvim'
     use {"akinsho/toggleterm.nvim"}
     use 'tpope/vim-commentary'
+    use 'jiangmiao/auto-pairs'
     -- use 'tpope/vim-unimpaired'
     -- use 'sbdchd/neoformat'
     use 'lukas-reineke/indent-blankline.nvim'
@@ -125,7 +126,7 @@ require('packer').startup(function(use)
     use 'adamheins/vim-highlight-match-under-cursor'
     use 'tpope/vim-surround'
     -- use 'tjdevries/astronauta.nvim'
-    use 'GustavoKatel/sidebar.nvim'
+    use 'sidebar-nvim/sidebar.nvim'
     use 'https://github.com/godlygeek/tabular'
 
     -- Mac specific
