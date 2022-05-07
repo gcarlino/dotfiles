@@ -212,7 +212,7 @@ vim.api.nvim_create_autocmd({"VimEnter", "BufEnter", "InsertLeave"}, {
 
 -- Mac specific {{{
 if vim.fn.has('mac') == 1 then
-    vim.api.nvim_set_keymap('n', '<leader>k', ':silent !open -a "Marked 2.app" %<CR>', {silent = true})
+    vim.api.nvim_set_keymap('n', '<leader>gm', ':silent !open -a "Marked 2.app" %<CR>', {silent = true})
     vim.api.nvim_set_keymap('n', '<leader>d', '<Plug>DashSearch', {silent = true})
 end
 -- }}}
@@ -872,8 +872,8 @@ require'marks'.setup {
 vim.cmd [[
     autocmd FileType lua setlocal foldmethod=marker foldlevel=0 foldcolumn=3
 ]]
-vim.o.foldmethod = 'expr'
-vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.wo.foldmethod = 'expr'
+vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
 -- }}}
 
 -- Fortran specific {{{
