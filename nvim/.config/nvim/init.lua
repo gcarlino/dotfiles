@@ -39,6 +39,7 @@ vim.opt.undofile = true
 vim.api.nvim_set_option("clipboard","unnamed")
 -- }}}
 
+
 -- Plugins {{{
 
 -- Install packer
@@ -51,17 +52,22 @@ require('packer').startup(function(use)
     -- Package manager
     use 'wbthomason/packer.nvim'
 
+    -- Tree-sitter
+    use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
+    use 'nvim-treesitter/nvim-treesitter-textobjects'
+    use 'nvim-treesitter/playground'
+
     -- LSP
     -- Installati a mano i server di:
-    --   R:       install.packages("languageserver")
+    --   R       install.packages("languageserver")
     --   Python:  npm install -g pyright / pip install pyright
     --   Fortran: pip install -U fortran-language-server
-    --   HTML:    npm install -g vscode-langservers-extracted
-    --   YAML:    brew install yaml-language-server
-    --   BASH:    brew install bash-language-server
-    --   LUA:     brew install lua-language-server
-    --   LATEX:   brew install texlab
-    --   cmake:   pip3 install cmake-language-server
+    --   HTML    npm install -g vscode-langservers-extracted
+    --   YAML    brew install yaml-language-server
+    --   BASH    brew install bash-language-server
+    --   LUA     brew install lua-language-server
+    --   LATEX   brew install texlab
+    --   cmake   pip3 install cmake-language-server
     use 'neovim/nvim-lspconfig'
     use 'onsails/lspkind-nvim'
 
@@ -87,9 +93,6 @@ require('packer').startup(function(use)
     use 'kyazdani42/nvim-tree.lua'
     use 'sudormrfbin/cheatsheet.nvim'
 
-    use 'nvim-treesitter/nvim-treesitter'
-
-    use 'simrat39/symbols-outline.nvim'
     -- Status Line
     use {
         'nvim-lualine/lualine.nvim',
@@ -115,10 +118,11 @@ require('packer').startup(function(use)
     use 'https://github.com/sainnhe/edge'
 
     -- Various
+    use 'windwp/nvim-autopairs'
+    use 'simrat39/symbols-outline.nvim'
     use 'chentau/marks.nvim'
     use {"akinsho/toggleterm.nvim"}
     use 'tpope/vim-commentary'
-    use 'jiangmiao/auto-pairs'
     -- use 'tpope/vim-unimpaired'
     -- use 'sbdchd/neoformat'
     use 'lukas-reineke/indent-blankline.nvim'
@@ -147,6 +151,7 @@ vim.api.nvim_create_autocmd('BufWritePost', {
     pattern = 'init.lua'
 })
 -- }}}
+
 
 -- Various {{{
 -- Edit config file
@@ -186,6 +191,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 -- }}}
 
+
 -- listchars {{{
 vim.opt.listchars = {
     tab = '▸ ',
@@ -210,6 +216,7 @@ vim.api.nvim_create_autocmd({"VimEnter", "BufEnter", "InsertLeave"}, {
 })
 -- }}}
 
+
 -- Mac specific {{{
 if vim.fn.has('mac') == 1 then
     vim.api.nvim_set_keymap('n', '<leader>gm', ':silent !open -a "Marked 2.app" %<CR>', {silent = true})
@@ -217,21 +224,82 @@ if vim.fn.has('mac') == 1 then
 end
 -- }}}
 
+
 -- Set colors {{{
 vim.o.termguicolors = true
 
 -- sainnhe/edge
 vim.g.edge_style = 'aura'
 vim.g.edge_enable = 1
--- vim.g.edge_enable_italic = 1
+-- -- vim.g.edge_enable_italic = 1
 vim.g.edge_disable_italic_comment = 1
 vim.g.edge_better_performance = 1
 vim.cmd([[ colorscheme edge ]])
 -- }}}
 
+
 --- Python setup {{{
 vim.g.python3_host_prog = '/Users/beps/.virtualenvs/neovim3/bin/python3'
 --}}}
+
+
+-- Tree-sitter configuration {{{
+-- Parsers must be installed manually via :TSInstall
+require'nvim-treesitter.configs'.setup({
+    highlight = {
+        enable = true, -- false will disable the whole extension
+    },
+    incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = 'gnn',
+      node_incremental = 'grn',
+      scope_incremental = 'grc',
+      node_decremental = 'grm',
+    },
+  },
+  indent = {
+    enable = true,
+  },
+  textobjects = {
+    select = {
+      enable = true,
+      lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
+      keymaps = {
+        -- You can use the capture groups defined in textobjects.scm
+        ['af'] = '@function.outer',
+        ['if'] = '@function.inner',
+        ['ac'] = '@class.outer',
+        ['ic'] = '@class.inner',
+      },
+    },
+    move = {
+      enable = false,
+      set_jumps = true, -- whether to set jumps in the jumplist
+      goto_next_start = {
+        [']m'] = '@function.outer',
+        [']]'] = '@class.outer',
+      },
+      goto_next_end = {
+        [']M'] = '@function.outer',
+        [']['] = '@class.outer',
+      },
+      goto_previous_start = {
+        ['[m'] = '@function.outer',
+        ['[['] = '@class.outer',
+      },
+      goto_previous_end = {
+        ['[M'] = '@function.outer',
+        ['[]'] = '@class.outer',
+      },
+    },
+  },
+})
+
+vim.wo.foldmethod = 'expr'
+vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
+-- }}}
+
 
 -- hoob3rt/lualine.nvim {{{
 require'lualine'.setup {
@@ -241,6 +309,7 @@ require'lualine'.setup {
     extensions = {'nvim-tree', 'toggleterm'}
 }
 -- }}}
+
 
 -- Toggle color {{{
 vim.api.nvim_set_keymap("n", "<leader>b", "", {
@@ -257,13 +326,15 @@ vim.api.nvim_set_keymap("n", "<leader>b", "", {
 })
 -- }}}
 
+
 -- lukas-reineke/indent-blankline.nvim {{{
 require("indent_blankline").setup {
     show_current_context = true,
-    show_current_context_start = true,
+    -- show_current_context_start = true,
     show_end_of_line = true,
 }
 -- }}}
+
 
 -- lewis6991/gitsigns.nvim {{{
 require('gitsigns').setup {
@@ -310,6 +381,7 @@ require('gitsigns').setup {
   },
 }
 -- }}}
+
 
 -- szw/vim-maximizer {{{
 vim.api.nvim_set_keymap('n', '<leader>m', ':MaximizerToggle!<CR>', {noremap = true})
@@ -374,6 +446,13 @@ vim.api.nvim_set_keymap('n', '<leader>fb', '<cmd>SidebarNvimToggle<CR>', {norema
 
 local actions = require('telescope.actions')
 
+-- nvim-telescope/telescope-fzf-native.nvim
+require('telescope').load_extension('fzf')
+-- nvim-telescope/telescope-file-browser.nvim
+require("telescope").load_extension "file_browser"
+-- Integration for vimspector with telescope
+require("telescope").load_extension("vimspector")
+
 require('telescope').setup {
     defaults = {
         color_devicons = true,
@@ -399,14 +478,12 @@ require('telescope').setup {
 		    show_last_used = true,
 	    },
     },
+    extensions = {
+        file_browser = {
+            respect_gitignore = false,
+        }
+    }
 }
-
--- nvim-telescope/telescope-fzf-native.nvim
-require('telescope').load_extension('fzf')
--- nvim-telescope/telescope-file-browser.nvim
-require("telescope").load_extension "file_browser"
--- Integration for vimspector with telescope
-require("telescope").load_extension("vimspector")
 
 vim.api.nvim_set_keymap('n', '<leader>ss', "<cmd>lua require('telescope').extensions.file_browser.file_browser()<CR>", opts)
 vim.api.nvim_set_keymap('n', '<leader><space>', [[<cmd>lua require('telescope.builtin').buffers()<CR>]], opts)
@@ -468,62 +545,9 @@ vim.api.nvim_set_keymap('n', '<leader>ed', "", {
 -- Telescope LSP commands
 
 -- nnoremap <leader>ls <cmd>lua require('telescope.builtin').lsp_references()<cr>
-vim.api.nvim_set_keymap('n', '<leader>ls', [[<cmd>lua require('telescope.builtin').lsp_references()<cr>]], {noremap = true})
+-- vim.api.nvim_set_keymap('n', '<leader>ls', [[<cmd>lua require('telescope.builtin').lsp_references()<cr>]], {noremap = true})
 -- }}}
 
--- Treesitter configuration {{{
--- Parsers must be installed manually via :TSInstall
-require('nvim-treesitter.configs').setup {
-  highlight = {
-    enable = true, -- false will disable the whole extension
-  },
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = 'gnn',
-      node_incremental = 'grn',
-      scope_incremental = 'grc',
-      node_decremental = 'grm',
-    },
-  },
-  indent = {
-    enable = true,
-  },
-  textobjects = {
-    select = {
-      enable = true,
-      lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
-      keymaps = {
-        -- You can use the capture groups defined in textobjects.scm
-        ['af'] = '@function.outer',
-        ['if'] = '@function.inner',
-        ['ac'] = '@class.outer',
-        ['ic'] = '@class.inner',
-      },
-    },
-    move = {
-      enable = true,
-      set_jumps = true, -- whether to set jumps in the jumplist
-      goto_next_start = {
-        [']m'] = '@function.outer',
-        [']]'] = '@class.outer',
-      },
-      goto_next_end = {
-        [']M'] = '@function.outer',
-        [']['] = '@class.outer',
-      },
-      goto_previous_start = {
-        ['[m'] = '@function.outer',
-        ['[['] = '@class.outer',
-      },
-      goto_previous_end = {
-        ['[M'] = '@function.outer',
-        ['[]'] = '@class.outer',
-      },
-    },
-  },
-}
--- }}}
 
 -- neovi/nvim-lspconfig {{{
 local nvim_lsp = require 'lspconfig'
@@ -635,8 +659,8 @@ cmp.setup({
     },
 
     window = {
-        -- completion = cmp.config.window.bordered(),
-        -- documentation = cmp.config.window.bordered(),
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
     },
 
     mapping = {
@@ -715,9 +739,11 @@ cmp.setup.cmdline(':', {
     })
 })
 
+
 -- Load snippets
 require('luasnip.loaders.from_vscode').lazy_load()
 -- }}}
+
 
 -- kyazdani42/nvim-tree.lua {{{
 local nvim_tree = require 'nvim-tree'
@@ -726,6 +752,7 @@ vim.api.nvim_set_keymap('n', '<C-n>', ':NvimTreeToggle<CR>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<leader>r', ':NvimTreeRefresh<CR>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<leader>n', ':NvimTreeFindFile<CR>', {noremap = true})
 -- }}}
+
 
 -- sindrets/diffview {{{
 local cb = require'diffview.config'.diffview_callback
@@ -834,6 +861,7 @@ require'diffview'.setup {
 }
 -- }}}
 
+
 -- chentau/marks.nvim {{{
 require'marks'.setup {
   -- whether to map keybinds or not. default true
@@ -868,13 +896,13 @@ require'marks'.setup {
 }
 -- }}}
 
+
 -- Fold method for init.lua {{{
 vim.cmd [[
     autocmd FileType lua setlocal foldmethod=marker foldlevel=0 foldcolumn=3
 ]]
-vim.wo.foldmethod = 'expr'
-vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
 -- }}}
+
 
 -- Fortran specific {{{
 vim.cmd([[
@@ -904,6 +932,7 @@ vim.cmd([[
 vim.api.nvim_set_keymap('n', '<leader>ff', ':set syntax=fortran<CR>', opts)
 -- }}}
 
+
 -- jalvesazq/Nvim-R {{{
 vim.cmd([[
     let R_assign_map = '<M-->'
@@ -912,4 +941,9 @@ vim.cmd([[
     set nofoldenable
     autocmd VimLeave * if exists("g:SendCmdToR") && string(g:SendCmdToR) != "function('SendCmdToR_fake')" | call RQuit("nosave") | endif
 ]])
+-- }}}
+
+
+-- windwp/nvim-autopairs {{{
+require('nvim-autopairs').setup({})
 -- }}}
