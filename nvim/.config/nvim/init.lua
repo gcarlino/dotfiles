@@ -119,6 +119,9 @@ require('packer').startup(function(use)
     -- Color schemes
     use 'https://github.com/sainnhe/edge'
 
+    -- Tabline
+    use { 'alvarosevilla95/luatab.nvim', requires='kyazdani42/nvim-web-devicons' }
+
     -- Various
     use 'szw/vim-maximizer'
     use 'windwp/nvim-autopairs'
@@ -240,6 +243,10 @@ vim.g.edge_better_performance = 1
 vim.cmd([[ colorscheme edge ]])
 -- }}}
 
+
+-- alvarosevilla95/luatab.nvim {{{
+require('luatab').setup{}
+-- }}}
 
 -- Tree-sitter configuration {{{
 -- Parsers must be installed manually via :TSInstall
@@ -1004,5 +1011,6 @@ end
 require("nvim-dap-virtual-text").setup({
     virt_text_win_col = 80,
 })
-
 -- }}}
+
+
