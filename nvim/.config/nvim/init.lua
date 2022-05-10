@@ -113,12 +113,14 @@ require('packer').startup(function(use)
     use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
     use 'mfussenegger/nvim-dap-python'
     use 'theHamsta/nvim-dap-virtual-text'
-    use 'szw/vim-maximizer'
+    use 'nvim-telescope/telescope-dap.nvim'
+
 
     -- Color schemes
     use 'https://github.com/sainnhe/edge'
 
     -- Various
+    use 'szw/vim-maximizer'
     use 'windwp/nvim-autopairs'
     use 'simrat39/symbols-outline.nvim'
     use 'chentau/marks.nvim'
@@ -932,8 +934,24 @@ require('nvim-autopairs').setup({})
 
 -- DAP {{{
 
+local dap, dapui = require("dap"), require("dapui")
+
 -- Load configurations inside ./.nvim-dap/launch.json
 require('dap.ext.vscode').load_launchjs('./.nvim-dap/launch.json')
+
+--- Python DAP setup
+require('dap-python').setup('~/.virtualenvs/debugpy/bin/python')
+vim.g.python3_host_prog = '/Users/beps/.virtualenvs/debugpy/bin/python3'
+
+-- C/C++/Rust (via vscode-cpptools)
+dap.adapters.fortran = {
+    id = 'cppdbg',
+    type = 'executable',
+    command = '/home/carlino/.vscode-server/extensions/ms-vscode.cpptools-1.9.7/debugAdapters/bin/OpenDebugAD7'
+}
+
+-- Enable dap in telescope
+require('telescope').load_extension('dap')
 
 -- nvim-dap-ui
 require("dapui").setup({
@@ -972,7 +990,6 @@ vim.api.nvim_set_keymap('n', '<leader>e', '<Cmd>lua require("dapui").eval(nil, {
 vim.api.nvim_set_keymap('x', '<leader>e', '<Cmd>lua require("dapui").eval(nil, {enter = true, context = "repl"})<CR>', opts)
 
 -- Use nvim-dap events to open and close the windows automatically
-local dap, dapui = require("dap"), require("dapui")
 dap.listeners.after.event_initialized["dapui_config"] = function()
     dapui.open()
 end
@@ -983,22 +1000,9 @@ dap.listeners.before.event_exited["dapui_config"] = function()
     dapui.close()
 end
 
-
 -- DAP virtual text
 require("nvim-dap-virtual-text").setup({
     virt_text_win_col = 80,
 })
 
-
---- Python DAP setup
-require('dap-python').setup('~/.virtualenvs/debugpy/bin/python')
-vim.g.python3_host_prog = '/Users/beps/.virtualenvs/debugpy/bin/python3'
-
--- TODO: C/C++/Rust (via vscode-cpptools)
--- local dap = require('dap')
--- dap.adapters.cppdbg = {
---   id = 'cppdbg',
---   type = 'executable',
---   command = '/absolute/path/to/cpptools/extension/debugAdapters/bin/OpenDebugAD7',
--- }
---}}}
+-- }}}
