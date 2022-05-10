@@ -110,8 +110,9 @@ require('packer').startup(function(use)
     use 'jalvesaq/Nvim-R'
 
     -- Debug
-    use 'puremourning/vimspector'
-    use 'nvim-telescope/telescope-vimspector.nvim'
+    use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
+    use 'mfussenegger/nvim-dap-python'
+    use 'theHamsta/nvim-dap-virtual-text'
     use 'szw/vim-maximizer'
 
     -- Color schemes
@@ -236,11 +237,6 @@ vim.g.edge_disable_italic_comment = 1
 vim.g.edge_better_performance = 1
 vim.cmd([[ colorscheme edge ]])
 -- }}}
-
-
---- Python setup {{{
-vim.g.python3_host_prog = '/Users/beps/.virtualenvs/neovim3/bin/python3'
---}}}
 
 
 -- Tree-sitter configuration {{{
@@ -388,31 +384,12 @@ vim.api.nvim_set_keymap('n', '<leader>m', ':MaximizerToggle!<CR>', {noremap = tr
 vim.api.nvim_set_keymap('n', '<C-W><C-m>', ':MaximizerToggle!<CR>', {noremap = true})
 -- }}}
 
--- puremourning/vimspector {{{
-vim.g.vimspector_enable_mappings = 'HUMAN'
-vim.g.vimspector_variables_display_mode = 'full'
--- vim.api.nvim_set_keymap('n', '<leader>dd', ':call vimspector#Launch()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<leader>dd', ':Telescope vimspector configurations<CR>', opts)
-vim.api.nvim_set_keymap('n', '<leader>dx', ':call vimspector#Reset()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<leader>de', ':VimspectorEval', opts)
-vim.api.nvim_set_keymap('n', '<leader>dw', ':VimspectorWatch', opts)
-vim.api.nvim_set_keymap('n', '<leader>do', ':VimspectorShowOutput', opts)
-
-vim.api.nvim_set_keymap('n', '<leader>dj', ':VimSpectorStepInto', opts)
-vim.api.nvim_set_keymap('n', '<leader>dk', ':VimSpectorStepOut', opts)
-vim.api.nvim_set_keymap('n', '<leader>dl', ':VimSpectorStepOver', opts)
-
--- mnemonic 'di' = 'debug inspect' (pick your own, if you prefer!)
--- for normal mode - the word under the cursor
--- for visual mode, the visually selected text
-vim.api.nvim_set_keymap('n', '<leader>i', '<Plug>VimspectorBalloonEval', opts)
-vim.api.nvim_set_keymap('x', '<leader>i', '<Plug>VimspectorBalloonEval', opts)
--- }}}
 
 -- tpope/vim-commentary {{{
 vim.api.nvim_set_keymap('n', '<leader>/', ':Commentary<CR>', {noremap = true})
 vim.api.nvim_set_keymap('v', '<leader>/', ':Commentary<CR>', {noremap = true})
 -- }}}
+
 
 -- kassio/neoterm {{{
 vim.g.neoterm_default_mod = 'belowright'
@@ -423,15 +400,18 @@ vim.api.nvim_set_keymap('i', '<c-q>', '<Esc>:Ttoggle<CR>', {noremap = true})
 vim.api.nvim_set_keymap('t', '<c-q>', '<c-\\><c-n>:Ttoggle<CR>', {noremap = true})
 -- }}}
 
+
 -- use akinsho/toggleterm.nvim {{{
 require("toggleterm").setup{
   open_mapping = [[<c-q>]],
 }
 -- }}}
 
+
 -- sbdchd/neoformat {{{
 vim.api.nvim_set_keymap('n', '<leader>F', ':Neoformat prettier<CR>', {noremap = true})
 -- }}}
+
 
 -- GustavoKatel/sidebar.nvim {{{
 require("sidebar-nvim").setup({
@@ -442,8 +422,8 @@ require("sidebar-nvim").setup({
 vim.api.nvim_set_keymap('n', '<leader>fb', '<cmd>SidebarNvimToggle<CR>', {noremap = true})
 -- }}}
 
--- nvim-telescope/telescope {{{
 
+-- nvim-telescope/telescope {{{
 local actions = require('telescope.actions')
 
 -- nvim-telescope/telescope-fzf-native.nvim
@@ -451,7 +431,7 @@ require('telescope').load_extension('fzf')
 -- nvim-telescope/telescope-file-browser.nvim
 require("telescope").load_extension "file_browser"
 -- Integration for vimspector with telescope
-require("telescope").load_extension("vimspector")
+-- require("telescope").load_extension("vimspector")
 
 require('telescope').setup {
     defaults = {
@@ -638,6 +618,7 @@ require('lspconfig').sumneko_lua.setup {
   },
 }
 -- }}}
+
 
 -- hrsh7th/nvim-cmp {{{
 local lspkind = require('lspkind')
@@ -947,3 +928,77 @@ vim.cmd([[
 -- windwp/nvim-autopairs {{{
 require('nvim-autopairs').setup({})
 -- }}}
+
+
+-- DAP {{{
+
+-- Load configurations inside ./.nvim-dap/launch.json
+require('dap.ext.vscode').load_launchjs('./.nvim-dap/launch.json')
+
+-- nvim-dap-ui
+require("dapui").setup({
+    floating = {
+        max_height = 0.85,
+        max_width = 0.85,
+    }
+})
+
+-- Diasbale statusline
+-- vim.cmd([[
+-- autocmd FileType dapui* set statusline=\ 
+-- autocmd FileType dap-repl set statusline=\ 
+-- ]])
+
+-- key mappings
+vim.api.nvim_set_keymap('n', '<leader>dd', '<Cmd>lua require("dap").continue()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<F5>', '<Cmd>lua require("dap").continue()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<F4>', '<Cmd>lua require("dap").run_last()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<F3>', '<Cmd>lua require("dap").pause()<CR>', opts)
+
+vim.api.nvim_set_keymap('n', '<F10>', '<Cmd>lua require("dap").step_over()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<F11>', '<Cmd>lua require("dap").step_into()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<F12>', '<Cmd>lua require("dap").step_out()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<F8>', '<Cmd>lua require("dap").run_to_cursor()<CR>', opts)
+
+vim.api.nvim_set_keymap('n', '<leader>dx', '<Cmd>lua require("dap").disconnect()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<leader>dr', '<Cmd>lua require("dap").repl.open()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<F9>', '<Cmd>lua require("dap").toggle_breakpoint()<CR>', opts)
+
+vim.fn.sign_define('DapBreakpoint', {text='🛑', texthl='', linehl='', numhl=''})
+
+-- hover
+-- vim.api.nvim_set_keymap('n', '<leader>f', '<Cmd>lua require("dap.ui.widgets").hover()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<leader>e', '<Cmd>lua require("dapui").eval(nil, {enter = true, context = "repl"})<CR>', opts)
+vim.api.nvim_set_keymap('x', '<leader>e', '<Cmd>lua require("dapui").eval(nil, {enter = true, context = "repl"})<CR>', opts)
+
+-- Use nvim-dap events to open and close the windows automatically
+local dap, dapui = require("dap"), require("dapui")
+dap.listeners.after.event_initialized["dapui_config"] = function()
+    dapui.open()
+end
+dap.listeners.before.event_terminated["dapui_config"] = function()
+    dapui.close()
+end
+dap.listeners.before.event_exited["dapui_config"] = function()
+    dapui.close()
+end
+
+
+-- DAP virtual text
+require("nvim-dap-virtual-text").setup({
+    virt_text_win_col = 80,
+})
+
+
+--- Python DAP setup
+require('dap-python').setup('~/.virtualenvs/debugpy/bin/python')
+vim.g.python3_host_prog = '/Users/beps/.virtualenvs/debugpy/bin/python3'
+
+-- TODO: C/C++/Rust (via vscode-cpptools)
+-- local dap = require('dap')
+-- dap.adapters.cppdbg = {
+--   id = 'cppdbg',
+--   type = 'executable',
+--   command = '/absolute/path/to/cpptools/extension/debugAdapters/bin/OpenDebugAD7',
+-- }
+--}}}
