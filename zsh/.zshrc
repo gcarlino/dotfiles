@@ -1,3 +1,7 @@
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:$HOME/.local/bin:${HOME}/node_modules/.bin/:/home/exe64:$PATH
+
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
@@ -28,7 +32,7 @@ DISABLE_AUTO_UPDATE="true"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 COMPLETION_WAITING_DOTS="true"
@@ -171,3 +175,25 @@ export FZF_DEFAULT_COMMAND='fd --type f'
 
 # Default editor
 export EDITOR=vim
+
+# Disable python bytecode files
+export PYTHONDONTWRITEBYTECODE=1
+
+#
+# # Code Saturne
+# export cspath=/home/carlino/Code_Saturne/6.1.0/code_saturne-6.1.0/arch/Linux_x86_64/bin
+# alias code_saturne="$cspath/code_saturne"
+
+# nvidia HPC SDK environmental setup
+export NVARCH=`uname -s`_`uname -m`
+export NVCOMPILERS=/opt/nvidia/hpc_sdk
+export MANPATH=$MANPATH:$NVCOMPILERS/$NVARCH/22.3/compilers/man
+export PATH=$NVCOMPILERS/$NVARCH/22.3/compilers/bin:$PATH
+
+# export LD_LIBRARY_PATH=/usr/local/cuda-11.5/lib64\
+#     ${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+
+# Permanently change umask
+umask 002
+
+alias luamake=/home/carlino/lua-language-server/3rd/luamake/luamake
