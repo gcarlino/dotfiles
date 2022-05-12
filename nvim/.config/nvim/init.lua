@@ -105,6 +105,7 @@ require('packer').startup(function(use)
     use { 'lewis6991/gitsigns.nvim', requires = 'nvim-lua/plenary.nvim' }
     use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
     -- use 'airblade/vim-gitgutter'
+    use 'f-person/git-blame.nvim'
 
     -- R
     use 'jalvesaq/Nvim-R'
@@ -247,6 +248,7 @@ vim.cmd([[ colorscheme edge ]])
 -- alvarosevilla95/luatab.nvim {{{
 require('luatab').setup{}
 -- }}}
+
 
 -- Tree-sitter configuration {{{
 -- Parsers must be installed manually via :TSInstall
@@ -439,8 +441,6 @@ local actions = require('telescope.actions')
 require('telescope').load_extension('fzf')
 -- nvim-telescope/telescope-file-browser.nvim
 require("telescope").load_extension "file_browser"
--- Integration for vimspector with telescope
--- require("telescope").load_extension("vimspector")
 
 require('telescope').setup {
     defaults = {
@@ -989,7 +989,7 @@ vim.api.nvim_set_keymap('n', '<leader>dx', '<Cmd>lua require("dap").disconnect()
 vim.api.nvim_set_keymap('n', '<leader>dr', '<Cmd>lua require("dap").repl.open()<CR>', opts)
 vim.api.nvim_set_keymap('n', '<F9>', '<Cmd>lua require("dap").toggle_breakpoint()<CR>', opts)
 
-vim.fn.sign_define('DapBreakpoint', {text='🛑', texthl='', linehl='', numhl=''})
+vim.fn.sign_define('DapBreakpoint', {text='🔴', texthl='', linehl='', numhl=''})
 
 -- hover
 -- vim.api.nvim_set_keymap('n', '<leader>f', '<Cmd>lua require("dap.ui.widgets").hover()<CR>', opts)
@@ -1014,3 +1014,7 @@ require("nvim-dap-virtual-text").setup({
 -- }}}
 
 
+-- f-person/git-blame.nvim {{{
+-- Disable by default. Toggle with :GitBlameToggle
+vim.g.gitblame_enabled = 0
+-- }}}
