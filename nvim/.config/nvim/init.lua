@@ -948,7 +948,7 @@ require('dap.ext.vscode').load_launchjs('./.nvim-dap/launch.json')
 
 --- Python DAP setup
 require('dap-python').setup('~/.virtualenvs/debugpy/bin/python')
-vim.g.python3_host_prog = '/Users/beps/.virtualenvs/debugpy/bin/python3'
+vim.g.python3_host_prog = '~/.virtualenvs/debugpy/bin/python3'
 
 -- C/C++/Rust (via vscode-cpptools)
 dap.adapters.fortran = {
