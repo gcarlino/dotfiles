@@ -1,7 +1,3 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-export PATH=$HOME/bin:$HOME/.local/bin:${HOME}/node_modules/.bin/:/home/exe64:$PATH
-
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
@@ -71,14 +67,15 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
+# Get OS
+OS="$(uname -s)"
+
+
 export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -103,7 +100,9 @@ alias tree='tree -C'
 # alias cat='bat --paging=never'
 
 # kitty ssh
-alias s='kitty +kitten ssh'
+if [[ $OS == "Darwin" ]] ; then
+    alias s='kitty +kitten ssh'
+fi
 
 
 # Remove unused docker images:
@@ -111,19 +110,22 @@ alias docker-clean-images='docker images | grep none | awk "{print \$3}" | xargs
 alias docker-clean-containers='docker ps -a | grep Exited | awk "{print \$1}" | xargs docker rm'
 
 # homebrew path
-export PATH=/usr/local/sbin:$PATH
+# export PATH=/usr/local/sbin:$PATH
 
-# Personal bin
-export PATH=~/bin:~/.cargo/bin:$PATH
-export PATH=$PATH:/usr/local/gfortran/bin
 
 # Disable homebrew analytics
 export HOMEBREW_NO_ANALYTICS=1
 
-# Disable python bytecode files
-# export PYTHONDONTWRITEBYTECODE=1
+# System dependent PATH
+if [[ $OS == "Darwin" ]] {
+    # Personal bin
+    export PATH=~/bin:~/.cargo/bin:$PATH
+    export PATH=$PATH:/usr/local/gfortran/bin
+} elif [[ $OS == "Linux" ]] {
+    export PATH=$HOME/bin:$HOME/.local/bin:${HOME}/node_modules/.bin/:/home/exe64:$PATH
+} fi
 
-# #export PATH="/usr/local/opt/gdal2-python/bin:$PATH"
+# export PATH="/usr/local/opt/gdal2-python/bin:$PATH"
 # export GDAL_DRIVER_PATH=/usr/local/lib/gdalplugins
 # export LDFLAGS="-L/usr/local/opt/gdal2/lib"
 # export CPPFLAGS="-I/usr/local/opt/gdal2/include"
@@ -136,7 +138,8 @@ export HOMEBREW_NO_ANALYTICS=1
 
 # PATH to R personal library
 #export R_LIBS_USER=$HOME/Library/R/4.x/library
-#
+
+
 # Add hostname to prompt
 PROMPT="%{$fg[green]%}%m%{$reset_color%} ${PROMPT}"
 
@@ -166,7 +169,7 @@ bindkey '^ ' autosuggest-execute
 # fi
 
 # bat
-export BAT_THEME=GitHub
+# export BAT_THEME=GitHub
 
 # FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -179,21 +182,27 @@ export EDITOR=vim
 # Disable python bytecode files
 export PYTHONDONTWRITEBYTECODE=1
 
-#
-# # Code Saturne
-# export cspath=/home/carlino/Code_Saturne/6.1.0/code_saturne-6.1.0/arch/Linux_x86_64/bin
-# alias code_saturne="$cspath/code_saturne"
 
-# nvidia HPC SDK environmental setup
-export NVARCH=`uname -s`_`uname -m`
-export NVCOMPILERS=/opt/nvidia/hpc_sdk
-export MANPATH=$MANPATH:$NVCOMPILERS/$NVARCH/22.3/compilers/man
-export PATH=$NVCOMPILERS/$NVARCH/22.3/compilers/bin:$PATH
+if [[ $OS == "Linux" ]] ; then
+    # Compilation flags
+    # export ARCHFLAGS="-arch x86_64"
 
-# export LD_LIBRARY_PATH=/usr/local/cuda-11.5/lib64\
-#     ${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+    #
+    # # Code Saturne
+    # export cspath=/home/carlino/Code_Saturne/6.1.0/code_saturne-6.1.0/arch/Linux_x86_64/bin
+    # alias code_saturne="$cspath/code_saturne"
 
-# Permanently change umask
-umask 002
+    # nvidia HPC SDK environmental setup
+    export NVARCH=`uname -s`_`uname -m`
+    export NVCOMPILERS=/opt/nvidia/hpc_sdk
+    export MANPATH=$MANPATH:$NVCOMPILERS/$NVARCH/22.3/compilers/man
+    export PATH=$NVCOMPILERS/$NVARCH/22.3/compilers/bin:$PATH
 
-alias luamake=/home/carlino/lua-language-server/3rd/luamake/luamake
+    # export LD_LIBRARY_PATH=/usr/local/cuda-11.5/lib64\
+    #     ${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+
+    # Permanently change umask
+    umask 002
+
+    alias luamake=/home/carlino/lua-language-server/3rd/luamake/luamake
+fi
