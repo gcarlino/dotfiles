@@ -436,20 +436,16 @@ vim.api.nvim_set_keymap('n', '<leader>fb', '<cmd>SidebarNvimToggle<CR>', {norema
 
 -- nvim-telescope/telescope {{{
 local actions = require('telescope.actions')
-
--- nvim-telescope/telescope-fzf-native.nvim
-require('telescope').load_extension('fzf')
--- nvim-telescope/telescope-file-browser.nvim
-require("telescope").load_extension "file_browser"
+local action_layout = require('telescope.actions.layout')
 
 require('telescope').setup {
     defaults = {
         color_devicons = true,
-        -- initial_mode = "insert",
+    --     -- initial_mode = "insert",
         mappings = {
             i = {
                 -- ["<c-x>"] = false,
-                -- ["<C-h>"] = "which_key",
+                ["<C-/>"] = "which_key",
                 ["<esc>"] = actions.close,
             },
         }
@@ -457,15 +453,15 @@ require('telescope').setup {
     pickers = {
 	    git_files = {
 		    shorten_path = true,
-		    layout_strategy = "horizontal",
-		    layout_options = {
-			    preview_width = 0.75,
-		    },
+		    -- layout_strategy = "horizontal",
+		    -- layout_options = {
+			    -- preview_width = 0.75,
+		    -- },
 	    },
-	    buffers = {
-		    show_all_buffers = true,
-		    show_last_used = true,
-	    },
+	    -- buffers = {
+		    -- show_all_buffers = true,
+		    -- show_last_used = true,
+	    -- },
     },
     extensions = {
         file_browser = {
@@ -473,6 +469,13 @@ require('telescope').setup {
         }
     }
 }
+
+-- nvim-telescope/telescope-fzf-native.nvim
+require('telescope').load_extension('fzf')
+-- nvim-telescope/telescope-file-browser.nvim
+require("telescope").load_extension "file_browser"
+
+vim.api.nvim_set_keymap('n', '<leader>p', [[<cmd>lua require('telescope.builtin').commands()<CR>]], opts)
 
 vim.api.nvim_set_keymap('n', '<leader>ss', "<cmd>lua require('telescope').extensions.file_browser.file_browser()<CR>", opts)
 vim.api.nvim_set_keymap('n', '<leader><space>', [[<cmd>lua require('telescope.builtin').buffers()<CR>]], opts)
@@ -948,7 +951,7 @@ require('dap.ext.vscode').load_launchjs('./.nvim-dap/launch.json')
 
 --- Python DAP setup
 require('dap-python').setup('~/.virtualenvs/debugpy/bin/python')
-vim.g.python3_host_prog = '/Users/beps/.virtualenvs/debugpy/bin/python3'
+vim.g.python3_host_prog = '~/.virtualenvs/debugpy/bin/python3'
 
 -- C/C++/Rust (via vscode-cpptools)
 dap.adapters.fortran = {
