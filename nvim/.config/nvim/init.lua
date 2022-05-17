@@ -127,7 +127,7 @@ require('packer').startup(function(use)
     use 'szw/vim-maximizer'
     use 'windwp/nvim-autopairs'
     use 'simrat39/symbols-outline.nvim'
-    use 'chentau/marks.nvim'
+    use 'chentoast/marks.nvim'
     use {"akinsho/toggleterm.nvim"}
     use 'tpope/vim-commentary'
     -- use 'tpope/vim-unimpaired'
