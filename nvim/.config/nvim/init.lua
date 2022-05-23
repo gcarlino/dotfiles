@@ -37,6 +37,11 @@ vim.opt.undofile = false
 
 -- Copy to system clipboard
 vim.api.nvim_set_option("clipboard", "unnamed")
+--
+--
+vim.g.do_filetype_lua = 1
+vim.g.did_load_filetypes = 0
+-- let g:do_filetype_lua = 1 and let g:did_load_filetypes = 0 
 -- }}}
 
 
@@ -227,7 +232,7 @@ vim.api.nvim_create_autocmd({ "VimEnter", "BufEnter", "InsertLeave" }, {
 -- Mac specific {{{
 if vim.fn.has('mac') == 1 then
     vim.api.nvim_set_keymap('n', '<leader>gm', ':silent !open -a "Marked 2.app" %<CR>', { silent = true })
-    vim.api.nvim_set_keymap('n', '<leader>d', '<Plug>DashSearch', { silent = true })
+    vim.api.nvim_set_keymap('n', '<leader>D', '<Plug>DashSearch', { silent = true })
 end
 -- }}}
 
@@ -573,8 +578,10 @@ local on_attach = function(_, bufnr)
 end
 
 -- nvim-cmp supports additional completion capabilities
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+-- local capabilities = vim.lsp.protocol.make_client_capabilities()
+-- capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 -- Enable the following language servers
 local servers = { 'pyright', 'html', 'r_language_server', 'yamlls', 'bashls', 'texlab', 'cmake' }
@@ -644,6 +651,9 @@ local has_words_before = function()
     return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
+-- set completeopt=menu,menuone,noselect
+vim.opt.completeopt = 'menu,menuone,noselect'
+
 local luasnip = require('luasnip')
 local cmp = require('cmp')
 cmp.setup({
@@ -655,22 +665,15 @@ cmp.setup({
     },
 
     window = {
-        completion = cmp.config.window.bordered(),
-        documentation = cmp.config.window.bordered(),
+        -- completion = cmp.config.window.bordered(),
+        -- documentation = cmp.config.window.bordered(),
     },
 
-    mapping = {
-        ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-        ["<C-u>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-        ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-        ["<C-y"] = cmp.mapping.confirm {
-            behavior = cmp.ConfirmBehavior.Insert,
-            select = true,
-        },
-        ['<C-e>'] = cmp.mapping({
-            i = cmp.mapping.abort(),
-            c = cmp.mapping.close(),
-        }),
+    mapping = cmp.mapping.preset.insert({
+        ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+        ["<C-f>"] = cmp.mapping.scroll_docs(4),
+        ["<C-Space>"] = cmp.mapping.complete({}),
+        ["<C-e>"] = cmp.mapping.abort(),
         ['<CR>'] = cmp.mapping.confirm({ select = true }),
         ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
@@ -682,7 +685,7 @@ cmp.setup({
             else
                 fallback()
             end
-        end, { "i", "s" }),
+        end),
         ["<S-Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_prev_item()
@@ -691,8 +694,8 @@ cmp.setup({
             else
                 fallback()
             end
-        end, { "i", "s" }),
-    },
+        end),
+    }),
 
     sources = cmp.config.sources({
         { name = "nvim_lsp" },
@@ -708,13 +711,13 @@ cmp.setup({
         format = lspkind.cmp_format({
             with_text = true,
             menu = {
-                buffer = "[buf]",
-                nvim_lsp = "[LSP]",
-                nvim_lua = "[lua]",
-                path = "[path]",
-                luasnip = "[snip]",
+                buffer        = "[buf]",
+                nvim_lsp      = "[LSP]",
+                nvim_lua      = "[lua]",
+                path          = "[path]",
+                luasnip       = "[snip]",
                 latex_symbols = "[Latex]",
-                cmdline = "[cmd]",
+                cmdline       = "[cmd]",
             },
         }),
     },
