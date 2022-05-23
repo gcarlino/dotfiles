@@ -786,9 +786,14 @@ require 'marks'.setup {
 
 
 -- Fold method for init.lua {{{
-vim.cmd [[
-    autocmd FileType lua setlocal foldmethod=marker foldlevel=0 foldcolumn=3
-]]
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "lua",
+    callback = function()
+        vim.o.foldmethod = "marker"
+        vim.o.foldlevel = 0
+        vim.opt.foldcolumn = "3"
+    end
+})
 -- }}}
 
 
@@ -867,10 +872,10 @@ require("dapui").setup({
 })
 
 -- Diasbale statusline
--- vim.cmd([[
--- autocmd FileType dapui* set statusline=\
--- autocmd FileType dap-repl set statusline=\
--- ]])
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = {'dap-repl', 'dapui*'},
+    command = "set statusline="
+})
 
 -- key mappings
 vim.api.nvim_set_keymap('n', '<leader>dd', '<Cmd>lua require("dap").continue()<CR>', opts)
