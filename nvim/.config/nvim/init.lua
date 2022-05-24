@@ -425,7 +425,7 @@ require("toggleterm").setup {
 
 
 -- sbdchd/neoformat {{{
-vim.api.nvim_set_keymap('n', '<leader>F', ':Neoformat prettier<CR>', { noremap = true })
+-- vim.api.nvim_set_keymap('n', '<leader>F', ':Neoformat prettier<CR>', { noremap = true })
 -- }}}
 
 
@@ -440,8 +440,8 @@ vim.api.nvim_set_keymap('n', '<leader>fb', '<cmd>SidebarNvimToggle<CR>', { norem
 
 
 -- nvim-telescope/telescope {{{
-local actions = require('telescope.actions')
-local action_layout = require('telescope.actions.layout')
+-- local actions = require('telescope.actions')
+-- local action_layout = require('telescope.actions.layout')
 
 require('telescope').setup {
     defaults = {
@@ -450,8 +450,8 @@ require('telescope').setup {
         mappings = {
             i = {
                 -- ["<c-x>"] = false,
-                ["<C-/>"] = "which_key",
-                ["<esc>"] = actions.close,
+                -- ["<C-/>"] = "which_key",
+                -- ["<esc>"] = actions.close,
             },
         }
     },
@@ -471,6 +471,7 @@ require('telescope').setup {
     extensions = {
         file_browser = {
             respect_gitignore = false,
+            hijack_netrw = true,
         }
     }
 }
@@ -480,26 +481,25 @@ require('telescope').load_extension('fzf')
 -- nvim-telescope/telescope-file-browser.nvim
 require("telescope").load_extension "file_browser"
 
-vim.api.nvim_set_keymap('n', '<leader>p', [[<cmd>lua require('telescope.builtin').commands()<CR>]], opts)
+vim.api.nvim_set_keymap('n', '<leader>p', ':Telescope commands<cr>', opts)
 
-vim.api.nvim_set_keymap('n', '<leader>ss', "<cmd>lua require('telescope').extensions.file_browser.file_browser()<CR>", opts)
-vim.api.nvim_set_keymap('n', '<leader><space>', [[<cmd>lua require('telescope.builtin').buffers()<CR>]], opts)
-vim.api.nvim_set_keymap('n', '<leader>sf', [[<cmd>lua require('telescope.builtin').find_files()<CR>]], opts)
-vim.api.nvim_set_keymap('n', '<leader>sb', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>]], opts)
-vim.api.nvim_set_keymap('n', '<leader>sh', [[<cmd>lua require('telescope.builtin').help_tags()<CR>]], opts)
-vim.api.nvim_set_keymap('n', '<leader>sw', [[<cmd>lua require('telescope.builtin').grep_string()<CR>]], opts)
-vim.api.nvim_set_keymap('n', '<leader>sg', [[<cmd>lua require('telescope.builtin').live_grep()<CR>]], opts)
-vim.api.nvim_set_keymap('n', '<leader>st', [[<cmd>lua require('telescope.builtin').tags()<CR>]], opts)
-vim.api.nvim_set_keymap('n', '<leader>so', [[<cmd>lua require('telescope.builtin').tags{ only_current_buffer = true }<CR>]], opts)
-vim.api.nvim_set_keymap('n', '<leader>?', [[<cmd>lua require('telescope.builtin').oldfiles()<CR>]], opts)
+vim.api.nvim_set_keymap('n', '<leader><space>', ':Telescope buffers<cr>', opts)
+
+vim.api.nvim_set_keymap('n', '<leader>ss', ':Telescope file_browser<cr>', opts)
+vim.api.nvim_set_keymap('n', '<leader>sf', ':Telescope find_files<cr>', opts)
+vim.api.nvim_set_keymap('n', '<leader>sb', ':Telescope current_buffer_fuzzy_find<cr>', opts)
+vim.api.nvim_set_keymap('n', '<leader>sh', ':Telescope help_tags<cr>', opts)
+vim.api.nvim_set_keymap('n', '<leader>sw', ':Telescope grep_string<cr>', opts)
+vim.api.nvim_set_keymap('n', '<leader>sg', ':Telescope live_grep<cr>', opts)
+
+-- vim.api.nvim_set_keymap('n', '<leader>st', [[<cmd>lua require('telescope.builtin').tags()<CR>]], opts)
+-- vim.api.nvim_set_keymap('n', '<leader>so', [[<cmd>lua require('telescope.builtin').tags{ only_current_buffer = true }<CR>]], opts)
+-- vim.api.nvim_set_keymap('n', '<leader>?', [[<cmd>lua require('telescope.builtin').oldfiles()<CR>]], opts)
 
 -- Telescope for git
--- vim.api.nvim_set_keymap('n', '<leader>gf', [[<cmd>lua require('telescope.builtin').git_files()<CR>]], opts)
-vim.api.nvim_set_keymap('n', '<leader>gc', [[<cmd>lua require('telescope.builtin').git_commits()<CR>]], opts)
-vim.api.nvim_set_keymap('n', '<leader>gb', [[<cmd>lua require('telescope.builtin').git_bcommits()<CR>]], opts)
-vim.api.nvim_set_keymap('n', '<leader>gs', [[<cmd>lua require('telescope.builtin').git_status()<CR>]], opts)
-vim.api.nvim_set_keymap('n', '<leader>gh', [[<cmd>lua require('telescope.builtin').git_stash()<CR>]], opts)
-
+vim.api.nvim_set_keymap('n', '<leader>gc', ':Telescope git_commits<cr>', opts)
+vim.api.nvim_set_keymap('n', '<leader>gb', ':Telescope git_bcommits<cr>', opts)
+vim.api.nvim_set_keymap('n', '<leader>gs', ':Telescope git_status<cr>', opts)
 
 -- Search for Simularia notes
 if vim.fn.has("mac") == 1 then
