@@ -786,14 +786,14 @@ require('nvim-autopairs').setup({})
 
 
 -- DAP {{{
-
-local dap, dapui = require("dap"), require("dapui")
+local dap = require("dap")
+local dapui = require("dapui")
 
 -- Load configurations inside ./.nvim-dap/launch.json
 require('dap.ext.vscode').load_launchjs('./.nvim-dap/launch.json')
 
 --- Python DAP setup
-require('dap-python').setup('~/.virtualenvs/debugpy/bin/python')
+require('dap-python').setup('$HOME/.virtualenvs/debugpy/bin/python', { })
 vim.g.python3_host_prog = '~/.virtualenvs/debugpy/bin/python3'
 
 -- C/C++/Rust (via vscode-cpptools)
@@ -844,13 +844,13 @@ vim.api.nvim_set_keymap('x', '<leader>e', '<Cmd>lua require("dapui").eval(nil, {
 
 -- Use nvim-dap events to open and close the windows automatically
 dap.listeners.after.event_initialized["dapui_config"] = function()
-    dapui.open()
+    dapui.open({ })
 end
 dap.listeners.before.event_terminated["dapui_config"] = function()
-    dapui.close()
+    dapui.close({ })
 end
 dap.listeners.before.event_exited["dapui_config"] = function()
-    dapui.close()
+    dapui.close({ })
 end
 
 -- DAP virtual text
