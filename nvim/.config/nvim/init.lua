@@ -1,8 +1,8 @@
 -- General setup {{{
-local opts = { noremap = true, silent = true }
+local keymapOpts = { noremap = true, silent = true }
 
 -- Remap space as leader key and ; as local leader
-vim.api.nvim_set_keymap('', '<Space>', '<Nop>', opts)
+vim.api.nvim_set_keymap('', '<Space>', '<Nop>', keymapOpts)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ';'
 
@@ -41,7 +41,6 @@ vim.api.nvim_set_option("clipboard", "unnamed")
 --
 vim.g.do_filetype_lua = 1
 vim.g.did_load_filetypes = 0
--- let g:do_filetype_lua = 1 and let g:did_load_filetypes = 0 
 -- }}}
 
 
@@ -167,10 +166,10 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 
 -- Various {{{
 -- Edit config file
-vim.api.nvim_set_keymap('n', '<leader>v', ':e $MYVIMRC<CR>', opts)
+vim.api.nvim_set_keymap('n', '<leader>v', ':e $MYVIMRC<CR>', keymapOpts)
 
 -- No highlight
-vim.api.nvim_set_keymap('n', '<CR>', ':noh<CR>', opts)
+vim.api.nvim_set_keymap('n', '<CR>', ':noh<CR>', keymapOpts)
 
 -- Move in split navigations
 vim.api.nvim_set_keymap('n', '<C-J>', '<C-W><C-J>', { noremap = true })
@@ -226,14 +225,6 @@ vim.api.nvim_create_autocmd({ "VimEnter", "BufEnter", "InsertLeave" }, {
         vim.opt.list = false
     end
 })
--- }}}
-
-
--- Mac specific {{{
-if vim.fn.has('mac') == 1 then
-    vim.api.nvim_set_keymap('n', '<leader>gm', ':silent !open -a "Marked 2.app" %<CR>', { silent = true })
-    vim.api.nvim_set_keymap('n', '<leader>D', '<Plug>DashSearch', { silent = true })
-end
 -- }}}
 
 
@@ -444,29 +435,21 @@ vim.api.nvim_set_keymap('n', '<leader>fb', '<cmd>SidebarNvimToggle<CR>', { norem
 -- local action_layout = require('telescope.actions.layout')
 
 require('telescope').setup {
-    defaults = {
-        color_devicons = true,
-        --     -- initial_mode = "insert",
-        mappings = {
-            i = {
-                -- ["<c-x>"] = false,
-                -- ["<C-/>"] = "which_key",
-                -- ["<esc>"] = actions.close,
-            },
-        }
-    },
+    -- defaults = {
+    --     color_devicons = true,
+    --     --     -- initial_mode = "insert",
+    --     mappings = {
+    --         i = {
+    --             -- ["<c-x>"] = false,
+    --             -- ["<C-/>"] = "which_key",
+    --             -- ["<esc>"] = actions.close,
+    --         },
+    --     }
+    -- },
     pickers = {
         git_files = {
             shorten_path = true,
-            -- layout_strategy = "horizontal",
-            -- layout_options = {
-            -- preview_width = 0.75,
-            -- },
         },
-        -- buffers = {
-        -- show_all_buffers = true,
-        -- show_last_used = true,
-        -- },
     },
     extensions = {
         file_browser = {
@@ -481,49 +464,34 @@ require('telescope').load_extension('fzf')
 -- nvim-telescope/telescope-file-browser.nvim
 require("telescope").load_extension "file_browser"
 
-vim.api.nvim_set_keymap('n', '<leader>p', ':Telescope commands<cr>', opts)
+vim.api.nvim_set_keymap('n', '<leader>p', '<cmd>Telescope commands<cr>', keymapOpts)
 
-vim.api.nvim_set_keymap('n', '<leader><space>', ':Telescope buffers<cr>', opts)
+vim.api.nvim_set_keymap('n', '<leader><space>', '<cmd>Telescope buffers<cr>', keymapOpts)
 
-vim.api.nvim_set_keymap('n', '<leader>ss', ':Telescope file_browser<cr>', opts)
-vim.api.nvim_set_keymap('n', '<leader>sf', ':Telescope find_files<cr>', opts)
-vim.api.nvim_set_keymap('n', '<leader>sb', ':Telescope current_buffer_fuzzy_find<cr>', opts)
-vim.api.nvim_set_keymap('n', '<leader>sh', ':Telescope help_tags<cr>', opts)
-vim.api.nvim_set_keymap('n', '<leader>sw', ':Telescope grep_string<cr>', opts)
-vim.api.nvim_set_keymap('n', '<leader>sg', ':Telescope live_grep<cr>', opts)
+vim.api.nvim_set_keymap('n', '<leader>ss', '<cmd>Telescope file_browser<cr>', keymapOpts)
+vim.api.nvim_set_keymap('n', '<leader>sf', '<cmd>Telescope find_files<cr>', keymapOpts)
+vim.api.nvim_set_keymap('n', '<leader>sb', '<cmd>Telescope current_buffer_fuzzy_find<cr>', keymapOpts)
+vim.api.nvim_set_keymap('n', '<leader>sh', '<cmd>Telescope help_tags<cr>', keymapOpts)
+vim.api.nvim_set_keymap('n', '<leader>sw', '<cmd>Telescope grep_string<cr>', keymapOpts)
+vim.api.nvim_set_keymap('n', '<leader>sg', '<cmd>Telescope live_grep<cr>', keymapOpts)
 
 -- vim.api.nvim_set_keymap('n', '<leader>st', [[<cmd>lua require('telescope.builtin').tags()<CR>]], opts)
 -- vim.api.nvim_set_keymap('n', '<leader>so', [[<cmd>lua require('telescope.builtin').tags{ only_current_buffer = true }<CR>]], opts)
 -- vim.api.nvim_set_keymap('n', '<leader>?', [[<cmd>lua require('telescope.builtin').oldfiles()<CR>]], opts)
 
 -- Telescope for git
-vim.api.nvim_set_keymap('n', '<leader>gc', ':Telescope git_commits<cr>', opts)
-vim.api.nvim_set_keymap('n', '<leader>gb', ':Telescope git_bcommits<cr>', opts)
-vim.api.nvim_set_keymap('n', '<leader>gs', ':Telescope git_status<cr>', opts)
-
--- Search for Simularia notes
-if vim.fn.has("mac") == 1 then
-    vim.api.nvim_set_keymap("n", "<leader>sn", "", {
-        noremap = true,
-        callback = function()
-            require('telescope.builtin').live_grep {
-                -- path_display = "tail",
-                cwd = "~/Simularia/Notes",
-                prompt_title = "~ (Not only) Simularia Notes ~",
-                layout_strategy = "horizontal",
-            }
-        end,
-    })
-end
+vim.api.nvim_set_keymap('n', '<leader>gc', '<cmd>Telescope git_commits<cr>', keymapOpts)
+vim.api.nvim_set_keymap('n', '<leader>gb', '<cmd>Telescope git_bcommits<cr>', keymapOpts)
+vim.api.nvim_set_keymap('n', '<leader>gs', '<cmd>Telescope git_status<cr>', keymapOpts)
 
 -- Search nvim dotfiles
 vim.api.nvim_set_keymap('n', '<leader>en', "", {
     callback = function()
-        require('telescope.builtin').find_files {
+        require('telescope.builtin').find_files({
             cwd = "~/.dotfiles/nvim/.config/nvim/",
             prompt_title = "~ Edit nvim ~",
             layout_strategies = "horizontal",
-        }
+        })
     end
 })
 
@@ -551,30 +519,30 @@ local nvim_lsp = require 'lspconfig'
 
 -- See `:help vim.lsp.*` for documentation on any of the below functions
 -- vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<leader>dl', '<cmd>Telescope diagnostics<cr>', opts)
-vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<leader>dl', '<cmd>Telescope diagnostics<cr>', keymapOpts)
+vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', keymapOpts)
+vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', keymapOpts)
 -- vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(_, bufnr)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gT', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', keymapOpts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', keymapOpts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', keymapOpts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gT', '<cmd>lua vim.lsp.buf.type_definition()<CR>', keymapOpts)
     -- vim.keymap.set('n', 'K', vim.lsp.buf.hover, {buffer = 0})
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', keymapOpts)
     -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
     -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
     -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
     -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
     -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>so', [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>]], opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', keymapOpts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', keymapOpts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', keymapOpts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', keymapOpts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>so', [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>]], keymapOpts)
 end
 
 -- nvim-cmp supports additional completion capabilities
@@ -825,7 +793,7 @@ vim.cmd([[
       autocmd BufNewFile,BufRead *.cuf :set filetype=fortran
     augroup end
 ]])
-vim.api.nvim_set_keymap('n', '<leader>ff', ':set syntax=fortran<CR>', opts)
+vim.api.nvim_set_keymap('n', '<leader>ff', ':set syntax=fortran<CR>', keymapOpts)
 -- }}}
 
 
@@ -881,26 +849,26 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- key mappings
-vim.api.nvim_set_keymap('n', '<leader>dd', '<Cmd>lua require("dap").continue()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<F5>', '<Cmd>lua require("dap").continue()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<F4>', '<Cmd>lua require("dap").run_last()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<F3>', '<Cmd>lua require("dap").pause()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<leader>dd', '<Cmd>lua require("dap").continue()<CR>', keymapOpts)
+vim.api.nvim_set_keymap('n', '<F5>', '<Cmd>lua require("dap").continue()<CR>', keymapOpts)
+vim.api.nvim_set_keymap('n', '<F4>', '<Cmd>lua require("dap").run_last()<CR>', keymapOpts)
+vim.api.nvim_set_keymap('n', '<F3>', '<Cmd>lua require("dap").pause()<CR>', keymapOpts)
 
-vim.api.nvim_set_keymap('n', '<F10>', '<Cmd>lua require("dap").step_over()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<F11>', '<Cmd>lua require("dap").step_into()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<F12>', '<Cmd>lua require("dap").step_out()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<F8>', '<Cmd>lua require("dap").run_to_cursor()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<F10>', '<Cmd>lua require("dap").step_over()<CR>', keymapOpts)
+vim.api.nvim_set_keymap('n', '<F11>', '<Cmd>lua require("dap").step_into()<CR>', keymapOpts)
+vim.api.nvim_set_keymap('n', '<F12>', '<Cmd>lua require("dap").step_out()<CR>', keymapOpts)
+vim.api.nvim_set_keymap('n', '<F8>', '<Cmd>lua require("dap").run_to_cursor()<CR>', keymapOpts)
 
-vim.api.nvim_set_keymap('n', '<leader>dx', '<Cmd>lua require("dap").disconnect()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<leader>dr', '<Cmd>lua require("dap").repl.open()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<F9>', '<Cmd>lua require("dap").toggle_breakpoint()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<leader>dx', '<Cmd>lua require("dap").disconnect()<CR>', keymapOpts)
+vim.api.nvim_set_keymap('n', '<leader>dr', '<Cmd>lua require("dap").repl.open()<CR>', keymapOpts)
+vim.api.nvim_set_keymap('n', '<F9>', '<Cmd>lua require("dap").toggle_breakpoint()<CR>', keymapOpts)
 
 vim.fn.sign_define('DapBreakpoint', { text = '🔴', texthl = '', linehl = '', numhl = '' })
 
 -- hover
 -- vim.api.nvim_set_keymap('n', '<leader>f', '<Cmd>lua require("dap.ui.widgets").hover()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<leader>e', '<Cmd>lua require("dapui").eval(nil, {enter = true, context = "repl"})<CR>', opts)
-vim.api.nvim_set_keymap('x', '<leader>e', '<Cmd>lua require("dapui").eval(nil, {enter = true, context = "repl"})<CR>', opts)
+vim.api.nvim_set_keymap('n', '<leader>e', '<Cmd>lua require("dapui").eval(nil, {enter = true, context = "repl"})<CR>', keymapOpts)
+vim.api.nvim_set_keymap('x', '<leader>e', '<Cmd>lua require("dapui").eval(nil, {enter = true, context = "repl"})<CR>', keymapOpts)
 
 -- Use nvim-dap events to open and close the windows automatically
 dap.listeners.after.event_initialized["dapui_config"] = function()
@@ -923,4 +891,13 @@ require("nvim-dap-virtual-text").setup({
 -- f-person/git-blame.nvim {{{
 -- Disable by default. Toggle with :GitBlameToggle
 vim.g.gitblame_enabled = 0
+-- }}}
+
+
+-- Load mac specific configuration {{{
+if vim.fn.has("mac") == 1 then
+    require("bepsmac")
+    -- Simularia notes
+    vim.api.nvim_set_keymap('n', '<leader>sn', '<cmd>lua require("bepsmac").simulnotes()<cr>', keymapOpts)
+end
 -- }}}
