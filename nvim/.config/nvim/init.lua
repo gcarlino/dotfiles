@@ -435,23 +435,7 @@ vim.api.nvim_set_keymap('n', '<leader>fb', '<cmd>SidebarNvimToggle<CR>', { norem
 -- local action_layout = require('telescope.actions.layout')
 
 require('telescope').setup {
-    -- defaults = {
-    --     color_devicons = true,
-    --     --     -- initial_mode = "insert",
-    --     mappings = {
-    --         i = {
-    --             -- ["<c-x>"] = false,
-    --             -- ["<C-/>"] = "which_key",
-    --             -- ["<esc>"] = actions.close,
-    --         },
-    --     }
-    -- },
-    pickers = {
-        git_files = {
-            shorten_path = true,
-        },
-    },
-    extensions = {
+   extensions = {
         file_browser = {
             respect_gitignore = false,
             hijack_netrw = true,
@@ -484,17 +468,6 @@ vim.api.nvim_set_keymap('n', '<leader>gc', '<cmd>Telescope git_commits<cr>', key
 vim.api.nvim_set_keymap('n', '<leader>gb', '<cmd>Telescope git_bcommits<cr>', keymapOpts)
 vim.api.nvim_set_keymap('n', '<leader>gs', '<cmd>Telescope git_status<cr>', keymapOpts)
 
--- Search nvim dotfiles
-vim.api.nvim_set_keymap('n', '<leader>en', "", {
-    callback = function()
-        require('telescope.builtin').find_files({
-            cwd = "~/.dotfiles/nvim/.config/nvim/",
-            prompt_title = "~ Edit nvim ~",
-            layout_strategies = "horizontal",
-        })
-    end
-})
-
 -- Search dotfiles
 vim.api.nvim_set_keymap('n', '<leader>ed', "", {
     callback = function()
@@ -518,8 +491,7 @@ vim.api.nvim_set_keymap('n', '<leader>ed', "", {
 local nvim_lsp = require 'lspconfig'
 
 -- See `:help vim.lsp.*` for documentation on any of the below functions
--- vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<leader>dl', '<cmd>Telescope diagnostics<cr>', keymapOpts)
+vim.api.nvim_set_keymap('n', '<leader>di', '<cmd>Telescope diagnostics<cr>', keymapOpts)
 vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', keymapOpts)
 vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', keymapOpts)
 -- vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
