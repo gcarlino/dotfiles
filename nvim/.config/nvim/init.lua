@@ -37,10 +37,11 @@ vim.opt.undofile = false
 
 -- Copy to system clipboard
 vim.api.nvim_set_option("clipboard", "unnamed")
---
---
-vim.g.do_filetype_lua = 1
-vim.g.did_load_filetypes = 0
+
+
+-- vim.g.do_filetype_lua = 1
+-- vim.g.did_load_filetypes = 0
+-- let g:do_filetype_lua = 1 and let g:did_load_filetypes = 0 
 -- }}}
 
 
@@ -115,6 +116,7 @@ require('packer').startup(function(use)
     use 'jalvesaq/Nvim-R'
 
     -- Debug
+    use "mfussenegger/nvim-dap"
     use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
     use 'mfussenegger/nvim-dap-python'
     use 'theHamsta/nvim-dap-virtual-text'
@@ -200,6 +202,10 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     group = yankHighlightGroup,
     pattern = "*"
 })
+
+-- Quickfixlist navigation
+vim.api.nvim_set_keymap("n", "]q", ":cnext<cr>", keymapOpts)
+vim.api.nvim_set_keymap("n", "[q", ":cprevious<cr>", keymapOpts)
 -- }}}
 
 
@@ -307,7 +313,8 @@ vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
 -- hoob3rt/lualine.nvim {{{
 require 'lualine'.setup {
     options = {
-        theme = 'edge'
+        theme = 'edge',
+        global = true,
     },
     extensions = { 'nvim-tree', 'toggleterm' }
 }
@@ -788,6 +795,7 @@ require('nvim-autopairs').setup({})
 -- DAP {{{
 local dap = require("dap")
 local dapui = require("dapui")
+-- local dap, dapui = require("dap"), require("dapui")
 
 -- Load configurations inside ./.nvim-dap/launch.json
 require('dap.ext.vscode').load_launchjs('./.nvim-dap/launch.json')
@@ -807,7 +815,7 @@ dap.adapters.fortran = {
 require('telescope').load_extension('dap')
 
 -- nvim-dap-ui
-require("dapui").setup({
+dapui.setup({
     floating = {
         max_height = 0.85,
         max_width = 0.85,
@@ -825,6 +833,7 @@ vim.api.nvim_set_keymap('n', '<leader>dd', '<Cmd>lua require("dap").continue()<C
 vim.api.nvim_set_keymap('n', '<F5>', '<Cmd>lua require("dap").continue()<CR>', keymapOpts)
 vim.api.nvim_set_keymap('n', '<F4>', '<Cmd>lua require("dap").run_last()<CR>', keymapOpts)
 vim.api.nvim_set_keymap('n', '<F3>', '<Cmd>lua require("dap").pause()<CR>', keymapOpts)
+vim.api.nvim_set_keymap('n', '<F2>', '<Cmd>lua require("dap").terminate()<CR>', keymapOpts)
 
 vim.api.nvim_set_keymap('n', '<F10>', '<Cmd>lua require("dap").step_over()<CR>', keymapOpts)
 vim.api.nvim_set_keymap('n', '<F11>', '<Cmd>lua require("dap").step_into()<CR>', keymapOpts)
@@ -844,13 +853,13 @@ vim.api.nvim_set_keymap('x', '<leader>e', '<Cmd>lua require("dapui").eval(nil, {
 
 -- Use nvim-dap events to open and close the windows automatically
 dap.listeners.after.event_initialized["dapui_config"] = function()
-    dapui.open({ })
+    dapui.open()
 end
 dap.listeners.before.event_terminated["dapui_config"] = function()
-    dapui.close({ })
+    dapui.close()
 end
 dap.listeners.before.event_exited["dapui_config"] = function()
-    dapui.close({ })
+    dapui.close()
 end
 
 -- DAP virtual text
