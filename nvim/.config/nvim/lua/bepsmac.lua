@@ -11,6 +11,9 @@ vim.api.nvim_set_keymap('n', '<leader>D', '<Plug>DashSearch', keymapOpts)
 vim.api.nvim_set_keymap('n', '<leader>S', ':lua package.loaded.bepsmac=nil<cr>:source $MYVIMRC<cr>',
     keymapOpts)
 
+if vim.fn.has("gui_vimr") == 1 then
+    vim.opt.background = "light"
+end
 
 -- Functions
 local M = {}
