@@ -129,13 +129,15 @@ require('packer').startup(function(use)
     -- Tabline
     use { 'alvarosevilla95/luatab.nvim', requires = 'kyazdani42/nvim-web-devicons' }
 
+    -- Comment
+    use 'numToStr/Comment.nvim'
+
     -- Various
     use 'szw/vim-maximizer'
     use 'windwp/nvim-autopairs'
     use 'simrat39/symbols-outline.nvim'
     use 'chentoast/marks.nvim'
     use { "akinsho/toggleterm.nvim" }
-    use 'tpope/vim-commentary'
     -- use 'tpope/vim-unimpaired'
     -- use 'sbdchd/neoformat'
     use 'lukas-reineke/indent-blankline.nvim'
@@ -396,12 +398,6 @@ require('gitsigns').setup {
 -- szw/vim-maximizer {{{
 vim.api.nvim_set_keymap('n', '<leader>m', ':MaximizerToggle!<CR>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-W><C-m>', ':MaximizerToggle!<CR>', { noremap = true })
--- }}}
-
-
--- tpope/vim-commentary {{{
-vim.api.nvim_set_keymap('n', '<leader>/', ':Commentary<CR>', { noremap = true })
-vim.api.nvim_set_keymap('v', '<leader>/', ':Commentary<CR>', { noremap = true })
 -- }}}
 
 
@@ -754,8 +750,6 @@ vim.cmd([[
     autocmd BufNewFile,BufRead *.f :set filetype=Fortran77
     autocmd BufNewFile,BufRead *.f :set syntax=fortran
     autocmd Filetype Fortran77 let g:fortran_fixed_source=1
-    autocmd FileType Fortran77 setlocal commentstring=C\ %s
-    autocmd Filetype Fortran77 let b:commentary_startofline=1
     autocmd Filetype Fortran77 set tabstop=6
     autocmd Filetype Fortran77 set softtabstop=3
     autocmd Filetype Fortran77 set shiftwidth=3
@@ -872,6 +866,17 @@ require("nvim-dap-virtual-text").setup({
 -- f-person/git-blame.nvim {{{
 -- Disable by default. Toggle with :GitBlameToggle
 vim.g.gitblame_enabled = 0
+-- }}}
+
+
+-- numToStr/Comment.nvim {{{
+require('Comment').setup()
+
+vim.keymap.set('n', '<leader>/', '<CMD>lua require("Comment.api").toggle_current_linewise()<CR>')
+vim.keymap.set('x', '<leader>/', '<ESC><CMD>lua require("Comment.api").toggle_linewise_op(vim.fn.visualmode())<CR>')
+
+-- Fortran77
+require('Comment.ft').set('Fortran77', 'C%s')
 -- }}}
 
 
