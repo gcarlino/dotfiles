@@ -38,6 +38,8 @@ vim.opt.undofile = false
 -- Copy to system clipboard
 vim.api.nvim_set_option("clipboard", "unnamed")
 
+-- Global window status line
+vim.opt.laststatus = 3
 
 -- vim.g.do_filetype_lua = 1
 -- vim.g.did_load_filetypes = 0
@@ -317,6 +319,12 @@ require 'lualine'.setup {
     options = {
         theme = 'edge',
         global = true,
+        section_separators = "",
+        component_separators = ""
+    },
+    sections = { 
+        lualine_c = {'%=', {'filetype', icon_only = true}, '%t%m'},
+        lualine_x = {'encoding', 'fileformat'},
     },
     extensions = { 'nvim-tree', 'toggleterm' }
 }
