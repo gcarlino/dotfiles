@@ -43,7 +43,7 @@ vim.opt.laststatus = 3
 
 -- vim.g.do_filetype_lua = 1
 -- vim.g.did_load_filetypes = 0
--- let g:do_filetype_lua = 1 and let g:did_load_filetypes = 0 
+-- let g:do_filetype_lua = 1 and let g:did_load_filetypes = 0
 -- }}}
 
 
@@ -253,6 +253,10 @@ vim.cmd([[ colorscheme edge ]])
 
 -- alvarosevilla95/luatab.nvim {{{
 require('luatab').setup {}
+
+vim.api.nvim_set_keymap("n", "]t", ":tabnext<cr>", keymapOpts)
+vim.api.nvim_set_keymap("n", "[t", ":tabprevious<cr>", keymapOpts)
+
 -- }}}
 
 
@@ -322,7 +326,7 @@ require 'lualine'.setup {
         section_separators = "",
         component_separators = ""
     },
-    sections = { 
+    sections = {
         lualine_c = {'%=', {'filetype', icon_only = true}, '%t%m'},
         lualine_x = {'encoding', 'fileformat'},
     },
