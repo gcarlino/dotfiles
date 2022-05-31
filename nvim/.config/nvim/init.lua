@@ -323,16 +323,21 @@ require 'lualine'.setup {
     options = {
         theme = 'edge',
         global = true,
-        section_separators = "",
+        section_separators = { left = '', right = '' },
+        -- section_separators = "",
+        -- component_separators = { left = '', right = '' }
         component_separators = ""
     },
     sections = {
-        lualine_c = {'%=', {'filetype', icon_only = true}, '%t%m'},
+        lualine_c = {'%=', {'filetype', icon_only = true},
+            {'filename', file_status = true, path = 3}},
         lualine_x = {'encoding', 'fileformat'},
     },
     extensions = { 'nvim-tree', 'toggleterm' }
 }
--- }}}
+-- winbar
+vim.opt.winbar = "%= %m %t"
+-- }}
 
 
 -- Toggle color {{{
@@ -857,15 +862,21 @@ vim.fn.sign_define('DapBreakpoint', { text = '🔴', texthl = '', linehl = '', n
 vim.api.nvim_set_keymap('n', '<leader>e', '<Cmd>lua require("dapui").eval(nil, {enter = true, context = "repl"})<CR>', keymapOpts)
 vim.api.nvim_set_keymap('x', '<leader>e', '<Cmd>lua require("dapui").eval(nil, {enter = true, context = "repl"})<CR>', keymapOpts)
 
+ -- Reload launch json configuration
+vim.api.nvim_set_keymap('n', '<leader>dl', '<Cmd>lua require("dap.ext.vscode").load_launchjs("./.nvim-dap/launch.json")<cr>', {noremap = true, silent = false})
+
+
 -- Use nvim-dap events to open and close the windows automatically
 dap.listeners.after.event_initialized["dapui_config"] = function()
     dapui.open()
 end
 dap.listeners.before.event_terminated["dapui_config"] = function()
     dapui.close()
+    require('lualine').setup()
 end
 dap.listeners.before.event_exited["dapui_config"] = function()
     dapui.close()
+    require('lualine').setup()
 end
 
 -- DAP virtual text
