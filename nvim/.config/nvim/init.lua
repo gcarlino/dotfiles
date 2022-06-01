@@ -442,9 +442,19 @@ require("toggleterm").setup {
 
 -- GustavoKatel/sidebar.nvim {{{
 require("sidebar-nvim").setup({
-    sections = { "datetime", "git", "symbols", "diagnostics" },
+    sections = { "datetime", "buffers", "git", "symbols", "todos", "diagnostics" },
     hide_statusline = true,
+    section_separator = {"", "–––––––––––––––––––––––––––––"},
+    datetime = {
+        clocks = {
+            { name = "Local"}
+        }
+    },
+    buffers = {
+        ignored_buffers = {"SidebarNvim*"}
+    }
 })
+
 -- nnoremap <leader>sb <cmd>SidebarNvimToggle<CR>
 vim.api.nvim_set_keymap('n', '<leader>fb', '<cmd>SidebarNvimToggle<CR>', { noremap = true })
 -- }}}
