@@ -814,23 +814,13 @@ require('nvim-autopairs').setup({})
 
 
 -- DAP {{{
+-- Adapters configurations in dap_config.lua
+
 local dap = require("dap")
 local dapui = require("dapui")
--- local dap, dapui = require("dap"), require("dapui")
 
--- Load configurations inside ./.nvim-dap/launch.json
-require('dap.ext.vscode').load_launchjs('./.nvim-dap/launch.json')
-
---- Python DAP setup
-require('dap-python').setup('$HOME/.virtualenvs/debugpy/bin/python', { })
-vim.g.python3_host_prog = '~/.virtualenvs/debugpy/bin/python3'
-
--- C/C++/Rust (via vscode-cpptools)
-dap.adapters.fortran = {
-    id = 'cppdbg',
-    type = 'executable',
-    command = '/home/carlino/.vscode-server/extensions/ms-vscode.cpptools-1.9.7/debugAdapters/bin/OpenDebugAD7'
-}
+--- Python
+-- vim.g.python3_host_prog = '~/.virtualenvs/debugpy/bin/python3'
 
 -- Enable dap in telescope
 require('telescope').load_extension('dap')
@@ -838,19 +828,28 @@ require('telescope').load_extension('dap')
 -- nvim-dap-ui
 dapui.setup({
     floating = {
-        max_height = 0.85,
-        max_width = 0.85,
+        max_height = 0.95,
+        max_width = 0.95,
     }
 })
 
--- Diasbale statusline
+-- Disable statusline
 vim.api.nvim_create_autocmd("FileType", {
     pattern = {'dap-repl', 'dapui*'},
     command = "set statusline="
 })
 
 -- key mappings
-vim.api.nvim_set_keymap('n', '<leader>dd', '<Cmd>lua require("dap").continue()<CR>', keymapOpts)
+-- Clear configurations, reload and continue
+vim.api.nvim_set_keymap("n", "<leader>dd", "", {
+    noremap = true,
+    callback = function()
+        require("dap_config").clear_configurations()
+        require("dap_config").config_dap()
+        dap.continue()
+    end,
+    }
+)
 vim.api.nvim_set_keymap('n', '<F5>', '<Cmd>lua require("dap").continue()<CR>', keymapOpts)
 vim.api.nvim_set_keymap('n', '<F4>', '<Cmd>lua require("dap").run_last()<CR>', keymapOpts)
 vim.api.nvim_set_keymap('n', '<F3>', '<Cmd>lua require("dap").pause()<CR>', keymapOpts)
