@@ -839,6 +839,9 @@ vim.api.nvim_create_autocmd("FileType", {
     command = "set statusline="
 })
 
+-- Breakpoint symbols
+vim.fn.sign_define('DapBreakpoint', { text = '🔴', texthl = '', linehl = '', numhl = '' })
+
 -- key mappings
 -- Clear configurations, reload and continue
 vim.api.nvim_set_keymap("n", "<leader>dd", "", {
@@ -859,12 +862,14 @@ vim.api.nvim_set_keymap('n', '<F10>', '<Cmd>lua require("dap").step_over()<CR>',
 vim.api.nvim_set_keymap('n', '<F11>', '<Cmd>lua require("dap").step_into()<CR>', keymapOpts)
 vim.api.nvim_set_keymap('n', '<F12>', '<Cmd>lua require("dap").step_out()<CR>', keymapOpts)
 vim.api.nvim_set_keymap('n', '<F8>', '<Cmd>lua require("dap").run_to_cursor()<CR>', keymapOpts)
+vim.api.nvim_set_keymap('n', '<F9>', '<Cmd>lua require("dap").toggle_breakpoint()<CR>', keymapOpts)
 
 vim.api.nvim_set_keymap('n', '<leader>dx', '<Cmd>lua require("dap").disconnect()<CR>', keymapOpts)
 vim.api.nvim_set_keymap('n', '<leader>dr', '<Cmd>lua require("dap").repl.open()<CR>', keymapOpts)
-vim.api.nvim_set_keymap('n', '<F9>', '<Cmd>lua require("dap").toggle_breakpoint()<CR>', keymapOpts)
 
-vim.fn.sign_define('DapBreakpoint', { text = '🔴', texthl = '', linehl = '', numhl = '' })
+vim.api.nvim_set_keymap('n', '<leader>dt', '<Cmd>lua require("dapui").toggle()<CR>', keymapOpts)
+vim.api.nvim_set_keymap('n', '<leader>dc', '<Cmd>lua require("dapui").close()<CR>', keymapOpts)
+
 
 -- hover
 -- vim.api.nvim_set_keymap('n', '<leader>f', '<Cmd>lua require("dap.ui.widgets").hover()<CR>', opts)
@@ -873,7 +878,6 @@ vim.api.nvim_set_keymap('x', '<leader>e', '<Cmd>lua require("dapui").eval(nil, {
 
  -- Reload launch json configuration
 vim.api.nvim_set_keymap('n', '<leader>dl', '<Cmd>lua require("dap.ext.vscode").load_launchjs("./.nvim-dap/launch.json")<cr>', {noremap = true, silent = false})
-
 
 -- Use nvim-dap events to open and close the windows automatically
 dap.listeners.after.event_initialized["dapui_config"] = function()
