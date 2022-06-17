@@ -335,8 +335,14 @@ require 'lualine'.setup {
     },
     extensions = { 'nvim-tree', 'toggleterm' }
 }
--- winbar
-vim.opt.winbar = "%= %m %t"
+
+-- Hide command line when it is not used
+vim.cmd([[set cmdheight=0]])
+
+--[[ -- winbar
+if vim.fn.has("gui_vimr") ~= 1 then
+    vim.opt.winbar = "%= %m %t"
+end ]]
 -- }}
 
 
