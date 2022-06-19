@@ -338,7 +338,9 @@ require 'lualine'.setup {
 }
 
 -- Hide command line when it is not used
-vim.cmd([[set cmdheight=0]])
+if vim.fn.has("gui_vimr") ~= 1 then
+    vim.cmd([[set cmdheight=0]])
+end
 
 --[[ -- winbar
 if vim.fn.has("gui_vimr") ~= 1 then
