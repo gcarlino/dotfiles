@@ -107,6 +107,12 @@ require('packer').startup(function(use)
         requires = { 'kyazdani42/nvim-web-devicons', opt = true }
     }
 
+    -- Tabline
+    use { 'alvarosevilla95/luatab.nvim', requires = 'kyazdani42/nvim-web-devicons' }
+
+    -- Folding
+    use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'}
+
     -- Git
     use 'tpope/vim-fugitive'
     -- use 'itchyny/vim-gitbranch'
@@ -125,12 +131,8 @@ require('packer').startup(function(use)
     use 'theHamsta/nvim-dap-virtual-text'
     use 'nvim-telescope/telescope-dap.nvim'
 
-
     -- Color schemes
     use 'https://github.com/sainnhe/edge'
-
-    -- Tabline
-    use { 'alvarosevilla95/luatab.nvim', requires = 'kyazdani42/nvim-web-devicons' }
 
     -- Comment
     use 'numToStr/Comment.nvim'
@@ -313,9 +315,6 @@ require 'nvim-treesitter.configs'.setup({
         },
     },
 })
-
-vim.wo.foldmethod = 'expr'
-vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
 -- }}}
 
 
@@ -346,7 +345,7 @@ end
 if vim.fn.has("gui_vimr") ~= 1 then
     vim.opt.winbar = "%= %m %t"
 end ]]
--- }}
+-- }}}
 
 
 -- Toggle color {{{
@@ -474,7 +473,7 @@ vim.api.nvim_set_keymap('n', '<leader>fb', '<cmd>SidebarNvimToggle<CR>', { norem
 -- local action_layout = require('telescope.actions.layout')
 
 require('telescope').setup {
-   extensions = {
+    extensions = {
         file_browser = {
             respect_gitignore = false,
             hijack_netrw = true,
@@ -561,6 +560,15 @@ end
 -- capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+-- local capabilities = vim.lsp.protocol.make_client_capabilities()
+
+--
+-- tell the sever the capability of foldingRange
+capabilities.textDocument.foldingRange = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true
+}
+--
 
 -- Enable the following language servers
 local servers = { 'pyright', 'html', 'r_language_server', 'yamlls', 'bashls', 'texlab', 'cmake' }
@@ -773,7 +781,7 @@ vim.api.nvim_create_autocmd("FileType", {
     callback = function()
         vim.o.foldmethod = "marker"
         vim.o.foldlevel = 0
-        vim.opt.foldcolumn = "3"
+        vim.opt.foldcolumn = "1"
     end
 })
 -- }}}
@@ -803,6 +811,19 @@ vim.cmd([[
     augroup end
 ]])
 vim.api.nvim_set_keymap('n', '<leader>ff', ':set syntax=fortran<CR>', keymapOpts)
+-- }}}
+
+
+-- kevinhwang91/nvim-ufo {{{
+vim.wo.foldcolumn = '1'
+vim.wo.foldlevel = 99 -- feel free to decrease the value
+vim.wo.foldenable = true
+vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+
+-- vim.wo.foldmethod = 'expr'
+-- vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
+
+require('ufo').setup()
 -- }}}
 
 
