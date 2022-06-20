@@ -473,6 +473,14 @@ vim.api.nvim_set_keymap('n', '<leader>fb', '<cmd>SidebarNvimToggle<CR>', { norem
 -- local action_layout = require('telescope.actions.layout')
 
 require('telescope').setup {
+    defaults = {
+        sorting_strategy = "ascending",
+        scroll_strategy = "cycle",
+        layout_strategies = "flex",
+        layout_config = {
+            prompt_position = "top",
+        },
+    },
     extensions = {
         file_browser = {
             respect_gitignore = false,
