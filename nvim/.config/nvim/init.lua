@@ -85,6 +85,7 @@ require('packer').startup(function(use)
     use 'hrsh7th/cmp-buffer'
     use 'hrsh7th/cmp-path'
     use 'hrsh7th/cmp-cmdline'
+    use 'rcarriga/cmp-dap'
     use { 'hrsh7th/nvim-cmp',
         requires = { 'kdheepak/cmp-latex-symbols' } }
 
@@ -333,7 +334,7 @@ require 'lualine'.setup {
             {'filename', file_status = true, path = 3}},
         lualine_x = {'encoding', 'fileformat'},
     },
-    extensions = { 'nvim-tree', 'toggleterm' }
+    extensions = { 'nvim-tree', 'toggleterm', 'nvim-dap-ui', 'fugitive', 'symbols-outline' }
 }
 
 -- Hide command line when it is not used
@@ -532,26 +533,37 @@ vim.api.nvim_set_keymap('n', '<leader>ed', "", {
 -- vim.api.nvim_set_keymap('n', '<leader>ls', [[<cmd>lua require('telescope.builtin').lsp_references()<cr>]], {noremap = true})
 -- }}}
 
-
 -- neovi/nvim-lspconfig {{{
 local nvim_lsp = require 'lspconfig'
 
+vim.diagnostic.config({
+    virtual_text = true,
+    signs = true,
+    underline = true,
+    update_in_insert = false,
+    severity_sort = false,
+})
+local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+for type, icon in pairs(signs) do
+    local hl = "DiagnosticSign" .. type
+    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
+
 -- See `:help vim.lsp.*` for documentation on any of the below functions
 vim.api.nvim_set_keymap('n', '<leader>di', '<cmd>Telescope diagnostics<cr>', keymapOpts)
+vim.keymap.set('n', '<leader>dl', vim.diagnostic.open_float, keymapOpts)
 vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', keymapOpts)
 vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', keymapOpts)
 -- vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
 
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
+-- Use an on_attach function to only map the following keys after the language server attaches to the current buffer
 local on_attach = function(_, bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', keymapOpts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', keymapOpts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', keymapOpts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gT', '<cmd>lua vim.lsp.buf.type_definition()<CR>', keymapOpts)
-    -- vim.keymap.set('n', 'K', vim.lsp.buf.hover, {buffer = 0})
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', keymapOpts)
-    -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+    -- vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gT', '<cmd>lua vim.lsp.buf.type_definition()<CR>', keymapOpts)
+    -- vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', keymapOpts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gh', '<cmd>lua vim.lsp.buf.signature_help()<CR>', keymapOpts)
     -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
     -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
     -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
@@ -564,13 +576,9 @@ local on_attach = function(_, bufnr)
 end
 
 -- nvim-cmp supports additional completion capabilities
--- local capabilities = vim.lsp.protocol.make_client_capabilities()
--- capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
--- local capabilities = vim.lsp.protocol.make_client_capabilities()
-
---
 -- tell the sever the capability of foldingRange
 capabilities.textDocument.foldingRange = {
     dynamicRegistration = false,
@@ -588,7 +596,6 @@ for _, lsp in ipairs(servers) do
 end
 
 -- custom server configurations
-
 require('lspconfig').fortls.setup {
     on_attach = on_attach,
     capabilities = capabilities,
@@ -692,6 +699,12 @@ cmp.setup({
         end),
     }),
 
+    -- nvim-cmp by defaults disables autocomplete for prompt buffers
+    enabled = function ()
+        return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
+            or require("cmp_dap").is_dap_buffer()
+    end,
+
     sources = cmp.config.sources({
         { name = "nvim_lsp" },
         { name = "nvim_lua" },
@@ -699,6 +712,7 @@ cmp.setup({
         { name = "path" },
         { name = "cmdline" },
         { name = "latex_symbols" },
+        { name = "dap"},
         { name = "buffer", keyword_length = 3 }
     }),
 
@@ -871,12 +885,6 @@ dapui.setup({
     }
 })
 
--- Disable statusline
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = {'dap-repl', 'dapui*'},
-    command = "set statusline="
-})
-
 -- Breakpoint symbols
 vim.fn.sign_define('DapBreakpoint', { text = '🔴', texthl = '', linehl = '', numhl = '' })
 
@@ -923,11 +931,9 @@ dap.listeners.after.event_initialized["dapui_config"] = function()
 end
 dap.listeners.before.event_terminated["dapui_config"] = function()
     dapui.close()
-    require('lualine').setup()
 end
 dap.listeners.before.event_exited["dapui_config"] = function()
     dapui.close()
-    require('lualine').setup()
 end
 
 -- DAP virtual text
