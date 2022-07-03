@@ -3,7 +3,7 @@
 local keymapOpts = { noremap = true, silent = true}
 
 -- Open Marked.app
-vim.api.nvim_set_keymap('n', '<leader>gm', ':silent !open -a "Marked 2.app" %<CR>', keymapOpts)
+vim.api.nvim_set_keymap('n', '<leader>mk', ':silent !open -a "Marked 2.app" %<CR>', keymapOpts)
 -- Open Dash for documentation
 vim.api.nvim_set_keymap('n', '<leader>D', '<Plug>DashSearch', keymapOpts)
 
