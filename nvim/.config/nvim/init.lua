@@ -102,14 +102,14 @@ require('packer').startup(function(use)
     use 'kyazdani42/nvim-tree.lua'
     use 'sudormrfbin/cheatsheet.nvim'
 
+    -- Tabline
+    use { 'alvarosevilla95/luatab.nvim', requires = 'kyazdani42/nvim-web-devicons' }
+
     -- Status Line
     use {
         'nvim-lualine/lualine.nvim',
         requires = { 'kyazdani42/nvim-web-devicons', opt = true }
     }
-
-    -- Tabline
-    use { 'alvarosevilla95/luatab.nvim', requires = 'kyazdani42/nvim-web-devicons' }
 
     -- Folding
     use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'}
@@ -255,15 +255,6 @@ vim.cmd([[ colorscheme edge ]])
 -- }}}
 
 
--- alvarosevilla95/luatab.nvim {{{
-require('luatab').setup {}
-
-vim.api.nvim_set_keymap("n", "]t", ":tabnext<cr>", keymapOpts)
-vim.api.nvim_set_keymap("n", "[t", ":tabprevious<cr>", keymapOpts)
-
--- }}}
-
-
 -- Tree-sitter configuration {{{
 -- Parsers must be installed manually via :TSInstall
 require 'nvim-treesitter.configs'.setup({
@@ -319,22 +310,44 @@ require 'nvim-treesitter.configs'.setup({
 -- }}}
 
 
+-- alvarosevilla95/luatab.nvim {{{
+require('luatab').setup {}
+
+vim.api.nvim_set_keymap("n", "]t", ":tabnext<cr>", keymapOpts)
+vim.api.nvim_set_keymap("n", "[t", ":tabprevious<cr>", keymapOpts)
+-- }}}
+
+
 -- hoob3rt/lualine.nvim {{{
+-- Get current working directory (relative to home path)
+local function getCWD()
+    return vim.fn.fnamemodify(vim.fn.getcwd(), ":~")
+end
+
 require 'lualine'.setup {
+    extensions = {'nvim-tree', 'toggleterm', 'nvim-dap-ui', 'fugitive', 'symbols-outline'},
     options = {
         theme = 'edge',
         global = true,
         section_separators = { left = '', right = '' },
-        -- section_separators = "",
-        -- component_separators = { left = '', right = '' }
         component_separators = ""
     },
     sections = {
-        lualine_c = {'%=', {'filetype', icon_only = true},
-            {'filename', file_status = true, path = 3}},
+        lualine_c = {
+            { getCWD },
+            '%=',
+            {
+                'filetype',
+                icon_only = true
+            },
+            {
+                'filename',
+                file_status = true,
+                path = 1,
+            },
+        },
         lualine_x = {'encoding', 'fileformat'},
     },
-    extensions = { 'nvim-tree', 'toggleterm', 'nvim-dap-ui', 'fugitive', 'symbols-outline' }
 }
 
 -- Hide command line when it is not used
