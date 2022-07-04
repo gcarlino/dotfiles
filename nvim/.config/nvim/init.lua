@@ -932,8 +932,8 @@ vim.api.nvim_set_keymap('n', '<leader>dc', '<Cmd>lua require("dapui").close()<CR
 
 -- hover
 -- vim.api.nvim_set_keymap('n', '<leader>f', '<Cmd>lua require("dap.ui.widgets").hover()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<leader>e', '<Cmd>lua require("dapui").eval(nil, {enter = true, context = "repl"})<CR>', keymapOpts)
-vim.api.nvim_set_keymap('x', '<leader>e', '<Cmd>lua require("dapui").eval(nil, {enter = true, context = "repl"})<CR>', keymapOpts)
+vim.api.nvim_set_keymap('n', '<leader>i', '<Cmd>lua require("dapui").eval(nil, {enter = true, context = "repl"})<CR>', keymapOpts)
+vim.api.nvim_set_keymap('x', '<leader>i', '<Cmd>lua require("dapui").eval(nil, {enter = true, context = "repl"})<CR>', keymapOpts)
 
  -- Reload launch json configuration
 vim.api.nvim_set_keymap('n', '<leader>dl', '<Cmd>lua require("dap.ext.vscode").load_launchjs("./.nvim-dap/launch.json")<cr>', {noremap = true, silent = false})

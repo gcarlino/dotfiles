@@ -5,8 +5,8 @@ export ZSH=$HOME/.oh-my-zsh
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 # ZSH_THEME="gallifrey"
-ZSH_THEME="robbyrussell"
-# ZSH_THEME="daveverwer"
+# ZSH_THEME="robbyrussell"
+ZSH_THEME="daveverwer"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -58,7 +58,7 @@ plugins=(
     nmap
     rsync
     sudo
-    macos
+    # macos
     zsh-autosuggestions
     # zsh-syntax-highlighting
 )
@@ -142,7 +142,7 @@ if [[ $OS == "Darwin" ]] {
 
 
 # Add hostname to prompt
-PROMPT="%{$fg[green]%}%m%{$reset_color%} ${PROMPT}"
+# PROMPT="%{$fg[green]%}%m%{$reset_color%} ${PROMPT}"
 
 # enable spell check
 setopt correct
@@ -196,8 +196,8 @@ if [[ $OS == "Linux" ]] ; then
     # nvidia HPC SDK environmental setup
     export NVARCH=`uname -s`_`uname -m`
     export NVCOMPILERS=/opt/nvidia/hpc_sdk
-    export MANPATH=$MANPATH:$NVCOMPILERS/$NVARCH/22.3/compilers/man
-    export PATH=$NVCOMPILERS/$NVARCH/22.3/compilers/bin:$PATH
+    export MANPATH=$MANPATH:$NVCOMPILERS/$NVARCH/2022/compilers/man
+    export PATH=$NVCOMPILERS/$NVARCH/2022/compilers/bin:$PATH
 
     # export LD_LIBRARY_PATH=/usr/local/cuda-11.5/lib64\
     #     ${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
