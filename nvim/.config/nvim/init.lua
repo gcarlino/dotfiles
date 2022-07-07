@@ -38,9 +38,6 @@ vim.opt.undofile = false
 -- Copy to system clipboard
 vim.api.nvim_set_option("clipboard", "unnamed")
 
--- Global window status line
-vim.opt.laststatus = 3
-
 -- vim.g.do_filetype_lua = 1
 -- vim.g.did_load_filetypes = 0
 -- let g:do_filetype_lua = 1 and let g:did_load_filetypes = 0
@@ -349,6 +346,16 @@ require 'lualine'.setup {
         lualine_x = {'encoding', 'fileformat'},
     },
 }
+
+-- Global window status line
+vim.opt.laststatus = 3
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "dapui*", "dap-repl" },
+    callback = function()
+        vim.opt.laststatus = 2
+    end
+})
 
 -- Hide command line when it is not used
 if vim.fn.has("gui_vimr") ~= 1 then
