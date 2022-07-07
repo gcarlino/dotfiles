@@ -900,6 +900,7 @@ dapui.setup({
 
 -- Breakpoint symbols
 vim.fn.sign_define('DapBreakpoint', { text = '🔴', texthl = '', linehl = '', numhl = '' })
+vim.fn.sign_define('DapBreakpointCondition', { text = '🟡', texthl = '', linehl = '', numhl = '' })
 
 -- key mappings
 -- Clear configurations, reload and continue
@@ -922,6 +923,7 @@ vim.api.nvim_set_keymap('n', '<F11>', '<Cmd>lua require("dap").step_into()<CR>',
 vim.api.nvim_set_keymap('n', '<F12>', '<Cmd>lua require("dap").step_out()<CR>', keymapOpts)
 vim.api.nvim_set_keymap('n', '<F8>', '<Cmd>lua require("dap").run_to_cursor()<CR>', keymapOpts)
 vim.api.nvim_set_keymap('n', '<F9>', '<Cmd>lua require("dap").toggle_breakpoint()<CR>', keymapOpts)
+vim.api.nvim_set_keymap('n', '<leader>b', '<Cmd>lua require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>', keymapOpts)
 
 vim.api.nvim_set_keymap('n', '<leader>dx', '<Cmd>lua require("dap").disconnect()<CR>', keymapOpts)
 vim.api.nvim_set_keymap('n', '<leader>dr', '<Cmd>lua require("dap").repl.open()<CR>', keymapOpts)
