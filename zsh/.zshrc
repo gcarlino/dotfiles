@@ -87,7 +87,6 @@ alias mv='mv -i'
 alias vim='nvim'
 alias view='mvim -R'
 alias vi='nvim'
-alias view='nvim -R'
 alias less='less -FRX'
 if type "lsd" > /dev/null ; then
     alias ls="lsd"
@@ -112,7 +111,6 @@ alias docker-clean-containers='docker ps -a | grep Exited | awk "{print \$1}" | 
 
 # homebrew path
 # export PATH=/usr/local/sbin:$PATH
-
 
 # Disable homebrew analytics
 export HOMEBREW_NO_ANALYTICS=1
@@ -194,10 +192,10 @@ if [[ $OS == "Linux" ]] ; then
     # alias code_saturne="$cspath/code_saturne"
 
     # nvidia HPC SDK environmental setup
-    export NVARCH=`uname -s`_`uname -m`
-    export NVCOMPILERS=/opt/nvidia/hpc_sdk
-    export MANPATH=$MANPATH:$NVCOMPILERS/$NVARCH/2022/compilers/man
-    export PATH=$NVCOMPILERS/$NVARCH/2022/compilers/bin:$PATH
+    # export NVARCH=`uname -s`_`uname -m`
+    # export NVCOMPILERS=/opt/nvidia/hpc_sdk
+    # export MANPATH=$MANPATH:$NVCOMPILERS/$NVARCH/22.5/compilers/man
+    # export PATH=$NVCOMPILERS/$NVARCH/22.5/compilers/bin:$PATH
 
     # export LD_LIBRARY_PATH=/usr/local/cuda-11.5/lib64\
     #     ${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
@@ -205,5 +203,18 @@ if [[ $OS == "Linux" ]] ; then
     # Permanently change umask
     umask 002
 
-    alias luamake=/home/carlino/lua-language-server/3rd/luamake/luamake
+    # # alias luamake=/home/carlino/lua-language-server/3rd/luamake/luamake
+
+    if [ -d /etc/profile.d ]; then
+        setopt no_nomatch
+        for i in /etc/profile.d/*.sh; do
+            if [ -r $i ]; then
+                . $i
+            fi
+        done
+        setopt nomatch
+    fi
+    #
+    # module load nvhpc/22.5
+
 fi
