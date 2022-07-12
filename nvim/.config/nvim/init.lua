@@ -252,6 +252,13 @@ vim.cmd([[ colorscheme edge ]])
 -- }}}
 
 
+-- kyazdani42/nvim-web-devicons {{{
+require('nvim-web-devicons').setup{
+    default = true,
+}
+-- }}}
+
+
 -- Tree-sitter configuration {{{
 -- Parsers must be installed manually via :TSInstall
 require 'nvim-treesitter.configs'.setup({
