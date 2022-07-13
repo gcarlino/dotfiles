@@ -10,7 +10,7 @@ function M.config_dap()
     dap.adapters.fortran = {
         id = 'cppdbg',
         type = 'executable',
-        command = '/home/carlino/.vscode-server/extensions/ms-vscode.cpptools-1.9.7/debugAdapters/bin/OpenDebugAD7'
+        command = '/home/carlino/.vscode-server/extensions/ms-vscode.cpptools-1.10.7/debugAdapters/bin/OpenDebugAD7'
     }
 
     -- Python debug
