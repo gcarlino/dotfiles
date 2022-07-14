@@ -38,9 +38,8 @@ vim.opt.undofile = false
 -- Copy to system clipboard
 vim.api.nvim_set_option("clipboard", "unnamed")
 
--- vim.g.do_filetype_lua = 1
--- vim.g.did_load_filetypes = 0
--- let g:do_filetype_lua = 1 and let g:did_load_filetypes = 0
+-- Switch to old filetype.vim mechanism
+-- vim.g.do_legacy_filetype = 1
 -- }}}
 
 
@@ -633,7 +632,7 @@ require('lspconfig').fortls.setup {
     on_attach = on_attach,
     capabilities = capabilities,
     cmd = { 'fortls' },
-    filetypes = { "fortran", "Fortran77" },
+    filetypes = { "fortran", "fortran77" },
     settings = {
         notifyInit = true,
         lowercaseIntrinsics = true,
@@ -843,29 +842,13 @@ vim.api.nvim_create_autocmd("FileType", {
 
 
 -- Fortran specific {{{
-vim.cmd([[
-    augroup Fortran77
-    autocmd!
-    autocmd BufNewFile,BufRead *.f :set filetype=Fortran77
-    autocmd BufNewFile,BufRead *.f :set syntax=fortran
-    autocmd Filetype Fortran77 let g:fortran_fixed_source=1
-    autocmd Filetype Fortran77 set tabstop=6
-    autocmd Filetype Fortran77 set softtabstop=3
-    autocmd Filetype Fortran77 set shiftwidth=3
-    augroup end
-    doautoall Fortran77 FileType Loaded-Buffer,BufRead
-
-    augroup customFortran
-    autocmd FileType fortran setlocal tabstop=2
-    autocmd FileType fortran setlocal shiftwidth=2 
-    augroup end
-
-    augroup FortranCUDA
-      autocmd!
-      autocmd BufNewFile,BufRead *.cuf :set filetype=fortran
-    augroup end
-]])
-vim.api.nvim_set_keymap('n', '<leader>ff', ':set syntax=fortran<CR>', keymapOpts)
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "fortran",
+    callback = function ()
+        vim.o.tabstop=2
+        vim.o.shiftwidth=2
+    end
+})
 -- }}}
 
 
