@@ -997,9 +997,6 @@ vim.keymap.set('n', '<leader>/', '<CMD>lua require("Comment.api").toggle_current
     desc = "Toggle comment on current line" })
 vim.keymap.set('x', '<leader>/', '<ESC><CMD>lua require("Comment.api").toggle_linewise_op(vim.fn.visualmode())<CR>', {
     desc = "Toggle comment on current line" })
-
--- Fortran77
-require('Comment.ft').set('Fortran77', 'C%s')
 -- }}}
 
 
