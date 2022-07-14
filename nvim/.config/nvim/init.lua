@@ -172,10 +172,10 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 
 -- Various {{{
 -- Edit config file
-vim.api.nvim_set_keymap('n', '<leader>v', ':e $MYVIMRC<CR>', keymapOpts)
+vim.keymap.set('n', '<leader>v', ':e $MYVIMRC<CR>', { desc = "Edit init.lua"})
 
 -- No highlight
-vim.api.nvim_set_keymap('n', '<CR>', ':noh<CR>', keymapOpts)
+vim.keymap.set('n', '<CR>', ':noh<CR>', { desc = "No highlight"})
 
 -- Move in split navigations
 vim.api.nvim_set_keymap('n', '<C-J>', '<C-W><C-J>', { noremap = true })
@@ -521,36 +521,46 @@ require('telescope').load_extension('fzf')
 -- nvim-telescope/telescope-file-browser.nvim
 require("telescope").load_extension "file_browser"
 
-vim.api.nvim_set_keymap('n', '<leader>p', '<cmd>Telescope commands<cr>', keymapOpts)
+vim.keymap.set('n', '<leader>p', '<cmd>Telescope commands<cr>', {
+    desc = "Lists available plugin/user commands and runs them on `<cr>`" })
 
-vim.api.nvim_set_keymap('n', '<leader><space>', '<cmd>Telescope buffers<cr>', keymapOpts)
+vim.keymap.set('n', '<leader><space>', '<cmd>Telescope buffers<cr>', {desc = "Show buffers with Telescope"})
 
-vim.api.nvim_set_keymap('n', '<leader>ss', '<cmd>Telescope file_browser<cr>', keymapOpts)
-vim.api.nvim_set_keymap('n', '<leader>sf', '<cmd>Telescope find_files<cr>', keymapOpts)
-vim.api.nvim_set_keymap('n', '<leader>sb', '<cmd>Telescope current_buffer_fuzzy_find<cr>', keymapOpts)
-vim.api.nvim_set_keymap('n', '<leader>sh', '<cmd>Telescope help_tags<cr>', keymapOpts)
-vim.api.nvim_set_keymap('n', '<leader>sw', '<cmd>Telescope grep_string<cr>', keymapOpts)
+vim.keymap.set('n', '<leader>fs', '<cmd>Telescope file_browser<cr>', { desc = "Telescope file browser"})
+vim.keymap.set('n', '<leader>ff', '<cmd>Telescope find_files<cr>', { desc = "Telescope find files"})
+vim.keymap.set('n', '<leader>fb', '<cmd>Telescope current_buffer_fuzzy_find<cr>', { desc = "Telescope fuzzy find in current buffer"})
+vim.keymap.set('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', { desc = "Telescope help"})
+vim.keymap.set('n', '<leader>fw', '<cmd>Telescope grep_string<cr>', {
+    desc = "Telescope searches for the string under your cursor in your current working directory" })
 vim.api.nvim_set_keymap('n', '<leader>sg', '<cmd>Telescope live_grep<cr>', keymapOpts)
+vim.keymap.set('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', {
+    desc = "Telesccope search for a string and get results live as you type" })
+vim.keymap.set('n', '<leader>fk', '<CMD>Telescope keymaps<CR>', {desc = "See keymaps with Telescope"})
 
 -- vim.api.nvim_set_keymap('n', '<leader>st', [[<cmd>lua require('telescope.builtin').tags()<CR>]], opts)
 -- vim.api.nvim_set_keymap('n', '<leader>so', [[<cmd>lua require('telescope.builtin').tags{ only_current_buffer = true }<CR>]], opts)
 -- vim.api.nvim_set_keymap('n', '<leader>?', [[<cmd>lua require('telescope.builtin').oldfiles()<CR>]], opts)
 
 -- Telescope for git
-vim.api.nvim_set_keymap('n', '<leader>gc', '<cmd>Telescope git_commits<cr>', keymapOpts)
-vim.api.nvim_set_keymap('n', '<leader>gb', '<cmd>Telescope git_bcommits<cr>', keymapOpts)
-vim.api.nvim_set_keymap('n', '<leader>gs', '<cmd>Telescope git_status<cr>', keymapOpts)
+vim.keymap.set('n', '<leader>gc', '<cmd>Telescope git_commits<cr>', {
+    desc = "Telescope lists commits for current directory with diff preview" })
+vim.keymap.set('n', '<leader>gs', '<cmd>Telescope git_status<cr>', {
+    desc = "Telescope lists git status for current directory" })
+vim.keymap.set('n', '<leader>gb', '<cmd>Telescope git_bcommits<cr>', {
+    desc = "Telescope lists commits for current buffer with diff preview" })
 
 -- Search dotfiles
-vim.api.nvim_set_keymap('n', '<leader>ed', "", {
-    callback = function()
+
+vim.keymap.set('n', '<leader>ed', 
+    function()
         require('telescope.builtin').git_files {
             cwd = "~/.dotfiles/",
             prompt_title = "~ Edit dotfiles ~",
             layout_strategies = "horizontal",
         }
-    end
-})
+    end,
+    { desc = "Telescope edit dotfiles" 
+    })
 
 
 -- Telescope LSP commands
@@ -907,40 +917,54 @@ vim.fn.sign_define('DapBreakpointCondition', { text = '🟡', texthl = '', lineh
 
 -- key mappings
 -- Clear configurations, reload and continue
-vim.api.nvim_set_keymap("n", "<leader>dd", "", {
-    noremap = true,
-    callback = function()
+vim.keymap.set("n", "<leader>dd", 
+    function()
         require("dap_config").clear_configurations()
         require("dap_config").config_dap()
         dap.continue()
     end,
-    }
-)
-vim.api.nvim_set_keymap('n', '<F5>', '<Cmd>lua require("dap").continue()<CR>', keymapOpts)
-vim.api.nvim_set_keymap('n', '<F4>', '<Cmd>lua require("dap").run_last()<CR>', keymapOpts)
-vim.api.nvim_set_keymap('n', '<F3>', '<Cmd>lua require("dap").pause()<CR>', keymapOpts)
-vim.api.nvim_set_keymap('n', '<F2>', '<Cmd>lua require("dap").terminate()<CR>', keymapOpts)
+    { desc = "DAP: debug load configurations with Telescope" })
 
-vim.api.nvim_set_keymap('n', '<F10>', '<Cmd>lua require("dap").step_over()<CR>', keymapOpts)
-vim.api.nvim_set_keymap('n', '<F11>', '<Cmd>lua require("dap").step_into()<CR>', keymapOpts)
-vim.api.nvim_set_keymap('n', '<F12>', '<Cmd>lua require("dap").step_out()<CR>', keymapOpts)
-vim.api.nvim_set_keymap('n', '<F8>', '<Cmd>lua require("dap").run_to_cursor()<CR>', keymapOpts)
-vim.api.nvim_set_keymap('n', '<F9>', '<Cmd>lua require("dap").toggle_breakpoint()<CR>', keymapOpts)
-vim.api.nvim_set_keymap('n', '<leader>db', '<Cmd>lua require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>', keymapOpts)
-
-vim.api.nvim_set_keymap('n', '<leader>dx', '<Cmd>lua require("dap").disconnect()<CR>', keymapOpts)
-vim.api.nvim_set_keymap('n', '<leader>dr', '<Cmd>lua require("dap").repl.open()<CR>', keymapOpts)
-
-vim.api.nvim_set_keymap('n', '<leader>dt', '<Cmd>lua require("dapui").toggle()<CR>', keymapOpts)
-vim.api.nvim_set_keymap('n', '<leader>dc', '<Cmd>lua require("dapui").close()<CR>', keymapOpts)
-
+vim.keymap.set('n', '<F5>', '<Cmd>lua require("dap").continue()<CR>', {
+    desc = "DAP: debug continue" })
+vim.keymap.set('n', '<F4>', '<Cmd>lua require("dap").run_last()<CR>', {
+    desc = "DAP: debug run last configuration" })
+vim.keymap.set('n', '<F3>', '<Cmd>lua require("dap").pause()<CR>', {
+    desc = "DAP: debug pause" })
+vim.keymap.set('n', '<F2>', '<Cmd>lua require("dap").terminate()<CR>', {
+    desc = "DAP: debug terminate" })
+vim.keymap.set('n', '<F10>', '<Cmd>lua require("dap").step_over()<CR>', {
+    desc = "DAP: debug step over"
+})
+vim.keymap.set('n', '<F11>', '<Cmd>lua require("dap").step_into()<CR>', {
+    desc = "DAP: debug step into" })
+vim.keymap.set('n', '<F12>', '<Cmd>lua require("dap").step_out()<CR>', {
+    desc = "DAP: debug step out" })
+vim.keymap.set('n', '<F8>', '<Cmd>lua require("dap").run_to_cursor()<CR>', {
+    desc = "DAP: debug run to cursor" })
+vim.keymap.set('n', '<F9>', '<Cmd>lua require("dap").toggle_breakpoint()<CR>', {
+    desc = "DAP: debug toggle breakpoint" })
+vim.keymap.set('n', '<leader>db', '<Cmd>lua require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>', {
+    desc = "DAP: debug set breakpoint condition" })
+vim.keymap.set('n', '<leader>dx', '<Cmd>lua require("dap").disconnect()<CR>', {
+    desc = "DAP: debug disconnect" })
+vim.keymap.set('n', '<leader>dr', '<Cmd>lua require("dap").repl.open()<CR>', {
+    desc = "DAP: debug open repl" })
+vim.keymap.set('n', '<leader>dt', '<Cmd>lua require("dapui").toggle()<CR>', {
+    desc = "DAP: debug toggle dap-ui" })
+vim.keymap.set('n', '<leader>dc', '<Cmd>lua require("dapui").close()<CR>', {
+    desc = "DAP: debug close dap-ui" })
 
 -- hover
-vim.api.nvim_set_keymap('n', '<leader>i', '<Cmd>lua require("dapui").eval(nil, {enter = true, context = "repl"})<CR>', keymapOpts)
-vim.api.nvim_set_keymap('x', '<leader>i', '<Cmd>lua require("dapui").eval(nil, {enter = true, context = "repl"})<CR>', keymapOpts)
+vim.keymap.set('n', '<leader>i', '<Cmd>lua require("dapui").eval(nil, {enter = true, context = "repl"})<CR>', {
+    desc = "DAP: open a floating window containing the result of evaluting an expression" })
+vim.keymap.set('x', '<leader>i', '<Cmd>lua require("dapui").eval(nil, {enter = true, context = "repl"})<CR>', {
+    desc = "DAP: open a floating window containing the result of evaluting an expression" })
 
  -- Reload launch json configuration
-vim.api.nvim_set_keymap('n', '<leader>dl', '<Cmd>lua require("dap.ext.vscode").load_launchjs("./.nvim-dap/launch.json")<cr>', {noremap = true, silent = false})
+vim.keymap.set('n', '<leader>dl', '<Cmd>lua require("dap.ext.vscode").load_launchjs("./.nvim-dap/launch.json")<cr>', {
+    desc = "DAP: load ./.nvim-dap/launch.json with debugger configuration" })
+
 
 -- Use nvim-dap events to open and close the windows automatically
 dap.listeners.after.event_initialized["dapui_config"] = function()
@@ -969,11 +993,10 @@ vim.g.gitblame_enabled = 0
 -- numToStr/Comment.nvim {{{
 require('Comment').setup()
 
-vim.keymap.set('n', '<leader>/', '<CMD>lua require("Comment.api").toggle_current_linewise()<CR>')
-vim.keymap.set('x', '<leader>/', '<ESC><CMD>lua require("Comment.api").toggle_linewise_op(vim.fn.visualmode())<CR>')
-
--- Fortran77
-require('Comment.ft').set('Fortran77', 'C%s')
+vim.keymap.set('n', '<leader>/', '<CMD>lua require("Comment.api").toggle_current_linewise()<CR>', {
+    desc = "Toggle comment on current line" })
+vim.keymap.set('x', '<leader>/', '<ESC><CMD>lua require("Comment.api").toggle_linewise_op(vim.fn.visualmode())<CR>', {
+    desc = "Toggle comment on current line" })
 -- }}}
 
 
@@ -981,6 +1004,7 @@ require('Comment.ft').set('Fortran77', 'C%s')
 if vim.fn.has("mac") == 1 then
     require("bepsmac")
     -- Simularia notes
-    vim.api.nvim_set_keymap('n', '<leader>sn', '<cmd>lua require("bepsmac").simulnotes()<cr>', keymapOpts)
+    vim.keymap.set('n', '<leader>sn', '<cmd>lua require("bepsmac").simulnotes()<cr>', {
+        desc = "List Simularia notes with Telescope" })
 end
 -- }}}

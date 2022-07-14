@@ -1,17 +1,11 @@
 local fortran77 = function(path, bufnr)
-    return "fortran77", function (_bufnr)
-        -- vim.api.nvim_buf_set_option(_bufnr, "syntax", "fortran")
-        vim.api.nvim_exec(
-            [[
-            set syntax=fortran
-            let g:fortran_fixed_source=1
-            set tabstop=6
-                        set softtabstop=6
-                        set shiftwidth=6
-                        set softtabstop=6
-            set shiftwidth=6
-            ]],
-            true)
+    return "fortran77", function ()
+        vim.bo.syntax="fortran"
+        vim.g.fortran_fixed_source=1
+        vim.o.tabstop = 6
+        vim.o.shiftwidth = 6
+        vim.o.softtabstop=6
+        vim.bo.commentstring = "C%s"
     end
 end
 
