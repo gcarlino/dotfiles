@@ -521,36 +521,46 @@ require('telescope').load_extension('fzf')
 -- nvim-telescope/telescope-file-browser.nvim
 require("telescope").load_extension "file_browser"
 
-vim.api.nvim_set_keymap('n', '<leader>p', '<cmd>Telescope commands<cr>', keymapOpts)
+vim.keymap.set('n', '<leader>p', '<cmd>Telescope commands<cr>', { 
+    desc = "Lists available plugin/user commands and runs them on `<cr>`" })
 
-vim.api.nvim_set_keymap('n', '<leader><space>', '<cmd>Telescope buffers<cr>', keymapOpts)
+vim.keymap.set('n', '<leader><space>', '<cmd>Telescope buffers<cr>', {desc = "Show buffers with Telescope"})
 
-vim.api.nvim_set_keymap('n', '<leader>ss', '<cmd>Telescope file_browser<cr>', keymapOpts)
-vim.api.nvim_set_keymap('n', '<leader>sf', '<cmd>Telescope find_files<cr>', keymapOpts)
-vim.api.nvim_set_keymap('n', '<leader>sb', '<cmd>Telescope current_buffer_fuzzy_find<cr>', keymapOpts)
-vim.api.nvim_set_keymap('n', '<leader>sh', '<cmd>Telescope help_tags<cr>', keymapOpts)
-vim.api.nvim_set_keymap('n', '<leader>sw', '<cmd>Telescope grep_string<cr>', keymapOpts)
+vim.keymap.set('n', '<leader>fs', '<cmd>Telescope file_browser<cr>', { desc = "Telescope file browser"})
+vim.keymap.set('n', '<leader>ff', '<cmd>Telescope find_files<cr>', { desc = "Telescope find files"})
+vim.keymap.set('n', '<leader>fb', '<cmd>Telescope current_buffer_fuzzy_find<cr>', { desc = "Telescope fuzzy find in current buffer"})
+vim.keymap.set('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', { desc = "Telescope help"})
+vim.keymap.set('n', '<leader>fw', '<cmd>Telescope grep_string<cr>', {
+    desc = "Telescope searches for the string under your cursor in your current working directory" })
 vim.api.nvim_set_keymap('n', '<leader>sg', '<cmd>Telescope live_grep<cr>', keymapOpts)
+vim.keymap.set('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', {
+    desc = "Telesccope search for a string and get results live as you type" })
+vim.keymap.set('n', '<leader>fk', '<CMD>Telescope keymaps<CR>', {desc = "See keymaps with Telescope"})
 
 -- vim.api.nvim_set_keymap('n', '<leader>st', [[<cmd>lua require('telescope.builtin').tags()<CR>]], opts)
 -- vim.api.nvim_set_keymap('n', '<leader>so', [[<cmd>lua require('telescope.builtin').tags{ only_current_buffer = true }<CR>]], opts)
 -- vim.api.nvim_set_keymap('n', '<leader>?', [[<cmd>lua require('telescope.builtin').oldfiles()<CR>]], opts)
 
 -- Telescope for git
-vim.api.nvim_set_keymap('n', '<leader>gc', '<cmd>Telescope git_commits<cr>', keymapOpts)
-vim.api.nvim_set_keymap('n', '<leader>gb', '<cmd>Telescope git_bcommits<cr>', keymapOpts)
-vim.api.nvim_set_keymap('n', '<leader>gs', '<cmd>Telescope git_status<cr>', keymapOpts)
+vim.keymap.set('n', '<leader>gc', '<cmd>Telescope git_commits<cr>', {
+    desc = "Telescope lists commits for current directory with diff preview" })
+vim.keymap.set('n', '<leader>gs', '<cmd>Telescope git_status<cr>', {
+    desc = "Telescope lists git status for current directory" })
+vim.keymap.set('n', '<leader>gb', '<cmd>Telescope git_bcommits<cr>', {
+    desc = "Telescope lists commits for current buffer with diff preview" })
 
 -- Search dotfiles
-vim.api.nvim_set_keymap('n', '<leader>ed', "", {
-    callback = function()
+
+vim.keymap.set('n', '<leader>ed', 
+    function()
         require('telescope.builtin').git_files {
             cwd = "~/.dotfiles/",
             prompt_title = "~ Edit dotfiles ~",
             layout_strategies = "horizontal",
         }
-    end
-})
+    end,
+    { desc = "Telescope edit dotfiles" 
+    })
 
 
 -- Telescope LSP commands
