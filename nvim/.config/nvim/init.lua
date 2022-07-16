@@ -859,6 +859,17 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.o.shiftwidth=2
     end
 })
+--[[ vim.api.nvim_create_autocmd({"FileType", "BufEnter"}, {
+    pattern = "fortran77",
+    callback = function ()
+        vim.bo.syntax="fortran"
+        vim.g.fortran_fixed_source=1
+        vim.o.tabstop = 6
+        vim.o.shiftwidth = 6
+        vim.o.softtabstop=6
+        vim.bo.commentstring = "C%s"
+    end
+}) ]]
 -- }}}
 
 
