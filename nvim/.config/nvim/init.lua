@@ -12,8 +12,7 @@ vim.opt.relativenumber = true
 
 -- Highlight the text line of the cursor
 vim.opt.cursorline = true
--- Enable mouse mode
-vim.opt.mouse = 'a'
+
 -- Enable break indent
 vim.opt.breakindent = true
 -- Case insensitive search unless /C or capital in search
