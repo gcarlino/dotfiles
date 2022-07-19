@@ -85,7 +85,7 @@ export LC_ALL=en_US.UTF-8
 alias rm='rm -i'
 alias mv='mv -i'
 alias vim='nvim'
-alias view='mvim -R'
+alias view='nvim -R'
 alias vi='nvim'
 alias less='less -FRX'
 if type "lsd" > /dev/null ; then
@@ -199,10 +199,7 @@ if [[ $OS == "Linux" ]] ; then
     # export LD_LIBRARY_PATH=/usr/local/cuda-11.5/lib64\
     #     ${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 
-    # Permanently change umask
-    umask 002
-
-    # # alias luamake=/home/carlino/lua-language-server/3rd/luamake/luamake
+    # alias luamake=/home/carlino/lua-language-server/3rd/luamake/luamake
 
     if [ -d /etc/profile.d ]; then
         setopt no_nomatch
@@ -213,7 +210,10 @@ if [[ $OS == "Linux" ]] ; then
         done
         setopt nomatch
     fi
-    #
+
     # module load nvhpc/22.5
+    
+    # Permanently change umask
+    umask 002
 
 fi
