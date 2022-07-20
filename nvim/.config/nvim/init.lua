@@ -35,7 +35,7 @@ vim.o.diffopt = 'internal,filler,closeoff,vertical'
 vim.opt.undofile = false
 
 -- Copy to system clipboard
-vim.api.nvim_set_option("clipboard", "unnamed")
+vim.api.nvim_set_option('clipboard', 'unnamed')
 
 -- Switch to old filetype.vim mechanism
 -- vim.g.do_legacy_filetype = 1
@@ -93,7 +93,7 @@ require('packer').startup(function(use)
     use 'nvim-lua/popup.nvim'
     use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
     use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-    use { "nvim-telescope/telescope-file-browser.nvim" }
+    use 'nvim-telescope/telescope-file-browser.nvim'
     use 'kyazdani42/nvim-tree.lua'
     use 'sudormrfbin/cheatsheet.nvim'
 
@@ -121,8 +121,8 @@ require('packer').startup(function(use)
     use 'jalvesaq/Nvim-R'
 
     -- Debug
-    use "mfussenegger/nvim-dap"
-    use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
+    use 'mfussenegger/nvim-dap'
+    use { 'rcarriga/nvim-dap-ui', requires = { 'mfussenegger/nvim-dap' } }
     use 'mfussenegger/nvim-dap-python'
     use 'theHamsta/nvim-dap-virtual-text'
     use 'nvim-telescope/telescope-dap.nvim'
@@ -138,13 +138,14 @@ require('packer').startup(function(use)
     use 'windwp/nvim-autopairs'
     use 'simrat39/symbols-outline.nvim'
     use 'chentoast/marks.nvim'
-    use { "akinsho/toggleterm.nvim" }
+    use 'akinsho/toggleterm.nvim'
     -- use 'tpope/vim-unimpaired'
     -- use 'sbdchd/neoformat'
     use 'lukas-reineke/indent-blankline.nvim'
     use 'mechatroner/rainbow_csv'
     use 'adamheins/vim-highlight-match-under-cursor'
-    use 'tpope/vim-surround'
+    -- use 'tpope/vim-surround'
+    use 'kylechui/nvim-surround'
     -- use 'tjdevries/astronauta.nvim'
     use 'sidebar-nvim/sidebar.nvim'
     use 'https://github.com/godlygeek/tabular'
@@ -1007,6 +1008,13 @@ vim.keymap.set('n', '<leader>/', '<CMD>lua require("Comment.api").toggle_current
     desc = "Toggle comment on current line" })
 vim.keymap.set('x', '<leader>/', '<ESC><CMD>lua require("Comment.api").toggle_linewise_op(vim.fn.visualmode())<CR>', {
     desc = "Toggle comment on current line" })
+-- }}}
+
+
+-- "kylechui/nvim-surround {{{
+require("nvim-surround").setup({
+            -- Configuration here, or leave empty to use defaults
+})
 -- }}}
 
 
