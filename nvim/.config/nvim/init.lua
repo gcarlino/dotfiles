@@ -501,12 +501,20 @@ vim.api.nvim_set_keymap('n', '<leader>fb', '<cmd>SidebarNvimToggle<CR>', { norem
 
 require('telescope').setup {
     defaults = {
+        mappings = {
+            i = {
+                ['<C-p>'] = require('telescope.actions.layout').toggle_preview
+            }
+        },
         sorting_strategy = "ascending",
         scroll_strategy = "cycle",
         layout_strategies = "flex",
         layout_config = {
             prompt_position = "top",
         },
+    },
+    preview = {
+        hide_on_startup = false
     },
     extensions = {
         file_browser = {
