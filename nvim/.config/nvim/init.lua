@@ -89,13 +89,23 @@ require('packer').startup(function(use)
     use 'saadparwaiz1/cmp_luasnip'
     use 'rafamadriz/friendly-snippets'
 
-    -- Telescope
-    use 'nvim-lua/popup.nvim'
-    use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
+-- Telescope
+    use { 'nvim-telescope/telescope.nvim',
+        requires = {
+            { 'nvim-lua/plenary.nvim' },
+            { 'nvim-lua/popup.nvim' }
+        }
+    }
     use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
     use 'nvim-telescope/telescope-file-browser.nvim'
     use 'kyazdani42/nvim-tree.lua'
-    use 'sudormrfbin/cheatsheet.nvim'
+    use { 'sudormrfbin/cheatsheet.nvim',
+        requires = {
+            {'nvim-telescope/telescope.nvim'},
+            {'nvim-lua/popup.nvim'},
+            {'nvim-lua/plenary.nvim'}
+        }
+    }
 
     -- Tabline
     use { 'alvarosevilla95/luatab.nvim', requires = 'kyazdani42/nvim-web-devicons' }
@@ -544,6 +554,7 @@ vim.api.nvim_set_keymap('n', '<leader>sg', '<cmd>Telescope live_grep<cr>', keyma
 vim.keymap.set('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', {
     desc = "Telesccope search for a string and get results live as you type" })
 vim.keymap.set('n', '<leader>fk', '<CMD>Telescope keymaps<CR>', {desc = "See keymaps with Telescope"})
+vim.keymap.set('n', '<leader>?', '<CMD>Cheatsheet<CR>', {desc = "Cheatsheet"})
 
 -- vim.api.nvim_set_keymap('n', '<leader>st', [[<cmd>lua require('telescope.builtin').tags()<CR>]], opts)
 -- vim.api.nvim_set_keymap('n', '<leader>so', [[<cmd>lua require('telescope.builtin').tags{ only_current_buffer = true }<CR>]], opts)
