@@ -71,15 +71,25 @@ require('packer').startup(function(use)
     use 'neovim/nvim-lspconfig'
     use 'onsails/lspkind-nvim'
 
-    -- Completion
-    use 'hrsh7th/cmp-nvim-lsp'
-    use 'hrsh7th/cmp-nvim-lua'
-    use 'hrsh7th/cmp-buffer'
-    use 'hrsh7th/cmp-path'
-    use 'hrsh7th/cmp-cmdline'
-    use 'rcarriga/cmp-dap'
-    use { 'hrsh7th/nvim-cmp',
-        requires = { 'kdheepak/cmp-latex-symbols' } }
+  -- Completion
+    use {
+        'hrsh7th/nvim-cmp',
+        requires = {
+            'L3MON4D3/LuaSnip',
+            { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
+            'hrsh7th/cmp-nvim-lsp',
+            'hrsh7th/cmp-nvim-lua',
+            'hrsh7th/cmp-nvim-lsp-signature-help',
+            'hrsh7th/cmp-cmdline',
+            { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
+            { 'hrsh7th/cmp-nvim-lua', after = 'nvim-cmp' },
+            { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' },
+            { 'kdheepak/cmp-latex-symbols', after = 'nvim-cmp'},
+            'rcarriga/cmp-dap'
+        },
+        -- config = [[require('config.cmp')]],
+        -- event = 'InsertEnter *',
+    }
 
     -- Snippet
     use 'L3MON4D3/LuaSnip'
@@ -115,7 +125,7 @@ require('packer').startup(function(use)
     use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'}
 
     -- Git
-    use 'tpope/vim-fugitive'
+    use { 'tpope/vim-fugitive' }
     -- use 'itchyny/vim-gitbranch'
     use { 'lewis6991/gitsigns.nvim', requires = 'nvim-lua/plenary.nvim' }
     use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
@@ -123,7 +133,9 @@ require('packer').startup(function(use)
     use 'f-person/git-blame.nvim'
 
     -- R
-    use 'jalvesaq/Nvim-R'
+    use { 'jalvesaq/Nvim-R',
+        keys = "<localleader>rf"
+    }
 
     -- Debug
     use 'mfussenegger/nvim-dap'
@@ -749,6 +761,7 @@ cmp.setup({
 
     sources = cmp.config.sources({
         { name = "nvim_lsp" },
+        { name = "nvim_lsp_signature_help" },
         { name = "nvim_lua" },
         { name = "luasnip" },
         { name = "path" },
