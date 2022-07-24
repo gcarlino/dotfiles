@@ -31,9 +31,6 @@ vim.o.splitright = true
 vim.o.scrolloff = 4
 vim.o.diffopt = 'internal,filler,closeoff,vertical'
 
---Save undo history
-vim.opt.undofile = false
-
 -- Copy to system clipboard
 vim.api.nvim_set_option('clipboard', 'unnamed')
 
