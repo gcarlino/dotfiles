@@ -87,20 +87,18 @@ require('packer').startup(function(use)
     use 'rafamadriz/friendly-snippets'
 
 -- Telescope
-    use { 'nvim-telescope/telescope.nvim',
-        requires = {
-            { 'nvim-lua/plenary.nvim' },
-            { 'nvim-lua/popup.nvim' }
-        }
-    }
+    use { 'nvim-lua/popup.nvim' }
+    use { 'nvim-lua/plenary.nvim' }
+    use { 'nvim-telescope/telescope.nvim' }
     use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-    use 'nvim-telescope/telescope-file-browser.nvim'
-    use 'kyazdani42/nvim-tree.lua'
+    use { 'nvim-telescope/telescope-file-browser.nvim' }
+    use { 'kyazdani42/nvim-tree.lua' }
+    use { 'nvim-telescope/telescope-packer.nvim' }
     use { 'sudormrfbin/cheatsheet.nvim',
         requires = {
-            {'nvim-telescope/telescope.nvim'},
             {'nvim-lua/popup.nvim'},
-            {'nvim-lua/plenary.nvim'}
+            {'nvim-lua/plenary.nvim'},
+            {'nvim-telescope/telescope.nvim'},
         }
     }
 
