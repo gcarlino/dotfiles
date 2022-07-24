@@ -2,7 +2,7 @@
 local keymapOpts = { noremap = true, silent = true }
 
 -- Remap space as leader key and ; as local leader
-vim.api.nvim_set_keymap('', '<Space>', '<Nop>', keymapOpts)
+-- vim.api.nvim_set_keymap('', '<Space>', '<Nop>', keymapOpts)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ';'
 
