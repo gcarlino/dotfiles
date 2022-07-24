@@ -154,7 +154,7 @@ require('packer').startup(function(use)
     -- use 'tpope/vim-surround'
     use 'kylechui/nvim-surround'
     -- use 'tjdevries/astronauta.nvim'
-    use 'sidebar-nvim/sidebar.nvim'
+    use { 'sidebar-nvim/sidebar.nvim', disable = true }
     use 'https://github.com/godlygeek/tabular'
 
     -- Mac specific
@@ -199,7 +199,8 @@ vim.api.nvim_set_keymap('v', '<M-j>', ":m '>+1<CR>gv==gv", { noremap = true })
 vim.api.nvim_set_keymap('v', '<M-k>', ":m '<-2<CR>gv==gv", { noremap = true })
 
 -- Change current directory to working file path
-vim.api.nvim_set_keymap('n', '<leader>cd', ':cd %:p:h<CR>:pwd<CR>', { noremap = true })
+vim.keymap.set('n', '<leader>cd', '<cmd>cd %:p:h<CR>:pwd<CR>',
+    { noremap = true , desc = "Change current directory to working file path."})
 
 -- Highlight syntax inside markdown
 vim.g.markdown_fenced_languages = { 'html', 'python', 'vim', 'r', 'sh' }
@@ -460,16 +461,6 @@ vim.api.nvim_set_keymap('n', '<C-W><C-m>', ':MaximizerToggle!<CR>', { noremap = 
 -- }}}
 
 
--- kassio/neoterm {{{
-vim.g.neoterm_default_mod = 'belowright'
-vim.g.neoterm_size = 18
-vim.g.neoterm_autoinsert = 1
-vim.api.nvim_set_keymap('n', '<c-q>', ":<c-u>exec v:count.'Ttoggle'<CR>", { noremap = true })
-vim.api.nvim_set_keymap('i', '<c-q>', '<Esc>:Ttoggle<CR>', { noremap = true })
-vim.api.nvim_set_keymap('t', '<c-q>', '<c-\\><c-n>:Ttoggle<CR>', { noremap = true })
--- }}}
-
-
 -- use akinsho/toggleterm.nvim {{{
 require("toggleterm").setup {
     open_mapping = [[<c-q>]],
@@ -481,26 +472,21 @@ require("toggleterm").setup {
 -- vim.api.nvim_set_keymap('n', '<leader>F', ':Neoformat prettier<CR>', { noremap = true })
 -- }}}
 
-
+--[[
 -- GustavoKatel/sidebar.nvim {{{
 require("sidebar-nvim").setup({
-    sections = { "datetime", "buffers", "git", "symbols", "todos", "diagnostics" },
     hide_statusline = true,
-    section_separator = {"", "–––––––––––––––––––––––––––––"},
-    datetime = {
-        clocks = {
-            { name = "Local"}
-        }
+    bindings = { ["q"] = function ()
+        require('sidebar-nvim').close()
+    end
     },
-    buffers = {
-        ignored_buffers = {"SidebarNvim*"}
-    }
+    sections = { "datetime", "buffers", "git", "symbols", "todos", "diagnostics" },
 })
 
--- nnoremap <leader>sb <cmd>SidebarNvimToggle<CR>
-vim.api.nvim_set_keymap('n', '<leader>fb', '<cmd>SidebarNvimToggle<CR>', { noremap = true })
+-- Toggle sidebar
+vim.keymap.set('n', '<leader>s', require('sidebar-nvim').toggle, { desc = "Toggle sidebar"})
 -- }}}
-
+]]
 
 -- nvim-telescope/telescope {{{
 -- local actions = require('telescope.actions')
