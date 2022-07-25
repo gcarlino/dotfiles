@@ -506,7 +506,7 @@ require('telescope').setup {
     defaults = {
         mappings = {
             i = {
-                ['<C-p>'] = require('telescope.actions.layout').toggle_preview
+                ['<C-v>'] = require('telescope.actions.layout').toggle_preview
             }
         },
         sorting_strategy = "ascending",
