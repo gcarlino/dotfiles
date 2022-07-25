@@ -307,7 +307,7 @@ require 'nvim-treesitter.configs'.setup({
             },
         },
         move = {
-            enable = false,
+            enable = true,
             set_jumps = true, -- whether to set jumps in the jumplist
             goto_next_start = {
                 [']m'] = '@function.outer',
@@ -583,7 +583,7 @@ vim.keymap.set('n', '<leader>ed',
 
 
 -- neovi/nvim-lspconfig {{{
-local nvim_lsp = require 'lspconfig'
+-- local nvim_lsp = require 'lspconfig'
 
 vim.diagnostic.config({
     virtual_text = true,
@@ -629,8 +629,10 @@ local on_attach = function(client, bufnr)
     end, bufopts)
 end
 
--- nvim-cmp supports additional completion capabilities
+-- additional capabilities
 local capabilities = vim.lsp.protocol.make_client_capabilities()
+
+-- nvim-cmp supports additional completion capabilities
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- tell the sever the capability of foldingRange
@@ -638,15 +640,14 @@ capabilities.textDocument.foldingRange = {
     dynamicRegistration = false,
     lineFoldingOnly = true
 }
---
 
 -- Enable the following language servers
 local servers = { 'pyright', 'html', 'r_language_server', 'yamlls', 'bashls', 'texlab', 'cmake' }
 for _, lsp in ipairs(servers) do
-    nvim_lsp[lsp].setup {
+    require('lspconfig')[lsp].setup({
         on_attach = on_attach,
         capabilities = capabilities,
-    }
+    })
 end
 
 -- custom server configurations
@@ -887,15 +888,53 @@ vim.api.nvim_create_autocmd("FileType", {
 
 
 -- kevinhwang91/nvim-ufo {{{
-vim.wo.foldcolumn = '1'
-vim.wo.foldlevel = 99 -- feel free to decrease the value
-vim.wo.foldenable = true
+vim.o.foldcolumn = '1'
+vim.o.foldlevel = 99 -- feel free to decrease the value
+vim.o.foldlevelstart = -1
+vim.o.foldenable = true
 vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 
--- vim.wo.foldmethod = 'expr'
--- vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
+-- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
+vim.keymap.set('n', 'zR', require('ufo').openAllFolds, { desc = "Open all folds."})
+vim.keymap.set('n', 'zM', require('ufo').closeAllFolds, { desc = "Close all folds."})
 
-require('ufo').setup()
+local handler = function(virtText, lnum, endLnum, width, truncate)
+    local newVirtText = {}
+    local suffix = ('  %d '):format(endLnum - lnum)
+    local sufWidth = vim.fn.strdisplaywidth(suffix)
+    local targetWidth = width - sufWidth
+    local curWidth = 0
+    for _, chunk in ipairs(virtText) do
+        local chunkText = chunk[1]
+        local chunkWidth = vim.fn.strdisplaywidth(chunkText)
+        if targetWidth > curWidth + chunkWidth then
+            table.insert(newVirtText, chunk)
+        else
+            chunkText = truncate(chunkText, targetWidth - curWidth)
+            local hlGroup = chunk[2]
+            table.insert(newVirtText, {chunkText, hlGroup})
+            chunkWidth = vim.fn.strdisplaywidth(chunkText)
+            -- str width returned from truncate() may less than 2nd argument, need padding
+            if curWidth + chunkWidth < targetWidth then
+                suffix = suffix .. (' '):rep(targetWidth - curWidth - chunkWidth)
+            end
+            break
+        end
+        curWidth = curWidth + chunkWidth
+    end
+    table.insert(newVirtText, {suffix, 'MoreMsg'})
+    return newVirtText
+end
+
+-- global handler
+require('ufo').setup({
+    fold_virt_text_handler = handler
+})
+
+-- buffer scope handler
+-- will override global handler if it is existed
+local bufnr = vim.api.nvim_get_current_buf()
+require('ufo').setFoldVirtTextHandler(bufnr, handler)
 -- }}}
 
 
@@ -941,7 +980,7 @@ vim.fn.sign_define('DapBreakpointCondition', { text = '🟡', texthl = '', lineh
 
 -- key mappings
 -- Clear configurations, reload and continue
-vim.keymap.set("n", "<leader>dd", 
+vim.keymap.set("n", "<leader>dd",
     function()
         require("dap_config").clear_configurations()
         require("dap_config").config_dap()
