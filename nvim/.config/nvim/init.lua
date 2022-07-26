@@ -133,9 +133,7 @@ require('packer').startup(function(use)
     use 'f-person/git-blame.nvim'
 
     -- R
-    use { 'jalvesaq/Nvim-R',
-        keys = "<localleader>rf"
-    }
+    use { 'jalvesaq/Nvim-R' }
 
     -- Debug
     use 'mfussenegger/nvim-dap'
