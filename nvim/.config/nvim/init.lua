@@ -382,9 +382,9 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Hide command line when it is not used
-if vim.fn.has("gui_vimr") ~= 1 then
-    vim.cmd([[set cmdheight=0]])
-end
+-- if vim.fn.has("gui_vimr") ~= 1 then
+--     vim.cmd([[set cmdheight=0]])
+-- end
 
 --[[ -- winbar
 if vim.fn.has("gui_vimr") ~= 1 then
