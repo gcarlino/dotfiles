@@ -266,7 +266,8 @@ vim.g.edge_enable = 1
 vim.g.edge_disable_italic_comment = 1
 vim.g.edge_better_performance = 1
 vim.cmd([[ colorscheme edge ]])
-vim.api.nvim_set_hl(0, 'VertSplit', {fg='DarkGray'})
+-- vim.api.nvim_set_hl(0, 'VertSplit', {fg='Gray'})
+vim.api.nvim_set_hl(0, 'VertSplit', {fg='#666666'})
 -- }}}
 
 
