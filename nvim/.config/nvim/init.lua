@@ -39,12 +39,25 @@ vim.api.nvim_set_option('clipboard', 'unnamed')
 -- }}}
 
 
+-- Fold method for init.lua {{{
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "lua",
+    callback = function()
+        vim.o.foldmethod = "marker"
+        vim.o.foldlevel = 0
+        vim.opt.foldcolumn = "1"
+    end
+})
+-- }}}
+
+
 -- Plugins {{{
 
 -- Install packer
 local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-    Packer_bootstrap = vim.fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
+    Packer_bootstrap = vim.fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim',
+        install_path })
 end
 
 require('packer').startup(function(use)
@@ -71,7 +84,7 @@ require('packer').startup(function(use)
     use 'neovim/nvim-lspconfig'
     use 'onsails/lspkind-nvim'
 
-  -- Completion
+    -- Completion
     use {
         'hrsh7th/nvim-cmp',
         requires = {
@@ -84,7 +97,7 @@ require('packer').startup(function(use)
             { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
             { 'hrsh7th/cmp-nvim-lua', after = 'nvim-cmp' },
             { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' },
-            { 'kdheepak/cmp-latex-symbols', after = 'nvim-cmp'},
+            { 'kdheepak/cmp-latex-symbols', after = 'nvim-cmp' },
             'rcarriga/cmp-dap'
         },
         -- config = [[require('config.cmp')]],
@@ -96,7 +109,7 @@ require('packer').startup(function(use)
     use 'saadparwaiz1/cmp_luasnip'
     use 'rafamadriz/friendly-snippets'
 
--- Telescope
+    -- Telescope
     use { 'nvim-lua/popup.nvim' }
     use { 'nvim-lua/plenary.nvim' }
     use { 'nvim-telescope/telescope.nvim' }
@@ -106,9 +119,9 @@ require('packer').startup(function(use)
     use { 'nvim-telescope/telescope-packer.nvim' }
     use { 'sudormrfbin/cheatsheet.nvim',
         requires = {
-            {'nvim-lua/popup.nvim'},
-            {'nvim-lua/plenary.nvim'},
-            {'nvim-telescope/telescope.nvim'},
+            { 'nvim-lua/popup.nvim' },
+            { 'nvim-lua/plenary.nvim' },
+            { 'nvim-telescope/telescope.nvim' },
         }
     }
 
@@ -122,7 +135,7 @@ require('packer').startup(function(use)
     }
 
     -- Folding
-    use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'}
+    use { 'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async' }
 
     -- Git
     use { 'tpope/vim-fugitive' }
@@ -187,10 +200,10 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 
 -- Various {{{
 -- Edit config file
-vim.keymap.set('n', '<leader>v', ':e $MYVIMRC<CR>', { desc = "Edit init.lua"})
+vim.keymap.set('n', '<leader>v', ':e $MYVIMRC<CR>', { desc = "Edit init.lua" })
 
 -- No highlight
-vim.keymap.set('n', '<CR>', ':noh<CR>', { desc = "No highlight"})
+vim.keymap.set('n', '<CR>', ':noh<CR>', { desc = "No highlight" })
 
 -- Move in split navigations
 vim.api.nvim_set_keymap('n', '<C-J>', '<C-W><C-J>', { noremap = true })
@@ -208,7 +221,7 @@ vim.api.nvim_set_keymap('v', '<M-k>', ":m '<-2<CR>gv==gv", { noremap = true })
 
 -- Change current directory to working file path
 vim.keymap.set('n', '<leader>cd', '<cmd>cd %:p:h<CR>:pwd<CR>',
-    { noremap = true , desc = "Change current directory to working file path."})
+    { noremap = true, silent = true, desc = "Change current directory to working file path." })
 
 -- Highlight syntax inside markdown
 vim.g.markdown_fenced_languages = { 'html', 'python', 'vim', 'r', 'sh' }
@@ -226,10 +239,8 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 -- Quickfixlist navigation
 vim.api.nvim_set_keymap("n", "]q", ":cnext<cr>", keymapOpts)
 vim.api.nvim_set_keymap("n", "[q", ":cprevious<cr>", keymapOpts)
--- }}}
 
-
--- listchars {{{
+-- listchars
 vim.opt.listchars = {
     tab = '▸ ',
     trail = '·',
@@ -260,17 +271,17 @@ vim.o.termguicolors = true
 -- sainnhe/edge
 vim.g.edge_style = 'aura'
 vim.g.edge_enable = 1
--- -- vim.g.edge_enable_italic = 1
+-- vim.g.edge_enable_italic = 1
 vim.g.edge_disable_italic_comment = 1
 vim.g.edge_better_performance = 1
 vim.cmd([[ colorscheme edge ]])
--- vim.api.nvim_set_hl(0, 'VertSplit', {fg='Gray'})
-vim.api.nvim_set_hl(0, 'VertSplit', {fg='#666666'})
+-- Override split separator color
+vim.api.nvim_set_hl(0, 'VertSplit', { fg = '#666666' })
 -- }}}
 
 
 -- kyazdani42/nvim-web-devicons {{{
-require('nvim-web-devicons').setup{
+require('nvim-web-devicons').setup {
     default = true,
 }
 -- }}}
@@ -280,7 +291,7 @@ require('nvim-web-devicons').setup{
 -- Parsers must be installed manually via :TSInstall
 require 'nvim-treesitter.configs'.setup({
     highlight = {
-        enable = true, -- false will disable the whole extension
+        enable = true,
     },
     incremental_selection = {
         enable = true,
@@ -328,6 +339,11 @@ require 'nvim-treesitter.configs'.setup({
         },
     },
 })
+-- Tree-sitter base folding
+vim.cmd[[
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+]]
 -- }}}
 
 
@@ -346,9 +362,9 @@ local function getCWD()
 end
 
 require 'lualine'.setup {
-    extensions = {'nvim-tree', 'toggleterm', 'nvim-dap-ui', 'fugitive', 'symbols-outline'},
+    extensions = { 'nvim-tree', 'toggleterm', 'nvim-dap-ui', 'fugitive', 'symbols-outline' },
     options = {
-        theme = 'edge',
+        theme = 'auto',
         global = true,
         section_separators = { left = '', right = '' },
         component_separators = ""
@@ -367,7 +383,7 @@ require 'lualine'.setup {
                 path = 1,
             },
         },
-        lualine_x = {'encoding', 'fileformat'},
+        lualine_x = { 'encoding', 'fileformat' },
     },
 }
 
@@ -498,10 +514,8 @@ vim.keymap.set('n', '<leader>s', require('sidebar-nvim').toggle, { desc = "Toggl
 -- }}}
 ]]
 
--- nvim-telescope/telescope {{{
--- local actions = require('telescope.actions')
--- local action_layout = require('telescope.actions.layout')
 
+-- nvim-telescope/telescope {{{
 require('telescope').setup {
     defaults = {
         mappings = {
@@ -530,40 +544,49 @@ require('telescope').setup {
 -- nvim-telescope/telescope-fzf-native.nvim
 require('telescope').load_extension('fzf')
 -- nvim-telescope/telescope-file-browser.nvim
-require("telescope").load_extension "file_browser"
+require('telescope').load_extension 'file_browser'
 
-vim.keymap.set('n', '<leader>p', '<cmd>Telescope commands<cr>', {
+vim.keymap.set('n', '<leader>p', function() require('telescope.builtin').commands() end, {
     desc = "Lists available plugin/user commands and runs them on `<cr>`" })
 
-vim.keymap.set('n', '<leader><space>', '<cmd>Telescope buffers<cr>', {desc = "Show buffers with Telescope"})
+vim.keymap.set('n', '<leader><space>', function() require('telescope.builtin').buffers() end, {
+    desc = "Show buffers with Telescope" })
 
-vim.keymap.set('n', '<leader>fs', '<cmd>Telescope file_browser<cr>', { desc = "Telescope file browser"})
-vim.keymap.set('n', '<leader>ff', '<cmd>Telescope find_files<cr>', { desc = "Telescope find files"})
-vim.keymap.set('n', '<leader>fb', '<cmd>Telescope current_buffer_fuzzy_find<cr>', { desc = "Telescope fuzzy find in current buffer"})
-vim.keymap.set('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', { desc = "Telescope help"})
-vim.keymap.set('n', '<leader>fw', '<cmd>Telescope grep_string<cr>', {
+vim.keymap.set('n', '<leader>fs', function() require('telescope').extensions.file_browser.file_browser() end, {
+    desc = "Telescope file browser" })
+
+vim.keymap.set('n', '<leader>ff', function() require('telescope.builtin').find_files() end, {
+    desc = "Telescope find files" })
+
+vim.keymap.set('n', '<leader>fb', function() require('telescope.builtin').current_buffer_fuzzy_find() end, {
+    desc = "Telescope fuzzy find in current buffer" })
+
+vim.keymap.set('n', '<leader>fh', function() require('telescope.builtin').help_tags() end, {
+    desc = "Telescope help" })
+
+vim.keymap.set('n', '<leader>fw', function () require('telescope.builtin').grep_string() end, {
     desc = "Telescope searches for the string under your cursor in your current working directory" })
-vim.api.nvim_set_keymap('n', '<leader>sg', '<cmd>Telescope live_grep<cr>', keymapOpts)
-vim.keymap.set('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', {
-    desc = "Telesccope search for a string and get results live as you type" })
-vim.keymap.set('n', '<leader>fk', '<CMD>Telescope keymaps<CR>', {desc = "See keymaps with Telescope"})
-vim.keymap.set('n', '<leader>?', '<CMD>Cheatsheet<CR>', {desc = "Cheatsheet"})
 
--- vim.api.nvim_set_keymap('n', '<leader>st', [[<cmd>lua require('telescope.builtin').tags()<CR>]], opts)
--- vim.api.nvim_set_keymap('n', '<leader>so', [[<cmd>lua require('telescope.builtin').tags{ only_current_buffer = true }<CR>]], opts)
--- vim.api.nvim_set_keymap('n', '<leader>?', [[<cmd>lua require('telescope.builtin').oldfiles()<CR>]], opts)
+vim.keymap.set('n', '<leader>fg', function () require('telescope.builtin').live_grep() end, {
+    desc = "Search for a string and get results live as you type." })
+
+vim.keymap.set('n', '<leader>fk', function () require('telescope.builtin').keymaps() end, {
+    desc = "See keymaps with Telescope" })
+
+vim.keymap.set('n', '<leader>?', '<CMD>Cheatsheet<CR>', { desc = "Cheatsheet" })
 
 -- Telescope for git
-vim.keymap.set('n', '<leader>gc', '<cmd>Telescope git_commits<cr>', {
+vim.keymap.set('n', '<leader>gc', function () require('telescope.builtin').git_commits() end, {
     desc = "Telescope lists commits for current directory with diff preview" })
-vim.keymap.set('n', '<leader>gs', '<cmd>Telescope git_status<cr>', {
+
+vim.keymap.set('n', '<leader>gs', function() require('telescope.builtin').git_status() end, {
     desc = "Telescope lists git status for current directory" })
-vim.keymap.set('n', '<leader>gb', '<cmd>Telescope git_bcommits<cr>', {
+
+vim.keymap.set('n', '<leader>gb', function() require('telescope.builtin').git_bcommits() end, {
     desc = "Telescope lists commits for current buffer with diff preview" })
 
 -- Search dotfiles
-
-vim.keymap.set('n', '<leader>ed', 
+vim.keymap.set('n', '<leader>ed',
     function()
         require('telescope.builtin').git_files {
             cwd = "~/.dotfiles/",
@@ -571,14 +594,11 @@ vim.keymap.set('n', '<leader>ed',
             layout_strategies = "horizontal",
         }
     end,
-    { desc = "Telescope edit dotfiles" 
-    })
-
+    { desc = "Telescope edit dotfiles" })
 
 -- Telescope LSP commands
-
--- nnoremap <leader>ls <cmd>lua require('telescope.builtin').lsp_references()<cr>
--- vim.api.nvim_set_keymap('n', '<leader>ls', [[<cmd>lua require('telescope.builtin').lsp_references()<cr>]], {noremap = true})
+vim.keymap.set('n', '<leader>ls', function () require('telescope.builtin').lsp_references() end, {
+    desc = "List LSP references for word under the cursor" })
 -- }}}
 
 
@@ -599,18 +619,19 @@ for type, icon in pairs(signs) do
 end
 
 -- See `:help vim.lsp.*` for documentation on any of the below functions
-vim.api.nvim_set_keymap('n', '<leader>di', '<cmd>Telescope diagnostics<cr>', keymapOpts)
+vim.keymap.set('n', '<leader>di', function() require('telescope.builtin').diagnostics() end,
+    { desc = "Document diagnostics" })
 -- vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, keymapOpts)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, keymapOpts)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, keymapOpts)
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, keymapOpts)
 
 -- Use an on_attach function to only map the following keys after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
+local on_attach = function(_, bufnr)
     -- Trigger completion with <c-x><c-o>
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-    local bufopts = { noremap=true, silent=true, buffer=bufnr }
+    local bufopts = { noremap = true, silent = true, buffer = bufnr }
 
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
@@ -624,7 +645,7 @@ local on_attach = function(client, bufnr)
     vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
     vim.keymap.set('n', '<leader>f', vim.lsp.buf.formatting, bufopts)
-    vim.keymap.set('n', '<leader>so', function ()
+    vim.keymap.set('n', '<leader>so', function()
         require('telescope.builtin').lsp_document_symbols()
     end, bufopts)
 end
@@ -755,7 +776,7 @@ cmp.setup({
     }),
 
     -- nvim-cmp by defaults disables autocomplete for prompt buffers
-    enabled = function ()
+    enabled = function()
         return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
             or require("cmp_dap").is_dap_buffer()
     end,
@@ -768,7 +789,7 @@ cmp.setup({
         { name = "path" },
         { name = "cmdline" },
         { name = "latex_symbols" },
-        { name = "dap"},
+        { name = "dap" },
         { name = "buffer", keyword_length = 3 }
     }),
 
@@ -853,24 +874,12 @@ require 'marks'.setup {
 -- }}}
 
 
--- Fold method for init.lua {{{
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = "lua",
-    callback = function()
-        vim.o.foldmethod = "marker"
-        vim.o.foldlevel = 0
-        vim.opt.foldcolumn = "1"
-    end
-})
--- }}}
-
-
 -- Fortran specific {{{
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "fortran",
-    callback = function ()
-        vim.o.tabstop=2
-        vim.o.shiftwidth=2
+    callback = function()
+        vim.o.tabstop = 2
+        vim.o.shiftwidth = 2
     end
 })
 --[[ vim.api.nvim_create_autocmd({"FileType", "BufEnter"}, {
@@ -895,8 +904,8 @@ vim.o.foldenable = true
 vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 
 -- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
-vim.keymap.set('n', 'zR', require('ufo').openAllFolds, { desc = "Open all folds."})
-vim.keymap.set('n', 'zM', require('ufo').closeAllFolds, { desc = "Close all folds."})
+vim.keymap.set('n', 'zR', require('ufo').openAllFolds, { desc = "Open all folds." })
+vim.keymap.set('n', 'zM', require('ufo').closeAllFolds, { desc = "Close all folds." })
 
 local handler = function(virtText, lnum, endLnum, width, truncate)
     local newVirtText = {}
@@ -912,7 +921,7 @@ local handler = function(virtText, lnum, endLnum, width, truncate)
         else
             chunkText = truncate(chunkText, targetWidth - curWidth)
             local hlGroup = chunk[2]
-            table.insert(newVirtText, {chunkText, hlGroup})
+            table.insert(newVirtText, { chunkText, hlGroup })
             chunkWidth = vim.fn.strdisplaywidth(chunkText)
             -- str width returned from truncate() may less than 2nd argument, need padding
             if curWidth + chunkWidth < targetWidth then
@@ -922,7 +931,7 @@ local handler = function(virtText, lnum, endLnum, width, truncate)
         end
         curWidth = curWidth + chunkWidth
     end
-    table.insert(newVirtText, {suffix, 'MoreMsg'})
+    table.insert(newVirtText, { suffix, 'MoreMsg' })
     return newVirtText
 end
 
@@ -989,44 +998,61 @@ vim.keymap.set("n", "<leader>dd",
     { desc = "DAP: debug load configurations with Telescope" })
 
 vim.keymap.set('n', '<F5>', '<Cmd>lua require("dap").continue()<CR>', {
-    desc = "DAP: debug continue" })
+    desc = "DAP: debug continue"
+})
 vim.keymap.set('n', '<F4>', '<Cmd>lua require("dap").run_last()<CR>', {
-    desc = "DAP: debug run last configuration" })
+    desc = "DAP: debug run last configuration"
+})
 vim.keymap.set('n', '<F3>', '<Cmd>lua require("dap").pause()<CR>', {
-    desc = "DAP: debug pause" })
+    desc = "DAP: debug pause"
+})
 vim.keymap.set('n', '<F2>', '<Cmd>lua require("dap").terminate()<CR>', {
-    desc = "DAP: debug terminate" })
+    desc = "DAP: debug terminate"
+})
 vim.keymap.set('n', '<F10>', '<Cmd>lua require("dap").step_over()<CR>', {
     desc = "DAP: debug step over"
 })
 vim.keymap.set('n', '<F11>', '<Cmd>lua require("dap").step_into()<CR>', {
-    desc = "DAP: debug step into" })
+    desc = "DAP: debug step into"
+})
 vim.keymap.set('n', '<F12>', '<Cmd>lua require("dap").step_out()<CR>', {
-    desc = "DAP: debug step out" })
+    desc = "DAP: debug step out"
+})
 vim.keymap.set('n', '<F8>', '<Cmd>lua require("dap").run_to_cursor()<CR>', {
-    desc = "DAP: debug run to cursor" })
+    desc = "DAP: debug run to cursor"
+})
 vim.keymap.set('n', '<F9>', '<Cmd>lua require("dap").toggle_breakpoint()<CR>', {
-    desc = "DAP: debug toggle breakpoint" })
-vim.keymap.set('n', '<leader>db', '<Cmd>lua require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>', {
-    desc = "DAP: debug set breakpoint condition" })
+    desc = "DAP: debug toggle breakpoint"
+})
+vim.keymap.set('n', '<leader>db', '<Cmd>lua require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>',
+    {
+        desc = "DAP: debug set breakpoint condition"
+    })
 vim.keymap.set('n', '<leader>dx', '<Cmd>lua require("dap").disconnect()<CR>', {
-    desc = "DAP: debug disconnect" })
+    desc = "DAP: debug disconnect"
+})
 vim.keymap.set('n', '<leader>dr', '<Cmd>lua require("dap").repl.open()<CR>', {
-    desc = "DAP: debug open repl" })
+    desc = "DAP: debug open repl"
+})
 vim.keymap.set('n', '<leader>dt', '<Cmd>lua require("dapui").toggle()<CR>', {
-    desc = "DAP: debug toggle dap-ui" })
+    desc = "DAP: debug toggle dap-ui"
+})
 vim.keymap.set('n', '<leader>dc', '<Cmd>lua require("dapui").close()<CR>', {
-    desc = "DAP: debug close dap-ui" })
+    desc = "DAP: debug close dap-ui"
+})
 
 -- hover
 vim.keymap.set('n', '<leader>i', '<Cmd>lua require("dapui").eval(nil, {enter = true, context = "repl"})<CR>', {
-    desc = "DAP: open a floating window containing the result of evaluting an expression" })
+    desc = "DAP: open a floating window containing the result of evaluting an expression"
+})
 vim.keymap.set('x', '<leader>i', '<Cmd>lua require("dapui").eval(nil, {enter = true, context = "repl"})<CR>', {
-    desc = "DAP: open a floating window containing the result of evaluting an expression" })
+    desc = "DAP: open a floating window containing the result of evaluting an expression"
+})
 
- -- Reload launch json configuration
+-- Reload launch json configuration
 vim.keymap.set('n', '<leader>dl', '<Cmd>lua require("dap.ext.vscode").load_launchjs("./.nvim-dap/launch.json")<cr>', {
-    desc = "DAP: load ./.nvim-dap/launch.json with debugger configuration" })
+    desc = "DAP: load ./.nvim-dap/launch.json with debugger configuration"
+})
 
 
 -- Use nvim-dap events to open and close the windows automatically
@@ -1057,15 +1083,17 @@ vim.g.gitblame_enabled = 0
 require('Comment').setup()
 
 vim.keymap.set('n', '<leader>/', '<CMD>lua require("Comment.api").toggle_current_linewise()<CR>', {
-    desc = "Toggle comment on current line" })
+    desc = "Toggle comment on current line"
+})
 vim.keymap.set('x', '<leader>/', '<ESC><CMD>lua require("Comment.api").toggle_linewise_op(vim.fn.visualmode())<CR>', {
-    desc = "Toggle comment on current line" })
+    desc = "Toggle comment on current line"
+})
 -- }}}
 
 
 -- "kylechui/nvim-surround {{{
 require("nvim-surround").setup({
-            -- Configuration here, or leave empty to use defaults
+    -- Configuration here, or leave empty to use defaults
 })
 -- }}}
 
@@ -1075,6 +1103,7 @@ if vim.fn.has("mac") == 1 then
     require("bepsmac")
     -- Simularia notes
     vim.keymap.set('n', '<leader>sn', '<cmd>lua require("bepsmac").simulnotes()<cr>', {
-        desc = "List Simularia notes with Telescope" })
+        desc = "List Simularia notes with Telescope"
+    })
 end
 -- }}}
