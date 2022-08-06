@@ -246,6 +246,7 @@ vim.opt.listchars = {
     trail = '·',
     precedes = '←',
     extends = '→',
+    conceal = '┊',
     eol = '↲',
     nbsp = '␣'
 }
