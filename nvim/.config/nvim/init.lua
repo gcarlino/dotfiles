@@ -64,6 +64,8 @@ require('packer').startup(function(use)
     -- Package manager
     use 'wbthomason/packer.nvim'
 
+    use 'rcarriga/nvim-notify'
+
     -- Tree-sitter
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
     use 'nvim-treesitter/nvim-treesitter-textobjects'
@@ -287,6 +289,11 @@ vim.api.nvim_set_hl(0, 'VertSplit', { fg = '#666666' })
 require('nvim-web-devicons').setup {
     default = true,
 }
+-- }}}
+
+
+-- use rcarriga/nvim-notify {{{
+vim.notify = require("notify")
 -- }}}
 
 
