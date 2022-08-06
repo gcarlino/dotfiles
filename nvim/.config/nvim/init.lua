@@ -85,6 +85,7 @@ require('packer').startup(function(use)
     --   cmake   pip3 install cmake-language-server
     use 'neovim/nvim-lspconfig'
     use 'onsails/lspkind-nvim'
+    use {'nvim-telescope/telescope-ui-select.nvim' }
     -- Standalone UI for nvim-lsp progress
     use 'j-hui/fidget.nvim'
 
@@ -525,7 +526,7 @@ vim.keymap.set('n', '<leader>s', require('sidebar-nvim').toggle, { desc = "Toggl
 ]]
 
 
--- nvim-telescope/telescope {{{
+-- Telescope {{{
 require('telescope').setup {
     defaults = {
         mappings = {
@@ -544,6 +545,9 @@ require('telescope').setup {
         hide_on_startup = false
     },
     extensions = {
+        [ "ui-select" ] = {
+            require("telescope.themes").get_dropdown()
+        },
         file_browser = {
             respect_gitignore = false,
             hijack_netrw = true,
@@ -555,6 +559,8 @@ require('telescope').setup {
 require('telescope').load_extension('fzf')
 -- nvim-telescope/telescope-file-browser.nvim
 require('telescope').load_extension 'file_browser'
+require("telescope").load_extension("packer")
+require("telescope").load_extension("ui-select")
 
 vim.keymap.set('n', '<leader>p', function() require('telescope.builtin').commands() end, {
     desc = "Lists available plugin/user commands and runs them on `<cr>`" })
