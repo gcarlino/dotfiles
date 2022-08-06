@@ -83,6 +83,8 @@ require('packer').startup(function(use)
     --   cmake   pip3 install cmake-language-server
     use 'neovim/nvim-lspconfig'
     use 'onsails/lspkind-nvim'
+    -- Standalone UI for nvim-lsp progress
+    use 'j-hui/fidget.nvim'
 
     -- Completion
     use {
@@ -720,6 +722,9 @@ require('lspconfig').sumneko_lua.setup {
 }
 -- }}}
 
+-- j-hui/fidget.nvim {{{
+require"fidget".setup{}
+-- }}}
 
 -- hrsh7th/nvim-cmp {{{
 local lspkind = require('lspkind')
