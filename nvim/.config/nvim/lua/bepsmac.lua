@@ -27,5 +27,7 @@ M.simulnotes = function()
     require('telescope.builtin').live_grep(opts)
 end
 
--- Return table M
-return M
+-- Simularia notes
+vim.keymap.set('n', '<leader>sn', function() M.simulnotes() end, {
+    desc = "List Simularia notes with Telescope"
+})

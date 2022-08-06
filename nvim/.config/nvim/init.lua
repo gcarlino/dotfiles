@@ -1121,9 +1121,5 @@ vim.keymap.set('n', '<leader>ls', function () require('telescope.builtin').lsp_r
 -- Load mac specific configuration {{{
 if vim.fn.has("mac") == 1 then
     require("bepsmac")
-    -- Simularia notes
-    vim.keymap.set('n', '<leader>sn', '<cmd>lua require("bepsmac").simulnotes()<cr>', {
-        desc = "List Simularia notes with Telescope"
-    })
 end
 -- }}}
