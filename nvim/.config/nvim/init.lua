@@ -892,16 +892,13 @@ require('nvim-autopairs').setup({})
 
 
 -- DAP {{{
--- Adapters configurations in dap_config.lua
+-- Adapters configurations in beps/dap_config.lua
 
 local dap = require("dap")
 local dapui = require("dapui")
 
 --- Python
 -- vim.g.python3_host_prog = '~/.virtualenvs/debugpy/bin/python3'
-
--- Enable dap in telescope
-require('telescope').load_extension('dap')
 
 -- nvim-dap-ui
 dapui.setup({
@@ -919,79 +916,58 @@ vim.fn.sign_define('DapBreakpointCondition', { text = '🟡', texthl = '', lineh
 -- Clear configurations, reload and continue
 vim.keymap.set("n", "<leader>dd",
     function()
-        require("dap_config").clear_configurations()
-        require("dap_config").config_dap()
+        require("beps.dap_config").clear_configurations()
+        require("beps.dap_config").config_dap()
         dap.continue()
     end,
     { desc = "DAP: debug load configurations with Telescope" })
 
-vim.keymap.set('n', '<F5>', '<Cmd>lua require("dap").continue()<CR>', {
-    desc = "DAP: debug continue"
-})
-vim.keymap.set('n', '<F4>', '<Cmd>lua require("dap").run_last()<CR>', {
-    desc = "DAP: debug run last configuration"
-})
-vim.keymap.set('n', '<F3>', '<Cmd>lua require("dap").pause()<CR>', {
-    desc = "DAP: debug pause"
-})
-vim.keymap.set('n', '<F2>', '<Cmd>lua require("dap").terminate()<CR>', {
-    desc = "DAP: debug terminate"
-})
-vim.keymap.set('n', '<F10>', '<Cmd>lua require("dap").step_over()<CR>', {
-    desc = "DAP: debug step over"
-})
-vim.keymap.set('n', '<F11>', '<Cmd>lua require("dap").step_into()<CR>', {
-    desc = "DAP: debug step into"
-})
-vim.keymap.set('n', '<F12>', '<Cmd>lua require("dap").step_out()<CR>', {
-    desc = "DAP: debug step out"
-})
-vim.keymap.set('n', '<F8>', '<Cmd>lua require("dap").run_to_cursor()<CR>', {
-    desc = "DAP: debug run to cursor"
-})
-vim.keymap.set('n', '<F9>', '<Cmd>lua require("dap").toggle_breakpoint()<CR>', {
-    desc = "DAP: debug toggle breakpoint"
-})
-vim.keymap.set('n', '<leader>db', '<Cmd>lua require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>',
-    {
-        desc = "DAP: debug set breakpoint condition"
-    })
-vim.keymap.set('n', '<leader>dx', '<Cmd>lua require("dap").disconnect()<CR>', {
-    desc = "DAP: debug disconnect"
-})
-vim.keymap.set('n', '<leader>dr', '<Cmd>lua require("dap").repl.open()<CR>', {
-    desc = "DAP: debug open repl"
-})
-vim.keymap.set('n', '<leader>dt', '<Cmd>lua require("dapui").toggle()<CR>', {
-    desc = "DAP: debug toggle dap-ui"
-})
-vim.keymap.set('n', '<leader>dc', '<Cmd>lua require("dapui").close()<CR>', {
-    desc = "DAP: debug close dap-ui"
-})
+vim.keymap.set('n', '<F5>', function() dap.continue() end,
+    { desc = "DAP: debug continue" })
+vim.keymap.set('n', '<F4>', function() dap.run_last() end,
+    { desc = "DAP: debug run last configuration" })
+vim.keymap.set('n', '<F3>', function() dap.pause() end,
+    { desc = "DAP: debug pause" })
+vim.keymap.set('n', '<F2>', function () dap.terminate() end,
+    { desc = "DAP: debug terminate" })
+vim.keymap.set('n', '<F10>', function() dap.step_over() end,
+    { desc = "DAP: debug step over" })
+vim.keymap.set('n', '<F11>', function() dap.step_into() end,
+    { desc = "DAP: debug step into" })
+vim.keymap.set('n', '<F12>', function() dap.step_out() end,
+    { desc = "DAP: debug step out" })
+vim.keymap.set('n', '<F8>', function() dap.run_to_cursor() end,
+    { desc = "DAP: debug run to cursor" })
+vim.keymap.set('n', '<F9>', function() dap.toggle_breakpoint() end,
+    { desc = "DAP: debug toggle breakpoint" })
+vim.keymap.set('n', '<leader>db', function() dap.set_breakpoint(vim.fn.input("Breakpoint condition: ")) end,
+    { desc = "DAP: debug set breakpoint condition" })
+vim.keymap.set('n', '<leader>dx', function() dap.disconnect() end,
+    { desc = "DAP: debug disconnect" })
+vim.keymap.set('n', '<leader>dr', function() dap.repl.open() end,
+    { desc = "DAP: debug open repl" })
+vim.keymap.set('n', '<leader>dt', function() dapui.toggle({}) end,
+    { desc = "DAP: debug toggle dap-ui" })
+vim.keymap.set('n', '<leader>dc', function() dapui.close({}) end,
+    { desc = "DAP: debug close dap-ui" })
 
 -- hover
-vim.keymap.set('n', '<leader>i', '<Cmd>lua require("dapui").eval(nil, {enter = true, context = "repl"})<CR>', {
-    desc = "DAP: open a floating window containing the result of evaluting an expression"
-})
-vim.keymap.set('x', '<leader>i', '<Cmd>lua require("dapui").eval(nil, {enter = true, context = "repl"})<CR>', {
-    desc = "DAP: open a floating window containing the result of evaluting an expression"
-})
+vim.keymap.set({'n', 'x'}, '<leader>i', function () dapui.eval(nil, {enter = true, context = "repl"}) end, 
+    { desc = "DAP: open a floating window containing the result of evaluting an expression" })
 
 -- Reload launch json configuration
-vim.keymap.set('n', '<leader>dl', '<Cmd>lua require("dap.ext.vscode").load_launchjs("./.nvim-dap/launch.json")<cr>', {
-    desc = "DAP: load ./.nvim-dap/launch.json with debugger configuration"
-})
-
+vim.keymap.set('n', '<leader>dl', function() require("dap.ext.vscode").load_launchjs("./.nvim-dap/launch.json") end,
+    { desc = "DAP: load ./.nvim-dap/launch.json with debugger configuration" })
 
 -- Use nvim-dap events to open and close the windows automatically
 dap.listeners.after.event_initialized["dapui_config"] = function()
-    dapui.open()
+    dapui.open({})
 end
 dap.listeners.before.event_terminated["dapui_config"] = function()
-    dapui.close()
+    dapui.close({})
 end
 dap.listeners.before.event_exited["dapui_config"] = function()
-    dapui.close()
+    dapui.close({})
 end
 
 -- DAP virtual text
@@ -1060,6 +1036,7 @@ require('telescope').load_extension('fzf')
 require('telescope').load_extension 'file_browser'
 require("telescope").load_extension("packer")
 require("telescope").load_extension("ui-select")
+require('telescope').load_extension('dap')
 
 -- Keymaps
 vim.keymap.set('n', '<leader>p', function() require('telescope.builtin').commands() end, {
@@ -1120,6 +1097,6 @@ vim.keymap.set('n', '<leader>ls', function () require('telescope.builtin').lsp_r
 
 -- Load mac specific configuration {{{
 if vim.fn.has("mac") == 1 then
-    require("bepsmac")
+    require("beps.bepsmac")
 end
 -- }}}
