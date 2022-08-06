@@ -1097,6 +1097,6 @@ vim.keymap.set('n', '<leader>ls', function () require('telescope.builtin').lsp_r
 
 -- Load mac specific configuration {{{
 if vim.fn.has("mac") == 1 then
-    require("beps.bepsmac")
+    require("beps.mac")
 end
 -- }}}
