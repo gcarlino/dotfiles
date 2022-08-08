@@ -283,6 +283,20 @@ vim.g.edge_better_performance = 1
 vim.cmd([[ colorscheme edge ]])
 -- Override split separator color
 vim.api.nvim_set_hl(0, 'VertSplit', { fg = '#666666' })
+
+-- Toggle backgournd color 
+vim.api.nvim_set_keymap("n", "<leader>b", "", {
+    noremap = true,
+    callback = function()
+        local _background = vim.api.nvim_get_option("background")
+        if (_background == "light") then
+            vim.o.background = "dark"
+        else
+            vim.o.background = "light"
+        end
+    end,
+    desc = "Toggle background color"
+})
 -- }}}
 
 
@@ -417,22 +431,6 @@ vim.api.nvim_create_autocmd("FileType", {
 if vim.fn.has("gui_vimr") ~= 1 then
     vim.opt.winbar = "%= %m %t"
 end ]]
--- }}}
-
-
--- Toggle color {{{
-vim.api.nvim_set_keymap("n", "<leader>b", "", {
-    noremap = true,
-    callback = function()
-        local _background = vim.api.nvim_get_option("background")
-        if (_background == "light") then
-            vim.o.background = "dark"
-        else
-            vim.o.background = "light"
-        end
-    end,
-    desc = "Toggle background color"
-})
 -- }}}
 
 
