@@ -58,7 +58,7 @@ plugins=(
     nmap
     rsync
     sudo
-    # macos
+    macos
     zsh-autosuggestions
     # zsh-syntax-highlighting
 )
