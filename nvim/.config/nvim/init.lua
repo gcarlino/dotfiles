@@ -268,6 +268,14 @@ vim.api.nvim_create_autocmd({ "VimEnter", "BufEnter", "InsertLeave" }, {
         vim.opt.list = false
     end
 })
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "html",
+    callback = function()
+        vim.o.tabstop = 2
+        vim.o.shiftwidth = 2
+    end
+})
 -- }}}
 
 
@@ -307,12 +315,12 @@ require('nvim-web-devicons').setup {
 -- }}}
 
 
--- use rcarriga/nvim-notify {{{
+-- rcarriga/nvim-notify {{{
 vim.notify = require("notify")
 -- }}}
 
 
--- Tree-sitter configuration {{{
+-- Tree-sitter {{{
 -- Parsers must be installed manually via :TSInstall
 require 'nvim-treesitter.configs'.setup({
     highlight = {
@@ -950,7 +958,7 @@ vim.keymap.set('n', '<leader>dc', function() dapui.close({}) end,
     { desc = "DAP: debug close dap-ui" })
 
 -- hover
-vim.keymap.set({'n', 'x'}, '<leader>i', function () dapui.eval(nil, {enter = true, context = "repl"}) end, 
+vim.keymap.set({'n', 'x'}, '<leader>i', function () dapui.eval(nil, {enter = true, context = "repl"}) end,
     { desc = "DAP: open a floating window containing the result of evaluting an expression" })
 
 -- Reload launch json configuration
@@ -994,9 +1002,7 @@ vim.keymap.set('x', '<leader>/', '<ESC><CMD>lua require("Comment.api").toggle_li
 
 
 -- "kylechui/nvim-surround {{{
-require("nvim-surround").setup({
-    -- Configuration here, or leave empty to use defaults
-})
+require("nvim-surround").setup({})
 -- }}}
 
 
