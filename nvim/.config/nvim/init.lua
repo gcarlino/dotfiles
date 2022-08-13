@@ -185,7 +185,9 @@ require('packer').startup(function(use)
 
     -- Mac specific
     if vim.fn.has('mac') == 1 then
-        use 'rizzatti/dash.vim'
+        use({'mrjones2014/dash.nvim',
+            requires = { 'nvim-telescope/telescope.nvim' },
+            run = 'make install', })
     end
 
     if Packer_bootstrap then
@@ -1031,9 +1033,23 @@ require('telescope').setup {
         file_browser = {
             respect_gitignore = false,
             hijack_netrw = true,
-        }
+        },
     }
 }
+
+if vim.fn.has('mac') == 1 then
+  require('telescope').setup {
+    extensions = {
+      dash = {
+        file_type_keywords = {
+          html = {'html', 'css', 'javascript', 'bootstrap'}
+        }
+      }
+    }
+  }
+
+    require('telescope').load_extension('dash')
+end
 
 -- Load extensions
 require('telescope').load_extension('fzf')

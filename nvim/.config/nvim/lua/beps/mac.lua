@@ -4,8 +4,12 @@ local keymapOpts = { noremap = true, silent = true}
 
 -- Open Marked.app
 vim.api.nvim_set_keymap('n', '<leader>mk', ':silent !open -a "Marked 2.app" %<CR>', keymapOpts)
--- Open Dash for documentation
-vim.api.nvim_set_keymap('n', '<leader>D', '<Plug>DashSearch', keymapOpts)
+
+-- Open Dash for documentation *** KEYMAP NOT WORKING ***
+vim.keymap.set('n', '<leader>D', function ()
+  require('dash.providers.telescope').dash({bang = false, initial_text = ''})
+end,
+  {desc = "Search with Dash app."} )
 
 -- Source this lua file and init.lua
 vim.api.nvim_set_keymap('n', '<leader>S', ':lua package.loaded.bepsmac=nil<cr>:source $MYVIMRC<cr>',
