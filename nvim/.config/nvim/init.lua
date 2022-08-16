@@ -134,10 +134,11 @@ require('packer').startup(function(use)
     use { 'alvarosevilla95/luatab.nvim', requires = 'kyazdani42/nvim-web-devicons' }
 
     -- Status Line
-    use {
-        'nvim-lualine/lualine.nvim',
-        requires = { 'kyazdani42/nvim-web-devicons', opt = true }
-    }
+    -- use {
+    --     'nvim-lualine/lualine.nvim',
+    --     requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+    -- }
+    use 'feline-nvim/feline.nvim'
 
     -- Folding
     use { 'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async' }
@@ -390,58 +391,64 @@ vim.api.nvim_set_keymap("n", "[t", ":tabprevious<cr>", keymapOpts)
 -- }}}
 
 
--- hoob3rt/lualine.nvim {{{
--- Get current working directory (relative to home path)
-local function getCWD()
-    return vim.fn.fnamemodify(vim.fn.getcwd(), ":~")
-end
-
-require 'lualine'.setup {
-    extensions = { 'nvim-tree', 'toggleterm', 'nvim-dap-ui', 'fugitive', 'symbols-outline' },
-    options = {
-        theme = 'auto',
-        global = true,
-        section_separators = { left = '', right = '' },
-        component_separators = ""
-    },
-    sections = {
-        lualine_c = {
-            { getCWD },
-            '%=',
-            {
-                'filetype',
-                icon_only = true
-            },
-            {
-                'filename',
-                file_status = true,
-                path = 1,
-            },
-        },
-        lualine_x = { 'encoding', 'fileformat' },
-    },
-}
-
--- Global window status line
-vim.opt.laststatus = 3
-
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = { "dapui*", "dap-repl" },
-    callback = function()
-        vim.opt.laststatus = 2
-    end
-})
-
--- Hide command line when it is not used
--- if vim.fn.has("gui_vimr") ~= 1 then
---     vim.cmd([[set cmdheight=0]])
--- end
-
---[[ -- winbar
-if vim.fn.has("gui_vimr") ~= 1 then
-    vim.opt.winbar = "%= %m %t"
-end ]]
+-- feline-nvim/feline.nvim {{{
+-- require("beps.statusline")
+require('feline').setup()
 -- }}}
+
+
+-- -- hoob3rt/lualine.nvim {{{
+-- -- Get current working directory (relative to home path)
+-- local function getCWD()
+--     return vim.fn.fnamemodify(vim.fn.getcwd(), ":~")
+-- end
+--
+-- require 'lualine'.setup {
+--     extensions = { 'nvim-tree', 'toggleterm', 'nvim-dap-ui', 'fugitive', 'symbols-outline' },
+--     options = {
+--         theme = 'auto',
+--         global = true,
+--         section_separators = { left = '', right = '' },
+--         component_separators = ""
+--     },
+--     sections = {
+--         lualine_c = {
+--             { getCWD },
+--             '%=',
+--             {
+--                 'filetype',
+--                 icon_only = true
+--             },
+--             {
+--                 'filename',
+--                 file_status = true,
+--                 path = 1,
+--             },
+--         },
+--         lualine_x = { 'encoding', 'fileformat' },
+--     },
+-- }
+--
+-- -- Global window status line
+-- vim.opt.laststatus = 3
+--
+-- vim.api.nvim_create_autocmd("FileType", {
+--     pattern = { "dapui*", "dap-repl" },
+--     callback = function()
+--         vim.opt.laststatus = 2
+--     end
+-- })
+--
+-- -- Hide command line when it is not used
+-- -- if vim.fn.has("gui_vimr") ~= 1 then
+-- --     vim.cmd([[set cmdheight=0]])
+-- -- end
+--
+-- --[[ -- winbar
+-- if vim.fn.has("gui_vimr") ~= 1 then
+--     vim.opt.winbar = "%= %m %t"
+-- end ]]
+-- -- }}}
 
 
 -- lukas-reineke/indent-blankline.nvim {{{
