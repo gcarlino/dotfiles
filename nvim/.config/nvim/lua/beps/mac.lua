@@ -19,6 +19,12 @@ if vim.fn.has("gui_vimr") == 1 then
     vim.opt.background = "light"
 end
 
+if vim.g.neovide then
+    vim.g.neovide_cursor_trail_legnth = 0
+    vim.g.neovide_cursor_animation_length = 0
+    vim.o.guifont="SF Mono:h12"
+end
+
 -- Functions
 local M = {}
 
