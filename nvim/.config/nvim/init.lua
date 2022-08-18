@@ -286,13 +286,17 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.o.termguicolors = true
 
 -- sainnhe/edge
-vim.g.edge_enable = 1
-vim.g.edge_disable_italic_comment = 1
-vim.g.edge_better_performance = 1
 vim.g.edge_style = 'aura'
+vim.g.edge_better_performance = 1
+
+vim.g.edge_dim_foreground = 1
+vim.g.edge_disable_italic_comment = 1
+vim.g.edge_disable_terminal_colors = 1
+
 vim.cmd([[ colorscheme edge ]])
+
 -- Override split separator color
-vim.api.nvim_set_hl(0, 'VertSplit', { fg = '#666666' })
+vim.api.nvim_set_hl(0, 'WinSeparator', { fg = '#666666' })
 
 -- Toggle backgournd color 
 vim.api.nvim_set_keymap("n", "<leader>b", "", {
@@ -393,7 +397,6 @@ vim.api.nvim_set_keymap("n", "[t", ":tabprevious<cr>", keymapOpts)
 -- statusline {{{
 
 -- hoob3rt/lualine.nvim
--- Get current working directory (relative to home path)
 require("beps.lualine")
 
 -- Global window status line
