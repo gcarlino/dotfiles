@@ -1,15 +1,15 @@
 local colors = {
-  bg       = '#202328',
-  fg       = '#bbc2cf',
-  yellow   = '#ECBE7B',
-  cyan     = '#008080',
-  darkblue = '#081633',
-  green    = '#98be65',
-  orange   = '#FF8800',
-  violet   = '#a9a1e1',
-  magenta  = '#c678dd',
-  blue     = '#51afef',
-  red      = '#ec5f67',
+    bg       = '#2b2d37',
+    fg       = '#97a4b5',
+    yellow   = '#deb974',
+    cyan     = '#5dbbc1',
+    darkblue = '#081633',
+    green    = '#a0c980',
+    orange   = '#FF8800',
+    violet   = '#a9a1e1',
+    magenta  = '#c678dd',
+    blue     = '#6cb6eb',
+    red      = '#ec7279',
 }
 
 local function getCWD()
@@ -48,7 +48,7 @@ require 'lualine'.setup {
                getCWD,
                 icon = ' ',
                 color = {
-                    fg = colors.green,
+                    fg = colors.blue,
                 },
             },
             {
@@ -77,9 +77,17 @@ require 'lualine'.setup {
                 'filename',
                 file_status = true,
                 path = 1,
+                color = {
+                    fg = colors.blue,
+                },
+                symbols = {
+                    modified = ' ●',      -- Text to show when the buffer is modified
+                    alternate_file = '#', -- Text to show to identify the alternate file
+                    directory =  '',     -- Text to show when the buffer is a directory
+                },
             },
-            -- '%=',
         },
+
         lualine_x = {
             {
                 getLSP,
@@ -91,16 +99,16 @@ require 'lualine'.setup {
             },
             {
                 'diagnostics',
-                -- sources = { 'nvim_diagnostic' },
+                sources = { 'nvim_diagnostic', 'nvim_lsp' },
                 symbols = { error = ' ', warn = ' ', info = ' ' },
                 diagnostics_color = {
-                    color_error = { fg = colors.red },
-                    color_warn = { fg = colors.yellow },
-                    color_info = { fg = colors.cyan },
+                    error = { fg = colors.red },
+                    warn = { fg = colors.yellow },
+                    info = { fg = colors.cyan },
                 },
             },
         },
-        lualine_y = { 'encoding', 'fileformat' },
+        lualine_y = { 'filesize', 'encoding', 'fileformat' },
         lualine_z = { 'progress', 'location' }
     },
     -- winbar = {
