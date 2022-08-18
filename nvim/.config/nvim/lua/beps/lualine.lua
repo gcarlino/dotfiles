@@ -1,5 +1,9 @@
 local colors = {
     bg       = '#2b2d37',
+    bg1      = '#333644',
+    bg2      = '#363a49',
+    bg3      = '#3a3e4e',
+    bg4      = '#404455',
     fg       = '#97a4b5',
     yellow   = '#deb974',
     cyan     = '#5dbbc1',
@@ -68,24 +72,24 @@ require 'lualine'.setup {
             },
         },
         lualine_c = {
-            '%=',
-            {
-                'filetype',
-                icon_only = true
-            },
-            {
-                'filename',
-                file_status = true,
-                path = 1,
-                color = {
-                    fg = colors.blue,
-                },
-                symbols = {
-                    modified = ' ●',      -- Text to show when the buffer is modified
-                    alternate_file = '#', -- Text to show to identify the alternate file
-                    directory =  '',     -- Text to show when the buffer is a directory
-                },
-            },
+            -- '%=',
+            -- {
+            --     'filetype',
+            --     icon_only = true
+            -- },
+            -- {
+            --     'filename',
+            --     file_status = true,
+            --     path = 1,
+            --     color = {
+            --         fg = colors.blue,
+            --     },
+            --     symbols = {
+            --         modified = ' ●',      -- Text to show when the buffer is modified
+            --         alternate_file = '#', -- Text to show to identify the alternate file
+            --         directory =  '',     -- Text to show when the buffer is a directory
+            --     },
+            -- },
         },
 
         lualine_x = {
@@ -111,20 +115,56 @@ require 'lualine'.setup {
         lualine_y = { 'filesize', 'encoding', 'fileformat' },
         lualine_z = { 'progress', 'location' }
     },
-    -- winbar = {
-    --     lualine_a = { 'filename', },
-    --     lualine_b = {},
-    --     lualine_c = {},
-    --     lualine_x = {},
-    --     lualine_y = {},
-    --     lualine_z = {}
-    -- },
-    -- inactive_winbar = {
-    --     lualine_a = { 'filename', },
-    --     lualine_b = {},
-    --     lualine_c = {},
-    --     lualine_x = {},
-    --     lualine_y = {},
-    --     lualine_z = {}
-    -- }
+    winbar = {
+        lualine_a = {
+            {
+                'filetype',
+                icon_only = true,
+                color = {
+                    bg = colors.bg1
+                }
+
+            },
+            {
+                'filename',
+                file_status = true,
+                path = 1,
+                color = {
+                    fg = colors.blue,
+                    bg = colors.bg1,
+                    gui = 'italic',
+                },
+                symbols = {
+                    modified = ' ●',      -- Text to show when the buffer is modified
+                    alternate_file = '#', -- Text to show to identify the alternate file
+                    directory =  '',     -- Text to show when the buffer is a directory
+                },
+            }
+        },
+        lualine_b = {},
+        lualine_c = {},
+        lualine_x = {},
+        lualine_y = {},
+        lualine_z = {}
+    },
+    inactive_winbar = {
+        lualine_a = {
+            {
+                'filetype',
+                icon_only = true
+            },
+            {
+                'filename',
+                path = 1,
+                color = {
+                    gui = 'italic'
+                }
+            },
+        },
+        lualine_b = {},
+        lualine_c = {},
+        lualine_x = {},
+        lualine_y = {},
+        lualine_z = {}
+    }
 }
