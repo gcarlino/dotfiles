@@ -40,14 +40,14 @@ vim.api.nvim_set_option('clipboard', 'unnamed')
 
 
 -- Fold method for init.lua {{{
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = "lua",
-    callback = function()
-        vim.o.foldmethod = "marker"
-        vim.o.foldlevel = 0
-        vim.opt.foldcolumn = "1"
-    end
-})
+-- vim.api.nvim_create_autocmd("FileType", {
+--     pattern = "lua",
+--     callback = function()
+--         vim.o.foldmethod = "marker"
+--         vim.o.foldlevel = 0
+--         vim.opt.foldcolumn = "1"
+--     end
+-- })
 -- }}}
 
 
@@ -134,11 +134,11 @@ require('packer').startup(function(use)
     use { 'alvarosevilla95/luatab.nvim', requires = 'kyazdani42/nvim-web-devicons' }
 
     -- Status Line
-    -- use {
-    --     'nvim-lualine/lualine.nvim',
-    --     requires = { 'kyazdani42/nvim-web-devicons', opt = true }
-    -- }
-    use 'feline-nvim/feline.nvim'
+    use {
+        'nvim-lualine/lualine.nvim',
+        requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+        disable = false
+    }
 
     -- Folding
     use { 'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async' }
@@ -286,11 +286,10 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.o.termguicolors = true
 
 -- sainnhe/edge
-vim.g.edge_style = 'aura'
 vim.g.edge_enable = 1
--- vim.g.edge_enable_italic = 1
 vim.g.edge_disable_italic_comment = 1
 vim.g.edge_better_performance = 1
+vim.g.edge_style = 'aura'
 vim.cmd([[ colorscheme edge ]])
 -- Override split separator color
 vim.api.nvim_set_hl(0, 'VertSplit', { fg = '#666666' })
@@ -391,54 +390,22 @@ vim.api.nvim_set_keymap("n", "[t", ":tabprevious<cr>", keymapOpts)
 -- }}}
 
 
--- feline-nvim/feline.nvim {{{
--- require("beps.statusline")
-require('feline').setup()
--- }}}
+-- statusline {{{
 
+-- hoob3rt/lualine.nvim
+-- Get current working directory (relative to home path)
+require("beps.lualine")
 
--- -- hoob3rt/lualine.nvim {{{
--- -- Get current working directory (relative to home path)
--- local function getCWD()
---     return vim.fn.fnamemodify(vim.fn.getcwd(), ":~")
--- end
---
--- require 'lualine'.setup {
---     extensions = { 'nvim-tree', 'toggleterm', 'nvim-dap-ui', 'fugitive', 'symbols-outline' },
---     options = {
---         theme = 'auto',
---         global = true,
---         section_separators = { left = '', right = '' },
---         component_separators = ""
---     },
---     sections = {
---         lualine_c = {
---             { getCWD },
---             '%=',
---             {
---                 'filetype',
---                 icon_only = true
---             },
---             {
---                 'filename',
---                 file_status = true,
---                 path = 1,
---             },
---         },
---         lualine_x = { 'encoding', 'fileformat' },
---     },
--- }
---
--- -- Global window status line
--- vim.opt.laststatus = 3
---
--- vim.api.nvim_create_autocmd("FileType", {
---     pattern = { "dapui*", "dap-repl" },
---     callback = function()
---         vim.opt.laststatus = 2
---     end
--- })
---
+-- Global window status line
+vim.opt.laststatus = 3
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "dapui*", "dap-repl" },
+    callback = function()
+        vim.opt.laststatus = 2
+    end
+})
+
 -- -- Hide command line when it is not used
 -- -- if vim.fn.has("gui_vimr") ~= 1 then
 -- --     vim.cmd([[set cmdheight=0]])
@@ -448,7 +415,7 @@ require('feline').setup()
 -- if vim.fn.has("gui_vimr") ~= 1 then
 --     vim.opt.winbar = "%= %m %t"
 -- end ]]
--- -- }}}
+-- }}}
 
 
 -- lukas-reineke/indent-blankline.nvim {{{
