@@ -17,11 +17,12 @@ local colors = {
 }
 
 local function getCWD()
-    return vim.fn.fnamemodify(vim.fn.getcwd(), ":~")
+    local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ":~")
+    return vim.fn.pathshorten(cwd)
 end
 
 local function getLSP()
-    local msg = 'No Active Lsp'
+    local msg = 'No Active LSP'
     local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
     local clients = vim.lsp.get_active_clients()
     if next(clients) == nil then
@@ -41,55 +42,45 @@ require 'lualine'.setup {
     options = {
         theme = 'auto',
         globalstatusline = true,
-        -- section_separators = { left = '', right = '' },
+        -- section_separatoRs = { left = '', right = '' },
         section_separators = { left = '', right = '' },
         -- component_separators = { left = '', right = '' },
         component_separators = "",
     },
     sections = {
+        lualine_a = {
+            {
+                'mode',
+                icons_enabled = true,
+                icon = '',
+            }
+        },
         lualine_b = {
             {
-               getCWD,
+                getCWD,
                 icon = ' ',
                 color = {
                     fg = colors.blue,
+                    gui = 'italic',
                 },
             },
+        },
+        lualine_c = {
             {
                 'branch',
                 color = {
-                    fg = colors.fg,
+                    fg = colors.violet,
                 }
             },
             {
                 'diff',
                 symbols = { added = ' ', modified = '柳', removed = ' ' },
-                diff_color = {
-                    added = { fg = colors.green },
-                    modified = { fg = colors.orange },
-                    removed = { fg = colors.red },
-                },
+                -- diff_color = {
+                --     added = { fg = colors.green },
+                --     modified = { fg = colors.cyan },
+                --     removed = { fg = colors.red },
+                -- },
             },
-        },
-        lualine_c = {
-            -- '%=',
-            -- {
-            --     'filetype',
-            --     icon_only = true
-            -- },
-            -- {
-            --     'filename',
-            --     file_status = true,
-            --     path = 1,
-            --     color = {
-            --         fg = colors.blue,
-            --     },
-            --     symbols = {
-            --         modified = ' ●',      -- Text to show when the buffer is modified
-            --         alternate_file = '#', -- Text to show to identify the alternate file
-            --         directory =  '',     -- Text to show when the buffer is a directory
-            --     },
-            -- },
         },
 
         lualine_x = {
@@ -97,8 +88,8 @@ require 'lualine'.setup {
                 getLSP,
                 icon = ' ',
                 color = {
-                    fg = colors.fg,
-                    -- gui = 'bold' },
+                    fg = colors.violet,
+                    -- gui = 'bold',
                     },
             },
             {
@@ -120,18 +111,19 @@ require 'lualine'.setup {
             {
                 'filetype',
                 icon_only = true,
+                colored = false,
                 color = {
-                    bg = colors.bg1
+                    -- fg = colors.blue,
+                    -- bg = colors.bg4
                 }
-
             },
             {
                 'filename',
                 file_status = true,
                 path = 1,
                 color = {
-                    fg = colors.blue,
-                    bg = colors.bg1,
+                    -- fg = colors.blue,
+                    -- bg = colors.bg4,
                     gui = 'italic',
                 },
                 symbols = {
@@ -139,7 +131,7 @@ require 'lualine'.setup {
                     alternate_file = '#', -- Text to show to identify the alternate file
                     directory =  '',     -- Text to show when the buffer is a directory
                 },
-            }
+            },
         },
         lualine_b = {},
         lualine_c = {},
@@ -151,14 +143,24 @@ require 'lualine'.setup {
         lualine_a = {
             {
                 'filetype',
-                icon_only = true
+                icon_only = true,
+                colored = false,
+                color = {
+                    -- bg = colors.bg2,
+                }
             },
             {
                 'filename',
                 path = 1,
                 color = {
-                    gui = 'italic'
-                }
+                    -- bg = colors.bg2,
+                    gui = 'italic',
+                },
+                symbols = {
+                    modified = ' ●',      -- Text to show when the buffer is modified
+                    alternate_file = '#', -- Text to show to identify the alternate file
+                    directory =  '',     -- Text to show when the buffer is a directory
+                },
             },
         },
         lualine_b = {},
