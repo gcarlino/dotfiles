@@ -1,4 +1,4 @@
--- General setup {{{
+-- General options {{{
 local keymapOpts = { noremap = true, silent = true }
 
 -- Remap space as leader key and ; as local leader
@@ -34,19 +34,11 @@ vim.o.diffopt = 'internal,filler,closeoff,vertical'
 -- Copy to system clipboard
 vim.api.nvim_set_option('clipboard', 'unnamed')
 
+-- Highlight syntax inside markdown
+vim.g.markdown_fenced_languages = { 'html', 'python', 'vim', 'r', 'sh' }
+
 -- Switch to old filetype.vim mechanism
 -- vim.g.do_legacy_filetype = 1
--- }}}
-
--- Fold method for init.lua {{{
--- vim.api.nvim_create_autocmd("FileType", {
---     pattern = "lua",
---     callback = function()
---         vim.o.foldmethod = "marker"
---         vim.o.foldlevel = 0
---         vim.opt.foldcolumn = "1"
---     end
--- })
 -- }}}
 
 
@@ -62,8 +54,6 @@ end
 require('packer').startup(function(use)
     -- Package manager
     use 'wbthomason/packer.nvim'
-
-    use 'rcarriga/nvim-notify'
 
     -- Tree-sitter
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
@@ -129,14 +119,11 @@ require('packer').startup(function(use)
         }
     }
 
-    -- Tabline
-    use { 'alvarosevilla95/luatab.nvim', requires = 'kyazdani42/nvim-web-devicons' }
-
-    -- Status Line
-    use {
-        'nvim-lualine/lualine.nvim',
+    -- Statusline & tabline
+    use { 'alvarosevilla95/luatab.nvim',
+        requires = 'kyazdani42/nvim-web-devicons' }
+    use { 'nvim-lualine/lualine.nvim',
         requires = { 'kyazdani42/nvim-web-devicons', opt = true },
-        disable = false
     }
 
     -- Folding
@@ -144,11 +131,8 @@ require('packer').startup(function(use)
 
     -- Git
     use { 'tpope/vim-fugitive' }
-    -- use 'itchyny/vim-gitbranch'
     use { 'lewis6991/gitsigns.nvim', requires = 'nvim-lua/plenary.nvim' }
     use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
-    -- use 'airblade/vim-gitgutter'
-    use 'f-person/git-blame.nvim'
 
     -- R
     use { 'jalvesaq/Nvim-R' }
@@ -167,18 +151,15 @@ require('packer').startup(function(use)
     use 'numToStr/Comment.nvim'
 
     -- Various
+    use 'rcarriga/nvim-notify'
     use 'szw/vim-maximizer'
     use 'windwp/nvim-autopairs'
-    use 'simrat39/symbols-outline.nvim'
     use 'chentoast/marks.nvim'
     use { 'akinsho/toggleterm.nvim', tag = 'v2.*' }
-    -- use 'tpope/vim-unimpaired'
-    -- use 'sbdchd/neoformat'
     use 'lukas-reineke/indent-blankline.nvim'
     use 'mechatroner/rainbow_csv'
     use 'adamheins/vim-highlight-match-under-cursor'
     use 'kylechui/nvim-surround'
-    -- use 'tjdevries/astronauta.nvim'
     use { 'sidebar-nvim/sidebar.nvim', disable = true }
     use 'https://github.com/godlygeek/tabular'
 
@@ -229,9 +210,6 @@ vim.api.nvim_set_keymap('v', '<M-k>', ":m '<-2<CR>gv==gv", { noremap = true })
 vim.keymap.set('n', '<leader>cd', '<cmd>cd %:p:h<CR>:pwd<CR>',
     { noremap = true, silent = true, desc = "Change current directory to working file path." })
 
--- Highlight syntax inside markdown
-vim.g.markdown_fenced_languages = { 'html', 'python', 'vim', 'r', 'sh' }
-
 -- Highlight on yank
 local yankHighlightGroup = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
@@ -277,6 +255,16 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.o.shiftwidth = 2
     end
 })
+
+-- Fold method for init.lua
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "lua",
+    callback = function()
+        vim.o.foldmethod = "marker"
+        vim.o.foldlevel = 0
+        vim.opt.foldcolumn = "1"
+    end
+})
 -- }}}
 
 
@@ -286,14 +274,12 @@ vim.o.termguicolors = true
 -- sainnhe/edge
 vim.g.edge_style = 'aura'
 vim.g.edge_better_performance = 1
-
 vim.g.edge_dim_foreground = 1
 vim.g.edge_disable_italic_comment = 1
 vim.g.edge_disable_terminal_colors = 1
-
 vim.cmd([[ colorscheme edge ]])
 
--- Override split separator color
+-- -- Override split separator color
 vim.api.nvim_set_hl(0, 'WinSeparator', { fg = '#666666' })
 
 -- Toggle backgournd color 
@@ -316,11 +302,6 @@ vim.api.nvim_set_keymap("n", "<leader>b", "", {
 require('nvim-web-devicons').setup {
     default = true,
 }
--- }}}
-
-
--- rcarriga/nvim-notify {{{
-vim.notify = require("notify")
 -- }}}
 
 
@@ -393,13 +374,11 @@ vim.api.nvim_set_keymap("n", "[t", ":tabprevious<cr>", keymapOpts)
 
 
 -- statusline {{{
-
 -- hoob3rt/lualine.nvim
 require("beps.lualine")
 
 -- Global window status line
 vim.opt.laststatus = 3
-
 vim.api.nvim_create_autocmd("FileType", {
     pattern = { "dapui*", "dap-repl" },
     callback = function()
@@ -407,7 +386,7 @@ vim.api.nvim_create_autocmd("FileType", {
     end
 })
 
--- -- Hide command line when it is not used
+-- Hide command line when it is not used
 -- -- if vim.fn.has("gui_vimr") ~= 1 then
 -- --     vim.cmd([[set cmdheight=0]])
 -- -- end
@@ -437,40 +416,44 @@ require('gitsigns').setup {
         topdelete    = { hl = 'GitSignsDelete', text = '‾', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
         changedelete = { hl = 'GitSignsChange', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
     },
-    signcolumn                        = true, -- Toggle with `:Gitsigns toggle_signs`
-    numhl                             = false, -- Toggle with `:Gitsigns toggle_numhl`
-    linehl                            = false, -- Toggle with `:Gitsigns toggle_linehl`
-    word_diff                         = false, -- Toggle with `:Gitsigns toggle_word_diff`
-    watch_gitdir                      = {
-        interval = 1000,
-        follow_files = true
-    },
-    attach_to_untracked               = true,
-    current_line_blame                = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
-    current_line_blame_opts           = {
-        virt_text = true,
-        virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
-        delay = 1000,
-        ignore_whitespace = false,
-    },
-    current_line_blame_formatter_opts = {
-        relative_time = false
-    },
-    sign_priority                     = 6,
-    update_debounce                   = 100,
-    status_formatter                  = nil, -- Use default
-    max_file_length                   = 40000,
-    preview_config                    = {
-        -- Options passed to nvim_open_win
-        border = 'single',
-        style = 'minimal',
-        relative = 'cursor',
-        row = 0,
-        col = 1
-    },
-    yadm                              = {
-        enable = false
-    },
+  on_attach = function(bufnr)
+    local gs = package.loaded.gitsigns
+
+    local function map(mode, l, r, opts)
+      opts = opts or {}
+      opts.buffer = bufnr
+      vim.keymap.set(mode, l, r, opts)
+    end
+
+    -- Navigation
+    map('n', ']c', function()
+      if vim.wo.diff then return ']c' end
+      vim.schedule(function() gs.next_hunk() end)
+      return '<Ignore>'
+    end, {expr=true})
+
+    map('n', '[c', function()
+      if vim.wo.diff then return '[c' end
+      vim.schedule(function() gs.prev_hunk() end)
+      return '<Ignore>'
+    end, {expr=true})
+
+    -- Actions
+    map({'n', 'v'}, '<leader>hs', ':Gitsigns stage_hunk<CR>')
+    map({'n', 'v'}, '<leader>hr', ':Gitsigns reset_hunk<CR>')
+    map('n', '<leader>hS', gs.stage_buffer)
+    map('n', '<leader>hu', gs.undo_stage_hunk)
+    map('n', '<leader>hR', gs.reset_buffer)
+    map('n', '<leader>hp', gs.preview_hunk)
+    map('n', '<leader>hb', function() gs.blame_line{full=true} end)
+    map('n', '<leader>tb', gs.toggle_current_line_blame)
+    map('n', '<leader>hd', gs.diffthis)
+    map('n', '<leader>hD', function() gs.diffthis('~') end)
+    map('n', '<leader>td', gs.toggle_deleted)
+
+    -- Text object
+    map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+  end
 }
 -- }}}
 
@@ -954,12 +937,6 @@ require("nvim-dap-virtual-text").setup({
 -- }}}
 
 
--- f-person/git-blame.nvim {{{
--- Disable by default. Toggle with :GitBlameToggle
-vim.g.gitblame_enabled = 0
--- }}}
-
-
 -- numToStr/Comment.nvim {{{
 require('Comment').setup()
 
@@ -1079,6 +1056,11 @@ vim.keymap.set('n', '<leader>ed',
 -- Telescope LSP commands
 vim.keymap.set('n', '<leader>ls', function () require('telescope.builtin').lsp_references() end, {
     desc = "List LSP references for word under the cursor" })
+-- }}}
+
+
+-- rcarriga/nvim-notify {{{
+vim.notify = require("notify")
 -- }}}
 
 
