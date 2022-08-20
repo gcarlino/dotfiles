@@ -74,12 +74,13 @@ require 'lualine'.setup {
             },
             {
                 'diff',
-                symbols = { added = ' ', modified = '柳', removed = ' ' },
-                -- diff_color = {
-                --     added = { fg = colors.green },
-                --     modified = { fg = colors.cyan },
-                --     removed = { fg = colors.red },
-                -- },
+                -- symbols = { added = ' ', modified = '柳', removed = ' ' },
+                symbols = { added = ' ', modified = ' ', removed = ' ' },
+                diff_color = {
+                    added = { fg = colors.green },
+                    modified = { fg = colors.cyan },
+                    removed = { fg = colors.red },
+                },
             },
         },
 
@@ -94,12 +95,14 @@ require 'lualine'.setup {
             },
             {
                 'diagnostics',
-                sources = { 'nvim_diagnostic', 'nvim_lsp' },
-                symbols = { error = ' ', warn = ' ', info = ' ' },
+                sources = { 'nvim_diagnostic' },
+                -- symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
+                symbols = { error = " ", warn = " ", hint = " ", info = " " },
                 diagnostics_color = {
                     error = { fg = colors.red },
                     warn = { fg = colors.yellow },
                     info = { fg = colors.cyan },
+                    hint = { fg = colors.green },
                 },
             },
         },
