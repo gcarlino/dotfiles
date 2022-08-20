@@ -1,8 +1,5 @@
 -- General options {{{
-local keymapOpts = { noremap = true, silent = true }
-
 -- Remap space as leader key and ; as local leader
--- vim.api.nvim_set_keymap('', '<Space>', '<Nop>', keymapOpts)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ';'
 
@@ -74,7 +71,7 @@ require('packer').startup(function(use)
     --   cmake   pip3 install cmake-language-server
     use 'neovim/nvim-lspconfig'
     use 'onsails/lspkind-nvim'
-    use {'nvim-telescope/telescope-ui-select.nvim' }
+    use { 'nvim-telescope/telescope-ui-select.nvim' }
     -- Standalone UI for nvim-lsp progress
     use 'j-hui/fidget.nvim'
 
@@ -169,7 +166,7 @@ require('packer').startup(function(use)
 
     -- Mac specific
     if vim.fn.has('mac') == 1 then
-        use({'mrjones2014/dash.nvim',
+        use({ 'mrjones2014/dash.nvim',
             requires = { 'nvim-telescope/telescope.nvim' },
             run = 'make install', })
     end
@@ -253,7 +250,7 @@ vim.api.nvim_create_autocmd({ "VimEnter", "BufEnter", "InsertLeave" }, {
 })
 
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = "html",
+    pattern = {"html"},
     callback = function()
         vim.o.tabstop = 2
         vim.o.shiftwidth = 2
@@ -286,7 +283,7 @@ vim.cmd([[ colorscheme edge ]])
 -- -- Override split separator color
 vim.api.nvim_set_hl(0, 'WinSeparator', { fg = '#666666' })
 
--- Toggle backgournd color 
+-- Toggle backgournd color
 vim.api.nvim_set_keymap("n", "<leader>b", "", {
     noremap = true,
     callback = function()
@@ -362,7 +359,7 @@ require 'nvim-treesitter.configs'.setup({
     },
 })
 -- Tree-sitter base folding
-vim.cmd[[
+vim.cmd [[
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 ]]
@@ -373,7 +370,7 @@ set foldexpr=nvim_treesitter#foldexpr()
 require('luatab').setup {}
 
 vim.keymap.set("n", "]t", ":tabnext<cr>", { desc = "Next tab" })
-vim.keymap.set("n", "[t", ":tabprevious<cr>", { desc = "Previous tab"})
+vim.keymap.set("n", "[t", ":tabprevious<cr>", { desc = "Previous tab" })
 -- }}}
 
 
@@ -413,51 +410,51 @@ require("indent_blankline").setup {
 
 -- lewis6991/gitsigns.nvim {{{
 require('gitsigns').setup {
-    signs                             = {
+    signs     = {
         add          = { hl = 'GitSignsAdd', text = '│', numhl = 'GitSignsAddNr', linehl = 'GitSignsAddLn' },
         change       = { hl = 'GitSignsChange', text = '│', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
         delete       = { hl = 'GitSignsDelete', text = '_', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
         topdelete    = { hl = 'GitSignsDelete', text = '‾', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
         changedelete = { hl = 'GitSignsChange', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
     },
-  on_attach = function(bufnr)
-    local gs = package.loaded.gitsigns
+    on_attach = function(bufnr)
+        local gs = package.loaded.gitsigns
 
-    local function map(mode, l, r, opts)
-      opts = opts or {}
-      opts.buffer = bufnr
-      vim.keymap.set(mode, l, r, opts)
+        local function map(mode, l, r, opts)
+            opts = opts or {}
+            opts.buffer = bufnr
+            vim.keymap.set(mode, l, r, opts)
+        end
+
+        -- Navigation
+        map('n', ']c', function()
+            if vim.wo.diff then return ']c' end
+            vim.schedule(function() gs.next_hunk() end)
+            return '<Ignore>'
+        end, { expr = true })
+
+        map('n', '[c', function()
+            if vim.wo.diff then return '[c' end
+            vim.schedule(function() gs.prev_hunk() end)
+            return '<Ignore>'
+        end, { expr = true })
+
+        -- Actions
+        map({ 'n', 'v' }, '<leader>hs', ':Gitsigns: stage_hunk<CR>')
+        map({ 'n', 'v' }, '<leader>hr', ':Gitsigns: reset_hunk<CR>')
+        map('n', '<leader>hS', gs.stage_buffer, { desc = "Gitsigns: stage buffer" })
+        map('n', '<leader>hu', gs.undo_stage_hunk, { desc = "Gitsigns: undo stage hunk" })
+        map('n', '<leader>hR', gs.reset_buffer, { desc = "Gitsigs: reset buffer" })
+        map('n', '<leader>hp', gs.preview_hunk, { desc = "Gitsigns: preview hunk" })
+        map('n', '<leader>hb', function() gs.blame_line { full = true } end, { desc = "Gitsigns: blame line" })
+        map('n', '<leader>tb', gs.toggle_current_line_blame, { desc = "Gitsigns: toggle current line blame" })
+        map('n', '<leader>hd', gs.diffthis, { desc = "Gitsigns: diff this" })
+        map('n', '<leader>hD', function() gs.diffthis('~') end, { desc = "Gitsigns: diff this against last commit" })
+        map('n', '<leader>td', gs.toggle_deleted, { desc = "Gitsign:  toggle deleted" })
+
+        -- Text object
+        map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
     end
-
-    -- Navigation
-    map('n', ']c', function()
-      if vim.wo.diff then return ']c' end
-      vim.schedule(function() gs.next_hunk() end)
-      return '<Ignore>'
-    end, {expr=true})
-
-    map('n', '[c', function()
-      if vim.wo.diff then return '[c' end
-      vim.schedule(function() gs.prev_hunk() end)
-      return '<Ignore>'
-    end, {expr=true})
-
-    -- Actions
-    map({'n', 'v'}, '<leader>hs', ':Gitsigns: stage_hunk<CR>')
-    map({'n', 'v'}, '<leader>hr', ':Gitsigns: reset_hunk<CR>')
-    map('n', '<leader>hS', gs.stage_buffer, {desc = "Gitsigns: stage buffer"})
-    map('n', '<leader>hu', gs.undo_stage_hunk, {desc = "Gitsigns: undo stage hunk"})
-    map('n', '<leader>hR', gs.reset_buffer, {desc = "Gitsigs: reset buffer"})
-    map('n', '<leader>hp', gs.preview_hunk, {desc = "Gitsigns: preview hunk"})
-    map('n', '<leader>hb', function() gs.blame_line{full=true} end, {desc = "Gitsigns: blame line"})
-    map('n', '<leader>tb', gs.toggle_current_line_blame, {desc = "Gitsigns: toggle current line blame"})
-    map('n', '<leader>hd', gs.diffthis, {desc = "Gitsigns: diff this"})
-    map('n', '<leader>hD', function() gs.diffthis('~') end, { desc = "Gitsigns: diff this against last commit"})
-    map('n', '<leader>td', gs.toggle_deleted, { desc = "Gitsign:  toggle deleted" })
-
-    -- Text object
-    map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
-  end
 }
 -- }}}
 
@@ -470,13 +467,13 @@ require("toggleterm").setup {
 -- Mappings to make moving in and out of a terminal easier once toggled,
 -- whilst still keeping it open
 function _G.set_terminal_keymaps()
-  local opts = {buffer = 0}
-  vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
-  vim.keymap.set('t', 'jk', [[<C-\><C-n>]], opts)
-  vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
-  vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
-  vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
-  vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
+    local opts = { buffer = 0 }
+    vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
+    vim.keymap.set('t', 'jk', [[<C-\><C-n>]], opts)
+    vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
+    vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
+    vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
+    vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
 end
 
 vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
@@ -503,10 +500,10 @@ end
 vim.keymap.set('n', '<leader>di', function() require('telescope.builtin').diagnostics() end,
     { desc = "Document diagnostics" })
 -- vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, keymapOpts)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, {desc = "Goto previous diagnostic"})
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, {desc = "Goto next diagnostic"})
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = "Goto previous diagnostic" })
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = "Goto next diagnostic" })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist,
-    {desc = "Add buffer diagnostic to the location list"})
+    { desc = "Add buffer diagnostic to the location list" })
 
 -- Use an on_attach function to only map the following keys after the language server attaches to the current buffer
 local on_attach = function(_, bufnr)
@@ -523,19 +520,19 @@ local on_attach = function(_, bufnr)
     -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', bufopts)
     -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', bufopts)
     vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition,
-        {desc = "Jumps to the definition of the type of the symbol under the cursor."})
+        { desc = "Jumps to the definition of the type of the symbol under the cursor." })
     vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename,
-        {desc = "Renames all references to the symbol under the cursor."})
+        { desc = "Renames all references to the symbol under the cursor." })
     vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action,
-        {desc = "Selects a code action available at the current cursor position."})
+        { desc = "Selects a code action available at the current cursor position." })
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-    vim.keymap.set('n', '<leader>F', vim.lsp.buf.formatting, 
-        {desc = "Format the current buffer"})
+    vim.keymap.set('n', '<leader>F', vim.lsp.buf.format,
+        { desc = "Format the current buffer" })
     vim.keymap.set('n', '<leader>so',
         function()
             require('telescope.builtin').lsp_document_symbols()
         end,
-        {desc = "Lists LSP symbols in the current buffer"})
+        { desc = "Lists LSP symbols in the current buffer" })
 end
 
 -- additional capabilities
@@ -609,7 +606,7 @@ require('lspconfig').sumneko_lua.setup {
 
 
 -- j-hui/fidget.nvim {{{
-require"fidget".setup{}
+require "fidget".setup {}
 -- }}}
 
 
@@ -643,26 +640,26 @@ cmp.setup({
         ["<C-Space>"] = cmp.mapping.complete({}),
         ["<C-e>"] = cmp.mapping.abort(),
         ['<CR>'] = cmp.mapping.confirm({ select = true }),
-        -- ["<Tab>"] = cmp.mapping(function(fallback)
-        --     if cmp.visible() then
-        --         cmp.select_next_item()
-        --     elseif luasnip.expand_or_jumpable() then
-        --         luasnip.expand_or_jump()
-        --     elseif has_words_before() then
-        --         cmp.complete()
-        --     else
-        --         fallback()
-        --     end
-        -- end),
-        -- ["<S-Tab>"] = cmp.mapping(function(fallback)
-        --     if cmp.visible() then
-        --         cmp.select_prev_item()
-        --     elseif luasnip.jumpable(-1) then
-        --         luasnip.jump(-1)
-        --     else
-        --         fallback()
-        --     end
-        -- end),
+        ["<Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_next_item()
+            elseif luasnip.expand_or_jumpable() then
+                luasnip.expand_or_jump()
+            elseif has_words_before() then
+                cmp.complete()
+            else
+                fallback()
+            end
+        end),
+        ["<S-Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_prev_item()
+            elseif luasnip.jumpable(-1) then
+                luasnip.jump(-1)
+            else
+                fallback()
+            end
+        end),
     }),
 
     -- nvim-cmp by defaults disables autocomplete for prompt buffers
@@ -860,7 +857,7 @@ vim.keymap.set('n', '<F4>', function() dap.run_last() end,
     { desc = "DAP: debug run last configuration" })
 vim.keymap.set('n', '<F3>', function() dap.pause() end,
     { desc = "DAP: debug pause" })
-vim.keymap.set('n', '<F2>', function () dap.terminate() end,
+vim.keymap.set('n', '<F2>', function() dap.terminate() end,
     { desc = "DAP: debug terminate" })
 vim.keymap.set('n', '<F10>', function() dap.step_over() end,
     { desc = "DAP: debug step over" })
@@ -884,7 +881,7 @@ vim.keymap.set('n', '<leader>dc', function() dapui.close({}) end,
     { desc = "DAP: debug close dap-ui" })
 
 -- hover
-vim.keymap.set({'n', 'x'}, '<leader>i', function () dapui.eval(nil, {enter = true, context = "repl"}) end,
+vim.keymap.set({ 'n', 'x' }, '<leader>i', function() dapui.eval(nil, { enter = true, context = "repl" }) end,
     { desc = "DAP: open a floating window containing the result of evaluting an expression" })
 
 -- Reload launch json configuration
@@ -912,14 +909,14 @@ require("nvim-dap-virtual-text").setup({
 -- numToStr/Comment.nvim {{{
 require('Comment').setup()
 
-vim.keymap.set('n', '<leader>/', function () require('Comment.api').toggle.linewise.current() end,
+vim.keymap.set('n', '<leader>/', function() require('Comment.api').toggle.linewise.current() end,
     { desc = "Toggle comment on current line" })
 vim.keymap.set('x', '<leader>/', '<ESC><CMD>lua require("Comment.api").toggle.linewise(vim.fn.visualmode())<CR>',
     { desc = "Toggle comment on current line" })
 -- }}}
 
 
--- "kylechui/nvim-surround {{{
+-- kylechui/nvim-surround {{{
 require("nvim-surround").setup({})
 -- }}}
 
@@ -943,7 +940,7 @@ require('telescope').setup {
         hide_on_startup = false
     },
     extensions = {
-        [ "ui-select" ] = {
+        ["ui-select"] = {
             require("telescope.themes").get_dropdown()
         },
         file_browser = {
@@ -954,15 +951,15 @@ require('telescope').setup {
 }
 
 if vim.fn.has('mac') == 1 then
-  require('telescope').setup {
-    extensions = {
-      dash = {
-        file_type_keywords = {
-          html = {'html', 'css', 'javascript', 'bootstrap'}
+    require('telescope').setup {
+        extensions = {
+            dash = {
+                file_type_keywords = {
+                    html = { 'html', 'css', 'javascript', 'bootstrap' }
+                }
+            }
         }
-      }
     }
-  }
 
     require('telescope').load_extension('dash')
 end
@@ -976,43 +973,55 @@ require('telescope').load_extension('dap')
 
 -- Keymaps
 vim.keymap.set('n', '<leader>p', function() require('telescope.builtin').commands() end, {
-    desc = "Lists available plugin/user commands and runs them on `<cr>`" })
+    desc = "Lists available plugin/user commands and runs them on `<cr>`"
+})
 
 vim.keymap.set('n', '<leader><space>', function() require('telescope.builtin').buffers() end, {
-    desc = "Show buffers with Telescope" })
+    desc = "Show buffers with Telescope"
+})
 
 vim.keymap.set('n', '<leader>fs', function() require('telescope').extensions.file_browser.file_browser() end, {
-    desc = "Telescope file browser" })
+    desc = "Telescope file browser"
+})
 
 vim.keymap.set('n', '<leader>ff', function() require('telescope.builtin').find_files() end, {
-    desc = "Telescope find files" })
+    desc = "Telescope find files"
+})
 
 vim.keymap.set('n', '<leader>fb', function() require('telescope.builtin').current_buffer_fuzzy_find() end, {
-    desc = "Telescope fuzzy find in current buffer" })
+    desc = "Telescope fuzzy find in current buffer"
+})
 
 vim.keymap.set('n', '<leader>fh', function() require('telescope.builtin').help_tags() end, {
-    desc = "Telescope help" })
+    desc = "Telescope help"
+})
 
-vim.keymap.set('n', '<leader>fw', function () require('telescope.builtin').grep_string() end, {
-    desc = "Telescope searches for the string under your cursor in your current working directory" })
+vim.keymap.set('n', '<leader>fw', function() require('telescope.builtin').grep_string() end, {
+    desc = "Telescope searches for the string under your cursor in your current working directory"
+})
 
-vim.keymap.set('n', '<leader>fg', function () require('telescope.builtin').live_grep() end, {
-    desc = "Search for a string and get results live as you type." })
+vim.keymap.set('n', '<leader>fg', function() require('telescope.builtin').live_grep() end, {
+    desc = "Search for a string and get results live as you type."
+})
 
-vim.keymap.set('n', '<leader>fk', function () require('telescope.builtin').keymaps() end, {
-    desc = "See keymaps with Telescope" })
+vim.keymap.set('n', '<leader>fk', function() require('telescope.builtin').keymaps() end, {
+    desc = "See keymaps with Telescope"
+})
 
 vim.keymap.set('n', '<leader>?', '<CMD>Cheatsheet<CR>', { desc = "Cheatsheet" })
 
 -- Telescope for git
-vim.keymap.set('n', '<leader>gc', function () require('telescope.builtin').git_commits() end, {
-    desc = "Telescope lists commits for current directory with diff preview" })
+vim.keymap.set('n', '<leader>gc', function() require('telescope.builtin').git_commits() end, {
+    desc = "Telescope lists commits for current directory with diff preview"
+})
 
 vim.keymap.set('n', '<leader>gs', function() require('telescope.builtin').git_status() end, {
-    desc = "Telescope lists git status for current directory" })
+    desc = "Telescope lists git status for current directory"
+})
 
 vim.keymap.set('n', '<leader>gb', function() require('telescope.builtin').git_bcommits() end, {
-    desc = "Telescope lists commits for current buffer with diff preview" })
+    desc = "Telescope lists commits for current buffer with diff preview"
+})
 
 -- Search dotfiles
 vim.keymap.set('n', '<leader>ed',
@@ -1026,8 +1035,9 @@ vim.keymap.set('n', '<leader>ed',
     { desc = "Telescope edit dotfiles" })
 
 -- Telescope LSP commands
-vim.keymap.set('n', '<leader>ls', function () require('telescope.builtin').lsp_references() end, {
-    desc = "List LSP references for word under the cursor" })
+vim.keymap.set('n', '<leader>ls', function() require('telescope.builtin').lsp_references() end, {
+    desc = "List LSP references for word under the cursor"
+})
 -- }}}
 
 

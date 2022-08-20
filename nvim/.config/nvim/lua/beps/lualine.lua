@@ -91,7 +91,7 @@ require 'lualine'.setup {
                 color = {
                     fg = colors.violet,
                     -- gui = 'bold',
-                    },
+                },
             },
             {
                 'diagnostics',
@@ -130,9 +130,9 @@ require 'lualine'.setup {
                     gui = 'italic',
                 },
                 symbols = {
-                    modified = ' ●',      -- Text to show when the buffer is modified
-                    alternate_file = '#', -- Text to show to identify the alternate file
-                    directory =  '',     -- Text to show when the buffer is a directory
+                    modified = ' ●',
+                    alternate_file = ' #',
+                    directory = ' ',
                 },
             },
         },
@@ -160,9 +160,9 @@ require 'lualine'.setup {
                     gui = 'italic',
                 },
                 symbols = {
-                    modified = ' ●',      -- Text to show when the buffer is modified
-                    alternate_file = '#', -- Text to show to identify the alternate file
-                    directory =  '',     -- Text to show when the buffer is a directory
+                    modified = ' ●',
+                    alternate_file = ' #',
+                    directory = ' ',
                 },
             },
         },

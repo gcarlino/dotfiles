@@ -1,5 +1,4 @@
 -- Configuration file for DAP
-
 local dap = require("dap")
 
 local M = {}
