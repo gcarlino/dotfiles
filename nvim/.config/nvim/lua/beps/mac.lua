@@ -3,7 +3,7 @@
 local keymapOpts = { noremap = true, silent = true}
 
 -- Open Marked.app
-vim.api.nvim_set_keymap('n', '<leader>mk', ':silent !open -a "Marked 2.app" %<CR>', keymapOpts)
+vim.keymap.set('n', '<leader>mk', ':silent !open -a "Marked 2.app" %<CR>', { desc = "Preview with Marked app"})
 
 -- Open Dash for documentation *** KEYMAP NOT WORKING ***
 vim.keymap.set('n', '<leader>D', function ()
@@ -12,8 +12,8 @@ end,
   {desc = "Search with Dash app."} )
 
 -- Source this lua file and init.lua
-vim.api.nvim_set_keymap('n', '<leader>S', ':lua package.loaded.bepsmac=nil<cr>:source $MYVIMRC<cr>',
-    keymapOpts)
+vim.keymap.set('n', '<leader>S', ':lua package.loaded.beps.mac=nil<cr>:source $MYVIMRC<cr>',
+    { desc = "Source beps.mac.lua and init.lua"} )
 
 if vim.fn.has("gui_vimr") == 1 then
     vim.opt.background = "light"

@@ -225,8 +225,8 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 -- Quickfixlist navigation
-vim.api.nvim_set_keymap("n", "]q", ":cnext<cr>", keymapOpts)
-vim.api.nvim_set_keymap("n", "[q", ":cprevious<cr>", keymapOpts)
+vim.keymap.set("n", "]q", ":cnext<cr>", { desc = "Next item in quickfix list" })
+vim.keymap.set("n", "[q", ":cnext<cr>", { desc = "Previous item in quickfix list" })
 
 -- listchars
 vim.opt.listchars = {
@@ -372,8 +372,8 @@ set foldexpr=nvim_treesitter#foldexpr()
 -- alvarosevilla95/luatab.nvim {{{
 require('luatab').setup {}
 
-vim.api.nvim_set_keymap("n", "]t", ":tabnext<cr>", keymapOpts)
-vim.api.nvim_set_keymap("n", "[t", ":tabprevious<cr>", keymapOpts)
+vim.keymap.set("n", "]t", ":tabnext<cr>", { desc = "Next tab" })
+vim.keymap.set("n", "[t", ":tabprevious<cr>", { desc = "Previous tab"})
 -- }}}
 
 
@@ -443,17 +443,17 @@ require('gitsigns').setup {
     end, {expr=true})
 
     -- Actions
-    map({'n', 'v'}, '<leader>hs', ':Gitsigns stage_hunk<CR>')
-    map({'n', 'v'}, '<leader>hr', ':Gitsigns reset_hunk<CR>')
-    map('n', '<leader>hS', gs.stage_buffer)
-    map('n', '<leader>hu', gs.undo_stage_hunk)
-    map('n', '<leader>hR', gs.reset_buffer)
-    map('n', '<leader>hp', gs.preview_hunk)
-    map('n', '<leader>hb', function() gs.blame_line{full=true} end)
-    map('n', '<leader>tb', gs.toggle_current_line_blame)
-    map('n', '<leader>hd', gs.diffthis)
-    map('n', '<leader>hD', function() gs.diffthis('~') end)
-    map('n', '<leader>td', gs.toggle_deleted)
+    map({'n', 'v'}, '<leader>hs', ':Gitsigns: stage_hunk<CR>')
+    map({'n', 'v'}, '<leader>hr', ':Gitsigns: reset_hunk<CR>')
+    map('n', '<leader>hS', gs.stage_buffer, {desc = "Gitsigns: stage buffer"})
+    map('n', '<leader>hu', gs.undo_stage_hunk, {desc = "Gitsigns: undo stage hunk"})
+    map('n', '<leader>hR', gs.reset_buffer, {desc = "Gitsigs: reset buffer"})
+    map('n', '<leader>hp', gs.preview_hunk, {desc = "Gitsigns: preview hunk"})
+    map('n', '<leader>hb', function() gs.blame_line{full=true} end, {desc = "Gitsigns: blame line"})
+    map('n', '<leader>tb', gs.toggle_current_line_blame, {desc = "Gitsigns: toggle current line blame"})
+    map('n', '<leader>hd', gs.diffthis, {desc = "Gitsigns: diff this"})
+    map('n', '<leader>hD', function() gs.diffthis('~') end, { desc = "Gitsigns: diff this against last commit"})
+    map('n', '<leader>td', gs.toggle_deleted, { desc = "Gitsign:  toggle deleted" })
 
     -- Text object
     map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
@@ -503,9 +503,10 @@ end
 vim.keymap.set('n', '<leader>di', function() require('telescope.builtin').diagnostics() end,
     { desc = "Document diagnostics" })
 -- vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, keymapOpts)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, keymapOpts)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, keymapOpts)
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, keymapOpts)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, {desc = "Goto previous diagnostic"})
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, {desc = "Goto next diagnostic"})
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist,
+    {desc = "Add buffer diagnostic to the location list"})
 
 -- Use an on_attach function to only map the following keys after the language server attaches to the current buffer
 local on_attach = function(_, bufnr)
@@ -521,14 +522,20 @@ local on_attach = function(_, bufnr)
     -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', bufopts)
     -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', bufopts)
     -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', bufopts)
-    vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, bufopts)
-    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
-    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
+    vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition,
+        {desc = "Jumps to the definition of the type of the symbol under the cursor."})
+    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename,
+        {desc = "Renames all references to the symbol under the cursor."})
+    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action,
+        {desc = "Selects a code action available at the current cursor position."})
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-    vim.keymap.set('n', '<leader>f', vim.lsp.buf.formatting, bufopts)
-    vim.keymap.set('n', '<leader>so', function()
-        require('telescope.builtin').lsp_document_symbols()
-    end, bufopts)
+    vim.keymap.set('n', '<leader>F', vim.lsp.buf.formatting, 
+        {desc = "Format the current buffer"})
+    vim.keymap.set('n', '<leader>so',
+        function()
+            require('telescope.builtin').lsp_document_symbols()
+        end,
+        {desc = "Lists LSP symbols in the current buffer"})
 end
 
 -- additional capabilities
@@ -621,44 +628,41 @@ vim.opt.completeopt = 'menu,menuone,noselect'
 local luasnip = require('luasnip')
 local cmp = require('cmp')
 cmp.setup({
-
     snippet = {
         expand = function(args)
             require('luasnip').lsp_expand(args.body)
         end,
     },
-
     window = {
         -- completion = cmp.config.window.bordered(),
         -- documentation = cmp.config.window.bordered(),
     },
-
     mapping = cmp.mapping.preset.insert({
         ["<C-b>"] = cmp.mapping.scroll_docs(-4),
         ["<C-f>"] = cmp.mapping.scroll_docs(4),
         ["<C-Space>"] = cmp.mapping.complete({}),
         ["<C-e>"] = cmp.mapping.abort(),
         ['<CR>'] = cmp.mapping.confirm({ select = true }),
-        ["<Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_next_item()
-            elseif luasnip.expand_or_jumpable() then
-                luasnip.expand_or_jump()
-            elseif has_words_before() then
-                cmp.complete()
-            else
-                fallback()
-            end
-        end),
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_prev_item()
-            elseif luasnip.jumpable(-1) then
-                luasnip.jump(-1)
-            else
-                fallback()
-            end
-        end),
+        -- ["<Tab>"] = cmp.mapping(function(fallback)
+        --     if cmp.visible() then
+        --         cmp.select_next_item()
+        --     elseif luasnip.expand_or_jumpable() then
+        --         luasnip.expand_or_jump()
+        --     elseif has_words_before() then
+        --         cmp.complete()
+        --     else
+        --         fallback()
+        --     end
+        -- end),
+        -- ["<S-Tab>"] = cmp.mapping(function(fallback)
+        --     if cmp.visible() then
+        --         cmp.select_prev_item()
+        --     elseif luasnip.jumpable(-1) then
+        --         luasnip.jump(-1)
+        --     else
+        --         fallback()
+        --     end
+        -- end),
     }),
 
     -- nvim-cmp by defaults disables autocomplete for prompt buffers
