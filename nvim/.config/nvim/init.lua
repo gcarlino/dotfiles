@@ -38,7 +38,6 @@ vim.api.nvim_set_option('clipboard', 'unnamed')
 -- vim.g.do_legacy_filetype = 1
 -- }}}
 
-
 -- Fold method for init.lua {{{
 -- vim.api.nvim_create_autocmd("FileType", {
 --     pattern = "lua",
@@ -172,13 +171,12 @@ require('packer').startup(function(use)
     use 'windwp/nvim-autopairs'
     use 'simrat39/symbols-outline.nvim'
     use 'chentoast/marks.nvim'
-    use 'akinsho/toggleterm.nvim'
+    use { 'akinsho/toggleterm.nvim', tag = 'v2.*' }
     -- use 'tpope/vim-unimpaired'
     -- use 'sbdchd/neoformat'
     use 'lukas-reineke/indent-blankline.nvim'
     use 'mechatroner/rainbow_csv'
     use 'adamheins/vim-highlight-match-under-cursor'
-    -- use 'tpope/vim-surround'
     use 'kylechui/nvim-surround'
     -- use 'tjdevries/astronauta.nvim'
     use { 'sidebar-nvim/sidebar.nvim', disable = true }
@@ -487,28 +485,22 @@ vim.api.nvim_set_keymap('n', '<C-W><C-m>', ':MaximizerToggle!<CR>', { noremap = 
 require("toggleterm").setup {
     open_mapping = [[<c-q>]],
 }
+
+-- Mappings to make moving in and out of a terminal easier once toggled,
+-- whilst still keeping it open
+function _G.set_terminal_keymaps()
+  local opts = {buffer = 0}
+  vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
+  vim.keymap.set('t', 'jk', [[<C-\><C-n>]], opts)
+  vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
+  vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
+  vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
+  vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
+end
+
+vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
 -- }}}
 
-
--- sbdchd/neoformat {{{
--- vim.api.nvim_set_keymap('n', '<leader>F', ':Neoformat prettier<CR>', { noremap = true })
--- }}}
-
---[[
--- GustavoKatel/sidebar.nvim {{{
-require("sidebar-nvim").setup({
-    hide_statusline = true,
-    bindings = { ["q"] = function ()
-        require('sidebar-nvim').close()
-    end
-    },
-    sections = { "datetime", "buffers", "git", "symbols", "todos", "diagnostics" },
-})
-
--- Toggle sidebar
-vim.keymap.set('n', '<leader>s', require('sidebar-nvim').toggle, { desc = "Toggle sidebar"})
--- }}}
-]]
 
 -- neovi/nvim-lspconfig {{{
 -- local nvim_lsp = require 'lspconfig'
