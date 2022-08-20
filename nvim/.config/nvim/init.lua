@@ -152,7 +152,6 @@ require('packer').startup(function(use)
 
     -- Various
     use 'rcarriga/nvim-notify'
-    use 'szw/vim-maximizer'
     use 'windwp/nvim-autopairs'
     use 'chentoast/marks.nvim'
     use { 'akinsho/toggleterm.nvim', tag = 'v2.*' }
@@ -460,12 +459,6 @@ require('gitsigns').setup {
     map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
   end
 }
--- }}}
-
-
--- szw/vim-maximizer {{{
-vim.api.nvim_set_keymap('n', '<leader>m', ':MaximizerToggle!<CR>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<C-W><C-m>', ':MaximizerToggle!<CR>', { noremap = true })
 -- }}}
 
 
