@@ -36,6 +36,9 @@ vim.g.markdown_fenced_languages = { 'html', 'python', 'vim', 'r', 'sh' }
 
 -- Switch to old filetype.vim mechanism
 -- vim.g.do_legacy_filetype = 1
+
+-- Turn off builtin plugins
+require("beps.disable_builtin")
 -- }}}
 
 
