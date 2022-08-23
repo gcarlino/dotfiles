@@ -145,7 +145,8 @@ require('packer').startup(function(use)
     use 'nvim-telescope/telescope-dap.nvim'
 
     -- Colorschemes
-    use 'https://github.com/sainnhe/edge'
+    use {'https://github.com/sainnhe/edge', disable = true}
+    use 'navarasu/onedark.nvim'
 
     -- Comment
     use 'numToStr/Comment.nvim'
@@ -275,16 +276,24 @@ vim.api.nvim_create_autocmd("FileType", {
 -- Set colors {{{
 vim.o.termguicolors = true
 
--- sainnhe/edge
-vim.g.edge_style = 'aura'
-vim.g.edge_better_performance = 1
-vim.g.edge_dim_foreground = 1
-vim.g.edge_disable_italic_comment = 1
-vim.g.edge_disable_terminal_colors = 1
-vim.cmd([[ colorscheme edge ]])
-
+-- -- sainnhe/edge
+-- vim.g.edge_style = 'aura'
+-- vim.g.edge_better_performance = 1
+-- vim.g.edge_dim_foreground = 1
+-- vim.g.edge_disable_italic_comment = 1
+-- vim.g.edge_disable_terminal_colors = 1
+-- vim.cmd([[ colorscheme edge ]])
 -- Override split separator color
-vim.api.nvim_set_hl(0, 'WinSeparator', { fg = '#666666' })
+-- vim.api.nvim_set_hl(0, 'WinSeparator', { fg = '#666666' })
+
+require('onedark').setup({
+    style = "dark",
+    toggle_style_key = '<leader>ts',
+    code_style = {
+        comments = 'none',
+    }
+})
+require('onedark').load()
 
 -- Toggle backgournd color
 vim.api.nvim_set_keymap("n", "<leader>b", "", {

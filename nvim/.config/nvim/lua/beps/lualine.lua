@@ -1,20 +1,23 @@
-local colors = {
-    bg       = '#2b2d37',
-    bg1      = '#333644',
-    bg2      = '#363a49',
-    bg3      = '#3a3e4e',
-    bg4      = '#404455',
-    fg       = '#97a4b5',
-    yellow   = '#deb974',
-    cyan     = '#5dbbc1',
-    darkblue = '#081633',
-    green    = '#a0c980',
-    orange   = '#FF8800',
-    violet   = '#a9a1e1',
-    magenta  = '#c678dd',
-    blue     = '#6cb6eb',
-    red      = '#ec7279',
-}
+-- local colors = {
+--     -- -- edge
+--     -- bg       = '#2b2d37',
+--     -- bg1      = '#333644',
+--     -- bg2      = '#363a49',
+--     -- bg3      = '#3a3e4e',
+--     -- bg4      = '#404455',
+--     -- fg       = '#97a4b5',
+--     -- yellow   = '#deb974',
+--     -- cyan     = '#5dbbc1',
+--     -- darkblue = '#081633',
+--     -- green    = '#a0c980',
+--     -- orange   = '#FF8800',
+--     -- violet   = '#a9a1e1',
+--     -- magenta  = '#c678dd',
+--     -- blue     = '#6cb6eb',
+--     -- red      = '#ec7279',
+-- }
+
+local colors = require('onedark.palette')['dark']
 
 local function getCWD()
     local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ":~")
@@ -69,7 +72,7 @@ require 'lualine'.setup {
             {
                 'branch',
                 color = {
-                    fg = colors.violet,
+                    fg = colors.purple,
                 }
             },
             {
@@ -89,7 +92,7 @@ require 'lualine'.setup {
                 getLSP,
                 icon = ' ',
                 color = {
-                    fg = colors.violet,
+                    fg = colors.purple,
                     -- gui = 'bold',
                 },
             },
@@ -98,12 +101,12 @@ require 'lualine'.setup {
                 sources = { 'nvim_diagnostic' },
                 -- symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
                 symbols = { error = " ", warn = " ", hint = " ", info = " " },
-                diagnostics_color = {
-                    error = { fg = colors.red },
-                    warn = { fg = colors.yellow },
-                    info = { fg = colors.cyan },
-                    hint = { fg = colors.green },
-                },
+                -- diagnostics_color = {
+                --     error = { fg = colors.red },
+                --     warn = { fg = colors.yellow },
+                --     info = { fg = colors.cyan },
+                --     hint = { fg = colors.green },
+                -- },
             },
         },
         lualine_y = { 'filesize', 'encoding', 'fileformat' },
