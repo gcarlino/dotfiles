@@ -144,7 +144,7 @@ require('packer').startup(function(use)
     use 'theHamsta/nvim-dap-virtual-text'
     use 'nvim-telescope/telescope-dap.nvim'
 
-    -- Color schemes
+    -- Colorschemes
     use 'https://github.com/sainnhe/edge'
 
     -- Comment
@@ -283,7 +283,7 @@ vim.g.edge_disable_italic_comment = 1
 vim.g.edge_disable_terminal_colors = 1
 vim.cmd([[ colorscheme edge ]])
 
--- -- Override split separator color
+-- Override split separator color
 vim.api.nvim_set_hl(0, 'WinSeparator', { fg = '#666666' })
 
 -- Toggle backgournd color

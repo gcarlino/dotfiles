@@ -76,11 +76,11 @@ require 'lualine'.setup {
                 'diff',
                 -- symbols = { added = ' ', modified = '柳', removed = ' ' },
                 symbols = { added = ' ', modified = ' ', removed = ' ' },
-                diff_color = {
-                    added = { fg = colors.green },
-                    modified = { fg = colors.cyan },
-                    removed = { fg = colors.red },
-                },
+                -- diff_color = {
+                --     added = { fg = colors.green },
+                --     modified = { fg = colors.cyan },
+                --     removed = { fg = colors.red },
+                -- },
             },
         },
 
