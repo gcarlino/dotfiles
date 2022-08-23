@@ -152,7 +152,7 @@ require('packer').startup(function(use)
     use 'numToStr/Comment.nvim'
 
     -- Various
-    use 'rcarriga/nvim-notify'
+    -- use 'rcarriga/nvim-notify'
     use 'windwp/nvim-autopairs'
     use 'chentoast/marks.nvim'
     use { 'akinsho/toggleterm.nvim', tag = 'v2.*' }
@@ -1054,7 +1054,7 @@ vim.keymap.set('n', '<leader>ls', function() require('telescope.builtin').lsp_re
 
 
 -- rcarriga/nvim-notify {{{
-vim.notify = require("notify")
+-- vim.notify = require("notify")
 -- }}}
 
 
