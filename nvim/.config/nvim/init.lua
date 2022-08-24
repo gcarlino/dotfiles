@@ -553,11 +553,11 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 -- nvim-cmp supports additional completion capabilities
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
--- tell the sever the capability of foldingRange
-capabilities.textDocument.foldingRange = {
-    dynamicRegistration = false,
-    lineFoldingOnly = true
-}
+-- -- tell the sever the capability of foldingRange
+-- capabilities.textDocument.foldingRange = {
+--     dynamicRegistration = false,
+--     lineFoldingOnly = true
+-- }
 
 -- Enable the following language servers
 local servers = { 'pyright', 'html', 'r_language_server', 'yamlls', 'bashls', 'texlab', 'cmake' }
@@ -806,13 +806,16 @@ end
 
 -- global handler
 require('ufo').setup({
+    provider_selector = function(bufnr, filetype)
+        return {'treesitter', 'indent'}
+    end,
     fold_virt_text_handler = handler
 })
 
 -- buffer scope handler
 -- will override global handler if it is existed
-local bufnr = vim.api.nvim_get_current_buf()
-require('ufo').setFoldVirtTextHandler(bufnr, handler)
+-- local bufnr = vim.api.nvim_get_current_buf()
+-- require('ufo').setFoldVirtTextHandler(bufnr, handler)
 -- }}}
 
 
