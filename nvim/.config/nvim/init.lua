@@ -72,6 +72,7 @@ require('packer').startup(function(use)
     --   LUA     brew install lua-language-server
     --   LATEX   brew install texlab
     --   cmake   pip3 install cmake-language-server
+    --   clangd  apt install clangd
     use 'neovim/nvim-lspconfig'
     use 'onsails/lspkind-nvim'
     use { 'nvim-telescope/telescope-ui-select.nvim' }
@@ -567,7 +568,8 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 -- }
 
 -- Enable the following language servers
-local servers = { 'pyright', 'html', 'r_language_server', 'yamlls', 'bashls', 'texlab', 'cmake' }
+local servers = { 'pyright', 'html', 'r_language_server', 'yamlls', 'bashls', 'texlab',
+    'cmake', 'clangd' }
 for _, lsp in ipairs(servers) do
     require('lspconfig')[lsp].setup({
         on_attach = on_attach,
