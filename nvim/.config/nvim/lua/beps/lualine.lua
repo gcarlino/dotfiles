@@ -17,7 +17,8 @@
 --     -- red      = '#ec7279',
 -- }
 
-local colors = require('onedark.palette')['dark']
+-- local colors = require('onedark.palette')['dark']
+local colors = require('nightfox.palette').load('nordfox')
 
 local function getCWD()
     local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ":~")
@@ -63,7 +64,7 @@ require 'lualine'.setup {
                 getCWD,
                 icon = ' ',
                 color = {
-                    fg = colors.blue,
+                    fg = colors.blue.bright,
                     gui = 'italic',
                 },
             },
@@ -72,7 +73,7 @@ require 'lualine'.setup {
             {
                 'branch',
                 color = {
-                    fg = colors.purple,
+                    fg = colors.pink.dim,
                 }
             },
             {
@@ -92,7 +93,7 @@ require 'lualine'.setup {
                 getLSP,
                 icon = ' ',
                 color = {
-                    fg = colors.purple,
+                    fg = colors.pink.dim,
                     -- gui = 'bold',
                 },
             },
@@ -159,7 +160,6 @@ require 'lualine'.setup {
                 'filename',
                 path = 1,
                 color = {
-                    -- bg = colors.bg2,
                     gui = 'italic',
                 },
                 symbols = {

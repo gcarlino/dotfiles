@@ -147,6 +147,7 @@ require('packer').startup(function(use)
     -- Colorschemes
     use {'https://github.com/sainnhe/edge', disable = true}
     use 'navarasu/onedark.nvim'
+    use "EdenEast/nightfox.nvim"
 
     -- Comment
     use 'numToStr/Comment.nvim'
@@ -286,14 +287,20 @@ vim.o.termguicolors = true
 -- Override split separator color
 -- vim.api.nvim_set_hl(0, 'WinSeparator', { fg = '#666666' })
 
-require('onedark').setup({
-    style = "dark",
-    toggle_style_key = '<leader>ts',
-    code_style = {
-        comments = 'none',
-    }
+-- require('onedark').setup({
+--     style = "dark",
+--     toggle_style_key = '<leader>ts',
+--     code_style = {
+--         comments = 'none',
+--     }
+-- })
+-- require('onedark').load()
+
+
+require('nightfox').setup({
+    terminal_colors = false
 })
-require('onedark').load()
+vim.cmd("colorscheme nordfox")
 
 -- Toggle backgournd color
 vim.api.nvim_set_keymap("n", "<leader>b", "", {
