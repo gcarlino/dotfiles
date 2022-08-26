@@ -199,12 +199,6 @@ vim.keymap.set('n', '<leader>v', ':e $MYVIMRC<CR>', { desc = "Edit init.lua" })
 -- No highlight
 vim.keymap.set('n', '<CR>', ':noh<CR>', { desc = "No highlight" })
 
--- Move in split navigations
-vim.api.nvim_set_keymap('n', '<C-J>', '<C-W><C-J>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<C-K>', '<C-W><C-K>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<C-L>', '<C-W><C-L>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<C-H>', '<C-W><C-H>', { noremap = true })
-
 -- Move lines around
 vim.api.nvim_set_keymap('n', '<M-k>', ':m .-2<CR>==', { noremap = true })
 vim.api.nvim_set_keymap('n', '<M-j>', ':m .+1<CR>==', { noremap = true })

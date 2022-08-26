@@ -11,9 +11,9 @@ vim.keymap.set('n', '<leader>D',
     { desc = "Search with Dash app." })
 
 -- vimr
-if vim.fn.has("gui_vimr") == 1 then
-    vim.opt.background = "light"
-end
+-- if vim.fn.has("gui_vimr") == 1 then
+--     vim.opt.background = "light"
+-- end
 
 -- neovide
 if vim.g.neovide then
