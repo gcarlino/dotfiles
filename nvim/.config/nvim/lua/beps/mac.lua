@@ -1,12 +1,13 @@
 -- neovim configuration for macOS
 
 -- Preview markdown with Marked.app
-vim.keymap.set('n', '<leader>mk', ':silent !open -a "Marked 2.app" %<CR>', { desc = "Preview with Marked app" })
+vim.keymap.set('n', '<leader>mk', '!open -a "Marked 2.app" "%"<CR>',
+    { desc = "Preview with Marked app" })
 
 -- Open Dash for documentation *** KEYMAP NOT WORKING ***
-vim.keymap.set('n', '<leader>D',
+vim.keymap.set('n','<leader>ds',
     function()
-        require('dash.providers.telescope').dash({ bang = false, initial_text = '' })
+        require('dash.providers.telescope').dash({ bang = false, initial_text = vim.fn.expand("<cword>") })
     end,
     { desc = "Search with Dash app." })
 
@@ -19,7 +20,7 @@ vim.keymap.set('n', '<leader>D',
 if vim.g.neovide then
     vim.g.neovide_cursor_trail_legnth = 0
     vim.g.neovide_cursor_animation_length = 0
-    vim.o.guifont = "SF Mono:h12"
+    vim.o.guifont = "SF Monoh12"
 end
 
 
