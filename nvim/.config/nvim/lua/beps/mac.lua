@@ -1,7 +1,7 @@
 -- neovim configuration for macOS
 
 -- Preview markdown with Marked.app
-vim.keymap.set('n', '<leader>mk', '!open -a "Marked 2.app" "%"<CR>',
+vim.keymap.set('n', '<leader>mk', ':!open -a "/Applications/Marked 2.app" "%"<CR>',
     { desc = "Preview with Marked app" })
 
 -- Open Dash for documentation *** KEYMAP NOT WORKING ***
