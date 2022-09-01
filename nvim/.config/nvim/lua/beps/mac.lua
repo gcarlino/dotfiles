@@ -2,7 +2,7 @@
 
 -- Preview markdown with Marked.app
 vim.keymap.set('n', '<leader>mk', ':!open -a "/Applications/Marked 2.app" "%"<CR>',
-    { desc = "Preview with Marked app" })
+    { desc = "Preview with Marked app", silent = true })
 
 -- Open Dash for documentation *** KEYMAP NOT WORKING ***
 vim.keymap.set('n','<leader>ds',
@@ -20,7 +20,7 @@ vim.keymap.set('n','<leader>ds',
 if vim.g.neovide then
     vim.g.neovide_cursor_trail_legnth = 0
     vim.g.neovide_cursor_animation_length = 0
-    vim.o.guifont = "SF Monoh12"
+    vim.o.guifont = "SF Mono:h12"
 end
 
 
@@ -34,6 +34,15 @@ M.simulnotes = function()
     require('telescope.builtin').live_grep(opts)
 end
 
-vim.keymap.set('n', '<leader>sn', function() M.simulnotes() end, {
-    desc = "List Simularia notes with Telescope"
-})
+M.simultitles = function()
+    local opts = {
+        cwd = "~/Simularia/Notes/",
+        prompt_title = "~ (Not only) Simularia Notes ~",
+    }
+    require('telescope.builtin').find_files(opts)
+end
+
+vim.keymap.set('n', '<leader>sg', function() M.simulnotes() end, {
+    desc = "Grep Simularia notes with Telescope" })
+vim.keymap.set('n', '<leader>sf', function() M.simultitles() end, {
+    desc = "List Simularia notes with Telescope" })
