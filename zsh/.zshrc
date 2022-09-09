@@ -119,6 +119,8 @@ if [[ $OS == "Darwin" ]] {
     export PATH=~/bin:~/.cargo/bin:$PATH
     export PATH=/usr/local/sbin:$PATH
     export PATH=$PATH:/usr/local/gfortran/bin
+    # Homebrew
+    export HOMEBREW_INSTALL_FROM_API=1 
 } elif [[ $OS == "Linux" ]] {
     export PATH=$HOME/bin:$HOME/.local/bin:${HOME}/node_modules/.bin/:/home/exe64:$PATH
 } fi
@@ -217,3 +219,5 @@ if [[ $OS == "Linux" ]] ; then
     umask 002
 
 fi
+
+
