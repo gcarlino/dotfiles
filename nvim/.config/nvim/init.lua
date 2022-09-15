@@ -168,11 +168,6 @@ require('packer').startup(function(use)
     use 'kylechui/nvim-surround'
     use { 'sidebar-nvim/sidebar.nvim', disable = true }
     use 'https://github.com/godlygeek/tabular'
-    use { "folke/which-key.nvim",
-        config = function()
-            require("which-key").setup {}
-        end
-    }
 
     -- Mac specific
     if vim.fn.has('mac') == 1 then
