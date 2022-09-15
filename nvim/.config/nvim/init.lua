@@ -37,6 +37,10 @@ vim.g.markdown_fenced_languages = { 'html', 'python', 'vim', 'r', 'sh' }
 -- Switch to old filetype.vim mechanism
 -- vim.g.do_legacy_filetype = 1
 
+-- Spellcheck
+vim.opt.spell = true
+vim.opt.spelllang = { 'en_us', 'it' }
+
 -- Turn off builtin plugins
 require("beps.disable_builtin")
 -- }}}
@@ -93,7 +97,7 @@ require('packer').startup(function(use)
             { 'hrsh7th/cmp-nvim-lua', after = 'nvim-cmp' },
             { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' },
             { 'kdheepak/cmp-latex-symbols', after = 'nvim-cmp' },
-            'rcarriga/cmp-dap'
+            'rcarriga/cmp-dap',
         },
         -- config = [[require('config.cmp')]],
         -- event = 'InsertEnter *',
@@ -607,7 +611,7 @@ require('lspconfig').sumneko_lua.setup {
             },
             workspace = {
                 -- Make the server aware of Neovim runtime files
-                library = vim.api.nvim_get_runtime_file('', true),
+                library = vim.api.nvim_get_runtime_file('lua', true),
                 checkThirdParty = false,
             },
             -- Do not send telemetry data containing a randomized but unique identifier
@@ -1069,3 +1073,4 @@ if vim.fn.has("mac") == 1 then
     require("beps.mac")
 end
 -- }}}
+--
