@@ -110,8 +110,6 @@ alias docker-clean-images='docker images | grep none | awk "{print \$3}" | xargs
 alias docker-clean-containers='docker ps -a | grep Exited | awk "{print \$1}" | xargs docker rm'
 
 
-# Disable homebrew analytics
-export HOMEBREW_NO_ANALYTICS=1
 
 # System dependent PATH
 if [[ $OS == "Darwin" ]] {
@@ -120,6 +118,7 @@ if [[ $OS == "Darwin" ]] {
     export PATH=/usr/local/sbin:$PATH
     export PATH=$PATH:/usr/local/gfortran/bin
     # Homebrew
+    export HOMEBREW_NO_ANALYTICS=1
     export HOMEBREW_INSTALL_FROM_API=1 
 } elif [[ $OS == "Linux" ]] {
     export PATH=$HOME/bin:$HOME/.local/bin:${HOME}/node_modules/.bin/:/home/exe64:$PATH
