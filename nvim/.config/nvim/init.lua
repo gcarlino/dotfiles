@@ -159,6 +159,7 @@ require('packer').startup(function(use)
 
     -- Various
     -- use 'rcarriga/nvim-notify'
+    use 'joeytwiddle/sexy_scroller.vim'
     use 'windwp/nvim-autopairs'
     use 'chentoast/marks.nvim'
     use { 'akinsho/toggleterm.nvim', tag = 'v2.*' }
