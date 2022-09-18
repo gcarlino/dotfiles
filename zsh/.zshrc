@@ -99,11 +99,6 @@ alias lt='ls --tree'
 alias tree='tree -C'
 # alias cat='bat --paging=never'
 
-# kitty ssh
-if [[ $OS == "Darwin" ]] ; then
-    alias s='kitty +kitten ssh'
-fi
-
 
 # Remove unused docker images:
 alias docker-clean-images='docker images | grep none | awk "{print \$3}" | xargs docker rmi'
@@ -113,13 +108,21 @@ alias docker-clean-containers='docker ps -a | grep Exited | awk "{print \$1}" | 
 
 # System dependent PATH
 if [[ $OS == "Darwin" ]] {
+    # kitty ssh
+    alias s='kitty +kitten ssh'
+
     # Personal bin
     export PATH=~/bin:~/.cargo/bin:$PATH
     export PATH=/usr/local/sbin:$PATH
     export PATH=$PATH:/usr/local/gfortran/bin
+
     # Homebrew
     export HOMEBREW_NO_ANALYTICS=1
     export HOMEBREW_INSTALL_FROM_API=1 
+
+    # broot
+    source /Users/beps/.config/broot/launcher/bash/br
+
 } elif [[ $OS == "Linux" ]] {
     export PATH=$HOME/bin:$HOME/.local/bin:${HOME}/node_modules/.bin/:/home/exe64:$PATH
 } fi
