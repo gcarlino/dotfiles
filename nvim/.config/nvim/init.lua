@@ -1026,6 +1026,10 @@ vim.keymap.set('n', '<leader>fk', function() require('telescope.builtin').keymap
     desc = "See keymaps with Telescope"
 })
 
+vim.keymap.set('n', '<leader>fo', function() require('telescope.builtin').oldfiles() end, {
+    desc = "See recently opened/edited files with Telescope"
+})
+
 vim.keymap.set('n', '<leader>?', '<CMD>Cheatsheet<CR>', { desc = "Cheatsheet" })
 
 -- Telescope for git
