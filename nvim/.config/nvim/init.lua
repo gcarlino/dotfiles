@@ -38,7 +38,7 @@ vim.g.markdown_fenced_languages = { 'html', 'python', 'vim', 'r', 'sh' }
 -- vim.g.do_legacy_filetype = 1
 
 -- Spellcheck
-vim.opt.spell = true
+vim.opt.spell = false
 vim.opt.spelllang = { 'en_us', 'it' }
 
 -- Turn off builtin plugins
@@ -62,7 +62,7 @@ require('packer').startup(function(use)
     -- Tree-sitter
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
     use 'nvim-treesitter/nvim-treesitter-textobjects'
-    use 'nvim-treesitter/playground'
+    use { 'nvim-treesitter/playground', opt = true, cmd = "TSPlaygroundToggle"}
     use 'nvim-treesitter/nvim-treesitter-context'
 
     -- LSP
@@ -89,10 +89,10 @@ require('packer').startup(function(use)
         requires = {
             'L3MON4D3/LuaSnip',
             { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
-            'hrsh7th/cmp-nvim-lsp',
-            'hrsh7th/cmp-nvim-lua',
-            'hrsh7th/cmp-nvim-lsp-signature-help',
-            'hrsh7th/cmp-cmdline',
+            {'hrsh7th/cmp-nvim-lsp'},
+            {'hrsh7th/cmp-nvim-lua'},
+            {'hrsh7th/cmp-nvim-lsp-signature-help'},
+            {'hrsh7th/cmp-cmdline'},
             { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
             { 'hrsh7th/cmp-nvim-lua', after = 'nvim-cmp' },
             { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' },
@@ -125,11 +125,8 @@ require('packer').startup(function(use)
     }
 
     -- Statusline & tabline
-    use { 'alvarosevilla95/luatab.nvim',
-        requires = 'kyazdani42/nvim-web-devicons' }
-    use { 'nvim-lualine/lualine.nvim',
-        requires = { 'kyazdani42/nvim-web-devicons', opt = true },
-    }
+    use { 'alvarosevilla95/luatab.nvim', requires = 'kyazdani42/nvim-web-devicons' }
+    use { 'nvim-lualine/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons' } }
 
     -- Folding
     use { 'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async' }
@@ -165,7 +162,7 @@ require('packer').startup(function(use)
     use { 'akinsho/toggleterm.nvim', tag = 'v2.*' }
     use 'lukas-reineke/indent-blankline.nvim'
     use 'mechatroner/rainbow_csv'
-    use 'adamheins/vim-highlight-match-under-cursor'
+    -- use 'adamheins/vim-highlight-match-under-cursor'
     use 'kylechui/nvim-surround'
     use { 'sidebar-nvim/sidebar.nvim', disable = true }
     use 'https://github.com/godlygeek/tabular'
@@ -183,12 +180,12 @@ require('packer').startup(function(use)
 end
 )
 
-local packer_group = vim.api.nvim_create_augroup('Packer', { clear = true })
-vim.api.nvim_create_autocmd('BufWritePost', {
-    command = 'source <afile> | PackerCompile',
-    group = packer_group,
-    pattern = 'init.lua'
-})
+-- local packer_group = vim.api.nvim_create_augroup('Packer', { clear = true })
+-- vim.api.nvim_create_autocmd('BufWritePost', {
+--     command = 'source <afile> | PackerCompile',
+--     group = packer_group,
+--     pattern = 'init.lua'
+-- })
 -- }}}
 
 
