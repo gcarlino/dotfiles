@@ -164,7 +164,6 @@ require('packer').startup(function(use)
     use 'mechatroner/rainbow_csv'
     -- use 'adamheins/vim-highlight-match-under-cursor'
     use 'kylechui/nvim-surround'
-    use { 'sidebar-nvim/sidebar.nvim', disable = true }
     use 'https://github.com/godlygeek/tabular'
 
     -- Mac specific
