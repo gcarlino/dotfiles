@@ -712,6 +712,13 @@ cmp.setup({
     }
 })
 
+cmp.setup.filetype({'markdown', 'text'}, {
+    sources = cmp.config.sources({
+        {name = 'latex_symbols'},
+        {name = 'buffer'}
+    })
+})
+
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline(':', {
     mapping = cmp.mapping.preset.cmdline(),
