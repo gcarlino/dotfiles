@@ -685,7 +685,7 @@ cmp.setup({
         { name = "nvim_lua" },
         { name = "luasnip" },
         { name = "path" },
-        { name = "cmdline" },
+        -- { name = "cmdline" },
         { name = "latex_symbols" },
         { name = "dap" },
         { name = "buffer", keyword_length = 3 }
@@ -706,6 +706,9 @@ cmp.setup({
         }),
     },
 
+    -- view = {
+    --     entries = "native"
+    -- },
     experimental = {
         native_menu = false,
         ghost_text = true
@@ -717,6 +720,16 @@ cmp.setup.filetype({'markdown', 'text'}, {
         {name = 'latex_symbols'},
         {name = 'buffer'}
     })
+})
+
+-- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline({ '/', '?' }, {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+        { name = 'buffer',
+            keyword_length = 3
+        }
+    }
 })
 
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
