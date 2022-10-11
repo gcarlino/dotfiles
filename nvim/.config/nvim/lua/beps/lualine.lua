@@ -93,8 +93,16 @@ require 'lualine'.setup {
 
         lualine_x = {
             {
+                'filetype',
+                icon_only = true,
+                colored = false,
+                color = {
+                    fg = colors.pink.dim,
+                },
+            },
+            {
                 getLSP,
-                icon = ' ',
+                -- icon = ' ',
                 color = {
                     fg = colors.pink.dim,
                     -- gui = 'bold',

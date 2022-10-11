@@ -6,6 +6,7 @@ table.insert(runtime_path, 'lua/?/init.lua')
 
 vim.lsp.start({
     name = 'sumneko_lua',
+    filetypes = { 'lua' },
     cmd = {'lua-language-server'},
     root_dir = vim.fs.dirname(vim.fs.find({'init.lua'}, { upward = true })[1]),
     settings = {
