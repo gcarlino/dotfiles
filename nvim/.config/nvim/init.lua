@@ -34,9 +34,6 @@ vim.api.nvim_set_option('clipboard', 'unnamed')
 -- Highlight syntax inside markdown
 vim.g.markdown_fenced_languages = { 'html', 'python', 'vim', 'r', 'sh' }
 
--- Switch to old filetype.vim mechanism
--- vim.g.do_legacy_filetype = 1
-
 -- Spellcheck
 vim.opt.spell = false
 vim.opt.spelllang = { 'en_us', 'it' }
@@ -77,7 +74,7 @@ require('packer').startup(function(use)
     --   LATEX   brew install texlab
     --   cmake   pip3 install cmake-language-server
     --   clangd  apt install clangd
-    use 'neovim/nvim-lspconfig'
+    -- use 'neovim/nvim-lspconfig'
     use 'onsails/lspkind-nvim'
     use { 'nvim-telescope/telescope-ui-select.nvim' }
     -- Standalone UI for nvim-lsp progress
@@ -245,13 +242,6 @@ vim.api.nvim_create_autocmd({ "VimEnter", "BufEnter", "InsertLeave" }, {
     end
 })
 
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = {"html"},
-    callback = function()
-        vim.o.tabstop = 2
-        vim.o.shiftwidth = 2
-    end
-})
 
 -- Fold method for init.lua
 vim.api.nvim_create_autocmd("FileType", {
@@ -492,7 +482,6 @@ vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
 
 -- neovi/nvim-lspconfig {{{
 -- local nvim_lsp = require 'lspconfig'
-
 vim.diagnostic.config({
     virtual_text = true,
     signs = true,
@@ -515,104 +504,146 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = "Goto next diagnost
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist,
     { desc = "Add buffer diagnostic to the location list" })
 
+-- vim.api.nvim_create_autocmd('LspAttach', {
+--     callback = function(args)
+--
+-- --     -- Trigger completion with <c-x><c-o>
+--         vim.api.nvim_buf_set_option(args.buf, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+--
+--         local bufopts = { buffer = args.buf, noremap = true, silent = true }
+--
+--         vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+--         vim.keymap.set('n', '<leader>F', vim.lsp.buf.format, bufopts)
+--         vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+--         vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+--         vim.keymap.set('n', 'ga', vim.lsp.buf.code_action, bufopts)
+--
+--         vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+--         vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+--         -- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+--         vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition,
+--             { desc = "Jumps to the definition of the type of the symbol under the cursor." })
+--         vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename,
+--             { desc = "Renames all references to the symbol under the cursor." })
+--         vim.keymap.set('n', '<leader>so',
+--             function()
+--                 require('telescope.builtin').lsp_document_symbols()
+--             end,
+--             { desc = "Lists LSP symbols in the current buffer" })
+--
+--         -- additional capabilities
+--         local capabilities = vim.lsp.protocol.make_client_capabilities()
+--
+--         -- nvim-cmp supports additional completion capabilities
+--         capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+--
+--         -- -- tell the sever the capability of foldingRange
+--         -- capabilities.textDocument.foldingRange = {
+--         --     dynamicRegistration = false,
+--         --     lineFoldingOnly = true
+--         -- }
+--
+--     end
+-- })
+
 -- Use an on_attach function to only map the following keys after the language server attaches to the current buffer
-local on_attach = function(_, bufnr)
-    -- Trigger completion with <c-x><c-o>
-    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+-- local on_attach = function(_, bufnr)
+--     -- Trigger completion with <c-x><c-o>
+--     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+--
+--     local bufopts = { noremap = true, silent = true, buffer = bufnr }
+--
+--     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+--     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+--     vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+--     vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+--     -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', bufopts)
+--     -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', bufopts)
+--     -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', bufopts)
+--     vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition,
+--         { desc = "Jumps to the definition of the type of the symbol under the cursor." })
+--     vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename,
+--         { desc = "Renames all references to the symbol under the cursor." })
+--     vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action,
+--         { desc = "Selects a code action available at the current cursor position." })
+--     vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+--     vim.keymap.set('n', '<leader>F', vim.lsp.buf.format,
+--         { desc = "Format the current buffer" })
+--     vim.keymap.set('n', '<leader>so',
+--         function()
+--             require('telescope.builtin').lsp_document_symbols()
+--         end,
+--         { desc = "Lists LSP symbols in the current buffer" })
+-- end
 
-    local bufopts = { noremap = true, silent = true, buffer = bufnr }
-
-    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-    -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', bufopts)
-    -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', bufopts)
-    -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', bufopts)
-    vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition,
-        { desc = "Jumps to the definition of the type of the symbol under the cursor." })
-    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename,
-        { desc = "Renames all references to the symbol under the cursor." })
-    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action,
-        { desc = "Selects a code action available at the current cursor position." })
-    vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-    vim.keymap.set('n', '<leader>F', vim.lsp.buf.format,
-        { desc = "Format the current buffer" })
-    vim.keymap.set('n', '<leader>so',
-        function()
-            require('telescope.builtin').lsp_document_symbols()
-        end,
-        { desc = "Lists LSP symbols in the current buffer" })
-end
-
--- additional capabilities
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-
--- nvim-cmp supports additional completion capabilities
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-
--- -- tell the sever the capability of foldingRange
--- capabilities.textDocument.foldingRange = {
---     dynamicRegistration = false,
---     lineFoldingOnly = true
+-- -- additional capabilities
+-- local capabilities = vim.lsp.protocol.make_client_capabilities()
+--
+-- -- nvim-cmp supports additional completion capabilities
+-- capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+--
+-- -- -- tell the sever the capability of foldingRange
+-- -- capabilities.textDocument.foldingRange = {
+-- --     dynamicRegistration = false,
+-- --     lineFoldingOnly = true
+-- -- }
+--
+-- -- Enable the following language servers
+-- local servers = { 'pyright', 'html', 'r_language_server', 'yamlls', 'bashls', 'texlab',
+--     'cmake', 'clangd' }
+-- for _, lsp in ipairs(servers) do
+--     require('lspconfig')[lsp].setup({
+--         on_attach = on_attach,
+--         capabilities = capabilities,
+--     })
+-- end
+--
+-- -- custom server configurations
+-- require('lspconfig').fortls.setup {
+--     on_attach = on_attach,
+--     capabilities = capabilities,
+--     cmd = { 'fortls' },
+--     filetypes = { "fortran", "fortran77" },
+--     settings = {
+--         notifyInit = true,
+--         lowercaseIntrinsics = true,
+--         enableCodeActions = true
+--     }
 -- }
-
--- Enable the following language servers
-local servers = { 'pyright', 'html', 'r_language_server', 'yamlls', 'bashls', 'texlab',
-    'cmake', 'clangd' }
-for _, lsp in ipairs(servers) do
-    require('lspconfig')[lsp].setup({
-        on_attach = on_attach,
-        capabilities = capabilities,
-    })
-end
-
--- custom server configurations
-require('lspconfig').fortls.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    cmd = { 'fortls' },
-    filetypes = { "fortran", "fortran77" },
-    settings = {
-        notifyInit = true,
-        lowercaseIntrinsics = true,
-        enableCodeActions = true
-    }
-}
-
--- Make runtime files discoverable to the server
-local runtime_path = vim.split(package.path, ';')
-table.insert(runtime_path, 'lua/?.lua')
-table.insert(runtime_path, 'lua/?/init.lua')
-
-require('lspconfig').sumneko_lua.setup {
-    cmd = { 'lua-language-server' },
-    on_attach = on_attach,
-    capabilities = capabilities,
-    settings = {
-        Lua = {
-            runtime = {
-                -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-                version = 'LuaJIT',
-                -- Setup your lua path
-                path = runtime_path,
-            },
-            diagnostics = {
-                -- Get the language server to recognize the `vim` global
-                globals = { 'vim' },
-            },
-            workspace = {
-                -- Make the server aware of Neovim runtime files
-                library = vim.api.nvim_get_runtime_file('lua', true),
-                checkThirdParty = false,
-            },
-            -- Do not send telemetry data containing a randomized but unique identifier
-            telemetry = {
-                enable = false,
-            },
-        },
-    },
-}
+--
+-- -- Make runtime files discoverable to the server
+-- local runtime_path = vim.split(package.path, ';')
+-- table.insert(runtime_path, 'lua/?.lua')
+-- table.insert(runtime_path, 'lua/?/init.lua')
+--
+-- require('lspconfig').sumneko_lua.setup {
+--     cmd = { 'lua-language-server' },
+--     on_attach = on_attach,
+--     capabilities = capabilities,
+--     settings = {
+--         Lua = {
+--             runtime = {
+--                 -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+--                 version = 'LuaJIT',
+--                 -- Setup your lua path
+--                 path = runtime_path,
+--             },
+--             diagnostics = {
+--                 -- Get the language server to recognize the `vim` global
+--                 globals = { 'vim' },
+--             },
+--             workspace = {
+--                 -- Make the server aware of Neovim runtime files
+--                 library = vim.api.nvim_get_runtime_file('lua', true),
+--                 checkThirdParty = false,
+--             },
+--             -- Do not send telemetry data containing a randomized but unique identifier
+--             telemetry = {
+--                 enable = false,
+--             },
+--         },
+--     },
+-- }
 -- }}}
 
 
