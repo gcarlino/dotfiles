@@ -9,7 +9,7 @@ end
 
 vim.filetype.add({
     extension = {
-        cuf = "fortran",
+        cuf = 'fortran',
         f = fortran77,
         f90 = fortran77,
     }
