@@ -56,6 +56,9 @@ require('packer').startup(function(use)
     -- Package manager
     use 'wbthomason/packer.nvim'
 
+    -- Impatient to improve startup time
+    use 'lewis6991/impatient.nvim'
+
     -- Tree-sitter
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
     use 'nvim-treesitter/nvim-treesitter-textobjects'
@@ -185,6 +188,7 @@ end
 -- })
 -- }}}
 
+require('impatient')
 
 -- Various {{{
 -- Edit config file
