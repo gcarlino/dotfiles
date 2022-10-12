@@ -74,6 +74,7 @@ require('packer').startup(function(use)
     --   LATEX   brew install texlab
     --   cmake   pip3 install cmake-language-server
     --   clangd  apt install clangd
+    --   markdown: marksman
     -- use 'neovim/nvim-lspconfig'
     use 'onsails/lspkind-nvim'
     use { 'nvim-telescope/telescope-ui-select.nvim' }
