@@ -78,7 +78,6 @@ require('packer').startup(function(use)
     --   cmake   pip3 install cmake-language-server
     --   clangd  apt install clangd
     --   markdown: marksman
-    -- use 'neovim/nvim-lspconfig'
     use 'onsails/lspkind-nvim'
     use { 'nvim-telescope/telescope-ui-select.nvim' }
     -- Standalone UI for nvim-lsp progress
@@ -489,8 +488,7 @@ vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
 -- }}}
 
 
--- neovi/nvim-lspconfig {{{
--- local nvim_lsp = require 'lspconfig'
+-- LSP {{{
 vim.diagnostic.config({
     virtual_text = true,
     signs = true,
@@ -498,6 +496,7 @@ vim.diagnostic.config({
     update_in_insert = false,
     severity_sort = false,
 })
+
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
 for type, icon in pairs(signs) do
     local hl = "DiagnosticSign" .. type
@@ -555,36 +554,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
 })
 
--- Use an on_attach function to only map the following keys after the language server attaches to the current buffer
--- local on_attach = function(_, bufnr)
---     -- Trigger completion with <c-x><c-o>
---     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
---
---     local bufopts = { noremap = true, silent = true, buffer = bufnr }
---
---     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
---     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
---     vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
---     vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
---     -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', bufopts)
---     -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', bufopts)
---     -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', bufopts)
---     vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition,
---         { desc = "Jumps to the definition of the type of the symbol under the cursor." })
---     vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename,
---         { desc = "Renames all references to the symbol under the cursor." })
---     vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action,
---         { desc = "Selects a code action available at the current cursor position." })
---     vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
---     vim.keymap.set('n', '<leader>F', vim.lsp.buf.format,
---         { desc = "Format the current buffer" })
---     vim.keymap.set('n', '<leader>so',
---         function()
---             require('telescope.builtin').lsp_document_symbols()
---         end,
---         { desc = "Lists LSP symbols in the current buffer" })
--- end
-
 -- -- additional capabilities
 -- local capabilities = vim.lsp.protocol.make_client_capabilities()
 --
@@ -596,63 +565,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 -- --     dynamicRegistration = false,
 -- --     lineFoldingOnly = true
 -- -- }
---
--- -- Enable the following language servers
--- local servers = { 'pyright', 'html', 'r_language_server', 'yamlls', 'bashls', 'texlab',
---     'cmake', 'clangd' }
--- for _, lsp in ipairs(servers) do
---     require('lspconfig')[lsp].setup({
---         on_attach = on_attach,
---         capabilities = capabilities,
---     })
--- end
---
--- -- custom server configurations
--- require('lspconfig').fortls.setup {
---     on_attach = on_attach,
---     capabilities = capabilities,
---     cmd = { 'fortls' },
---     filetypes = { "fortran", "fortran77" },
---     settings = {
---         notifyInit = true,
---         lowercaseIntrinsics = true,
---         enableCodeActions = true
---     }
--- }
---
--- -- Make runtime files discoverable to the server
--- local runtime_path = vim.split(package.path, ';')
--- table.insert(runtime_path, 'lua/?.lua')
--- table.insert(runtime_path, 'lua/?/init.lua')
---
--- require('lspconfig').sumneko_lua.setup {
---     cmd = { 'lua-language-server' },
---     on_attach = on_attach,
---     capabilities = capabilities,
---     settings = {
---         Lua = {
---             runtime = {
---                 -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
---                 version = 'LuaJIT',
---                 -- Setup your lua path
---                 path = runtime_path,
---             },
---             diagnostics = {
---                 -- Get the language server to recognize the `vim` global
---                 globals = { 'vim' },
---             },
---             workspace = {
---                 -- Make the server aware of Neovim runtime files
---                 library = vim.api.nvim_get_runtime_file('lua', true),
---                 checkThirdParty = false,
---             },
---             -- Do not send telemetry data containing a randomized but unique identifier
---             telemetry = {
---                 enable = false,
---             },
---         },
---     },
--- }
+
 -- }}}
 
 
