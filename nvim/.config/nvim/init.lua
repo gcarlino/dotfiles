@@ -188,7 +188,6 @@ end
 -- })
 -- }}}
 
-require('impatient')
 
 -- Various {{{
 -- Edit config file
@@ -303,6 +302,9 @@ vim.api.nvim_set_keymap("n", "<leader>b", "", {
 })
 -- }}}
 
+-- lewis6991/impatient.nvim {{{
+require('impatient')
+-- }}}
 
 -- kyazdani42/nvim-web-devicons {{{
 require('nvim-web-devicons').setup {
