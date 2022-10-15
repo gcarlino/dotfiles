@@ -543,7 +543,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
         local capabilities = vim.lsp.protocol.make_client_capabilities()
 
         -- nvim-cmp supports additional completion capabilities
-        capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+        -- capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+        capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
         -- -- tell the sever the capability of foldingRange
         -- capabilities.textDocument.foldingRange = {
@@ -712,28 +713,6 @@ vim.api.nvim_set_keymap('n', '<leader>n', ':NvimTreeFindFile<CR>', { noremap = t
 
 -- chentoast/marks.nvim {{{
 require 'marks'.setup({})
--- }}}
-
-
--- Fortran specific {{{
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = "fortran",
-    callback = function()
-        vim.o.tabstop = 2
-        vim.o.shiftwidth = 2
-    end
-})
---[[ vim.api.nvim_create_autocmd({"FileType", "BufEnter"}, {
-    pattern = "fortran77",
-    callback = function ()
-        vim.bo.syntax="fortran"
-        vim.g.fortran_fixed_source=1
-        vim.o.tabstop = 6
-        vim.o.shiftwidth = 6
-        vim.o.softtabstop=6
-        vim.bo.commentstring = "C%s"
-    end
-}) ]]
 -- }}}
 
 
