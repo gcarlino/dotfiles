@@ -112,7 +112,7 @@ if [[ $OS == "Darwin" ]] {
     alias s='kitty +kitten ssh'
 
     # Personal bin
-    export PATH=~/bin:~/.cargo/bin:$PATH
+    export PATH=~/bin:~/.local/bin:~/.cargo/bin:$PATH
     export PATH=/usr/local/sbin:$PATH
     export PATH=$PATH:/usr/local/gfortran/bin
 
