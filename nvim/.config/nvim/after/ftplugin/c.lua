@@ -1,1 +1,1 @@
-require('./clangd.lua')
+require('lsp.clangd')

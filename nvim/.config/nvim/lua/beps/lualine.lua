@@ -130,10 +130,10 @@ require 'lualine'.setup {
                 'filetype',
                 icon_only = true,
                 colored = false,
-                color = {
-                    -- fg = colors.blue,
-                    -- bg = colors.bg4
-                }
+                -- color = {
+                --     fg = colors.blue,
+                --     bg = colors.bg4
+                -- }
             },
             {
                 'filename',

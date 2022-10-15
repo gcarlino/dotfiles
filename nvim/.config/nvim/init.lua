@@ -164,7 +164,7 @@ require('packer').startup(function(use)
     use 'mechatroner/rainbow_csv'
     -- use 'adamheins/vim-highlight-match-under-cursor'
     use 'kylechui/nvim-surround'
-    use 'https://github.com/godlygeek/tabular'
+    -- use 'https://github.com/godlygeek/tabular'
 
     -- Mac specific
     if vim.fn.has('mac') == 1 then
@@ -516,7 +516,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     callback = function(args)
 
 --     -- Trigger completion with <c-x><c-o>
-        vim.api.nvim_buf_set_option(args.buf, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+        -- vim.api.nvim_buf_set_option(args.buf, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
         local bufopts = { buffer = args.buf, noremap = true, silent = true }
 
@@ -778,7 +778,7 @@ end
 
 -- global handler
 require('ufo').setup({
-    provider_selector = function(bufnr, filetype)
+    provider_selector = function(bufnr, filetype, buftype)
         return {'treesitter', 'indent'}
     end,
     fold_virt_text_handler = handler
@@ -1029,11 +1029,6 @@ vim.keymap.set('n', '<leader>ed',
 vim.keymap.set('n', '<leader>ls', function() require('telescope.builtin').lsp_references() end, {
     desc = "List LSP references for word under the cursor"
 })
--- }}}
-
-
--- rcarriga/nvim-notify {{{
--- vim.notify = require("notify")
 -- }}}
 
 

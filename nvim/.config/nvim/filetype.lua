@@ -1,5 +1,5 @@
-local fortran77 = function(path, bufnr)
-    if vim.fn.search("^C ", "nw") ~= 0 then
+local fortran77 = function()
+    if vim.fn.search("^C ", "nw", 200) ~= 0 then
         return "fortran77", function()
             vim.bo.syntax = "fortran"
         end
