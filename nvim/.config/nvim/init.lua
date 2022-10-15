@@ -67,16 +67,16 @@ require('packer').startup(function(use)
 
     -- LSP
     -- Installati a mano i server di:
-    --   R       install.packages("languageserver")
-    --   Python:  npm install -g pyright / pip install pyright
-    --   Fortran: pip install -U fortran-language-server
-    --   HTML    npm install -g vscode-langservers-extracted
-    --   YAML    brew install yaml-language-server
-    --   BASH    brew install bash-language-server
-    --   LUA     brew install lua-language-server
-    --   LATEX   brew install texlab
-    --   cmake   pip3 install cmake-language-server
-    --   clangd  apt install clangd
+    --   R         install.packages("languageserver")
+    --   Python:   pip install pyplsp
+    --   Fortran:  pip install -U fortran-language-server
+    --   HTML      npm install -g vscode-langservers-extracted (NO)
+    --   YAML      brew install yaml-language-server (NO)
+    --   BASH      brew install bash-language-server (NO)
+    --   LUA       brew install lua-language-server
+    --   LATEX     brew install texlab (NO)
+    --   cmake     pip3 install cmake-language-server
+    --   clangd    apt install clangd
     --   markdown: marksman
     use 'onsails/lspkind-nvim'
     use { 'nvim-telescope/telescope-ui-select.nvim' }
@@ -88,19 +88,17 @@ require('packer').startup(function(use)
         'hrsh7th/nvim-cmp',
         requires = {
             'L3MON4D3/LuaSnip',
-            { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
-            {'hrsh7th/cmp-nvim-lsp'},
-            {'hrsh7th/cmp-nvim-lua'},
-            {'hrsh7th/cmp-nvim-lsp-signature-help'},
-            {'hrsh7th/cmp-cmdline'},
-            { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
-            { 'hrsh7th/cmp-nvim-lua', after = 'nvim-cmp' },
-            { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' },
-            { 'kdheepak/cmp-latex-symbols', after = 'nvim-cmp' },
+            { 'hrsh7th/cmp-buffer' },
+            { 'hrsh7th/cmp-nvim-lsp'},
+            { 'hrsh7th/cmp-nvim-lua'},
+            { 'hrsh7th/cmp-nvim-lsp-signature-help'},
+            { 'hrsh7th/cmp-cmdline'},
+            { 'hrsh7th/cmp-path' },
+            { 'hrsh7th/cmp-nvim-lua' },
+            { 'saadparwaiz1/cmp_luasnip' },
+            { 'kdheepak/cmp-latex-symbols' },
             'rcarriga/cmp-dap',
         },
-        -- config = [[require('config.cmp')]],
-        -- event = 'InsertEnter *',
     }
 
     -- Snippet
@@ -137,18 +135,20 @@ require('packer').startup(function(use)
     use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
 
     -- R
-    use { 'jalvesaq/Nvim-R' }
+    use { 'jalvesaq/Nvim-R',
+        ft = 'r'
+    }
 
     -- Debug
-    use 'mfussenegger/nvim-dap'
+    use { 'mfussenegger/nvim-dap' }
     use { 'rcarriga/nvim-dap-ui', requires = { 'mfussenegger/nvim-dap' } }
-    use 'mfussenegger/nvim-dap-python'
-    use 'theHamsta/nvim-dap-virtual-text'
-    use 'nvim-telescope/telescope-dap.nvim'
+    use { 'mfussenegger/nvim-dap-python', requires = { 'mfussenegger/nvim-dap' } }
+    use { 'theHamsta/nvim-dap-virtual-text', requires = { 'mfussenegger/nvim-dap' } }
+    use { 'nvim-telescope/telescope-dap.nvim', requires = { 'mfussenegger/nvim-dap' } }
 
     -- Colorschemes
-    use {'https://github.com/sainnhe/edge', disable = true}
-    use 'navarasu/onedark.nvim'
+    use {'https://github.com/sainnhe/edge', disable = true }
+    use { 'navarasu/onedark.nvim', disable = true }
     use "EdenEast/nightfox.nvim"
 
     -- Comment
