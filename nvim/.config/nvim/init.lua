@@ -46,13 +46,13 @@ require("beps.disable_builtin")
 -- Plugins {{{
 
 -- Install packer
-local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-    Packer_bootstrap = vim.fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim',
-        install_path })
-end
+-- local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+-- if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+--     Packer_bootstrap = vim.fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim',
+--         install_path })
+-- end
 
-require('packer').startup(function(use)
+require('packer').startup({function(use)
     -- Package manager
     use 'wbthomason/packer.nvim'
 
@@ -147,9 +147,9 @@ require('packer').startup(function(use)
     use { 'nvim-telescope/telescope-dap.nvim', requires = { 'mfussenegger/nvim-dap' } }
 
     -- Colorschemes
-    use {'https://github.com/sainnhe/edge', disable = true }
+    use { 'https://github.com/sainnhe/edge', disable = true }
     use { 'navarasu/onedark.nvim', disable = true }
-    use "EdenEast/nightfox.nvim"
+    use { 'EdenEast/nightfox.nvim' }
 
     -- Comment
     use 'numToStr/Comment.nvim'
@@ -173,11 +173,20 @@ require('packer').startup(function(use)
             run = 'make install', })
     end
 
-    if Packer_bootstrap then
-        require('packer').sync()
-    end
-end
-)
+    -- if Packer_bootstrap then
+    --     require('packer').sync()
+    -- end
+
+end,
+    -- Floating window for packer
+    -- config = {
+    --     display = {
+    --         open_fn = function ()
+    --             return require('packer.util').float({border = 'single'})
+    --         end
+    --     }
+    -- }
+})
 
 -- local packer_group = vim.api.nvim_create_augroup('Packer', { clear = true })
 -- vim.api.nvim_create_autocmd('BufWritePost', {
