@@ -228,7 +228,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 
 -- Quickfixlist navigation
 vim.keymap.set("n", "]q", ":cnext<cr>", { desc = "Next item in quickfix list" })
-vim.keymap.set("n", "[q", ":cnext<cr>", { desc = "Previous item in quickfix list" })
+vim.keymap.set("n", "[q", ":cprevious<cr>", { desc = "Previous item in quickfix list" })
 
 -- listchars
 vim.opt.listchars = {
