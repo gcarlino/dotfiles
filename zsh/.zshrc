@@ -118,7 +118,7 @@ if [[ $OS == "Darwin" ]] {
 
     # Homebrew
     export HOMEBREW_NO_ANALYTICS=1
-    export HOMEBREW_INSTALL_FROM_API=1 
+    # export HOMEBREW_INSTALL_FROM_API=1 
 
     # broot
     source /Users/beps/.config/broot/launcher/bash/br
