@@ -172,7 +172,7 @@ require 'lualine'.setup {
                 icon_only = true,
                 colored = false,
                 color = {
-                    -- bg = colors.bg2,
+                    bg = colors.bg4,
                 }
             },
             {
@@ -180,6 +180,7 @@ require 'lualine'.setup {
                 path = 1,
                 color = {
                     gui = 'italic',
+                    bg = colors.bg4,
                 },
                 symbols = {
                     modified = ' ●',
