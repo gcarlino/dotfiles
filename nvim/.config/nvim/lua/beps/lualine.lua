@@ -56,9 +56,10 @@ require 'lualine'.setup {
         -- component_separators = { left = '', right = '' },
 
         disabled_filetypes = {
-            winbar = { 'toggleterm', 'NvimTree',
+            winbar = { 'toggleterm', 'NvimTree', 'fugitive', 'qf',
                 'dapui_watches', 'dapui_stacks', 'dapui_breakpoints', 'dapui_scopes',
-                'dapui_repl', 'dapui_console', 'dap-repl'
+                'dapui_repl', 'dapui_console', 'dap-repl',
+                'DiffviewFiles', 'DiffviewFileHistory',
             }
         },
     },
