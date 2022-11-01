@@ -1,3 +1,7 @@
+-- Remap space as leader key and ; as local leader
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ';'
+
 -- Edit config file
 vim.keymap.set('n', '<leader>v', ':e $MYVIMRC<CR>', { desc = "Edit init.lua" })
 
@@ -23,4 +27,7 @@ vim.keymap.set("n", "[q", ":cprevious<cr>", { desc = "Previous item in quickfix 
 -- nvim-tree
 vim.keymap.set('n', '<leader>n', ':NvimTreeToggle<CR>', { noremap = true, silent = true, desc = "Toggle nvim-tree." })
 
+-- Diffview
+vim.keymap.set('n', '<leader>do', ':DiffviewOpen<CR>', { noremap = true, desc = "Open Diffview tab."})
+vim.keymap.set('n', '<leader>dx', ':DiffviewClose<CR>', { noremap = true, desc = "Close Diffview tab."})
 

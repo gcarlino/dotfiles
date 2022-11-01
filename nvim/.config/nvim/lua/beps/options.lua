@@ -1,7 +1,3 @@
--- Remap space as leader key and ; as local leader
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ';'
-
 -- Line numbers
 vim.opt.number = true
 vim.opt.relativenumber = true
