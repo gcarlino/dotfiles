@@ -12,6 +12,8 @@ require('packer').startup({ function(use)
     -- Impatient to improve startup time
     use 'lewis6991/impatient.nvim'
 
+    use { 'nvim-lua/plenary.nvim' }
+
     -- Tree-sitter
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
     use 'nvim-treesitter/nvim-treesitter-textobjects'
@@ -31,7 +33,7 @@ require('packer').startup({ function(use)
     --   cmake     pip3 install cmake-language-server
     --   clangd    apt install clangd
     --   markdown: marksman
-    use 'onsails/lspkind-nvim'
+    use { 'onsails/lspkind-nvim' }
     use { 'nvim-telescope/telescope-ui-select.nvim' }
     -- Standalone UI for nvim-lsp progress
     use 'j-hui/fidget.nvim'
@@ -61,7 +63,6 @@ require('packer').startup({ function(use)
 
     -- Telescope
     use { 'nvim-lua/popup.nvim' }
-    use { 'nvim-lua/plenary.nvim' }
     use { 'nvim-telescope/telescope.nvim' }
     use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
     use { 'nvim-telescope/telescope-file-browser.nvim' }
