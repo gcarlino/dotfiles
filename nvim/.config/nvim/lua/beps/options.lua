@@ -1,6 +1,7 @@
 -- Line numbers
 vim.opt.number = true
 vim.opt.relativenumber = true
+vim.opt.wrap = false
 
 vim.o.termguicolors = true
 

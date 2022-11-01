@@ -1,5 +1,6 @@
--- require('lsp.marksman')
+vim.opt.wrap = true
 
+-- require('lsp.marksman')
 vim.lsp.start({
     name = 'marksman',
     filetypes = { 'markdown' },
