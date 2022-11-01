@@ -22,6 +22,8 @@ require('beps.colorscheme')
 require('beps.plugins.treesitter')
 require('beps.plugins.telescope')
 require('beps.plugins.dap')
+require('beps.lsp.lsp')
+require('beps.plugins.nvim-cmp')
 
 
 -- kyazdani42/nvim-web-devicons {{{
@@ -31,26 +33,23 @@ require('nvim-web-devicons').setup {
 -- }}}
 
 
--- alvarosevilla95/luatab.nvim {{{
+-- alvarosevilla95/luatab.nvim 
 require('luatab').setup {}
--- }}}
 
 
--- statusline {{{
 -- hoob3rt/lualine.nvim
 require("beps.plugins.lualine")
 
 
--- lukas-reineke/indent-blankline.nvim {{{
+-- lukas-reineke/indent-blankline.nvim
 require("indent_blankline").setup {
     show_current_context = true,
     -- show_current_context_start = true,
     show_end_of_line = true,
 }
--- }}}
 
 
--- lewis6991/gitsigns.nvim {{{
+-- lewis6991/gitsigns.nvim 
 require('gitsigns').setup {
     signs     = {
         add          = { hl = 'GitSignsAdd', text = '│', numhl = 'GitSignsAddNr', linehl = 'GitSignsAddLn' },
@@ -98,10 +97,10 @@ require('gitsigns').setup {
         map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
     end
 }
--- }}}
 
 
--- use akinsho/toggleterm.nvim {{{
+
+-- use akinsho/toggleterm.nvim 
 require("toggleterm").setup {
     open_mapping = [[<c-q>]],
 }
@@ -118,233 +117,21 @@ function _G.set_terminal_keymaps()
     vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
 end
 vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
--- }}}
 
 
--- LSP {{{
-vim.diagnostic.config({
-    virtual_text = true,
-    signs = true,
-    underline = true,
-    update_in_insert = false,
-    severity_sort = false,
-})
-
-local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
-for type, icon in pairs(signs) do
-    local hl = "DiagnosticSign" .. type
-    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-end
-
--- See `:help vim.lsp.*` for documentation on any of the below functions
-vim.keymap.set('n', '<leader>di', function() require('telescope.builtin').diagnostics() end,
-    { desc = "Document diagnostics" })
--- vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, keymapOpts)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = "Goto previous diagnostic" })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = "Goto next diagnostic" })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist,
-    { desc = "Add buffer diagnostic to the location list" })
-
-vim.api.nvim_create_autocmd('LspAttach', {
-    callback = function(args)
-
---     -- Trigger completion with <c-x><c-o>
-        -- vim.api.nvim_buf_set_option(args.buf, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-        local bufopts = { buffer = args.buf, noremap = true, silent = true }
-
-        vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-        vim.keymap.set('n', '<leader>F', vim.lsp.buf.format, bufopts)
-        vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-        vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-        vim.keymap.set('n', 'ga', vim.lsp.buf.code_action, bufopts)
-
-        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-        -- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-        vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition,
-            { desc = "Jumps to the definition of the type of the symbol under the cursor." })
-        vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename,
-            { desc = "Renames all references to the symbol under the cursor." })
-        vim.keymap.set('n', '<leader>so',
-            function()
-                require('telescope.builtin').lsp_document_symbols()
-            end,
-            { desc = "Lists LSP symbols in the current buffer" })
-
-        -- additional capabilities
-        local capabilities = vim.lsp.protocol.make_client_capabilities()
-
-        -- nvim-cmp supports additional completion capabilities
-        -- capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-        capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-
-        -- -- tell the sever the capability of foldingRange
-        -- capabilities.textDocument.foldingRange = {
-        --     dynamicRegistration = false,
-        --     lineFoldingOnly = true
-        -- }
-
-    end
-})
-
--- -- additional capabilities
--- local capabilities = vim.lsp.protocol.make_client_capabilities()
---
--- -- nvim-cmp supports additional completion capabilities
--- capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
---
--- -- -- tell the sever the capability of foldingRange
--- -- capabilities.textDocument.foldingRange = {
--- --     dynamicRegistration = false,
--- --     lineFoldingOnly = true
--- -- }
-
--- }}}
-
-
--- j-hui/fidget.nvim {{{
+-- j-hui/fidget.nvim
 require "fidget".setup {}
--- }}}
 
 
--- hrsh7th/nvim-cmp {{{
-local lspkind = require('lspkind')
-lspkind.init()
-
-local has_words_before = function()
-    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
-
--- set completeopt=menu,menuone,noselect
-vim.opt.completeopt = 'menu,menuone,noselect'
-
-local luasnip = require('luasnip')
-local cmp = require('cmp')
-cmp.setup({
-    snippet = {
-        expand = function(args)
-            require('luasnip').lsp_expand(args.body)
-        end,
-    },
-    window = {
-        -- completion = cmp.config.window.bordered(),
-        -- documentation = cmp.config.window.bordered(),
-    },
-    mapping = cmp.mapping.preset.insert({
-        ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-f>"] = cmp.mapping.scroll_docs(4),
-        ["<C-Space>"] = cmp.mapping.complete({}),
-        ["<C-e>"] = cmp.mapping.abort(),
-        ['<CR>'] = cmp.mapping.confirm({ select = true }),
-        ["<Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_next_item()
-            elseif luasnip.expand_or_jumpable() then
-                luasnip.expand_or_jump()
-            elseif has_words_before() then
-                cmp.complete()
-            else
-                fallback()
-            end
-        end),
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_prev_item()
-            elseif luasnip.jumpable(-1) then
-                luasnip.jump(-1)
-            else
-                fallback()
-            end
-        end),
-    }),
-
-    -- nvim-cmp by defaults disables autocomplete for prompt buffers
-    enabled = function()
-        return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
-            or require("cmp_dap").is_dap_buffer()
-    end,
-
-    sources = cmp.config.sources({
-        { name = "nvim_lsp" },
-        { name = "nvim_lsp_signature_help" },
-        { name = "nvim_lua" },
-        { name = "luasnip" },
-        { name = "path" },
-        -- { name = "cmdline" },
-        { name = "latex_symbols" },
-        { name = "dap" },
-        { name = "buffer", keyword_length = 3 }
-    }),
-
-    formatting = {
-        format = lspkind.cmp_format({
-            with_text = true,
-            menu = {
-                buffer        = "[buf]",
-                nvim_lsp      = "[LSP]",
-                nvim_lua      = "[lua]",
-                path          = "[path]",
-                luasnip       = "[snip]",
-                latex_symbols = "[Latex]",
-                cmdline       = "[cmd]",
-            },
-        }),
-    },
-
-    -- view = {
-    --     entries = "native"
-    -- },
-    experimental = {
-        native_menu = false,
-        ghost_text = true
-    }
-})
-
-cmp.setup.filetype({'markdown', 'text'}, {
-    sources = cmp.config.sources({
-        {name = 'latex_symbols'},
-        {name = 'buffer'}
-    })
-})
-
--- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline({ '/', '?' }, {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = {
-        { name = 'buffer',
-            keyword_length = 3
-        }
-    }
-})
-
--- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline(':', {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = cmp.config.sources({
-        { name = 'path' },
-        { name = 'cmdline',
-            keyword_length = 2 }
-    })
-})
-
--- Load snippets
-require('luasnip.loaders.from_vscode').lazy_load()
--- }}}
-
-
--- kyazdani42/nvim-tree.lua {{{
+-- kyazdani42/nvim-tree.lua
 require('nvim-tree').setup()
--- }}}
 
 
--- chentoast/marks.nvim {{{
+-- chentoast/marks.nvim
 require 'marks'.setup({})
--- }}}
 
 
--- kevinhwang91/nvim-ufo {{{
+-- kevinhwang91/nvim-ufo
 vim.o.foldcolumn = '1'
 vim.o.foldlevel = 99 -- feel free to decrease the value
 vim.o.foldlevelstart = 99
@@ -390,10 +177,9 @@ require('ufo').setup({
     end,
     fold_virt_text_handler = handler
 })
--- }}}
 
 
--- jalvesazq/Nvim-R {{{
+-- jalvesazq/Nvim-R
 vim.cmd([[
     let R_assign_map = '<M-->'
     let rout_follow_colorscheme = 1
@@ -401,25 +187,16 @@ vim.cmd([[
     set nofoldenable
     autocmd VimLeave * if exists("g:SendCmdToR") && string(g:SendCmdToR) != "function('SendCmdToR_fake')" | call RQuit("nosave") | endif
 ]])
--- }}}
 
 
--- windwp/nvim-autopairs {{{
+-- windwp/nvim-autopairs
 require('nvim-autopairs').setup({})
--- }}}
 
 
--- numToStr/Comment.nvim {{{
+-- numToStr/Comment.nvim
 require('Comment').setup()
 
-vim.keymap.set('n', '<leader>/', function() require('Comment.api').toggle.linewise.current() end,
-    { desc = "Toggle comment on current line" })
-vim.keymap.set('x', '<leader>/', '<ESC><CMD>lua require("Comment.api").toggle.linewise(vim.fn.visualmode())<CR>',
-    { desc = "Toggle comment on current line" })
--- }}}
 
-
--- kylechui/nvim-surround {{{
+-- kylechui/nvim-surround
 require('nvim-surround').setup({})
--- }}}
 

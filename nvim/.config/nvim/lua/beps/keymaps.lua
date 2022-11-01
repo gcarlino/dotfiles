@@ -39,3 +39,8 @@ vim.keymap.set('n', '<leader>n', ':NvimTreeToggle<CR>', { noremap = true, silent
 vim.keymap.set('n', '<leader>vo', ':DiffviewOpen<CR>', { noremap = true, desc = "Open Diffview tab."})
 vim.keymap.set('n', '<leader>vc', ':DiffviewClose<CR>', { noremap = true, desc = "Close Diffview tab."})
 
+-- Custom comments
+vim.keymap.set('n', '<leader>/', function() require('Comment.api').toggle.linewise.current() end,
+    { desc = "Toggle comment on current line" })
+vim.keymap.set('x', '<leader>/', '<ESC><CMD>lua require("Comment.api").toggle.linewise(vim.fn.visualmode())<CR>',
+    { desc = "Toggle comment on current line" })
