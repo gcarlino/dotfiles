@@ -8,6 +8,12 @@ vim.keymap.set('n', '<leader>tc', ':tabclose<CR>', { desc = 'Close tab' })
 vim.keymap.set("n", "]t", ":tabnext<cr>", { desc = "Next tab" })
 vim.keymap.set("n", "[t", ":tabprevious<cr>", { desc = "Previous tab" })
 
+-- Splits
+vim.keymap.set('n', '<C-h>', '<C-w>h', {desc = 'Move to left split.'})
+vim.keymap.set('n', '<C-j>', '<C-w>j', {desc = 'Move to lower split.'})
+vim.keymap.set('n', '<C-k>', '<C-w>k', {desc = 'Move to upper split.'})
+vim.keymap.set('n', '<C-l>', '<C-w>l', {desc = 'Move to right split.'})
+
 -- Edit config file
 vim.keymap.set('n', '<leader>v', ':e $MYVIMRC<CR>', { desc = "Edit init.lua" })
 
@@ -34,6 +40,6 @@ vim.keymap.set("n", "[q", ":cprevious<cr>", { desc = "Previous item in quickfix 
 vim.keymap.set('n', '<leader>n', ':NvimTreeToggle<CR>', { noremap = true, silent = true, desc = "Toggle nvim-tree." })
 
 -- Diffview
-vim.keymap.set('n', '<leader>do', ':DiffviewOpen<CR>', { noremap = true, desc = "Open Diffview tab."})
-vim.keymap.set('n', '<leader>dx', ':DiffviewClose<CR>', { noremap = true, desc = "Close Diffview tab."})
+vim.keymap.set('n', '<leader>vo', ':DiffviewOpen<CR>', { noremap = true, desc = "Open Diffview tab."})
+vim.keymap.set('n', '<leader>vc', ':DiffviewClose<CR>', { noremap = true, desc = "Close Diffview tab."})
 
