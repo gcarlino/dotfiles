@@ -29,7 +29,7 @@ local M = {}
 M.simulnotes = function()
     local opts = {
         cwd = "~/Simularia/Notes/",
-        prompt_title = "~ (Not only) Simularia Notes ~",
+        prompt_title = "~ Grep (not only) Simularia Notes ~",
     }
     require('telescope.builtin').live_grep(opts)
 end
@@ -37,7 +37,7 @@ end
 M.simultitles = function()
     local opts = {
         cwd = "~/Simularia/Notes/",
-        prompt_title = "~ (Not only) Simularia Notes ~",
+        prompt_title = "~ Find files in (not only) Simularia Notes ~",
     }
     require('telescope.builtin').find_files(opts)
 end
@@ -46,3 +46,4 @@ vim.keymap.set('n', '<leader>sg', function() M.simulnotes() end, {
     desc = "Grep Simularia notes with Telescope" })
 vim.keymap.set('n', '<leader>sf', function() M.simultitles() end, {
     desc = "List Simularia notes with Telescope" })
+
