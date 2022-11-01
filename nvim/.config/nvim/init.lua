@@ -1,273 +1,14 @@
--- General options {{{
--- Remap space as leader key and ; as local leader
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ';'
-
--- Line numbers
-vim.opt.number = true
-vim.opt.relativenumber = true
-
--- Highlight the text line of the cursor
-vim.opt.cursorline = true
-
--- Enable break indent
-vim.opt.breakindent = true
--- Case insensitive search unless /C or capital in search
-vim.o.ignorecase = true
-vim.o.smartcase = true
-
--- Decrease update time
-vim.o.updatetime = 250
-vim.wo.signcolumn = 'yes'
-
-vim.o.expandtab = true
-vim.o.tabstop = 4
-vim.o.shiftwidth = 4
-vim.o.splitbelow = true
-vim.o.splitright = true
-vim.o.scrolloff = 4
-vim.o.diffopt = 'internal,filler,closeoff,vertical'
-
--- Copy to system clipboard
-vim.api.nvim_set_option('clipboard', 'unnamed')
-
--- Highlight syntax inside markdown
-vim.g.markdown_fenced_languages = { 'html', 'python', 'vim', 'r', 'sh' }
-
--- Spellcheck
-vim.opt.spell = false
-vim.opt.spelllang = { 'en_us', 'it' }
-
--- Highlight on yank
-local yankHighlightGroup = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
-vim.api.nvim_create_autocmd("TextYankPost", {
-    callback = function()
-        vim.highlight.on_yank()
-    end,
-    group = yankHighlightGroup,
-    pattern = "*"
-})
-
--- listchars
-vim.opt.listchars = {
-    tab = '▸ ',
-    trail = '·',
-    precedes = '←',
-    extends = '→',
-    conceal = '┊',
-    eol = '↲',
-    nbsp = '␣'
-}
-
-vim.api.nvim_create_autocmd("InsertEnter", {
-    pattern = "*",
-    callback = function()
-        vim.opt.list = true
-    end
-})
-vim.api.nvim_create_autocmd({ "VimEnter", "BufEnter", "InsertLeave" }, {
-    pattern = "*",
-    callback = function()
-        vim.opt.list = false
-    end
-})
-
--- Fold method for init.lua
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = "lua",
-    callback = function()
-        vim.o.foldmethod = "marker"
-        vim.o.foldlevel = 0
-        vim.opt.foldcolumn = "1"
-    end
-})
-
--- Turn off builtin plugins
+require("beps.options")
+if vim.fn.has("mac") == 1 then
+    require("beps.mac")
+end
+require("beps.keymaps")
 require("beps.disable_builtin")
--- }}}
 
-
--- Plugins {{{
-
--- Install packer
--- local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
--- if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
---     Packer_bootstrap = vim.fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim',
---         install_path })
--- end
-
-require('packer').startup({function(use)
-    -- Package manager
-    use 'wbthomason/packer.nvim'
-
-    -- Impatient to improve startup time
-    use 'lewis6991/impatient.nvim'
-
-    -- Tree-sitter
-    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-    use 'nvim-treesitter/nvim-treesitter-textobjects'
-    use { 'nvim-treesitter/playground', opt = true, cmd = "TSPlaygroundToggle"}
-    use 'nvim-treesitter/nvim-treesitter-context'
-
-    -- LSP
-    -- Installati a mano i server di:
-    --   R         install.packages("languageserver")
-    --   Python:   pip install pyplsp
-    --   Fortran:  pip install -U fortran-language-server
-    --   HTML      npm install -g vscode-langservers-extracted (NO)
-    --   YAML      brew install yaml-language-server (NO)
-    --   BASH      brew install bash-language-server (NO)
-    --   LUA       brew install lua-language-server
-    --   LATEX     brew install texlab (NO)
-    --   cmake     pip3 install cmake-language-server
-    --   clangd    apt install clangd
-    --   markdown: marksman
-    use 'onsails/lspkind-nvim'
-    use { 'nvim-telescope/telescope-ui-select.nvim' }
-    -- Standalone UI for nvim-lsp progress
-    use 'j-hui/fidget.nvim'
-
-    -- Completion
-    use {
-        'hrsh7th/nvim-cmp',
-        requires = {
-            'L3MON4D3/LuaSnip',
-            { 'hrsh7th/cmp-buffer' },
-            { 'hrsh7th/cmp-nvim-lsp'},
-            { 'hrsh7th/cmp-nvim-lua'},
-            { 'hrsh7th/cmp-nvim-lsp-signature-help'},
-            { 'hrsh7th/cmp-cmdline'},
-            { 'hrsh7th/cmp-path' },
-            { 'hrsh7th/cmp-nvim-lua' },
-            { 'saadparwaiz1/cmp_luasnip' },
-            { 'kdheepak/cmp-latex-symbols' },
-            'rcarriga/cmp-dap',
-        },
-    }
-
-    -- Snippet
-    use 'L3MON4D3/LuaSnip'
-    use 'saadparwaiz1/cmp_luasnip'
-    use 'rafamadriz/friendly-snippets'
-
-    -- Telescope
-    use { 'nvim-lua/popup.nvim' }
-    use { 'nvim-lua/plenary.nvim' }
-    use { 'nvim-telescope/telescope.nvim' }
-    use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-    use { 'nvim-telescope/telescope-file-browser.nvim' }
-    use { 'kyazdani42/nvim-tree.lua' }
-    use { 'nvim-telescope/telescope-packer.nvim' }
-    use { 'sudormrfbin/cheatsheet.nvim',
-        requires = {
-            { 'nvim-lua/popup.nvim' },
-            { 'nvim-lua/plenary.nvim' },
-            { 'nvim-telescope/telescope.nvim' },
-        }
-    }
-
-    -- Statusline & tabline
-    use { 'alvarosevilla95/luatab.nvim', requires = 'kyazdani42/nvim-web-devicons' }
-    use { 'nvim-lualine/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons' } }
-
-    -- Folding
-    use { 'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async' }
-
-    -- Git
-    use { 'tpope/vim-fugitive' }
-    use { 'lewis6991/gitsigns.nvim', requires = 'nvim-lua/plenary.nvim' }
-    use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
-
-    -- R
-    use { 'jalvesaq/Nvim-R',
-        ft = 'r'
-    }
-
-    -- Debug
-    use { 'mfussenegger/nvim-dap' }
-    use { 'rcarriga/nvim-dap-ui', requires = { 'mfussenegger/nvim-dap' } }
-    use { 'mfussenegger/nvim-dap-python', requires = { 'mfussenegger/nvim-dap' } }
-    use { 'theHamsta/nvim-dap-virtual-text', requires = { 'mfussenegger/nvim-dap' } }
-    use { 'nvim-telescope/telescope-dap.nvim', requires = { 'mfussenegger/nvim-dap' } }
-
-    -- Colorschemes
-    use { 'https://github.com/sainnhe/edge', disable = true }
-    use { 'navarasu/onedark.nvim', disable = true }
-    use { 'EdenEast/nightfox.nvim' }
-
-    -- Comment
-    use 'numToStr/Comment.nvim'
-
-    -- Various
-    -- use 'rcarriga/nvim-notify'
-    use 'joeytwiddle/sexy_scroller.vim'
-    use 'windwp/nvim-autopairs'
-    use 'chentoast/marks.nvim'
-    use { 'akinsho/toggleterm.nvim', tag = 'v2.*' }
-    use 'lukas-reineke/indent-blankline.nvim'
-    use 'mechatroner/rainbow_csv'
-    -- use 'adamheins/vim-highlight-match-under-cursor'
-    use 'kylechui/nvim-surround'
-    -- use 'https://github.com/godlygeek/tabular'
-
-    -- Mac specific
-    if vim.fn.has('mac') == 1 then
-        use({ 'mrjones2014/dash.nvim',
-            requires = { 'nvim-telescope/telescope.nvim' },
-            run = 'make install', })
-    end
-
-    -- if Packer_bootstrap then
-    --     require('packer').sync()
-    -- end
-
-end,
-    -- Floating window for packer
-    -- config = {
-    --     display = {
-    --         open_fn = function ()
-    --             return require('packer.util').float({border = 'single'})
-    --         end
-    --     }
-    -- }
-})
-
--- local packer_group = vim.api.nvim_create_augroup('Packer', { clear = true })
--- vim.api.nvim_create_autocmd('BufWritePost', {
---     command = 'source <afile> | PackerCompile',
---     group = packer_group,
---     pattern = 'init.lua'
--- })
--- }}}
-
-
--- Keymaps {{{
--- Edit config file
-vim.keymap.set('n', '<leader>v', ':e $MYVIMRC<CR>', { desc = "Edit init.lua" })
-
--- No highlight
-vim.keymap.set('n', '<CR>', ':noh<CR>', { desc = "No highlight" })
-
--- Move lines around
-vim.api.nvim_set_keymap('n', '<M-k>', ':m .-2<CR>==', { noremap = true })
-vim.api.nvim_set_keymap('n', '<M-j>', ':m .+1<CR>==', { noremap = true })
-vim.api.nvim_set_keymap('i', '<M-j>', '<ESC>:m .+1<CR>==gi', { noremap = true })
-vim.api.nvim_set_keymap('i', '<M-k>', '<ESC>:m .-2<CR>==gi', { noremap = true })
-vim.api.nvim_set_keymap('v', '<M-j>', ":m '>+1<CR>gv==gv", { noremap = true })
-vim.api.nvim_set_keymap('v', '<M-k>', ":m '<-2<CR>gv==gv", { noremap = true })
-
--- Change current directory to working file path
-vim.keymap.set('n', '<leader>cd', '<cmd>cd %:p:h<CR>:pwd<CR>',
-    { noremap = true, silent = true, desc = "Change current directory to working file path." })
-
--- Quickfixlist navigation
-vim.keymap.set("n", "]q", ":cnext<cr>", { desc = "Next item in quickfix list" })
-vim.keymap.set("n", "[q", ":cprevious<cr>", { desc = "Previous item in quickfix list" })
--- }}}
+require("beps.plugins-setup")
 
 
 -- Set colors {{{
-vim.o.termguicolors = true
 
 -- -- sainnhe/edge
 -- vim.g.edge_style = 'aura'
@@ -392,7 +133,7 @@ vim.keymap.set("n", "[t", ":tabprevious<cr>", { desc = "Previous tab" })
 
 -- statusline {{{
 -- hoob3rt/lualine.nvim
-require("beps.lualine")
+require("beps.plugins.lualine")
 
 -- Global window status line
 vim.opt.laststatus = 3
@@ -711,11 +452,7 @@ require('luasnip.loaders.from_vscode').lazy_load()
 
 
 -- kyazdani42/nvim-tree.lua {{{
-local nvim_tree = require 'nvim-tree'
-nvim_tree.setup()
-vim.api.nvim_set_keymap('n', '<C-n>', ':NvimTreeToggle<CR>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<leader>r', ':NvimTreeRefresh<CR>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<leader>n', ':NvimTreeFindFile<CR>', { noremap = true })
+require('nvim-tree').setup()
 -- }}}
 
 
@@ -892,7 +629,7 @@ vim.keymap.set('x', '<leader>/', '<ESC><CMD>lua require("Comment.api").toggle.li
 
 
 -- kylechui/nvim-surround {{{
-require("nvim-surround").setup({})
+require('nvim-surround').setup({})
 -- }}}
 
 
@@ -904,11 +641,11 @@ require('telescope').setup {
                 ['<M-v>'] = require('telescope.actions.layout').toggle_preview
             }
         },
-        sorting_strategy = "ascending",
-        scroll_strategy = "cycle",
-        layout_strategies = "flex",
+        sorting_strategy = 'ascending',
+        scroll_strategy = 'cycle',
+        layout_strategies = 'flex',
         layout_config = {
-            prompt_position = "top",
+            prompt_position = 'top',
         },
     },
     preview = {
@@ -1017,13 +754,6 @@ vim.keymap.set('n', '<leader>ed',
 vim.keymap.set('n', '<leader>ls', function() require('telescope.builtin').lsp_references() end, {
     desc = "List LSP references for word under the cursor"
 })
--- }}}
-
-
--- Load mac specific configuration {{{
-if vim.fn.has("mac") == 1 then
-    require("beps.mac")
-end
 -- }}}
 
 
