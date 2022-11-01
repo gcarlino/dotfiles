@@ -34,26 +34,6 @@ require('luatab').setup {}
 -- hoob3rt/lualine.nvim
 require("beps.plugins.lualine")
 
--- Global window status line
-vim.opt.laststatus = 3
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = { "dapui*", "dap-repl" },
-    callback = function()
-        vim.opt.laststatus = 2
-    end
-})
-
--- Hide command line when it is not used
--- -- if vim.fn.has("gui_vimr") ~= 1 then
--- --     vim.cmd([[set cmdheight=0]])
--- -- end
---
--- --[[ -- winbar
--- if vim.fn.has("gui_vimr") ~= 1 then
---     vim.opt.winbar = "%= %m %t"
--- end ]]
--- }}}
-
 
 -- lukas-reineke/indent-blankline.nvim {{{
 require("indent_blankline").setup {
@@ -131,7 +111,6 @@ function _G.set_terminal_keymaps()
     vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
     vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
 end
-
 vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
 -- }}}
 
@@ -439,9 +418,3 @@ vim.keymap.set('x', '<leader>/', '<ESC><CMD>lua require("Comment.api").toggle.li
 require('nvim-surround').setup({})
 -- }}}
 
-
-
-
--- diffview {{{
-vim.opt.fillchars = vim.opt.fillchars + 'diff:╱'
--- }}}

@@ -26,6 +26,18 @@ vim.o.splitright = true
 vim.o.scrolloff = 4
 vim.o.diffopt = 'internal,filler,closeoff,vertical'
 
+-- Global status line
+vim.opt.laststatus = 3
+-- vim.api.nvim_create_autocmd("FileType", {
+--     pattern = { "dapui*", "dap-repl" },
+--     callback = function()
+--         vim.opt.laststatus = 2
+--     end
+-- })
+
+-- diffview fill characters
+vim.opt.fillchars = vim.opt.fillchars + 'diff:╱'
+
 -- Copy to system clipboard
 vim.api.nvim_set_option('clipboard', 'unnamed')
 
