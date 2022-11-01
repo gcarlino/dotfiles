@@ -1,16 +1,22 @@
 require("beps.options")
+
+-- Remap space as leader key and ; as local leader
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ';'
+
+-- Mac spefic configuration
 if vim.fn.has("mac") == 1 then
     require("beps.mac")
 end
+
 require("beps.keymaps")
 require("beps.disable_builtin")
 
 require("beps.plugins-setup")
 
 
--- lewis6991/impatient.nvim {{{
+-- lewis6991/impatient.nvim 
 require('impatient')
--- }}}
 
 require('beps.colorscheme')
 require('beps.plugins.treesitter')
@@ -322,7 +328,6 @@ cmp.setup.cmdline(':', {
             keyword_length = 2 }
     })
 })
-
 
 -- Load snippets
 require('luasnip.loaders.from_vscode').lazy_load()
