@@ -406,15 +406,14 @@ require 'marks'.setup({})
 -- kevinhwang91/nvim-ufo {{{
 vim.o.foldcolumn = '1'
 vim.o.foldlevel = 99 -- feel free to decrease the value
-vim.o.foldlevelstart = -1
+vim.o.foldlevelstart = 99
 vim.o.foldenable = true
-vim.o.foldnestmax = 1
 vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 
 -- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
-vim.keymap.set('n', 'zR', require('ufo').openAllFolds, { desc = "Open all folds." })
-vim.keymap.set('n', 'zM', require('ufo').closeAllFolds, { desc = "Close all folds." })
-
+-- vim.keymap.set('n', 'zR', require('ufo').openAllFolds, { desc = "Open all folds." })
+-- vim.keymap.set('n', 'zM', require('ufo').closeAllFolds, { desc = "Close all folds." })
+--
 local handler = function(virtText, lnum, endLnum, width, truncate)
     local newVirtText = {}
     local suffix = ('  %d '):format(endLnum - lnum)
@@ -450,11 +449,6 @@ require('ufo').setup({
     end,
     fold_virt_text_handler = handler
 })
-
--- buffer scope handler
--- will override global handler if it is existed
--- local bufnr = vim.api.nvim_get_current_buf()
--- require('ufo').setFoldVirtTextHandler(bufnr, handler)
 -- }}}
 
 

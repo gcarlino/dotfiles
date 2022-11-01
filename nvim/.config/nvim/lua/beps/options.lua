@@ -69,13 +69,3 @@ vim.api.nvim_create_autocmd({ "VimEnter", "BufEnter", "InsertLeave" }, {
     end
 })
 
--- Fold method for init.lua
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = "lua",
-    callback = function()
-        vim.o.foldmethod = "marker"
-        vim.o.foldlevel = 0
-        vim.opt.foldcolumn = "1"
-    end
-})
-

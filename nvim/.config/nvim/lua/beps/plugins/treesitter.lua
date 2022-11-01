@@ -21,6 +21,27 @@ treesitter.setup({
     indent = {
         enable = true,
     },
+    ensure_installed = {
+        'json',
+        'yaml',
+        'toml',
+        'html',
+        'css',
+        'markdown',
+        'markdown_inline',
+        'lua',
+        'vim',
+        'dockerfile',
+        'gitignore',
+        'python',
+        'fortran',
+        'c',
+        'r',
+        'cmake',
+        'bash',
+        'diff',
+    },
+    auto_install = true,
     textobjects = {
         select = {
             enable = true,
@@ -56,7 +77,5 @@ treesitter.setup({
     },
 })
 -- Tree-sitter base folding
-vim.cmd [[
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
-]]
+vim.o.foldmethod = 'expr'
+vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
