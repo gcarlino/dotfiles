@@ -38,6 +38,50 @@ vim.g.markdown_fenced_languages = { 'html', 'python', 'vim', 'r', 'sh' }
 vim.opt.spell = false
 vim.opt.spelllang = { 'en_us', 'it' }
 
+-- Highlight on yank
+local yankHighlightGroup = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
+vim.api.nvim_create_autocmd("TextYankPost", {
+    callback = function()
+        vim.highlight.on_yank()
+    end,
+    group = yankHighlightGroup,
+    pattern = "*"
+})
+
+-- listchars
+vim.opt.listchars = {
+    tab = '▸ ',
+    trail = '·',
+    precedes = '←',
+    extends = '→',
+    conceal = '┊',
+    eol = '↲',
+    nbsp = '␣'
+}
+
+vim.api.nvim_create_autocmd("InsertEnter", {
+    pattern = "*",
+    callback = function()
+        vim.opt.list = true
+    end
+})
+vim.api.nvim_create_autocmd({ "VimEnter", "BufEnter", "InsertLeave" }, {
+    pattern = "*",
+    callback = function()
+        vim.opt.list = false
+    end
+})
+
+-- Fold method for init.lua
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "lua",
+    callback = function()
+        vim.o.foldmethod = "marker"
+        vim.o.foldlevel = 0
+        vim.opt.foldcolumn = "1"
+    end
+})
+
 -- Turn off builtin plugins
 require("beps.disable_builtin")
 -- }}}
@@ -197,7 +241,7 @@ end,
 -- }}}
 
 
--- Various {{{
+-- Keymaps {{{
 -- Edit config file
 vim.keymap.set('n', '<leader>v', ':e $MYVIMRC<CR>', { desc = "Edit init.lua" })
 
@@ -216,54 +260,9 @@ vim.api.nvim_set_keymap('v', '<M-k>', ":m '<-2<CR>gv==gv", { noremap = true })
 vim.keymap.set('n', '<leader>cd', '<cmd>cd %:p:h<CR>:pwd<CR>',
     { noremap = true, silent = true, desc = "Change current directory to working file path." })
 
--- Highlight on yank
-local yankHighlightGroup = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
-vim.api.nvim_create_autocmd("TextYankPost", {
-    callback = function()
-        vim.highlight.on_yank()
-    end,
-    group = yankHighlightGroup,
-    pattern = "*"
-})
-
 -- Quickfixlist navigation
 vim.keymap.set("n", "]q", ":cnext<cr>", { desc = "Next item in quickfix list" })
 vim.keymap.set("n", "[q", ":cprevious<cr>", { desc = "Previous item in quickfix list" })
-
--- listchars
-vim.opt.listchars = {
-    tab = '▸ ',
-    trail = '·',
-    precedes = '←',
-    extends = '→',
-    conceal = '┊',
-    eol = '↲',
-    nbsp = '␣'
-}
-
-vim.api.nvim_create_autocmd("InsertEnter", {
-    pattern = "*",
-    callback = function()
-        vim.opt.list = true
-    end
-})
-vim.api.nvim_create_autocmd({ "VimEnter", "BufEnter", "InsertLeave" }, {
-    pattern = "*",
-    callback = function()
-        vim.opt.list = false
-    end
-})
-
-
--- Fold method for init.lua
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = "lua",
-    callback = function()
-        vim.o.foldmethod = "marker"
-        vim.o.foldlevel = 0
-        vim.opt.foldcolumn = "1"
-    end
-})
 -- }}}
 
 
