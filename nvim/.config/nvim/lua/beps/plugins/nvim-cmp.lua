@@ -1,4 +1,13 @@
--- hrsh7th/nvim-cmp {{{
+-- hrsh7th/nvim-cmp
+local status, cmp = pcall(require, 'cmp')
+if not status then
+    return
+end
+local status, luasnip = pcall(require, 'luasnip')
+if not status then
+    return
+end
+
 local lspkind = require('lspkind')
 lspkind.init()
 
@@ -10,12 +19,10 @@ end
 -- set completeopt=menu,menuone,noselect
 vim.opt.completeopt = 'menu,menuone,noselect'
 
-local luasnip = require('luasnip')
-local cmp = require('cmp')
 cmp.setup({
     snippet = {
         expand = function(args)
-            require('luasnip').lsp_expand(args.body)
+            luasnip.lsp_expand(args.body)
         end,
     },
     window = {
