@@ -33,6 +33,7 @@ require('packer').startup({ function(use)
     --   cmake     pip3 install cmake-language-server
     --   clangd    apt install clangd
     --   markdown: marksman
+    use({ 'glepnir/lspsaga.nvim', branch = 'main' })
     use { 'onsails/lspkind-nvim' }
     use { 'nvim-telescope/telescope-ui-select.nvim' }
     -- Standalone UI for nvim-lsp progress
