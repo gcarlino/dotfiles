@@ -32,7 +32,6 @@ treesitter.setup({
         'lua',
         'vim',
         'dockerfile',
-        'gitignore',
         'python',
         'fortran',
         'c',
