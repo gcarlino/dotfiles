@@ -39,12 +39,7 @@ end
 -- vim.g.python3_host_prog = '~/.virtualenvs/debugpy/bin/python3'
 
 -- nvim-dap-ui
-dapui.setup({
-    floating = {
-        max_height = 0.95,
-        max_width = 0.95,
-    }
-})
+dapui.setup()
 
 -- Breakpoint symbols
 vim.fn.sign_define('DapBreakpoint', { text = '🔴', texthl = '', linehl = '', numhl = '' })
@@ -92,9 +87,7 @@ vim.keymap.set('n', '<leader>dc', function() dapui.close({}) end,
     { desc = "DAP: debug close dap-ui" })
 
 -- hover
-vim.keymap.set({ 'n', 'x' }, '<leader>i', function()
-    -- dapui.eval(nil, { enter = true, context = "repl" }) end,
-    dapui.eval("", { enter = true, context = "repl" }) end,
+vim.keymap.set({ 'n', 'x' }, '<leader>i', function() dapui.eval() end,
     { desc = "DAP: open a floating window containing the result of evaluting an expression" })
 
 -- Reload launch json configuration
@@ -113,6 +106,10 @@ dap.listeners.before.event_exited["dapui_config"] = function()
 end
 
 -- DAP virtual text
-require("nvim-dap-virtual-text").setup({
+local status, nvim_dap_virtual_text = pcall(require, 'nvim-dap-virtual-text')
+if not status then
+   return
+end
+nvim_dap_virtual_text.setup({
     virt_text_win_col = 80,
 })
