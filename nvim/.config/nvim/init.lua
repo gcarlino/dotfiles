@@ -124,7 +124,11 @@ require "fidget".setup {}
 
 
 -- kyazdani42/nvim-tree.lua
-require('nvim-tree').setup()
+require('nvim-tree').setup({
+    git = {
+        ignore = false
+    }
+})
 
 
 -- chentoast/marks.nvim
