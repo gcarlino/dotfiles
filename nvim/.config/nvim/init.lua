@@ -204,3 +204,6 @@ require('Comment').setup()
 -- kylechui/nvim-surround
 require('nvim-surround').setup({})
 
+
+require("diffview").setup()
+vim.opt.fillchars = vim.opt.fillchars + 'diff:╱'
