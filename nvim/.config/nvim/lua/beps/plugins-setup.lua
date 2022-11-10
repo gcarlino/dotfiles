@@ -35,7 +35,6 @@ require('packer').startup({ function(use)
     --   markdown: marksman
     use({ 'glepnir/lspsaga.nvim', branch = 'main' })
     use { 'onsails/lspkind-nvim' }
-    use { 'nvim-telescope/telescope-ui-select.nvim' }
     -- Standalone UI for nvim-lsp progress
     use 'j-hui/fidget.nvim'
 
@@ -63,19 +62,23 @@ require('packer').startup({ function(use)
     use 'rafamadriz/friendly-snippets'
 
     -- Telescope
-    use { 'nvim-lua/popup.nvim' }
-    use { 'nvim-telescope/telescope.nvim' }
+    use { 'nvim-telescope/telescope.nvim',
+        requires = {
+            'nvim-lua/plenary.nvim'
+        },
+    }
     use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
     use { 'nvim-telescope/telescope-file-browser.nvim' }
     use { 'kyazdani42/nvim-tree.lua' }
     use { 'nvim-telescope/telescope-packer.nvim' }
-    use { 'sudormrfbin/cheatsheet.nvim',
-        requires = {
-            { 'nvim-lua/popup.nvim' },
-            { 'nvim-lua/plenary.nvim' },
-            { 'nvim-telescope/telescope.nvim' },
-        }
-    }
+    use { 'nvim-telescope/telescope-ui-select.nvim' }
+    -- use { 'sudormrfbin/cheatsheet.nvim',
+    --     requires = {
+    --         { 'nvim-lua/popup.nvim' },
+    --         { 'nvim-lua/plenary.nvim' },
+    --         { 'nvim-telescope/telescope.nvim' },
+    --     }
+    -- }
 
     -- Statusline & tabline
     use { 'alvarosevilla95/luatab.nvim', requires = 'kyazdani42/nvim-web-devicons' }
