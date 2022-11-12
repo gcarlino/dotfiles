@@ -29,9 +29,11 @@ vim.api.nvim_set_keymap("n", "<leader>b", "", {
     callback = function()
         local _background = vim.api.nvim_get_option("background")
         if (_background == "light") then
-            vim.o.background = "dark"
+            vim.api.nvim_set_option('background', 'dark')
+            vim.cmd('colorscheme nordfox')
         else
-            vim.o.background = "light"
+            vim.api.nvim_set_option('background', 'light')
+            vim.cmd('colorscheme dayfox')
         end
     end,
     desc = "Toggle background color"
