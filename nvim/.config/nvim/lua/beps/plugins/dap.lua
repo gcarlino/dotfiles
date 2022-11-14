@@ -32,9 +32,6 @@ function M.clear_configurations()
 end
 
 
--- Adapters configurations in beps/plugings/dap_config.lua
-
-
 --- Python
 -- vim.g.python3_host_prog = '~/.virtualenvs/debugpy/bin/python3'
 
@@ -49,9 +46,7 @@ vim.fn.sign_define('DapBreakpointCondition', { text = '🟡', texthl = '', lineh
 -- Clear configurations, reload and continue
 vim.keymap.set("n", "<leader>dd",
     function()
-        -- require("beps.plugins.dap_config").clear_configurations()
         M.clear_configurations()
-        -- require("beps.plugins.dap_config").config_dap()
         M.config_dap()
         dap.continue()
     end,
@@ -79,15 +74,15 @@ vim.keymap.set('n', '<leader>db', function() dap.set_breakpoint(vim.fn.input("Br
     { desc = "DAP: debug set breakpoint condition" })
 vim.keymap.set('n', '<leader>dx', function() dap.disconnect() end,
     { desc = "DAP: debug disconnect" })
-vim.keymap.set('n', '<leader>dr', function() dap.repl.open() end,
-    { desc = "DAP: debug open repl" })
 vim.keymap.set('n', '<leader>dt', function() dapui.toggle({}) end,
     { desc = "DAP: debug toggle dap-ui" })
 vim.keymap.set('n', '<leader>dc', function() dapui.close({}) end,
     { desc = "DAP: debug close dap-ui" })
 
 -- hover
-vim.keymap.set({ 'n', 'x' }, '<leader>i', function() dapui.eval() end,
+vim.keymap.set({ 'n', 'x' }, '<leader>i', function()
+    -- dapui.eval(nil, { enter = true, context = "repl" }) end,
+    dapui.eval(nil, { enter = true, context = "repl" }) end,
     { desc = "DAP: open a floating window containing the result of evaluting an expression" })
 
 -- Reload launch json configuration

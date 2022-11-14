@@ -18,37 +18,54 @@ telescope.setup {
             prompt_position = 'top',
         },
     },
+    pickers = {
+        -- find_files = {
+        --     theme = "ivy",
+        -- },
+        buffers = {
+            -- ignore_current_buffer = true,
+            sort_mru = true,
+            mappings = {
+                i = {
+                    ["<c-d>"] = require("telescope.actions").delete_buffer,
+                },
+                n = {
+                    ["<c-d>"] = require("telescope.actions").delete_buffer,
+                },
+            },
+        },
+    },
     preview = {
         hide_on_startup = false
     },
     extensions = {
-        ["ui-select"] = {
-            require("telescope.themes").get_dropdown()
-        },
         file_browser = {
             respect_gitignore = false,
-            hijack_netrw = true,
+            hidden = true,
+        },
+        ["ui-select"] = {
+            require("telescope.themes").get_dropdown()
         },
     }
 }
 
-if vim.fn.has('mac') == 1 then
-    require('telescope').setup {
-        extensions = {
-            dash = {
-                file_type_keywords = {
-                    html = { 'html', 'css', 'javascript', 'bootstrap' }
-                }
-            }
-        }
-    }
-
-    require('telescope').load_extension('dash')
-end
+-- if vim.fn.has('mac') == 1 then
+--     require('telescope').setup {
+--         extensions = {
+--             dash = {
+--                 file_type_keywords = {
+--                     html = { 'html', 'css', 'javascript', 'bootstrap' }
+--                 }
+--             }
+--         }
+--     }
+--
+--     require('telescope').load_extension('dash')
+-- end
 
 -- Load extensions
-require('telescope').load_extension('fzf')
 require('telescope').load_extension 'file_browser'
+require('telescope').load_extension('fzf')
 require("telescope").load_extension("packer")
 require("telescope").load_extension("ui-select")
 require('telescope').load_extension('dap')

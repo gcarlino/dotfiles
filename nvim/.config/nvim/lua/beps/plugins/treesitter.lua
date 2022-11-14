@@ -27,8 +27,8 @@ treesitter.setup({
         'toml',
         'html',
         'css',
-        'markdown',
-        'markdown_inline',
+        -- 'markdown',
+        -- 'markdown_inline',
         'lua',
         'vim',
         'dockerfile',
@@ -40,7 +40,7 @@ treesitter.setup({
         'bash',
         'diff',
     },
-    auto_install = true,
+    auto_install = false,
     textobjects = {
         select = {
             enable = true,

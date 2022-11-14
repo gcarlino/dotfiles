@@ -124,7 +124,12 @@ require "fidget".setup {}
 
 
 -- kyazdani42/nvim-tree.lua
-require('nvim-tree').setup()
+require('nvim-tree').setup({
+    hijack_netrw = false,
+    git = {
+        ignore = false
+    }
+})
 
 
 -- chentoast/marks.nvim
@@ -190,7 +195,7 @@ vim.cmd([[
 
 
 -- windwp/nvim-autopairs
-require('nvim-autopairs').setup({})
+require('nvim-autopairs').setup()
 
 
 -- numToStr/Comment.nvim
@@ -198,5 +203,8 @@ require('Comment').setup()
 
 
 -- kylechui/nvim-surround
-require('nvim-surround').setup({})
+require('nvim-surround').setup()
 
+
+require("diffview").setup()
+vim.opt.fillchars = vim.opt.fillchars + 'diff:╱'

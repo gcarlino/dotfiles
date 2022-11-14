@@ -35,8 +35,6 @@ vim.opt.laststatus = 3
 --     end
 -- })
 
--- diffview fill characters
-vim.opt.fillchars = vim.opt.fillchars + 'diff:╱'
 
 -- Copy to system clipboard
 vim.api.nvim_set_option('clipboard', 'unnamed')
