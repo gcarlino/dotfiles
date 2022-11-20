@@ -12,11 +12,10 @@ end
 require("beps.keymaps")
 require("beps.disable_builtin")
 
-require("beps.plugins-setup")
-
-
 -- lewis6991/impatient.nvim 
 require('impatient')
+
+require("beps.plugins-setup")
 
 require('beps.colorscheme')
 require('beps.plugins.treesitter')
@@ -27,11 +26,10 @@ require('beps.plugins.nvim-cmp')
 require('beps.plugins.gitsigns')
 
 
--- kyazdani42/nvim-web-devicons {{{
+-- kyazdani42/nvim-web-devicons
 require('nvim-web-devicons').setup {
     default = true,
 }
--- }}}
 
 
 -- alvarosevilla95/luatab.nvim 
