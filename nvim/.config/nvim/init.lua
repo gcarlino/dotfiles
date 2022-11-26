@@ -21,7 +21,7 @@ require('beps.colorscheme')
 require('beps.plugins.treesitter')
 require('beps.plugins.telescope')
 require('beps.plugins.dap')
-require('beps.lsp.lsp')
+require('beps.lsp')
 require('beps.plugins.nvim-cmp')
 require('beps.plugins.gitsigns')
 

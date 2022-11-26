@@ -1,4 +1,3 @@
--- require('lsp.pylsp')
 vim.cmd[[let g:python3_host_prog = '/Users/beps/.virtualenvs/neovim3/bin/python3' ]]
 
 vim.lsp.start({
