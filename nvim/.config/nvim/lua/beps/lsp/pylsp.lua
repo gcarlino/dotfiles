@@ -1,6 +1,3 @@
--- require('lsp.pylsp')
-vim.cmd[[let g:python3_host_prog = '/Users/beps/.virtualenvs/neovim3/bin/python3' ]]
-
 vim.lsp.start({
     name = 'pylsp',
     filetypes = { 'python' },
@@ -10,3 +7,4 @@ vim.lsp.start({
             {'setup.py', 'pyproject.toml', 'requirements.txt'},
             { upward = true })[1]),
 })
+
