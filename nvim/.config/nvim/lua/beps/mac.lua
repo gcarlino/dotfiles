@@ -47,3 +47,6 @@ vim.keymap.set('n', '<leader>sg', function() M.simulnotes() end, {
 vim.keymap.set('n', '<leader>sf', function() M.simultitles() end, {
     desc = "List Simularia notes with Telescope" })
 
+-- Open the current file in the default program (on Mac this should just be just `open`)
+vim.keymap.set('n', '<leader>x', ':!open %<cr><cr>')
+

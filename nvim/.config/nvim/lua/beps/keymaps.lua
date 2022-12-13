@@ -44,3 +44,6 @@ vim.keymap.set('n', '<leader>/', function() require('Comment.api').toggle.linewi
     { desc = "Toggle comment on current line" })
 vim.keymap.set('x', '<leader>/', '<ESC><CMD>lua require("Comment.api").toggle.linewise(vim.fn.visualmode())<CR>',
     { desc = "Toggle comment on current line" })
+
+-- Allow gf to open non-existent files
+vim.keymap.set('', 'gf', ':edit <cfile><CR>')
