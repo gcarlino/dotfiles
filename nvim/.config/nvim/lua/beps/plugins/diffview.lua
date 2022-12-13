@@ -6,13 +6,13 @@ end
 diffview.setup({
     view = {
         default = {
-            layout = "diff2_vertical",
+            layout = "diff2_horizontal",
+            -- layout = "diff2_vertical",
         },
         merge_tool = {
             layout = "diff3_mixed"
         }
     },
-    file_panel = {
-        win_config = "right",
-    },
 })
+
+vim.opt.fillchars = vim.opt.fillchars + 'diff:╱'

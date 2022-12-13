@@ -36,7 +36,12 @@ require('packer').startup({ function(use)
     use({ 'glepnir/lspsaga.nvim', branch = 'main' })
     use { 'onsails/lspkind-nvim' }
     -- Standalone UI for nvim-lsp progress
-    use 'j-hui/fidget.nvim'
+    use({
+        'j-hui/fidget.nvim',
+        config = function()
+            require("fidget").setup()
+        end
+    })
 
     -- Completion
     use {
@@ -81,8 +86,25 @@ require('packer').startup({ function(use)
     -- }
 
     -- Statusline & tabline
-    use { 'alvarosevilla95/luatab.nvim', requires = 'kyazdani42/nvim-web-devicons' }
-    use { 'nvim-lualine/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons' } }
+    use({
+        'kyazdani42/nvim-web-devicons',
+        config = function()
+            require("nvim-web-devicons").setup({
+                default = true
+            })
+        end
+    })
+    use({
+        'alvarosevilla95/luatab.nvim',
+        requires = 'kyazdani42/nvim-web-devicons',
+        config = function()
+            require("luatab").setup()
+        end
+    })
+    use({
+        'nvim-lualine/lualine.nvim',
+        requires = { 'kyazdani42/nvim-web-devicons' },
+    })
 
     -- Folding
     use { 'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async' }
@@ -90,7 +112,7 @@ require('packer').startup({ function(use)
     -- Git
     use { 'tpope/vim-fugitive' }
     use { 'lewis6991/gitsigns.nvim' }
-    use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
+    use({ 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' })
 
     -- R
     use { 'jalvesaq/Nvim-R',
@@ -110,17 +132,54 @@ require('packer').startup({ function(use)
     use { 'EdenEast/nightfox.nvim' }
 
     -- Comment
-    use 'numToStr/Comment.nvim'
+    use({
+        'numToStr/Comment.nvim',
+        config = function()
+            require('Comment').setup()
+        end
+    })
 
     -- Various
     -- use 'rcarriga/nvim-notify'
     use 'joeytwiddle/sexy_scroller.vim'
-    use 'windwp/nvim-autopairs'
-    use 'chentoast/marks.nvim'
-    use { 'akinsho/toggleterm.nvim', tag = 'v2.*' }
-    use 'lukas-reineke/indent-blankline.nvim'
+    use({
+        'windwp/nvim-autopairs',
+        config = function()
+            require('nvim-autopairs').setup()
+        end
+    })
+    use({
+        'chentoast/marks.nvim',
+        config = function()
+            require('marks').setup()
+        end
+    })
+    use({
+        'akinsho/toggleterm.nvim',
+        tag = 'v2.*',
+        config = function()
+            require("toggleterm").setup {
+                open_mapping = [[<c-q>]],
+            }
+        end
+    })
+    use({
+        'lukas-reineke/indent-blankline.nvim',
+        config = function()
+            require("indent_blankline").setup {
+                show_current_context = true,
+                -- show_current_context_start = true,
+                show_end_of_line = true,
+            }
+        end
+    })
     use 'mechatroner/rainbow_csv'
-    use { 'kylechui/nvim-surround' }
+    use({
+        'kylechui/nvim-surround',
+        config = function()
+            require("nvim-surround").setup()
+        end
+    })
     -- use 'https://github.com/godlygeek/tabular'
 
     -- Mac specific
