@@ -24,6 +24,7 @@ require('beps.plugins.dap')
 require('beps.lsp')
 require('beps.plugins.nvim-cmp')
 require('beps.plugins.gitsigns')
+require('beps.plugins.diffview')
 
 
 -- kyazdani42/nvim-web-devicons
