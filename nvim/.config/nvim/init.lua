@@ -42,21 +42,11 @@ function _G.set_terminal_keymaps()
 end
 vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
 
---
--- kyazdani42/nvim-tree.lua
-require('nvim-tree').setup({
-    hijack_netrw = false,
-    git = {
-        ignore = false
-    }
-})
-
-
--- jalvesazq/Nvim-R
-vim.cmd([[
-    let R_assign_map = '<M-->'
-    let rout_follow_colorscheme = 1
-    let r_syntax_folding = 1
-    set nofoldenable
-    autocmd VimLeave * if exists("g:SendCmdToR") && string(g:SendCmdToR) != "function('SendCmdToR_fake')" | call RQuit("nosave") | endif
-]])
+-- -- jalvesazq/Nvim-R
+-- vim.cmd([[
+--     let R_assign_map = '<M-->'
+--     let rout_follow_colorscheme = 1
+--     let r_syntax_folding = 1
+--     set nofoldenable
+--     autocmd VimLeave * if exists("g:SendCmdToR") && string(g:SendCmdToR) != "function('SendCmdToR_fake')" | call RQuit("nosave") | endif
+-- ]])
