@@ -12,48 +12,21 @@ end
 require("beps.keymaps")
 require("beps.disable_builtin")
 
-require("beps.plugins-setup")
-
-
 -- lewis6991/impatient.nvim 
 require('impatient')
+
+require("beps.plugins-setup")
 
 require('beps.colorscheme')
 require('beps.plugins.treesitter')
 require('beps.plugins.telescope')
 require('beps.plugins.dap')
-require('beps.lsp.lsp')
+require('beps.lsp')
 require('beps.plugins.nvim-cmp')
 require('beps.plugins.gitsigns')
-
-
--- kyazdani42/nvim-web-devicons {{{
-require('nvim-web-devicons').setup {
-    default = true,
-}
--- }}}
-
-
--- alvarosevilla95/luatab.nvim 
-require('luatab').setup {}
-
-
--- hoob3rt/lualine.nvim
+require('beps.plugins.diffview')
 require("beps.plugins.lualine")
 
-
--- lukas-reineke/indent-blankline.nvim
-require("indent_blankline").setup {
-    show_current_context = true,
-    -- show_current_context_start = true,
-    show_end_of_line = true,
-}
-
-
--- use akinsho/toggleterm.nvim 
-require("toggleterm").setup {
-    open_mapping = [[<c-q>]],
-}
 
 -- Mappings to make moving in and out of a terminal easier once toggled,
 -- whilst still keeping it open
@@ -68,11 +41,7 @@ function _G.set_terminal_keymaps()
 end
 vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
 
-
--- j-hui/fidget.nvim
-require "fidget".setup {}
-
-
+--
 -- kyazdani42/nvim-tree.lua
 require('nvim-tree').setup({
     hijack_netrw = false,
@@ -82,16 +51,13 @@ require('nvim-tree').setup({
 })
 
 
--- chentoast/marks.nvim
-require 'marks'.setup({})
-
-
 -- kevinhwang91/nvim-ufo
 vim.o.foldcolumn = '1'
 vim.o.foldlevel = 99 -- feel free to decrease the value
 vim.o.foldlevelstart = 99
 vim.o.foldenable = true
-vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+-- vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+vim.opt.fillchars = vim.opt.fillchars + 'eob: ,fold: ,foldopen:,foldsep: ,foldclose:'
 
 -- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
 -- vim.keymap.set('n', 'zR', require('ufo').openAllFolds, { desc = "Open all folds." })
@@ -142,19 +108,3 @@ vim.cmd([[
     set nofoldenable
     autocmd VimLeave * if exists("g:SendCmdToR") && string(g:SendCmdToR) != "function('SendCmdToR_fake')" | call RQuit("nosave") | endif
 ]])
-
-
--- windwp/nvim-autopairs
-require('nvim-autopairs').setup()
-
-
--- numToStr/Comment.nvim
-require('Comment').setup()
-
-
--- kylechui/nvim-surround
-require('nvim-surround').setup()
-
-
-require("diffview").setup()
-vim.opt.fillchars = vim.opt.fillchars + 'diff:╱'

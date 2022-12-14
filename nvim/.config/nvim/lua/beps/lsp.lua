@@ -12,13 +12,14 @@ for type, icon in pairs(signs) do
     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
-
 local status, saga = pcall(require, 'lspsaga')
 if not status then
     return
 end
 
-saga.init_lsp_saga()
+saga.init_lsp_saga({
+    border_style = "rounded"
+})
 
 -- See `:help vim.lsp.*` for documentation on any of the below functions
 vim.keymap.set('n', '<leader>di', function() require('telescope.builtin').diagnostics() end,
@@ -53,7 +54,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition,
             { desc = "Jumps to the definition of the type of the symbol under the cursor." })
         -- vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename,
-        vim.keymap.set('n', '<leader>rn', '<cmd>Lspsaga rename<cr>', 
+        vim.keymap.set('n', '<leader>rn', '<cmd>Lspsaga rename<cr>',
             { desc = "Renames all references to the symbol under the cursor." })
         vim.keymap.set('n', '<leader>so',
             function()

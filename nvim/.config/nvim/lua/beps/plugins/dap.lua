@@ -19,7 +19,7 @@ function M.config_dap()
     }
 
     -- Python debug
-    require('dap-python').setup('~/.virtualenvs/debugpy/bin/python')
+    require('dap-python').setup('~/.virtualenvs/neovim3/bin/python')
 
     -- Load local configurations
     require('dap.ext.vscode').load_launchjs('./.nvim-dap/launch.json')
