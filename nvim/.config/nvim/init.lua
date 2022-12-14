@@ -1,9 +1,5 @@
 require("beps.options")
 
--- Remap space as leader key and ; as local leader
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ';'
-
 -- Mac spefic configuration
 if vim.fn.has("mac") == 1 then
     require("beps.mac")
