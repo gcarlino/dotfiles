@@ -2,6 +2,7 @@ local status, dap = pcall(require, 'dap')
 if not status then
     return
 end
+
 local status, dapui = pcall(require, 'dapui')
 if not status then
     return
@@ -11,18 +12,28 @@ local M = {}
 
 -- Function to configure adapters
 function M.config_dap()
+
     -- C/C++/Rust (via vscode-cpptools)
+    local cppdbgPath = ""
+    if vim.fn.has("mac") == 1 then
+        cppdbgPath = '/Users/beps/.vscode-server/extension/debugAdapters/bin/OpenDebugAD7'
+    else
+        cppdbgPath = '/home/carlino/.vscode-server/extension/debugAdapters/bin/OpenDebugAD7'
+    end
+
     dap.adapters.fortran = {
         id = 'cppdbg',
         type = 'executable',
-        command = '/home/carlino/.vscode-server/extensions/ms-vscode.cpptools-1.10.7/debugAdapters/bin/OpenDebugAD7'
+        command = cppdbgPath,
+        -- options = {}  TODO: kill telemetry
     }
+
+    -- Load local configurations
+    require('dap.ext.vscode').load_launchjs('./.nvim-dap/launch.json')
 
     -- Python debug
     require('dap-python').setup('~/.virtualenvs/neovim3/bin/python')
 
-    -- Load local configurations
-    require('dap.ext.vscode').load_launchjs('./.nvim-dap/launch.json')
 end
 
 -- Clear configurations
@@ -31,10 +42,6 @@ function M.clear_configurations()
     dap.configurations.fortran = {}
 end
 
-
---- Python
--- vim.g.python3_host_prog = '~/.virtualenvs/debugpy/bin/python3'
-
 -- nvim-dap-ui
 dapui.setup()
 
@@ -42,7 +49,10 @@ dapui.setup()
 vim.fn.sign_define('DapBreakpoint', { text = '🔴', texthl = '', linehl = '', numhl = '' })
 vim.fn.sign_define('DapBreakpointCondition', { text = '🟡', texthl = '', linehl = '', numhl = '' })
 
+--
 -- key mappings
+--
+
 -- Clear configurations, reload and continue
 vim.keymap.set("n", "<leader>dd",
     function()
@@ -50,7 +60,8 @@ vim.keymap.set("n", "<leader>dd",
         M.config_dap()
         dap.continue()
     end,
-    { desc = "DAP: debug load configurations with Telescope" })
+    { desc = "DAP: debug load configurations with Telescope" }
+)
 
 vim.keymap.set('n', '<F5>', function() dap.continue() end,
     { desc = "DAP: debug continue" })
@@ -72,7 +83,11 @@ vim.keymap.set('n', '<F9>', function() dap.toggle_breakpoint() end,
     { desc = "DAP: debug toggle breakpoint" })
 vim.keymap.set('n', '<leader>db', function() dap.set_breakpoint(vim.fn.input("Breakpoint condition: ")) end,
     { desc = "DAP: debug set breakpoint condition" })
-vim.keymap.set('n', '<leader>dx', function() dap.disconnect() end,
+vim.keymap.set('n', '<leader>dx',
+    function()
+        dap.disconnect()
+        dap.close()
+    end,
     { desc = "DAP: debug disconnect" })
 vim.keymap.set('n', '<leader>dt', function() dapui.toggle({}) end,
     { desc = "DAP: debug toggle dap-ui" })
