@@ -15,7 +15,7 @@ require("beps.disable_builtin")
 -- lewis6991/impatient.nvim 
 require('impatient')
 
-require("beps.plugins-setup")
+require("plugins")
 
 require('beps.colorscheme')
 require('beps.plugins.treesitter')
