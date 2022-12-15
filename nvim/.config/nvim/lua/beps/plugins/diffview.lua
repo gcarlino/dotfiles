@@ -16,3 +16,6 @@ diffview.setup({
 })
 
 vim.opt.fillchars = vim.opt.fillchars + 'diff:╱'
+
+vim.keymap.set('n', '<leader>vo', ':DiffviewOpen<CR>', { noremap = true, desc = "Open Diffview tab."})
+vim.keymap.set('n', '<leader>vc', ':DiffviewClose<CR>', { noremap = true, desc = "Close Diffview tab."})
