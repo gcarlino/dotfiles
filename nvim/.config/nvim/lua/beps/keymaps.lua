@@ -1,3 +1,7 @@
+-- Remap space as leader key and ; as local leader
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ';'
+
 -- Tabs
 vim.keymap.set('n', '<leader>to', ':tabnew<CR>', { desc = 'Open tab' })
 vim.keymap.set('n', '<leader>tc', ':tabclose<CR>', { desc = 'Close tab' })
