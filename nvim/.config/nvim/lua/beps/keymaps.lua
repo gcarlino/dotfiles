@@ -1,4 +1,3 @@
--- Remap space as leader key and ; as local leader
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ';'
 
@@ -39,19 +38,12 @@ vim.keymap.set("n", "[q", ":cprevious<cr>", { desc = "Previous item in quickfix 
 -- nvim-tree
 vim.keymap.set('n', '<C-n>', ':NvimTreeToggle<CR>', { noremap = true, silent = true, desc = "Toggle nvim-tree." })
 
--- Diffview
-vim.keymap.set('n', '<leader>vo', ':DiffviewOpen<CR>', { noremap = true, desc = "Open Diffview tab."})
-vim.keymap.set('n', '<leader>vc', ':DiffviewClose<CR>', { noremap = true, desc = "Close Diffview tab."})
-
--- Custom comments
-vim.keymap.set('n', '<leader>/', function() require('Comment.api').toggle.linewise.current() end,
-    { desc = "Toggle comment on current line" })
-vim.keymap.set('x', '<leader>/', '<ESC><CMD>lua require("Comment.api").toggle.linewise(vim.fn.visualmode())<CR>',
-    { desc = "Toggle comment on current line" })
-
 -- Allow gf to open non-existent files
 vim.keymap.set('', 'gf', ':edit <cfile><CR>')
 
+-- Reselect visual selection after indenting
+vim.keymap.set('v', '<', '<gv')
+vim.keymap.set('v', '>', '>gv')
 
 -- Mappings to make moving in and out of a terminal easier once toggled,
 -- whilst still keeping it open
