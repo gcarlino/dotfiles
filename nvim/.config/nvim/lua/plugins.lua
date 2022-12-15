@@ -117,7 +117,11 @@ require('packer').startup({ function(use)
     })
 
     -- Folding
-    use { 'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async' }
+    use({ 
+        'kevinhwang91/nvim-ufo',
+        requires = 'kevinhwang91/promise-async',
+        disable = true
+    })
 
     -- Git
     use { 'tpope/vim-fugitive' }

@@ -3,7 +3,6 @@ if not status then
     return
 end
 
--- kevinhwang91/nvim-ufo
 vim.o.foldcolumn = '1'
 vim.o.foldlevel = 99 -- feel free to decrease the value
 vim.o.foldlevelstart = 99
@@ -50,5 +49,3 @@ ufo.setup({
     end,
     fold_virt_text_handler = handler
 })
-
-
