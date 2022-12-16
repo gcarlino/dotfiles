@@ -190,7 +190,22 @@ require('packer').startup({ function(use)
         'lukas-reineke/indent-blankline.nvim',
         config = function()
             require("indent_blankline").setup {
-                show_current_context = true,
+                filetype_exclude = {
+                    'help',
+                    'terminal',
+                    'dashboard',
+                    'packer',
+                    'lspinfo',
+                    'TelescopePrompt',
+                    'TelescopeResults',
+                },
+                buftype_exclude = {
+                    'terminal',
+                    'NvimTree',
+                },
+                show_trailing_blankline_indent = false,
+                show_first_indent_level = true,
+                show_current_context = false,
                 -- show_current_context_start = true,
                 show_end_of_line = true,
             }
