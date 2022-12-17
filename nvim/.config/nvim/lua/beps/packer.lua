@@ -152,7 +152,15 @@ require('packer').startup({ function(use)
     -- Colorschemes
     use { 'https://github.com/sainnhe/edge', disable = true }
     use { 'navarasu/onedark.nvim', disable = true }
-    use { 'EdenEast/nightfox.nvim' }
+    use({
+        'EdenEast/nightfox.nvim',
+        config = function()
+            require('nightfox').setup({
+                terminal_colors = false
+            })
+            vim.cmd("colorscheme nordfox")
+        end
+    })
 
     -- Comment
     use({
@@ -190,24 +198,11 @@ require('packer').startup({ function(use)
         'lukas-reineke/indent-blankline.nvim',
         config = function()
             require("indent_blankline").setup {
-                filetype_exclude = {
-                    'help',
-                    'terminal',
-                    'dashboard',
-                    'packer',
-                    'lspinfo',
-                    'TelescopePrompt',
-                    'TelescopeResults',
-                },
-                buftype_exclude = {
-                    'terminal',
-                    'NvimTree',
-                },
-                show_trailing_blankline_indent = false,
-                show_first_indent_level = true,
-                show_current_context = false,
-                -- show_current_context_start = true,
-                show_end_of_line = true,
+                -- show_trailing_blankline_indent = false,
+                -- show_first_indent_level = true,
+                -- show_current_context = false,
+                -- -- show_current_context_start = true,
+                -- show_end_of_line = true,
             }
         end
     })
