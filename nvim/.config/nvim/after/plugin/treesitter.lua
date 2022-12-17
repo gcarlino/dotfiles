@@ -9,6 +9,18 @@ treesitter.setup({
     highlight = {
         enable = true,
     },
+    indent = {
+        enable = true,
+    },
+    ensure_installed = {
+        'help', 'json', 'yaml', 'toml', 'html', 'css',
+        'markdown', 'markdown_inline',
+        'lua', 'vim', 'dockerfile', 'python', 'fortran', 'c', 'r', 'cmake', 'bash', 'diff',
+        'cuda'
+    },
+    sync_install = false,
+    auto_install = true,
+    additional_vim_regex_highlighting = false,
     incremental_selection = {
         enable = true,
         keymaps = {
@@ -18,29 +30,6 @@ treesitter.setup({
             node_decremental = 'grm',
         },
     },
-    indent = {
-        enable = true,
-    },
-    ensure_installed = {
-        'json',
-        'yaml',
-        'toml',
-        'html',
-        'css',
-        -- 'markdown',
-        -- 'markdown_inline',
-        'lua',
-        'vim',
-        'dockerfile',
-        'python',
-        'fortran',
-        'c',
-        'r',
-        'cmake',
-        'bash',
-        'diff',
-    },
-    auto_install = false,
     textobjects = {
         select = {
             enable = true,
@@ -75,6 +64,16 @@ treesitter.setup({
         },
     },
 })
+
 -- Tree-sitter base folding
--- vim.o.foldmethod = 'expr'
--- vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.o.foldmethod = 'expr'
+vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
+
+-- Open all folds
+vim.api.nvim_create_autocmd(
+    {"BufReadPost", "FileReadPost"},
+    {
+        pattern = '*',
+        command = "normal zR"
+    }
+)

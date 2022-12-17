@@ -158,7 +158,7 @@ require('packer').startup({ function(use)
             require('nightfox').setup({
                 terminal_colors = false
             })
-            vim.cmd("colorscheme nordfox")
+            vim.cmd.colorscheme('nordfox')
         end
     })
 
