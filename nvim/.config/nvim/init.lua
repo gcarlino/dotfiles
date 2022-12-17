@@ -9,5 +9,4 @@ require("beps.keymaps")
 require('impatient')
 
 require("beps.packer")
-require('beps.lsp')
-require('beps.colorscheme')
+-- plugin sepcific configurations in ./after/plugin/ folder
