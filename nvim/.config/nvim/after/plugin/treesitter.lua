@@ -71,7 +71,7 @@ vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
 
 -- Open all folds
 vim.api.nvim_create_autocmd(
-    {"BufReadPost", "FileReadPost"},
+    {"BufReadPost", "FileReadPost", "FilterReadPost"},
     {
         pattern = '*',
         command = "normal zR"
