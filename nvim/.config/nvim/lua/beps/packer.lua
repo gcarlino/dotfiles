@@ -172,6 +172,7 @@ require('packer').startup({ function(use)
 
     -- Various
     -- use 'rcarriga/nvim-notify'
+    use({'mbbill/undotree'})
     use 'joeytwiddle/sexy_scroller.vim'
     use({
         'windwp/nvim-autopairs',

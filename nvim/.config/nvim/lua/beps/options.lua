@@ -25,6 +25,8 @@ vim.opt.spelllang = { 'en_us', 'it' } -- Spellcheck languages
 vim.opt.shortmess:append({ I = true }) -- disable the splash screen
 vim.opt.showmode = false
 vim.opt.updatetime = 250
+vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+vim.opt.undofile = true
 
 -- Highlight on yank
 local yankHighlightGroup = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
