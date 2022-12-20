@@ -1,6 +1,17 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ';'
 
+-- Move around selection
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+
+-- Search and stay in the middle
+vim.keymap.set("n", "n", "nzzzv")
+vim.keymap.set("n", "N", "Nzzzv")
+
+-- yank in system clipboard
+vim.keymap.set({"n", "v"}, "<leader>y", "\"+y")
+
 -- Tabs
 vim.keymap.set('n', '<leader>to', ':tabnew<CR>', { desc = 'Open tab' })
 vim.keymap.set('n', '<leader>tc', ':tabclose<CR>', { desc = 'Close tab' })
