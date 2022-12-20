@@ -186,6 +186,10 @@ export PYTHONDONTWRITEBYTECODE=1
 
 
 if [[ $OS == "Linux" ]] ; then
+    # FZF
+    source /usr/share/doc/fzf/examples/completion.zsh
+    source /usr/share/doc/fzf/examples/key-bindings.zsh
+
     # Compilation flags
     # export ARCHFLAGS="-arch x86_64"
 
