@@ -65,15 +65,15 @@ treesitter.setup({
     },
 })
 
--- Tree-sitter base folding
-vim.o.foldmethod = 'expr'
-vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
-
--- Open all folds
-vim.api.nvim_create_autocmd(
-    {"BufReadPost", "FileReadPost", "FilterReadPost"},
-    {
-        pattern = '*',
-        command = "normal zR"
-    }
-)
+-- -- Tree-sitter base folding
+-- vim.o.foldmethod = 'expr'
+-- vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
+--
+-- -- Open all folds
+-- vim.api.nvim_create_autocmd(
+--     {"BufReadPost", "FileReadPost", "FilterReadPost"},
+--     {
+--         pattern = '*',
+--         command = "normal zR"
+--     }
+-- )
