@@ -1,10 +1,3 @@
--- Install packer
--- local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
--- if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
---     Packer_bootstrap = vim.fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim',
---         install_path })
--- end
-
 require('packer').startup({ function(use)
     -- Package manager
     use 'wbthomason/packer.nvim'
@@ -18,7 +11,7 @@ require('packer').startup({ function(use)
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
     use 'nvim-treesitter/nvim-treesitter-textobjects'
     use { 'nvim-treesitter/playground', opt = true, cmd = 'TSPlaygroundToggle' }
-    use 'nvim-treesitter/nvim-treesitter-context'
+    -- use 'nvim-treesitter/nvim-treesitter-context'
 
     -- LSP
     -- Installati a mano i server di:
@@ -117,7 +110,7 @@ require('packer').startup({ function(use)
     })
 
     -- Folding
-    use({ 
+    use({
         'kevinhwang91/nvim-ufo',
         requires = 'kevinhwang91/promise-async',
         disable = true
@@ -198,14 +191,8 @@ require('packer').startup({ function(use)
     use({
         'lukas-reineke/indent-blankline.nvim',
         config = function()
-            require("indent_blankline").setup {
-                -- show_trailing_blankline_indent = false,
-                -- show_first_indent_level = true,
-                -- show_current_context = false,
-                -- -- show_current_context_start = true,
-                -- show_end_of_line = true,
-            }
-        end
+            require("indent_blankline").setup()
+        end,
     })
     use 'mechatroner/rainbow_csv'
     use({
@@ -223,24 +210,5 @@ require('packer').startup({ function(use)
             run = 'make install', })
     end
 
-    -- if Packer_bootstrap then
-    --     require('packer').sync()
-    -- end
-
 end,
-    -- Floating window for packer
-    -- config = {
-    --     display = {
-    --         open_fn = function ()
-    --             return require('packer.util').float({border = 'single'})
-    --         end
-    --     }
-    -- }
 })
-
--- local packer_group = vim.api.nvim_create_augroup('Packer', { clear = true })
--- vim.api.nvim_create_autocmd('BufWritePost', {
---     command = 'source <afile> | PackerCompile',
---     group = packer_group,
---     pattern = 'init.lua'
--- })
