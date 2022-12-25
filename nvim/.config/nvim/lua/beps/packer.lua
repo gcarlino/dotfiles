@@ -8,10 +8,17 @@ require('packer').startup({ function(use)
     use { 'nvim-lua/plenary.nvim' }
 
     -- Tree-sitter
-    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-    use 'nvim-treesitter/nvim-treesitter-textobjects'
-    use { 'nvim-treesitter/playground', opt = true, cmd = 'TSPlaygroundToggle' }
-    -- use 'nvim-treesitter/nvim-treesitter-context'
+    use({
+        'nvim-treesitter/nvim-treesitter',
+        run = ':TSUpdate',
+        requires = {
+            { 'nvim-treesitter/nvim-treesitter-textobjects' },
+            { 'nvim-treesitter/playground',
+                opt = true,
+                cmd = 'TSPlaygroundToggle'
+            },
+        }
+    })
 
     -- LSP
     -- Installati a mano i server di:
@@ -27,14 +34,14 @@ require('packer').startup({ function(use)
     --   clangd    apt install clangd
     --   markdown: marksman
     use({ 'glepnir/lspsaga.nvim', branch = 'main' })
-    use { 'onsails/lspkind-nvim' }
+    use({ 'onsails/lspkind-nvim' })
     -- Standalone UI for nvim-lsp progress
-    use({
-        'j-hui/fidget.nvim',
-        config = function()
-            require("fidget").setup()
-        end
-    })
+    -- use({
+    --     'j-hui/fidget.nvim',
+    --     config = function()
+    --         require("fidget").setup()
+    --     end
+    -- })
 
     -- Completion
     use {
@@ -55,18 +62,25 @@ require('packer').startup({ function(use)
     }
 
     -- Snippet
-    use 'L3MON4D3/LuaSnip'
-    use 'saadparwaiz1/cmp_luasnip'
-    use 'rafamadriz/friendly-snippets'
+    use({
+        'L3MON4D3/LuaSnip',
+        requires = {
+            'saadparwaiz1/cmp_luasnip',
+            'rafamadriz/friendly-snippets'
+        }
+    })
 
     -- Telescope
     use { 'nvim-telescope/telescope.nvim',
         requires = {
-            'nvim-lua/plenary.nvim'
+            'nvim-lua/plenary.nvim',
+            'nvim-telescope/telescope-packer.nvim',
+            'nvim-telescope/telescope-ui-select.nvim',
+            { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
+            { 'nvim-telescope/telescope-file-browser.nvim' }
         },
     }
-    use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-    use { 'nvim-telescope/telescope-file-browser.nvim' }
+
     use({
         'kyazdani42/nvim-tree.lua',
         config = function()
@@ -76,27 +90,19 @@ require('packer').startup({ function(use)
                     ignore = false
                 }
             })
-        end
+        end,
+        cmd = "NvimTreeToggle",
     })
-    use { 'nvim-telescope/telescope-packer.nvim' }
-    use { 'nvim-telescope/telescope-ui-select.nvim' }
-    -- use { 'sudormrfbin/cheatsheet.nvim',
-    --     requires = {
-    --         { 'nvim-lua/popup.nvim' },
-    --         { 'nvim-lua/plenary.nvim' },
-    --         { 'nvim-telescope/telescope.nvim' },
-    --     }
-    -- }
 
     -- Statusline & tabline
-    use({
-        'kyazdani42/nvim-web-devicons',
-        config = function()
-            require("nvim-web-devicons").setup({
-                default = true
-            })
-        end
-    })
+    -- use({
+    --     'kyazdani42/nvim-web-devicons',
+    --     config = function()
+    --         require("nvim-web-devicons").setup({
+    --             default = true
+    --         })
+    --     end
+    -- })
     use({
         'alvarosevilla95/luatab.nvim',
         requires = 'kyazdani42/nvim-web-devicons',
@@ -117,7 +123,10 @@ require('packer').startup({ function(use)
     })
 
     -- Git
-    use { 'tpope/vim-fugitive' }
+    use({
+        'tpope/vim-fugitive',
+        cmd = 'G',
+    })
     use { 'lewis6991/gitsigns.nvim' }
     use({ 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' })
 
@@ -132,15 +141,20 @@ require('packer').startup({ function(use)
                 set nofoldenable
                 autocmd VimLeave * if exists("g:SendCmdToR") && string(g:SendCmdToR) != "function('SendCmdToR_fake')" | call RQuit("nosave") | endif
             ]])
-        end
+        end,
+        opt = true,
     }
 
     -- Debug
-    use { 'mfussenegger/nvim-dap' }
-    use { 'rcarriga/nvim-dap-ui', requires = { 'mfussenegger/nvim-dap' } }
-    use { 'mfussenegger/nvim-dap-python', requires = { 'mfussenegger/nvim-dap' } }
-    use { 'theHamsta/nvim-dap-virtual-text', requires = { 'mfussenegger/nvim-dap' } }
-    use { 'nvim-telescope/telescope-dap.nvim', requires = { 'mfussenegger/nvim-dap' } }
+    use({
+        'mfussenegger/nvim-dap',
+        requires = {
+            { 'rcarriga/nvim-dap-ui' },
+            { 'mfussenegger/nvim-dap-python' },
+            { 'theHamsta/nvim-dap-virtual-text' },
+            { 'nvim-telescope/telescope-dap.nvim' },
+        }
+    })
 
     -- Colorschemes
     use { 'https://github.com/sainnhe/edge', disable = true }
@@ -206,7 +220,8 @@ require('packer').startup({ function(use)
     -- Mac specific
     if vim.fn.has('mac') == 1 then
         use({ 'mrjones2014/dash.nvim',
-            requires = { 'nvim-telescope/telescope.nvim' },
+            opt = true,
+            -- requires = { 'nvim-telescope/telescope.nvim' },
             run = 'make install', })
     end
 
