@@ -9,7 +9,6 @@ if not status then
 end
 
 local lspkind = require('lspkind')
-lspkind.init()
 
 local has_words_before = function()
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -77,16 +76,18 @@ cmp.setup({
 
     formatting = {
         format = lspkind.cmp_format({
-            with_text = true,
-            menu = {
-                buffer        = "[buf]",
-                nvim_lsp      = "[LSP]",
-                nvim_lua      = "[lua]",
-                path          = "[path]",
-                luasnip       = "[snip]",
-                latex_symbols = "[Latex]",
-                cmdline       = "[cmd]",
-            },
+            mode = 'symbol_text',
+            maxwidth = 50,
+            ellipsis_char = '...',
+            -- menu = {
+            --     buffer        = "[buf]",
+            --     nvim_lsp      = "[LSP]",
+            --     nvim_lua      = "[lua]",
+            --     path          = "[path]",
+            --     luasnip       = "[snip]",
+                -- latex_symbols = "[Latex]",
+            --     cmdline       = "[cmd]",
+            -- },
         }),
     },
 
