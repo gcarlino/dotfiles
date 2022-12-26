@@ -121,11 +121,15 @@ return require('packer').startup({ function(use)
     -- Statusline & tabline
     use({
         'alvarosevilla95/luatab.nvim',
-        requires = 'kyazdani42/nvim-web-devicons',
+        requires = { 'kyazdani42/nvim-web-devicons' },
         config = function()
-            require("luatab").setup()
+            require("luatab").setup({
+                separator = function() return '' end,
+                modified = function() return '' end,
+            })
         end
     })
+
     use({
         'nvim-lualine/lualine.nvim',
         event = 'BufEnter',
