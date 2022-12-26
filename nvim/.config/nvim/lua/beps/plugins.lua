@@ -1,12 +1,12 @@
 local ensure_packer = function()
-  local fn = vim.fn
-  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-  if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-    vim.cmd [[packadd packer.nvim]]
-    return true
-  end
-  return false
+    local fn = vim.fn
+    local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+    if fn.empty(fn.glob(install_path)) > 0 then
+        fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+        vim.cmd [[packadd packer.nvim]]
+        return true
+    end
+    return false
 end
 
 local packer_bootstrap = ensure_packer()
@@ -15,7 +15,7 @@ local packer_bootstrap = ensure_packer()
 vim.api.nvim_create_autocmd('BufWritePost', {
     group = vim.api.nvim_create_augroup('PACKER', { clear = true }),
     pattern = 'plugins.lua',
-    command = 'source <afile> | PackerCompile',
+    command = 'source <afile> | PackerCompile | LuaCacheClear ',
 })
 
 -- lewis6991/impatient.nvim 
@@ -33,12 +33,18 @@ return require('packer').startup({ function(use)
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate',
         requires = {
-            { 'nvim-treesitter/nvim-treesitter-textobjects' },
+            {
+                'nvim-treesitter/nvim-treesitter-textobjects',
+                after = 'nvim-treesitter'
+            },
             { 'nvim-treesitter/playground',
                 opt = true,
                 cmd = 'TSPlaygroundToggle'
             },
-        }
+        },
+        config = function ()
+            require('beps.plugins.treesitter')
+        end
     })
 
     -- LSP
@@ -56,54 +62,52 @@ return require('packer').startup({ function(use)
     --   markdown: marksman
     use({ 'glepnir/lspsaga.nvim', branch = 'main' })
     use({ 'onsails/lspkind-nvim' })
-    -- Standalone UI for nvim-lsp progress
-    -- use({
-    --     'j-hui/fidget.nvim',
-    --     config = function()
-    --         require("fidget").setup()
-    --     end
-    -- })
 
     -- Completion
     use {
         'hrsh7th/nvim-cmp',
+        event = 'InsertEnter',
         requires = {
-            'L3MON4D3/LuaSnip',
-            { 'hrsh7th/cmp-buffer' },
-            { 'hrsh7th/cmp-nvim-lsp' },
-            { 'hrsh7th/cmp-nvim-lua' },
-            { 'hrsh7th/cmp-nvim-lsp-signature-help' },
-            { 'hrsh7th/cmp-cmdline' },
-            { 'hrsh7th/cmp-path' },
-            { 'hrsh7th/cmp-nvim-lua' },
-            { 'saadparwaiz1/cmp_luasnip' },
-            { 'kdheepak/cmp-latex-symbols' },
-            { 'rcarriga/cmp-dap' },
+            {
+                'L3MON4D3/LuaSnip',
+                event = 'InsertEnter',
+                after = 'nvim-cmp',
+                requires = { 'rafamadriz/friendly-snippets' }
+            },
+            { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
+            { 'hrsh7th/cmp-cmdline', after = 'nvim-cmp' },
+            { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
+            { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' },
+            { 'hrsh7th/cmp-nvim-lsp', after = 'nvim-cmp' },
+            { 'hrsh7th/cmp-nvim-lua', after = 'nvim-cmp' },
+            { 'hrsh7th/cmp-nvim-lsp-signature-help', after = 'nvim-cmp' },
+            { 'hrsh7th/cmp-nvim-lua', after = 'nvim-cmp' },
+            { 'kdheepak/cmp-latex-symbols', after= 'nvim-cmp' },
+            { 'rcarriga/cmp-dap', after = 'nvim-cmp' },
         },
+        config = function ()
+            require('beps.plugins.nvim-cmp')
+        end
     }
-
-    -- Snippet
-    use({
-        'L3MON4D3/LuaSnip',
-        requires = {
-            'saadparwaiz1/cmp_luasnip',
-            'rafamadriz/friendly-snippets'
-        }
-    })
 
     -- Telescope
     use {
         'nvim-telescope/telescope.nvim',
+        event = 'CursorHold',
         requires = {
             { 'nvim-lua/plenary.nvim' },
             { 'nvim-telescope/telescope-ui-select.nvim' },
             { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
             { 'nvim-telescope/telescope-file-browser.nvim' }
         },
+        config = function()
+            require('beps.plugins.telescope')
+        end,
     }
 
     use({
         'kyazdani42/nvim-tree.lua',
+        event = 'CursorHold',
         config = function()
             require('nvim-tree').setup({
                 hijack_netrw = false,
@@ -112,18 +116,9 @@ return require('packer').startup({ function(use)
                 }
             })
         end,
-        cmd = 'NvimTreeToggle',
     })
 
     -- Statusline & tabline
-    -- use({
-    --     'kyazdani42/nvim-web-devicons',
-    --     config = function()
-    --         require("nvim-web-devicons").setup({
-    --             default = true
-    --         })
-    --     end
-    -- })
     use({
         'alvarosevilla95/luatab.nvim',
         requires = 'kyazdani42/nvim-web-devicons',
@@ -133,13 +128,21 @@ return require('packer').startup({ function(use)
     })
     use({
         'nvim-lualine/lualine.nvim',
+        event = 'BufEnter',
         requires = { 'kyazdani42/nvim-web-devicons' },
+        config = function()
+            require('beps.plugins.lualine')
+        end
     })
 
     -- Folding
     use({
         'kevinhwang91/nvim-ufo',
+        event = 'BufRead',
         requires = 'kevinhwang91/promise-async',
+        config = function ()
+            require('beps.plugins.nvim-ufo')
+        end,
         disable = true
     })
 
@@ -148,10 +151,20 @@ return require('packer').startup({ function(use)
         'tpope/vim-fugitive',
         cmd = 'G',
     })
-    use { 'lewis6991/gitsigns.nvim' }
+    use({
+        'lewis6991/gitsigns.nvim',
+        event = 'BufRead',
+        config = function ()
+            require('beps.plugins.gitsigns')
+        end
+    })
     use({
         'sindrets/diffview.nvim',
-        requires = 'nvim-lua/plenary.nvim'
+        event = 'BufRead',
+        requires = 'nvim-lua/plenary.nvim',
+        config = function ()
+            require('beps.plugins.diffview')
+        end
     })
 
     -- R
@@ -173,12 +186,16 @@ return require('packer').startup({ function(use)
     -- Debug
     use({
         'mfussenegger/nvim-dap',
+        event = 'BufRead',
         requires = {
             { 'rcarriga/nvim-dap-ui' },
             { 'mfussenegger/nvim-dap-python' },
             { 'theHamsta/nvim-dap-virtual-text' },
             { 'nvim-telescope/telescope-dap.nvim' },
         },
+        config = function ()
+            require('beps.plugins.dap')
+        end
     })
 
     -- Colorschemes
@@ -197,6 +214,7 @@ return require('packer').startup({ function(use)
     -- Comment
     use({
         'numToStr/Comment.nvim',
+        event = 'BufRead',
         config = function()
             require('Comment').setup()
         end
@@ -204,7 +222,13 @@ return require('packer').startup({ function(use)
 
     -- Various
     -- use 'rcarriga/nvim-notify'
-    use({ 'mbbill/undotree' })
+    use({
+        'mbbill/undotree',
+        event = 'BufRead',
+        config = function ()
+            require('beps.plugins.undotree')
+        end
+    })
     use({ 'joeytwiddle/sexy_scroller.vim' })
     use({
         'windwp/nvim-autopairs',
@@ -221,6 +245,7 @@ return require('packer').startup({ function(use)
     use({
         'akinsho/toggleterm.nvim',
         tag = 'v2.*',
+        event = 'CursorHold',
         config = function()
             require('toggleterm').setup {
                 open_mapping = [[<c-q>]],
