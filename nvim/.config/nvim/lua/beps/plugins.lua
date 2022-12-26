@@ -5,8 +5,6 @@ require('packer').startup({ function(use)
     -- Impatient to improve startup time
     use 'lewis6991/impatient.nvim'
 
-    use { 'nvim-lua/plenary.nvim' }
-
     -- Tree-sitter
     use({
         'nvim-treesitter/nvim-treesitter',
@@ -49,15 +47,15 @@ require('packer').startup({ function(use)
         requires = {
             'L3MON4D3/LuaSnip',
             { 'hrsh7th/cmp-buffer' },
-            { 'hrsh7th/cmp-nvim-lsp'},
-            { 'hrsh7th/cmp-nvim-lua'},
-            { 'hrsh7th/cmp-nvim-lsp-signature-help'},
-            { 'hrsh7th/cmp-cmdline'},
+            { 'hrsh7th/cmp-nvim-lsp' },
+            { 'hrsh7th/cmp-nvim-lua' },
+            { 'hrsh7th/cmp-nvim-lsp-signature-help' },
+            { 'hrsh7th/cmp-cmdline' },
             { 'hrsh7th/cmp-path' },
             { 'hrsh7th/cmp-nvim-lua' },
             { 'saadparwaiz1/cmp_luasnip' },
             { 'kdheepak/cmp-latex-symbols' },
-            'rcarriga/cmp-dap',
+            { 'rcarriga/cmp-dap' },
         },
     }
 
@@ -71,11 +69,12 @@ require('packer').startup({ function(use)
     })
 
     -- Telescope
-    use { 'nvim-telescope/telescope.nvim',
+    use {
+        'nvim-telescope/telescope.nvim',
         requires = {
-            'nvim-lua/plenary.nvim',
-            'nvim-telescope/telescope-packer.nvim',
-            'nvim-telescope/telescope-ui-select.nvim',
+            { 'nvim-lua/plenary.nvim' },
+            { 'nvim-telescope/telescope-packer.nvim' },
+            { 'nvim-telescope/telescope-ui-select.nvim' },
             { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
             { 'nvim-telescope/telescope-file-browser.nvim' }
         },
@@ -91,7 +90,7 @@ require('packer').startup({ function(use)
                 }
             })
         end,
-        cmd = "NvimTreeToggle",
+        cmd = 'NvimTreeToggle',
     })
 
     -- Statusline & tabline
@@ -128,10 +127,14 @@ require('packer').startup({ function(use)
         cmd = 'G',
     })
     use { 'lewis6991/gitsigns.nvim' }
-    use({ 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' })
+    use({
+        'sindrets/diffview.nvim',
+        requires = 'nvim-lua/plenary.nvim'
+    })
 
     -- R
-    use { 'jalvesaq/Nvim-R',
+    use {
+        'jalvesaq/Nvim-R',
         ft = 'r',
         config = function()
             vim.cmd([[
@@ -153,11 +156,11 @@ require('packer').startup({ function(use)
             { 'mfussenegger/nvim-dap-python' },
             { 'theHamsta/nvim-dap-virtual-text' },
             { 'nvim-telescope/telescope-dap.nvim' },
-        }
+        },
     })
 
     -- Colorschemes
-    use { 'https://github.com/sainnhe/edge', disable = true }
+    use { 'https;//github.com/sainnhe/edge', disable = true }
     use { 'navarasu/onedark.nvim', disable = true }
     use({
         'EdenEast/nightfox.nvim',
@@ -179,8 +182,8 @@ require('packer').startup({ function(use)
 
     -- Various
     -- use 'rcarriga/nvim-notify'
-    use({'mbbill/undotree'})
-    use 'joeytwiddle/sexy_scroller.vim'
+    use({ 'mbbill/undotree' })
+    use({ 'joeytwiddle/sexy_scroller.vim' })
     use({
         'windwp/nvim-autopairs',
         config = function()
@@ -197,7 +200,7 @@ require('packer').startup({ function(use)
         'akinsho/toggleterm.nvim',
         tag = 'v2.*',
         config = function()
-            require("toggleterm").setup {
+            require('toggleterm').setup {
                 open_mapping = [[<c-q>]],
             }
         end
@@ -205,17 +208,17 @@ require('packer').startup({ function(use)
     use({
         'lukas-reineke/indent-blankline.nvim',
         config = function()
-            require("indent_blankline").setup()
+            require('indent_blankline').setup()
         end,
     })
     use 'mechatroner/rainbow_csv'
     use({
         'kylechui/nvim-surround',
         config = function()
-            require("nvim-surround").setup()
+            require('nvim-surround').setup()
         end
     })
-    -- use 'https://github.com/godlygeek/tabular'
+    -- use 'https;//github.com/godlygeek/tabular'
 
     -- Mac specific
     if vim.fn.has('mac') == 1 then
