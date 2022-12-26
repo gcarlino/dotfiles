@@ -11,13 +11,6 @@ local function getCWD()
 end
 
 
-local function custom_fname()
-    local name = require('lualine.components.filename')
-    return vim.fn.pathshorten(name)
-
-end
-
-
 --- @param trunc_width number trunctates component when screen width is less then trunc_width
 --- @param trunc_len number truncates component to trunc_len number of chars
 --- @param hide_width number hides component when window width is smaller then hide_width
@@ -66,11 +59,14 @@ end
 
 
 require 'lualine'.setup {
-    extensions = { 'nvim-tree', 'toggleterm', 'nvim-dap-ui', 'fugitive', 'symbols-outline' },
+    extensions = {
+        'nvim-tree', 'toggleterm', 'nvim-dap-ui', 'fugitive',
+        'symbols-outline', 'fzf', 'nvim-tree'
+    },
     options = {
         theme = 'auto',
-        globalstatusline = true,
-        -- section_separatoRs = { left = '', right = '' },
+        globalstatusline = false,
+       -- section_separatoRs = { left = '', right = '' },
         -- component_separators = { left = '', right = '' }
         -- section_separators = { left = '', right = '' },
         -- component_separators = { left = '', right = '' },
@@ -93,7 +89,7 @@ require 'lualine'.setup {
                 'mode',
                 icons_enabled = true,
                 icon = '',
-                fmt = trunc(80, 4, 0, true)
+                fmt = trunc(100, 1, 0, true),
             }
         },
         -- lualine_b = {
@@ -110,6 +106,8 @@ require 'lualine'.setup {
             {
                 'branch',
                 -- color = { fg = colors.pink.dim, }
+                fmt = trunc(100, 4, 80, true),
+
             },
             {
                 'diff',
@@ -129,6 +127,7 @@ require 'lualine'.setup {
                 'filetype',
                 icon_only = true,
                 colored = false,
+                padding = { left = 1, right = 0 },
                 -- color = {
                 --     fg = colors.pink.dim,
                 -- },
@@ -137,7 +136,7 @@ require 'lualine'.setup {
                 'filename',
                 file_status = true,
                 path = 1,
-                shorting_target = 120,
+                shorting_target = 30,
                 color = { gui = 'italic' },
                 symbols = filename_symbols,
             }
@@ -150,59 +149,32 @@ require 'lualine'.setup {
                     fg = colors.pink.dim,
                     -- gui = 'bold',
                 },
+                fmt = trunc(100, 4, 90, true)
             },
         },
-        lualine_y = { 'fileformat', 'encoding', 'filesize' },
-        lualine_z = { 'location', 'progress' }
-    },
-    winbar = {
-        lualine_a = {
+        lualine_y = {
             {
-                'filetype',
-                icon_only = true,
-                colored = false,
-                -- color = {
-                --     fg = colors.blue,
-                --     bg = colors.bg4
-                -- }
+                'fileformat',
+                padding = { left = 1, right = 0 },
             },
             {
-                'filename',
-                file_status = true,
-                color = { gui = 'italic' },
-                symbols = filename_symbols,
-            },
-        },
-        lualine_b = {},
-        lualine_c = {},
-        lualine_x = {},
-        lualine_y = {},
-        lualine_z = {}
-    },
-    inactive_winbar = {
-        lualine_a = {
-            {
-                'filetype',
-                icon_only = true,
-                colored = false,
-                color = {
-                    bg = colors.bg4,
-                }
+                'encoding',
+                padding = {left = 1, right = 1 }
             },
             {
-                'filename',
-                color = {
-                    gui = 'italic',
-                    bg = colors.bg4,
-                },
-                symbols = filename_symbols,
+                'filesize',
+                padding = {left = 0, right = 1 }
             }
         },
-        lualine_b = {
-        },
-        lualine_c = {},
-        lualine_x = {},
-        lualine_y = {},
-        lualine_z = {}
+        lualine_z = {
+            {
+                'location',
+                padding = {left = 1, right = 0}
+            },
+            {
+                'progress',
+                padding = {left = 1, right = 1}
+            }
+        }
     },
 }

@@ -129,7 +129,7 @@ return require('packer').startup({ function(use)
     use({
         'nvim-lualine/lualine.nvim',
         event = 'BufEnter',
-        requires = { 'kyazdani42/nvim-web-devicons' },
+        requires = { 'kyazdani42/nvim-web-devicons', opt = true },
         config = function()
             require('beps.plugins.lualine')
         end
