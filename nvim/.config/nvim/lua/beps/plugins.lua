@@ -1,3 +1,6 @@
+-- lewis6991/impatient.nvim 
+require('impatient')
+
 require('packer').startup({ function(use)
     -- Package manager
     use 'wbthomason/packer.nvim'
