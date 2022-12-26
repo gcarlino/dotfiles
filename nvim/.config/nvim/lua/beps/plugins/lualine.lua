@@ -61,7 +61,7 @@ end
 require 'lualine'.setup {
     extensions = {
         'nvim-tree', 'toggleterm', 'nvim-dap-ui', 'fugitive',
-        'symbols-outline', 'fzf', 'nvim-tree'
+        'fzf', 'quickfix'
     },
     options = {
         theme = 'auto',
