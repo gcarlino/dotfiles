@@ -93,6 +93,7 @@ return require('packer').startup({ function(use)
     -- Telescope
     use {
         'nvim-telescope/telescope.nvim',
+        tag = '0.1.0',
         event = 'CursorHold',
         requires = {
             { 'nvim-lua/plenary.nvim' },

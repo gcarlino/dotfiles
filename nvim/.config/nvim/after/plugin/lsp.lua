@@ -33,7 +33,7 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist,
 vim.api.nvim_create_autocmd('LspAttach', {
     callback = function(args)
 
---     -- Trigger completion with <c-x><c-o>
+        -- Trigger completion with <c-x><c-o>
         -- vim.api.nvim_buf_set_option(args.buf, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
         local bufopts = { buffer = args.buf, noremap = true, silent = true }
@@ -56,11 +56,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
         -- vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename,
         vim.keymap.set('n', '<leader>rn', '<cmd>Lspsaga rename<cr>',
             { desc = "Renames all references to the symbol under the cursor." })
-        vim.keymap.set('n', '<leader>so',
-            function()
-                require('telescope.builtin').lsp_document_symbols()
-            end,
-            { desc = "Lists LSP symbols in the current buffer" })
         vim.keymap.set('n', '<leader>d', '<cmd>Lspsaga show_line_diagnostics<cr>', bufopts)
         vim.keymap.set('n', '<leader>d', '<cmd>Lspsaga show_cursor_diagnostics<cr>', bufopts)
 
