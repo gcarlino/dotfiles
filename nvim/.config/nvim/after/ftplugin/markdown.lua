@@ -1,4 +1,6 @@
 vim.opt.wrap = true
+-- Highlight syntax inside markdown
+vim.g.markdown_fenced_languages = { 'html', 'python', 'vim', 'r', 'sh' }
 
 -- require('lsp.marksman')
 vim.lsp.start({

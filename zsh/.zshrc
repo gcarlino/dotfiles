@@ -124,7 +124,7 @@ if [[ $OS == "Darwin" ]] {
     source /Users/beps/.config/broot/launcher/bash/br
 
 } elif [[ $OS == "Linux" ]] {
-    export PATH=$HOME/bin:$HOME/.local/bin:${HOME}/node_modules/.bin/:/home/exe64:$PATH
+    export PATH=$HOME/.local/bin:${HOME}/node_modules/.bin/:/home/exe64:$PATH
 } fi
 
 # export PATH="/usr/local/opt/gdal2-python/bin:$PATH"
@@ -186,6 +186,10 @@ export PYTHONDONTWRITEBYTECODE=1
 
 
 if [[ $OS == "Linux" ]] ; then
+    # FZF
+    source /usr/share/doc/fzf/examples/completion.zsh
+    source /usr/share/doc/fzf/examples/key-bindings.zsh
+
     # Compilation flags
     # export ARCHFLAGS="-arch x86_64"
 

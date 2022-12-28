@@ -1,29 +1,45 @@
--- local colors = {
---     -- -- edge
---     -- bg       = '#2b2d37',
---     -- bg1      = '#333644',
---     -- bg2      = '#363a49',
---     -- bg3      = '#3a3e4e',
---     -- bg4      = '#404455',
---     -- fg       = '#97a4b5',
---     -- yellow   = '#deb974',
---     -- cyan     = '#5dbbc1',
---     -- darkblue = '#081633',
---     -- green    = '#a0c980',
---     -- orange   = '#FF8800',
---     -- violet   = '#a9a1e1',
---     -- magenta  = '#c678dd',
---     -- blue     = '#6cb6eb',
---     -- red      = '#ec7279',
--- }
-
 -- local colors = require('onedark.palette')['dark']
 local colors = require('nightfox.palette').load('nordfox')
+
+
+local filename_symbols = { modified = ' ●', alternate_file = ' #', directory = ' ' }
+
 
 local function getCWD()
     local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ":~")
     return vim.fn.pathshorten(cwd)
 end
+
+
+--- @param trunc_width number trunctates component when screen width is less then trunc_width
+--- @param trunc_len number truncates component to trunc_len number of chars
+--- @param hide_width number hides component when window width is smaller then hide_width
+--- @param no_ellipsis boolean whether to disable adding '...' at end after truncation
+--- return function that can format the component accordingly
+local function trunc(trunc_width, trunc_len, hide_width, no_ellipsis)
+  return function(str)
+    local win_width = vim.fn.winwidth(0)
+    if hide_width and win_width < hide_width then return ''
+    elseif trunc_width and trunc_len and win_width < trunc_width and #str > trunc_len then
+       return str:sub(1, trunc_len) .. (no_ellipsis and '' or '...')
+    end
+    return str
+  end
+end
+
+
+-- External diff source
+local function diff_source()
+  local gitsigns = vim.b.gitsigns_status_dict
+  if gitsigns then
+    return {
+      added = gitsigns.added,
+      modified = gitsigns.changed,
+      removed = gitsigns.removed
+    }
+  end
+end
+
 
 local function getLSP()
     local msg = 'No Active LSP'
@@ -41,19 +57,23 @@ local function getLSP()
     return msg
 end
 
+
 require 'lualine'.setup {
-    extensions = { 'nvim-tree', 'toggleterm', 'nvim-dap-ui', 'fugitive', 'symbols-outline' },
+    extensions = {
+        'nvim-tree', 'toggleterm', 'nvim-dap-ui', 'fugitive',
+        'fzf', 'quickfix'
+    },
     options = {
         theme = 'auto',
-        globalstatusline = true,
-        -- section_separatoRs = { left = '', right = '' },
-        --
+        globalstatusline = false,
+       -- section_separatoRs = { left = '', right = '' },
+        -- component_separators = { left = '', right = '' }
         -- section_separators = { left = '', right = '' },
-        component_separators = "",
         -- component_separators = { left = '', right = '' },
-        --
-        section_separators = { left = '', right = '' },
+        -- section_separators = { left = '', right = '' },
         -- component_separators = { left = '', right = '' },
+        section_separators = "",
+        component_separators = "",
 
         disabled_filetypes = {
             winbar = { 'toggleterm', 'NvimTree', 'fugitive', 'qf',
@@ -69,132 +89,92 @@ require 'lualine'.setup {
                 'mode',
                 icons_enabled = true,
                 icon = '',
+                fmt = trunc(100, 1, 0, true),
             }
         },
+        -- lualine_b = {
+        --     {
+        --         getCWD,
+        --         icon = ' ',
+        --         color = {
+        --             fg = colors.blue.bright,
+        --             gui = 'italic',
+        --         },
+        --     },
+        -- },
         lualine_b = {
             {
-                getCWD,
-                icon = ' ',
-                color = {
-                    fg = colors.blue.bright,
-                    gui = 'italic',
-                },
-            },
-        },
-        lualine_c = {
-            {
                 'branch',
-                color = {
-                    fg = colors.pink.dim,
-                }
+                -- color = { fg = colors.pink.dim, }
+                fmt = trunc(100, 4, 80, true),
+
             },
             {
                 'diff',
+                source = diff_source,
                 -- symbols = { added = ' ', modified = '柳', removed = ' ' },
                 symbols = { added = ' ', modified = ' ', removed = ' ' },
-                -- diff_color = {
-                --     added = { fg = colors.green },
-                --     modified = { fg = colors.cyan },
-                --     removed = { fg = colors.red },
-                -- },
-            },
-        },
-
-        lualine_x = {
-            {
-                'filetype',
-                icon_only = true,
-                colored = false,
-                color = {
-                    fg = colors.pink.dim,
-                },
-            },
-            {
-                getLSP,
-                -- icon = ' ',
-                color = {
-                    fg = colors.pink.dim,
-                    -- gui = 'bold',
-                },
             },
             {
                 'diagnostics',
                 sources = { 'nvim_diagnostic' },
                 -- symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
                 symbols = { error = " ", warn = " ", hint = " ", info = " " },
-                -- diagnostics_color = {
-                --     error = { fg = colors.red },
-                --     warn = { fg = colors.yellow },
-                --     info = { fg = colors.cyan },
-                --     hint = { fg = colors.green },
-                -- },
             },
         },
-        lualine_y = { 'filesize', 'encoding', 'fileformat' },
-        lualine_z = { 'progress', 'location' }
-    },
-    winbar = {
-        lualine_a = {
+        lualine_c = {
             {
                 'filetype',
                 icon_only = true,
                 colored = false,
+                padding = { left = 1, right = 0 },
                 -- color = {
-                --     fg = colors.blue,
-                --     bg = colors.bg4
-                -- }
+                --     fg = colors.pink.dim,
+                -- },
             },
             {
                 'filename',
                 file_status = true,
                 path = 1,
-                color = {
-                    -- fg = colors.blue,
-                    -- bg = colors.bg4,
-                    gui = 'italic',
-                },
-                symbols = {
-                    modified = ' ●',
-                    alternate_file = ' #',
-                    directory = ' ',
-                },
-            },
-        },
-        lualine_b = {},
-        lualine_c = {},
-        lualine_x = {},
-        lualine_y = {},
-        lualine_z = {}
-    },
-    inactive_winbar = {
-        lualine_a = {
-            {
-                'filetype',
-                icon_only = true,
-                colored = false,
-                color = {
-                    bg = colors.bg4,
-                }
-            },
-            {
-                'filename',
-                path = 1,
-                color = {
-                    gui = 'italic',
-                    bg = colors.bg4,
-                },
-                symbols = {
-                    modified = ' ●',
-                    alternate_file = ' #',
-                    directory = ' ',
-                },
+                shorting_target = 30,
+                color = { gui = 'italic' },
+                symbols = filename_symbols,
             }
         },
-        lualine_b = {
+        lualine_x = {
+            {
+                getLSP,
+                icon = ' ',
+                color = {
+                    fg = colors.pink.dim,
+                    -- gui = 'bold',
+                },
+                fmt = trunc(100, 4, 90, true)
+            },
         },
-        lualine_c = {},
-        lualine_x = {},
-        lualine_y = {},
-        lualine_z = {}
+        lualine_y = {
+            {
+                'fileformat',
+                padding = { left = 1, right = 1 },
+            },
+            {
+                'encoding',
+                padding = {left = 0, right = 1 }
+            },
+            {
+                'filesize',
+                padding = {left = 0, right = 1 }
+            }
+        },
+        lualine_z = {
+            {
+                'location',
+                padding = {left = 1, right = 0}
+            },
+            {
+                'progress',
+                padding = {left = 1, right = 1}
+            }
+        }
     },
 }

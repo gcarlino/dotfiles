@@ -1,3 +1,17 @@
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ';'
+
+-- Move around selection
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+
+-- Search and stay in the middle
+vim.keymap.set("n", "n", "nzzzv")
+vim.keymap.set("n", "N", "Nzzzv")
+
+-- yank in system clipboard
+vim.keymap.set({"n", "v"}, "<leader>y", "\"+y")
+
 -- Tabs
 vim.keymap.set('n', '<leader>to', ':tabnew<CR>', { desc = 'Open tab' })
 vim.keymap.set('n', '<leader>tc', ':tabclose<CR>', { desc = 'Close tab' })
@@ -33,14 +47,40 @@ vim.keymap.set("n", "]q", ":cnext<cr>", { desc = "Next item in quickfix list" })
 vim.keymap.set("n", "[q", ":cprevious<cr>", { desc = "Previous item in quickfix list" })
 
 -- nvim-tree
-vim.keymap.set('n', '<C-n>', ':NvimTreeToggle<CR>', { noremap = true, silent = true, desc = "Toggle nvim-tree." })
+vim.keymap.set('n', '<leader>n', ':NvimTreeToggle<CR>', { noremap = true, silent = true, desc = "Toggle nvim-tree." })
 
--- Diffview
-vim.keymap.set('n', '<leader>vo', ':DiffviewOpen<CR>', { noremap = true, desc = "Open Diffview tab."})
-vim.keymap.set('n', '<leader>vc', ':DiffviewClose<CR>', { noremap = true, desc = "Close Diffview tab."})
+-- Allow gf to open non-existent files
+vim.keymap.set('', 'gf', ':edit <cfile><CR>')
 
--- Custom comments
-vim.keymap.set('n', '<leader>/', function() require('Comment.api').toggle.linewise.current() end,
-    { desc = "Toggle comment on current line" })
-vim.keymap.set('x', '<leader>/', '<ESC><CMD>lua require("Comment.api").toggle.linewise(vim.fn.visualmode())<CR>',
-    { desc = "Toggle comment on current line" })
+-- Reselect visual selection after indenting
+vim.keymap.set('v', '<', '<gv')
+vim.keymap.set('v', '>', '>gv')
+
+-- Mappings to make moving in and out of a terminal easier once toggled,
+-- whilst still keeping it open
+function _G.set_terminal_keymaps()
+    local opts = { buffer = 0 }
+    vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
+    vim.keymap.set('t', 'jk', [[<C-\><C-n>]], opts)
+    vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
+    vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
+    vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
+    vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
+end
+vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
+
+-- Toggle backgournd color
+vim.api.nvim_set_keymap("n", "<leader>b", "", {
+    noremap = true,
+    callback = function()
+        local _background = vim.api.nvim_get_option("background")
+        if (_background == "light") then
+            vim.cmd('colorscheme nordfox')
+            vim.api.nvim_set_option('background', 'dark')
+        else
+            vim.cmd('colorscheme dayfox')
+            vim.api.nvim_set_option('background', 'light')
+        end
+    end,
+    desc = "Toggle background color"
+})

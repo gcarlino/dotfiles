@@ -1,5 +1,28 @@
 -- neovim configuration for macOS
 
+-- Simularia notes
+local M = {}
+M.simulnotes = function()
+    local opts = {
+        cwd = "~/Simularia/Notes/",
+        prompt_title = "~ Grep (not only) Simularia Notes ~",
+    }
+    require('telescope.builtin').live_grep(opts)
+end
+
+M.simultitles = function()
+    local opts = {
+        cwd = "~/Simularia/Notes/",
+        prompt_title = "~ Find files in (not only) Simularia Notes ~",
+    }
+    require('telescope.builtin').find_files(opts)
+end
+
+vim.keymap.set('n', '<leader>sg', function() M.simulnotes() end, {
+    desc = "Grep Simularia notes with Telescope" })
+vim.keymap.set('n', '<leader>sf', function() M.simultitles() end, {
+    desc = "List Simularia notes with Telescope" })
+
 -- Preview markdown with Marked.app
 vim.keymap.set('n', '<leader>mk', ':!open -a "/Applications/Marked 2.app" "%"<CR>',
     { desc = "Preview with Marked app", silent = true })
@@ -23,27 +46,6 @@ if vim.g.neovide then
     vim.o.guifont = "SF Mono:h12"
 end
 
-
--- Simularia notes
-local M = {}
-M.simulnotes = function()
-    local opts = {
-        cwd = "~/Simularia/Notes/",
-        prompt_title = "~ Grep (not only) Simularia Notes ~",
-    }
-    require('telescope.builtin').live_grep(opts)
-end
-
-M.simultitles = function()
-    local opts = {
-        cwd = "~/Simularia/Notes/",
-        prompt_title = "~ Find files in (not only) Simularia Notes ~",
-    }
-    require('telescope.builtin').find_files(opts)
-end
-
-vim.keymap.set('n', '<leader>sg', function() M.simulnotes() end, {
-    desc = "Grep Simularia notes with Telescope" })
-vim.keymap.set('n', '<leader>sf', function() M.simultitles() end, {
-    desc = "List Simularia notes with Telescope" })
+-- Open the current file in the default program (on Mac this should just be just `open`)
+vim.keymap.set('n', '<leader>x', ':!open %<cr><cr>')
 

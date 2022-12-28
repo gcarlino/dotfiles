@@ -1,50 +1,32 @@
--- Line numbers
 vim.opt.number = true
 vim.opt.relativenumber = true
+vim.opt.title = true
 vim.opt.wrap = false
-
-vim.o.termguicolors = true
-
--- Highlight the text line of the cursor
+vim.opt.termguicolors = true
 vim.opt.cursorline = true
-
--- Enable break indent
 vim.opt.breakindent = true
--- Case insensitive search unless /C or capital in search
-vim.o.ignorecase = true
-vim.o.smartcase = true
-
--- Decrease update time
-vim.o.updatetime = 250
-vim.wo.signcolumn = 'yes'
-
-vim.o.expandtab = true
-vim.o.tabstop = 4
-vim.o.shiftwidth = 4
-vim.o.splitbelow = true
-vim.o.splitright = true
-vim.o.scrolloff = 4
-vim.o.diffopt = 'internal,filler,closeoff,vertical'
-
--- Global status line
-vim.opt.laststatus = 3
--- vim.api.nvim_create_autocmd("FileType", {
---     pattern = { "dapui*", "dap-repl" },
---     callback = function()
---         vim.opt.laststatus = 2
---     end
--- })
-
-
--- Copy to system clipboard
-vim.api.nvim_set_option('clipboard', 'unnamed')
-
--- Highlight syntax inside markdown
-vim.g.markdown_fenced_languages = { 'html', 'python', 'vim', 'r', 'sh' }
-
--- Spellcheck
-vim.opt.spell = false
-vim.opt.spelllang = { 'en_us', 'it' }
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.opt.signcolumn = 'yes'
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+vim.opt.softtabstop = 4
+vim.opt.smartindent = true
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+vim.opt.scrolloff = 8
+vim.opt.sidescrolloff = 8
+vim.opt.diffopt = 'internal,filler,closeoff,vertical'
+-- vim.opt.laststatus = 3 -- Global status line
+vim.opt.clipboard = 'unnamedplus' -- Copy to system clipboard
+vim.opt.confirm = true -- ask for confirmation instead of erroring
+vim.opt.spelllang = { 'en_us', 'it' } -- Spellcheck languages
+vim.opt.shortmess:append({ I = true }) -- disable the splash screen
+vim.opt.showmode = false
+vim.opt.updatetime = 250
+vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+vim.opt.undofile = true
 
 -- Highlight on yank
 local yankHighlightGroup = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
@@ -66,7 +48,6 @@ vim.opt.listchars = {
     eol = '↲',
     nbsp = '␣'
 }
-
 vim.api.nvim_create_autocmd("InsertEnter", {
     pattern = "*",
     callback = function()
@@ -79,4 +60,3 @@ vim.api.nvim_create_autocmd({ "VimEnter", "BufEnter", "InsertLeave" }, {
         vim.opt.list = false
     end
 })
-
