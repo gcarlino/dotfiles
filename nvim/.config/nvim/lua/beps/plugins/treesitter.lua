@@ -6,21 +6,21 @@ end
 
 -- Parsers must be installed manually via :TSInstall
 treesitter.setup({
-    highlight = {
-        enable = true,
-    },
-    indent = {
-        enable = true,
-    },
     ensure_installed = {
         'help', 'json', 'yaml', 'toml', 'html', 'css',
-        'markdown', 'markdown_inline',
+        'markdown', 'markdown_inline', 'latex',
         'lua', 'vim', 'dockerfile', 'python', 'fortran', 'c', 'r', 'cmake', 'bash', 'diff',
         'cuda'
     },
     sync_install = false,
     auto_install = true,
     additional_vim_regex_highlighting = false,
+    highlight = {
+        enable = true,
+    },
+    indent = {
+        enable = false,
+    },
     incremental_selection = {
         enable = true,
         keymaps = {
@@ -66,8 +66,9 @@ treesitter.setup({
 })
 
 -- -- Tree-sitter base folding
--- vim.o.foldmethod = 'expr'
--- vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.o.foldmethod = 'expr'
+vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.cmd('set nofoldenable')
 --
 -- -- Open all folds
 -- vim.api.nvim_create_autocmd(
