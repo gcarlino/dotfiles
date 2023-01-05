@@ -84,3 +84,7 @@ vim.api.nvim_set_keymap("n", "<leader>b", "", {
     end,
     desc = "Toggle background color"
 })
+
+vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle,
+    { desc = "Toggle Undotree" }
+)

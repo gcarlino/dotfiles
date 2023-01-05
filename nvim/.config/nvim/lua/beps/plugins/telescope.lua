@@ -39,6 +39,14 @@ telescope.setup {
             respect_gitignore = false,
             hidden = true,
         },
+        undo = {
+            use_delta = true,
+            side_by_side = true,
+            layout_strategy = "vertical",
+            layout_config = {
+                preview_height = 0.5,
+            },
+        },
         ["ui-select"] = {
             require("telescope.themes").get_dropdown()
         },
@@ -50,6 +58,7 @@ require('telescope').load_extension 'file_browser'
 require('telescope').load_extension('fzf')
 require("telescope").load_extension("ui-select")
 require('telescope').load_extension('dap')
+require('telescope').load_extension('undo')
 
 -- Keymaps
 local builtin = require('telescope.builtin')
@@ -102,6 +111,11 @@ vim.keymap.set('n', '<leader>fk',
 vim.keymap.set('n', '<leader>fo',
     function() builtin.oldfiles() end,
     { desc = "See recently opened/edited files with Telescope" }
+)
+
+vim.keymap.set('n', '<leader>fu',
+    function () require('telescope').extensions.undo.undo() end,
+    { desc = "See undo tree with Telescope" }
 )
 
 -- Telescope LSP commands

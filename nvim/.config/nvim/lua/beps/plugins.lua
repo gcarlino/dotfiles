@@ -99,7 +99,8 @@ return require('packer').startup({ function(use)
             { 'nvim-lua/plenary.nvim' },
             { 'nvim-telescope/telescope-ui-select.nvim' },
             { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
-            { 'nvim-telescope/telescope-file-browser.nvim' }
+            { 'nvim-telescope/telescope-file-browser.nvim' },
+            { 'debugloop/telescope-undo.nvim' },
         },
         config = function()
             require('beps.plugins.telescope')
@@ -230,9 +231,7 @@ return require('packer').startup({ function(use)
     use({
         'mbbill/undotree',
         event = 'BufRead',
-        config = function ()
-            require('beps.plugins.undotree')
-        end
+        disable = false,
     })
     use({ 'joeytwiddle/sexy_scroller.vim' })
     use({
