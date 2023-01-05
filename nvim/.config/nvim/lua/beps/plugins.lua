@@ -257,7 +257,8 @@ return require('packer').startup({ function(use)
         event = 'BufRead',
         config = function()
             require('marks').setup()
-        end
+        end,
+        disable = true
     })
     use({
         'akinsho/toggleterm.nvim',
