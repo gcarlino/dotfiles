@@ -60,8 +60,15 @@ return require('packer').startup({ function(use)
     --   cmake     pip3 install cmake-language-server
     --   clangd    apt install clangd
     --   markdown: marksman
-    use({ 'glepnir/lspsaga.nvim', branch = 'main' })
-    use({ 'onsails/lspkind-nvim' })
+    use({
+        'glepnir/lspsaga.nvim',
+        branch = 'main',
+        event = 'BufRead'
+    })
+    use({
+        'onsails/lspkind-nvim',
+        event = 'BufRead',
+    })
 
     -- Completion
     use {
@@ -123,6 +130,7 @@ return require('packer').startup({ function(use)
     -- Statusline & tabline
     use({
         'alvarosevilla95/luatab.nvim',
+        event = 'BufEnter',
         requires = { 'kyazdani42/nvim-web-devicons' },
         config = function()
             require("luatab").setup({
@@ -233,15 +241,20 @@ return require('packer').startup({ function(use)
         event = 'BufRead',
         disable = false,
     })
-    use({ 'joeytwiddle/sexy_scroller.vim' })
+    use({
+        'joeytwiddle/sexy_scroller.vim',
+        event = 'BufEnter',
+    })
     use({
         'windwp/nvim-autopairs',
+        event = 'InsertEnter',
         config = function()
             require('nvim-autopairs').setup()
         end
     })
     use({
         'chentoast/marks.nvim',
+        event = 'BufRead',
         config = function()
             require('marks').setup()
         end
@@ -258,13 +271,18 @@ return require('packer').startup({ function(use)
     })
     use({
         'lukas-reineke/indent-blankline.nvim',
+        event = 'BufRead',
         config = function()
             require('indent_blankline').setup()
         end,
     })
-    use 'mechatroner/rainbow_csv'
+    use({
+        'mechatroner/rainbow_csv',
+        opt = true,
+    })
     use({
         'kylechui/nvim-surround',
+        event = 'InsertEnter',
         config = function()
             require('nvim-surround').setup()
         end
@@ -272,9 +290,9 @@ return require('packer').startup({ function(use)
 
     -- use 'https;//github.com/godlygeek/tabular'
 
-    -- Lua
     use {
         "folke/which-key.nvim",
+        event = 'BufEnter',
         config = function()
             require("which-key").setup {
                 window = {
