@@ -45,6 +45,8 @@ end
 -- nvim-dap-ui
 dapui.setup()
 
+require('telescope').load_extension('dap')
+
 -- Breakpoint symbols
 vim.fn.sign_define('DapBreakpoint', { text = '🔴', texthl = '', linehl = '', numhl = '' })
 vim.fn.sign_define('DapBreakpointCondition', { text = '🟡', texthl = '', linehl = '', numhl = '' })
