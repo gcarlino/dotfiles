@@ -270,7 +270,24 @@ return require('packer').startup({ function(use)
             require('nvim-surround').setup()
         end
     })
+
     -- use 'https;//github.com/godlygeek/tabular'
+
+    -- Lua
+    use {
+        "folke/which-key.nvim",
+        config = function()
+            require("which-key").setup {
+                window = {
+                    border = 'single'
+                },
+                disable = {
+                    buftypes = {},
+                    filetypes = { "TelescopePrompt" },
+                },
+            }
+        end
+    }
 
     -- Mac specific
     if vim.fn.has('mac') == 1 then
@@ -284,6 +301,7 @@ return require('packer').startup({ function(use)
         require('packer').sync()
     end
 end,
+
 config = {
     display = {
         open_fn = function()
