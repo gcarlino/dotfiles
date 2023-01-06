@@ -63,12 +63,15 @@ return require('packer').startup({ function(use)
     use({
         'glepnir/lspsaga.nvim',
         branch = 'main',
-        event = 'BufRead'
-    })
-    use({
-        'onsails/lspkind-nvim',
         event = 'BufRead',
+        config = function()
+            require('beps.plugins.lsp')
+        end
     })
+    -- use({
+    --     'onsails/lspkind-nvim',
+    --     event = 'BufRead',
+    -- })
 
     -- Completion
     use {
@@ -91,6 +94,7 @@ return require('packer').startup({ function(use)
             { 'hrsh7th/cmp-nvim-lua', after = 'nvim-cmp' },
             { 'kdheepak/cmp-latex-symbols', after= 'nvim-cmp' },
             { 'rcarriga/cmp-dap', after = 'nvim-cmp' },
+            { 'onsails/lspkind-nvim' }
         },
         config = function ()
             require('beps.plugins.nvim-cmp')

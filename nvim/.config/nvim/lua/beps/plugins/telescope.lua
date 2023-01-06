@@ -118,17 +118,6 @@ vim.keymap.set('n', '<leader>fu',
     { desc = "See undo tree with Telescope" }
 )
 
--- Telescope LSP commands
-vim.keymap.set('n', '<leader>lr',
-    function() builtin.lsp_references() end,
-    { desc = "List LSP references for word under the cursor" }
-)
-
-vim.keymap.set('n', '<leader>ls',
-    function() builtin.lsp_document_symbols() end,
-    { desc = "List LSP references for word under the cursor" }
-)
-
 -- Telescope for git
 vim.keymap.set('n', '<leader>gc',
     function() builtin.git_commits() end,
