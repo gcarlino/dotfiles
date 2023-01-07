@@ -44,7 +44,8 @@ return require('packer').startup({ function(use)
         },
         config = function ()
             require('beps.plugins.treesitter')
-        end
+        end,
+        event = { 'BufRead', 'BufNewFile', 'InsertEnter' },
     })
 
     -- LSP
@@ -63,7 +64,7 @@ return require('packer').startup({ function(use)
     use({
         'glepnir/lspsaga.nvim',
         branch = 'main',
-        event = 'BufRead',
+        event = { 'BufRead', 'BufNewFile' },
         config = function()
             require('beps.plugins.lsp')
         end
@@ -134,7 +135,7 @@ return require('packer').startup({ function(use)
     -- Statusline & tabline
     use({
         'alvarosevilla95/luatab.nvim',
-        event = 'BufEnter',
+        event = { 'BufWinEnter' },
         requires = { 'kyazdani42/nvim-web-devicons' },
         config = function()
             require("luatab").setup({
@@ -146,7 +147,7 @@ return require('packer').startup({ function(use)
 
     use({
         'nvim-lualine/lualine.nvim',
-        event = 'BufEnter',
+        event = { 'BufWinEnter', 'BufEnter' },
         requires = { 'kyazdani42/nvim-web-devicons', opt = true },
         config = function()
             require('beps.plugins.lualine')
@@ -171,7 +172,7 @@ return require('packer').startup({ function(use)
     })
     use({
         'lewis6991/gitsigns.nvim',
-        event = 'BufRead',
+        event = { 'BufRead', 'BufNewFile' },
         config = function ()
             require('beps.plugins.gitsigns')
         end
@@ -226,13 +227,13 @@ return require('packer').startup({ function(use)
                 terminal_colors = false
             })
             vim.cmd.colorscheme('nordfox')
-        end
+        end,
     })
 
     -- Comment
     use({
         'numToStr/Comment.nvim',
-        event = 'BufRead',
+        event = 'InsertEnter',
         config = function()
             require('Comment').setup()
         end
@@ -242,12 +243,12 @@ return require('packer').startup({ function(use)
     -- use 'rcarriga/nvim-notify'
     use({
         'mbbill/undotree',
-        event = 'BufRead',
+        event = 'CursorHold',
         disable = false,
     })
     use({
         'joeytwiddle/sexy_scroller.vim',
-        event = 'BufEnter',
+        event = 'CursorHold',
     })
     use({
         'windwp/nvim-autopairs',
@@ -258,7 +259,7 @@ return require('packer').startup({ function(use)
     })
     use({
         'chentoast/marks.nvim',
-        event = 'BufRead',
+        event = { 'BufRead', 'BufNewFile' },
         config = function()
             require('marks').setup()
         end,
@@ -276,7 +277,7 @@ return require('packer').startup({ function(use)
     })
     use({
         'lukas-reineke/indent-blankline.nvim',
-        event = 'BufRead',
+        event = { 'BufNewFile', 'BufRead' },
         config = function()
             require('indent_blankline').setup()
         end,
@@ -297,7 +298,7 @@ return require('packer').startup({ function(use)
 
     use {
         "folke/which-key.nvim",
-        event = 'BufEnter',
+        event = 'CursorHold',
         config = function()
             require("which-key").setup {
                 window = {
