@@ -65,73 +65,73 @@ local builtin = require('telescope.builtin')
 
 vim.keymap.set('n', '<leader>p',
     function() builtin.commands() end,
-    { desc = "Lists available plugin/user commands and runs them on `<cr>`" }
+    { desc = " lists plugin/commands and runs them on `<cr>`" }
 )
 
 vim.keymap.set('n', '<leader><space>',
     function() builtin.buffers() end,
-    { desc = "Show buffers with Telescope" }
+    { desc = " show buffers" }
 )
 
 vim.keymap.set('n', '<leader>fs',
     function() require('telescope').extensions.file_browser.file_browser() end,
-    { desc = "Telescope file browser" }
+    { desc = " file browser" }
 )
 
 vim.keymap.set('n', '<leader>ff',
     function() builtin.find_files() end,
-    { desc = "Telescope find files" }
+    { desc = " find files" }
 )
 
 vim.keymap.set('n', '<leader>fb',
     function() builtin.current_buffer_fuzzy_find() end,
-    { desc = "Telescope fuzzy find in current buffer" }
+    { desc = " fuzzy find in current buffer" }
 )
 
 vim.keymap.set('n', '<leader>fh',
     function() builtin.help_tags() end,
-    { desc = "Telescope help" }
+    { desc = " find help" }
 )
 
 vim.keymap.set('n', '<leader>fw',
     function() builtin.grep_string() end,
-    { desc = "Telescope searches for the string under your cursor in your current working directory" }
+    { desc = " searches for string under your cursor in your current working directory" }
 )
 
 vim.keymap.set('n', '<leader>fg',
     function() builtin.live_grep() end,
-    { desc = "Search for a string and get results live as you type." }
+    { desc = " search for a string and get results live as you type." }
 )
 
 vim.keymap.set('n', '<leader>fk',
     function() builtin.keymaps() end,
-    { desc = "See keymaps with Telescope" }
+    { desc = " seaarch keymaps" }
 )
 
 vim.keymap.set('n', '<leader>fo',
     function() builtin.oldfiles() end,
-    { desc = "See recently opened/edited files with Telescope" }
+    { desc = " see recently opened/edited files" }
 )
 
 vim.keymap.set('n', '<leader>fu',
     function () require('telescope').extensions.undo.undo() end,
-    { desc = "See undo tree with Telescope" }
+    { desc = " see undo tree" }
 )
 
 -- Telescope for git
 vim.keymap.set('n', '<leader>gc',
     function() builtin.git_commits() end,
-    { desc = "Telescope lists commits for current directory with diff preview" }
+    { desc = " lists commits for current directory with diff preview" }
 )
 
 vim.keymap.set('n', '<leader>gs',
     function() builtin.git_status() end,
-    { desc = "Telescope lists git status for current directory" }
+    { desc = " lists git status for current directory" }
 )
 
 vim.keymap.set('n', '<leader>gb',
     function() builtin.git_bcommits() end,
-    { desc = "Telescope lists commits for current buffer with diff preview" }
+    { desc = " lists commits for current buffer with diff preview" }
 )
 
 -- Search for dotfiles
@@ -143,6 +143,6 @@ vim.keymap.set('n', '<leader>ed',
             layout_strategies = "horizontal",
         }
     end,
-    { desc = "Telescope edit dotfiles" }
+    { desc = " edit dotfiles" }
 )
 
