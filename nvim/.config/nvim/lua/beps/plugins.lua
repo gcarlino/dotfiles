@@ -67,17 +67,15 @@ return require('packer').startup({ function(use)
         event = { 'BufRead', 'BufNewFile' },
         config = function()
             require('beps.plugins.lsp')
-        end
+        end,
+        requires = { 'onsails/lspkind-nvim' }
     })
-    -- use({
-    --     'onsails/lspkind-nvim',
-    --     event = 'BufRead',
-    -- })
 
     -- Completion
     use {
         'hrsh7th/nvim-cmp',
-        event = 'InsertEnter',
+        event = { 'BufRead', 'BufNewFile' },
+        -- event = 'InsertEnter',
         requires = {
             {
                 'L3MON4D3/LuaSnip',
@@ -95,7 +93,6 @@ return require('packer').startup({ function(use)
             { 'hrsh7th/cmp-nvim-lua', after = 'nvim-cmp' },
             { 'kdheepak/cmp-latex-symbols', after= 'nvim-cmp' },
             { 'rcarriga/cmp-dap', after = 'nvim-cmp' },
-            { 'onsails/lspkind-nvim' }
         },
         config = function ()
             require('beps.plugins.nvim-cmp')

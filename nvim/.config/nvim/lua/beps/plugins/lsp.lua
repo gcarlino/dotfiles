@@ -21,13 +21,22 @@ if not status then
 end
 
 -- Lspsaga setup
-saga.init_lsp_saga({
-    border_style = "rounded",
-    show_outline = {
-        win_width = 35,
-        auto_preview = false,
-    }
+saga.setup({
+  symbol_in_winbar = {
+    enable = false,
+    separator = ' ',
+    hide_keyword = true,
+    show_file = true,
+    folder_level = 2,
+  },
 })
+-- saga.init_lsp_saga({
+--     border_style = "rounded",
+--     show_outline = {
+--         win_width = 35,
+--         auto_preview = false,
+--     }
+-- })
 
 -- vim.keymap.set('n', '<leader>di', function() require('telescope.builtin').diagnostics() end,
 --     { desc = "Document diagnostics" })
