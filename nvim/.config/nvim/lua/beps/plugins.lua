@@ -317,7 +317,7 @@ return require('packer').startup({ function(use)
             run = 'make install', })
         use({
             'epwalsh/obsidian.nvim',
-            event = 'InsertEnter',
+            event = 'VimEnter',
             config = function ()
                 require("obsidian").setup({
                     dir = "~/Simularia/Notes",
