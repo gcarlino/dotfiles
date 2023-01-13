@@ -318,6 +318,19 @@ return require('packer').startup({ function(use)
             opt = true,
             -- requires = { 'nvim-telescope/telescope.nvim' },
             run = 'make install', })
+        use({
+            'epwalsh/obsidian.nvim',
+            event = 'InsertEnter',
+            config = function ()
+                require("obsidian").setup({
+                    dir = "~/Simularia/Notes",
+                    completion = {
+                        nvim_cmp = true, -- if using nvim-cmp, otherwise set to false
+                    },
+                    disable_frontmatter = true,
+                })
+            end
+        })
     end
 
     if packer_bootstrap then
