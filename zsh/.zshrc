@@ -84,9 +84,9 @@ export LC_ALL=en_US.UTF-8
 # For a full list of active aliases, run `alias`.
 alias rm='rm -i'
 alias mv='mv -i'
-alias vim='nvim'
+# alias vim='nvim'
 alias view='nvim -R'
-alias vi='nvim'
+# alias vi='nvim'
 alias less='less -FRX'
 if type "lsd" > /dev/null ; then
     alias ls="lsd"
