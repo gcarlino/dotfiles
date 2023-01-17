@@ -1,5 +1,6 @@
 vim.o.tabstop = 2
 vim.o.shiftwidth = 2
+vim.cmd('let fortran_do_enddo=1')
 
 vim.lsp.start({
     name = 'fortls',
