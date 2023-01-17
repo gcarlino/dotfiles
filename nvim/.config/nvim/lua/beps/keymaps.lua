@@ -25,7 +25,7 @@ vim.keymap.set('n', '<C-k>', '<C-w>k', {desc = 'Move to upper split.'})
 vim.keymap.set('n', '<C-l>', '<C-w>l', {desc = 'Move to right split.'})
 
 -- Edit config file
-vim.keymap.set('n', '<leader>v', ':e $MYVIMRC<CR>', { desc = "Edit init.lua" })
+-- vim.keymap.set('n', '<leader>v', ':e $MYVIMRC<CR>', { desc = "Edit init.lua" })
 
 -- No highlight
 vim.keymap.set('n', '<CR>', ':noh<CR>', { desc = "No highlight" })
