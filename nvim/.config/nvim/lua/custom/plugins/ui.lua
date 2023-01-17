@@ -18,11 +18,14 @@ return {
     },
     {
         'lukas-reineke/indent-blankline.nvim',
+        -- event = "VeryLazy",
         event = "BufReadPre",
         config = function()
             require('indent_blankline').setup()
         end,
     },
-    { 'kyazdani42/nvim-web-devicons', lazy = true },
+    {
+        'kyazdani42/nvim-web-devicons',
+        lazy = true
+    },
 }
-

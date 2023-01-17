@@ -1,14 +1,19 @@
 -- Git
 return {
-    { 'tpope/vim-fugitive', },
-    { 'lewis6991/gitsigns.nvim',
+    {
+        'lewis6991/gitsigns.nvim',
+        event = "BufReadPre",
         config = function ()
             require('beps.plugins.gitsigns')
         end
     },
     {
+        'tpope/vim-fugitive',
+        event = "VeryLazy"
+    },
+    {
         'sindrets/diffview.nvim',
-        event = "BufReadPost",
+        event = "VeryLazy",
         config = function ()
             require('beps.plugins.diffview')
         end

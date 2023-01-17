@@ -47,7 +47,7 @@ vim.keymap.set("n", "]q", ":cnext<cr>", { desc = "Next item in quickfix list" })
 vim.keymap.set("n", "[q", ":cprevious<cr>", { desc = "Previous item in quickfix list" })
 
 -- nvim-tree
-vim.keymap.set('n', '<leader>n', ':NvimTreeToggle<CR>', { noremap = true, silent = true, desc = "Toggle nvim-tree." })
+-- vim.keymap.set('n', '<leader>n', ':NvimTreeToggle<CR>', { noremap = true, silent = true, desc = "Toggle nvim-tree." })
 
 -- Allow gf to open non-existent files
 vim.keymap.set('', 'gf', ':edit <cfile><CR>')

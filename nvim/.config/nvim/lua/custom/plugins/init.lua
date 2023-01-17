@@ -3,6 +3,9 @@ return {
 
     {
         'kyazdani42/nvim-tree.lua',
+        keys = {
+            {'<leader>n', ':NvimTreeToggle<CR>', desc = "Toggle nvim-tree" }
+        },
         config = function()
             require('nvim-tree').setup({
                 hijack_netrw = false,
@@ -13,7 +16,6 @@ return {
         end,
     },
 
-    -- R
     {
         'jalvesaq/Nvim-R',
         ft = 'r',
@@ -28,42 +30,53 @@ return {
         end,
     },
 
-
     -- Various
-    { 'mbbill/undotree', },
-    { 'joeytwiddle/sexy_scroller.vim', },
-    { 'windwp/nvim-autopairs',
+    {
+        'mbbill/undotree',
+        event = "VeryLazy"
+    },
+
+    {
+        'joeytwiddle/sexy_scroller.vim',
+        event = "BufReadPre",
+    },
+
+    {
+        'windwp/nvim-autopairs',
+        event = 'VeryLazy',
         config = function()
             require('nvim-autopairs').setup()
         end
     },
+
     {
         'chentoast/marks.nvim',
+        event = 'VeryLazy',
         config = function()
             require('marks').setup()
         end,
-        enable = false
     },
+
     {
         'akinsho/toggleterm.nvim',
+        event = 'VeryLazy',
         config = function()
             require('toggleterm').setup {
                 open_mapping = [[<c-q>]],
             }
         end
     },
+
     {
-        'lukas-reineke/indent-blankline.nvim',
-        config = function()
-            require('indent_blankline').setup()
-        end,
+        'mechatroner/rainbow_csv',
+        event = "VeryLazy",
     },
-    { 'mechatroner/rainbow_csv', },
+
     {
         'kylechui/nvim-surround',
+        event = 'VeryLazy',
         config = function()
             require('nvim-surround').setup()
         end
     },
-
 }

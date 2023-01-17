@@ -7,8 +7,8 @@ return {
             require('beps.plugins.telescope')
         end,
     },
-    { "nvim-telescope/telescope-file-browser.nvim" },
-    { "nvim-telescope/telescope-ui-select.nvim" },
-    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-    { "debugloop/telescope-undo.nvim" },
+    { "nvim-telescope/telescope-file-browser.nvim", lazy = true },
+    { "nvim-telescope/telescope-ui-select.nvim", lazy = true },
+    { "nvim-telescope/telescope-fzf-native.nvim", build = "make", lazy = true },
+    { "debugloop/telescope-undo.nvim", lazy = true, enable = false },
 }
