@@ -15,7 +15,7 @@ return {
     {
         'glepnir/lspsaga.nvim',
         branch = 'main',
-        event = "BufReadPre",
+        event = "BufRead",
         config = function()
             require('beps.plugins.lsp')
         end

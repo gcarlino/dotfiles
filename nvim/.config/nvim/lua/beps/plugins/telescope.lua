@@ -47,6 +47,7 @@ telescope.setup {
                 preview_height = 0.5,
             },
         },
+        dash = { },
         ["ui-select"] = {
             require("telescope.themes").get_dropdown()
         },

@@ -5,7 +5,7 @@ else
         {
             'mrjones2014/dash.nvim',
             build = 'make install',
-            event = "VeryLazy"
+            event = "VeryLazy",
         },
         {
             'epwalsh/obsidian.nvim',
