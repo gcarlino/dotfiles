@@ -80,7 +80,7 @@ vim.keymap.set('n', '<leader>fs',
 )
 
 vim.keymap.set('n', '<leader>ff',
-    function() builtin.find_files() end,
+    function() builtin.find_files({hidden = true}) end,
     { desc = " find files" }
 )
 
