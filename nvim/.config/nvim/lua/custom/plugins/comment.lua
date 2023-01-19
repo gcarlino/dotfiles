@@ -7,4 +7,12 @@ return {
             require('Comment').setup()
         end
     },
+    {
+        "folke/todo-comments.nvim",
+        event = "VeryLazy",
+        config = function()
+            require("todo-comments").setup {
+            }
+        end
+    }
 }
