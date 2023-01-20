@@ -65,7 +65,12 @@ treesitter.setup({
     },
 })
 
--- -- Tree-sitter base folding
+-- Open treesitter playground
+vim.keymap.set('n', '<leader>tp', function()
+vim.treesitter.show_tree({ command = 'botright 60vnew' })
+end, { desc = 'Open treesitter tree for current buffer' })
+
+-- Tree-sitter base folding
 vim.o.foldmethod = 'expr'
 vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
 vim.cmd('set nofoldenable')

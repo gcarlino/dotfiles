@@ -9,5 +9,4 @@ return {
         end,
     },
     { 'nvim-treesitter/nvim-treesitter-textobjects', lazy = true },
-    { 'nvim-treesitter/playground', event = "VeryLazy" },
 }
