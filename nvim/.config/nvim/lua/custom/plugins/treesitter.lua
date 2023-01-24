@@ -7,6 +7,8 @@ return {
         config = function ()
             require('beps.plugins.treesitter')
         end,
+        dependencies = {
+            'nvim-treesitter/nvim-treesitter-textobjects',
+        }
     },
-    { 'nvim-treesitter/nvim-treesitter-textobjects', lazy = true },
 }
