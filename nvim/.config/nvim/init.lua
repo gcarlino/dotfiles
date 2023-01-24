@@ -1,6 +1,4 @@
 require("beps.options")
-require("beps.disable_builtin")
-require("beps.keymaps")
 
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -18,6 +16,8 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup("custom.plugins", {})
 
+require("beps.disable_builtin")
+require("beps.keymaps")
 if vim.fn.has("mac") == 1 then
     require("beps.mac")
 end
