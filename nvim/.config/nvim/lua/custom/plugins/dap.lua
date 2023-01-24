@@ -5,10 +5,12 @@ return {
         -- event = "BufReadPre",
         config = function ()
             require('beps.plugins.dap')
-        end
+        end,
+        dependencies = {
+            'rcarriga/nvim-dap-ui',
+            'mfussenegger/nvim-dap-python',
+            'theHamsta/nvim-dap-virtual-text' ,
+            'nvim-telescope/telescope-dap.nvim' ,
+        }
     },
-    { 'rcarriga/nvim-dap-ui', event = "VeryLazy"},
-    { 'mfussenegger/nvim-dap-python', event = "VeryLazy"},
-    { 'theHamsta/nvim-dap-virtual-text', event = "VeryLazy" },
-    { 'nvim-telescope/telescope-dap.nvim', event = "VeryLazy" },
 }
