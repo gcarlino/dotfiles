@@ -30,6 +30,8 @@ return {
         end,
     },
 
+    { 'lervag/vimtex' },
+
     -- Various
     {
         'mbbill/undotree',
