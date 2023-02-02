@@ -16,18 +16,16 @@ telescope.setup {
         layout_strategies = 'flex',
         layout_config = {
             prompt_position = 'top',
+            preview_width = 0.5
         },
     },
     pickers = {
-        -- find_files = {
-        --     theme = "ivy",
-        -- },
         buffers = {
             -- ignore_current_buffer = true,
             sort_mru = true,
             mappings = {
-                i = { ["<c-d>"] = require("telescope.actions").delete_buffer, },
-                n = { ["<c-d>"] = require("telescope.actions").delete_buffer, },
+                i = { ["<c-b>"] = require("telescope.actions").delete_buffer, },
+                n = { ["<c-b>"] = require("telescope.actions").delete_buffer, },
             },
         },
     },
@@ -36,16 +34,9 @@ telescope.setup {
     },
     extensions = {
         file_browser = {
+            hijack_netrw = true,
             respect_gitignore = false,
             hidden = true,
-        },
-        undo = {
-            use_delta = true,
-            side_by_side = true,
-            layout_strategy = "vertical",
-            layout_config = {
-                preview_height = 0.5,
-            },
         },
         dash = { },
         ["ui-select"] = {
@@ -58,19 +49,16 @@ telescope.setup {
 require('telescope').load_extension 'file_browser'
 require('telescope').load_extension('fzf')
 require("telescope").load_extension("ui-select")
--- require('telescope').load_extension('dap')
-require('telescope').load_extension('undo')
+
 
 -- Keymaps
 local builtin = require('telescope.builtin')
 
-vim.keymap.set('n', '<leader>p',
-    function() builtin.commands() end,
+vim.keymap.set('n', '<leader>p', function() builtin.commands() end,
     { desc = " lists plugin/commands and runs them on `<cr>`" }
 )
 
-vim.keymap.set('n', '<leader><space>',
-    function() builtin.buffers() end,
+vim.keymap.set('n', '<leader><space>', function() builtin.buffers() end,
     { desc = " show buffers" }
 )
 
@@ -79,38 +67,31 @@ vim.keymap.set('n', '<leader>fs',
     { desc = " file browser" }
 )
 
-vim.keymap.set('n', '<leader>ff',
-    function() builtin.find_files({hidden = true}) end,
+vim.keymap.set('n', '<leader>ff', function() builtin.find_files({hidden = true}) end,
     { desc = " find files" }
 )
 
-vim.keymap.set('n', '<leader>fb',
-    function() builtin.current_buffer_fuzzy_find() end,
+vim.keymap.set('n', '<leader>fb', function() builtin.current_buffer_fuzzy_find() end,
     { desc = " fuzzy find in current buffer" }
 )
 
-vim.keymap.set('n', '<leader>fh',
-    function() builtin.help_tags() end,
+vim.keymap.set('n', '<leader>fh', function() builtin.help_tags() end,
     { desc = " find help" }
 )
 
-vim.keymap.set('n', '<leader>fw',
-    function() builtin.grep_string() end,
+vim.keymap.set('n', '<leader>fw', function() builtin.grep_string() end,
     { desc = " searches for string under your cursor in your current working directory" }
 )
 
-vim.keymap.set('n', '<leader>fg',
-    function() builtin.live_grep() end,
+vim.keymap.set('n', '<leader>fg', function() builtin.live_grep() end,
     { desc = " search for a string and get results live as you type." }
 )
 
-vim.keymap.set('n', '<leader>fk',
-    function() builtin.keymaps() end,
+vim.keymap.set('n', '<leader>fk', function() builtin.keymaps() end,
     { desc = " seaarch keymaps" }
 )
 
-vim.keymap.set('n', '<leader>fo',
-    function() builtin.oldfiles() end,
+vim.keymap.set('n', '<leader>fo', function() builtin.oldfiles() end,
     { desc = " see recently opened/edited files" }
 )
 
@@ -120,18 +101,15 @@ vim.keymap.set('n', '<leader>fu',
 )
 
 -- Telescope for git
-vim.keymap.set('n', '<leader>gc',
-    function() builtin.git_commits() end,
+vim.keymap.set('n', '<leader>gc', function() builtin.git_commits() end,
     { desc = " lists commits for current directory with diff preview" }
 )
 
-vim.keymap.set('n', '<leader>gs',
-    function() builtin.git_status() end,
+vim.keymap.set('n', '<leader>gs', function() builtin.git_status() end,
     { desc = " lists git status for current directory" }
 )
 
-vim.keymap.set('n', '<leader>gb',
-    function() builtin.git_bcommits() end,
+vim.keymap.set('n', '<leader>gb', function() builtin.git_bcommits() end,
     { desc = " lists commits for current buffer with diff preview" }
 )
 
