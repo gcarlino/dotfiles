@@ -34,6 +34,7 @@ opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 opt.undofile = true
 opt.updatetime = 200
 opt.wrap = false
+opt.colorcolumn = '80'
 
 -- Highlight on yank
 local yankHighlightGroup = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
