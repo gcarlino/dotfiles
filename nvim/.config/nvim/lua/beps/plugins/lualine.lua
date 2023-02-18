@@ -1,7 +1,3 @@
--- local colors = require('onedark.palette')['dark']
-local colors = require('nightfox.palette').load('nordfox')
-
-
 local filename_symbols = { modified = ' ●', alternate_file = ' #', directory = ' ' }
 
 
@@ -146,7 +142,7 @@ require 'lualine'.setup {
                 getLSP,
                 icon = ' ',
                 color = {
-                    fg = colors.pink.dim,
+                    -- fg = colors.pink.dim,
                     -- gui = 'bold',
                 },
                 fmt = trunc(100, 4, 90, true)
