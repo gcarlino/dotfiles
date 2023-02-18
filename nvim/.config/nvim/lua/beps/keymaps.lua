@@ -72,10 +72,21 @@ vim.api.nvim_set_keymap("n", "<leader>b", "", {
     callback = function()
         local _background = vim.api.nvim_get_option("background")
         if (_background == "light") then
-            vim.cmd('colorscheme nordfox')
+
+            -- If colorscheme is nightfox (catpuccin is automatic)
+            local status = pcall(require, 'nightfox')
+            if status then
+                vim.cmd('colorscheme nordfox')
+            end
+
             vim.api.nvim_set_option('background', 'dark')
         else
-            vim.cmd('colorscheme dayfox')
+            -- If colorscheme is nightfox (catpuccin is automatic)
+            local status = pcall(require, 'nightfox')
+            if status then
+                vim.cmd('colorscheme dayfox')
+            end
+
             vim.api.nvim_set_option('background', 'light')
         end
     end,
