@@ -72,6 +72,7 @@ cmp.setup({
         { name = "latex_symbols" },
         { name = "dap" },
         { name = "buffer", keyword_length = 3 }
+        -- TODO: ADD nvim-cmp-r for R
     }),
 
     formatting = {
