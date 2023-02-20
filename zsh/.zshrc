@@ -104,7 +104,8 @@ alias tree='tree -C'
 alias docker-clean-images='docker images | grep none | awk "{print \$3}" | xargs docker rmi'
 alias docker-clean-containers='docker ps -a | grep Exited | awk "{print \$1}" | xargs docker rm'
 
-
+# Weather in Torino
+alias weather='curl wttr.in/Torino'
 
 # System dependent PATH
 if [[ $OS == "Darwin" ]] {
