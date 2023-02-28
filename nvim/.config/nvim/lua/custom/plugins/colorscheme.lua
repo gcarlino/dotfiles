@@ -3,7 +3,7 @@ return {
         'EdenEast/nightfox.nvim',
         event = "VimEnter",
         priority = 1000,
-        enabled = false,
+        enabled = true,
         config = function()
             require('nightfox').setup({
                 terminal_colors = false
@@ -15,7 +15,7 @@ return {
         "catppuccin/nvim",
         name = "catppuccin",
         priority = 1000,
-        enabled = true,
+        enabled = false,
         config = function ()
             require('catppuccin').setup({
                 flavour = "frappe",

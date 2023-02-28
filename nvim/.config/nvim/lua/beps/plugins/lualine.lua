@@ -125,15 +125,18 @@ require 'lualine'.setup {
                 colored = false,
                 padding = { left = 1, right = 0 },
                 -- color = {
-                --     fg = colors.pink.dim,
+                --     fg = 'pink',
                 -- },
             },
             {
                 'filename',
                 file_status = true,
                 path = 1,
-                shorting_target = 30,
-                color = { gui = 'italic' },
+                shorting_target = 50,
+                color = {
+                    gui = 'italic',
+                    -- fg = 'pink'
+                },
                 symbols = filename_symbols,
             }
         },
@@ -142,6 +145,8 @@ require 'lualine'.setup {
                 getLSP,
                 icon = ' ',
                 color = {
+                    -- fg = 'pink',
+                    gui = 'italic',
                     -- fg = colors.pink.dim,
                     -- gui = 'bold',
                 },
