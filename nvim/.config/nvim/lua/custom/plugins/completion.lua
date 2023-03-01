@@ -12,6 +12,7 @@ return {
             { 'hrsh7th/cmp-cmdline' },
             { 'hrsh7th/cmp-nvim-lsp'  },
             { 'hrsh7th/cmp-nvim-lua' },
+            { 'jalvesaq/cmp-nvim-r' },
             { 'hrsh7th/cmp-nvim-lsp-signature-help' },
             "saadparwaiz1/cmp_luasnip",
             'hrsh7th/cmp-buffer',

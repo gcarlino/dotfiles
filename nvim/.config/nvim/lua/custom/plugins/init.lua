@@ -24,6 +24,14 @@ return {
                 let R_assign_map = '<M-->'
                 let rout_follow_colorscheme = 1
                 let r_syntax_folding = 1
+
+                " For radian
+                let R_app = "radian"
+                let R_cmd = "R"
+                let R_hl_term = 0
+                " let R_args = []  " if you had set any
+                let R_bracketed_paste = 1
+
                 set nofoldenable
                 autocmd VimLeave * if exists("g:SendCmdToR") && string(g:SendCmdToR) != "function('SendCmdToR_fake')" | call RQuit("nosave") | endif
             ]])
