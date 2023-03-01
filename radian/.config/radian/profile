@@ -1,0 +1,11 @@
+options(radian.editing_mode = "vi")
+
+# highlight matching bracket
+options(radian.highlight_matching_bracket = TRUE)
+
+# allows user defined shortcuts, these keys should be escaped when send through the terminal.
+# In the following example, `esc` + `-` sends `<-` and `esc` + `m` sends `%>%`.
+options(radian.escape_key_map = list(
+    list(key = "-", value = " <- "),
+    list(key = "m", value = " %>% ")
+))
