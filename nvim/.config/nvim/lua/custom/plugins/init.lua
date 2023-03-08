@@ -29,7 +29,7 @@ return {
                 let R_app = "radian"
                 let R_cmd = "R"
                 let R_hl_term = 0
-                " let R_args = []  " if you had set any
+                let R_args = ['--no-save']
                 let R_bracketed_paste = 1
 
                 set nofoldenable

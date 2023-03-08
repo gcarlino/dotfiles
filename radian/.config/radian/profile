@@ -1,4 +1,5 @@
 options(radian.editing_mode = "vi")
+options(radian.emacs_bindings_in_vi_insert_mode = TRUE)
 
 # highlight matching bracket
 options(radian.highlight_matching_bracket = TRUE)
