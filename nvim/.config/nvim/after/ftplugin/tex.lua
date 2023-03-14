@@ -1,3 +1,5 @@
+vim.opt.spell = true
+
 vim.lsp.start({
     name = 'texlab',
     cmd = { 'texlab' },

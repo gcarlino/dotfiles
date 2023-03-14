@@ -37,7 +37,7 @@ opt.colorcolumn = '80'
 
 -- Enable spell check
 opt.spelllang = { 'en_us', 'it' } -- Spellcheck languages
-opt.spell = true
+-- opt.spell = true
 
 -- Highlight on yank
 local yankHighlightGroup = vim.api.nvim_create_augroup("YankHighlight", { clear = true })

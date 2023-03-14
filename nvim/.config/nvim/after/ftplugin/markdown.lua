@@ -1,4 +1,5 @@
 vim.opt.wrap = true
+vim.opt.spell = true
 -- Highlight syntax inside markdown
 vim.g.markdown_fenced_languages = { 'html', 'python', 'vim', 'r', 'sh' }
 
