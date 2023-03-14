@@ -18,6 +18,11 @@ return {
         event = "BufRead",
         config = function()
             require('beps.plugins.lsp')
-        end
+        end,
+        dependencies = {
+            'nvim-tree/nvim-web-devicons',
+            'nvim-treesitter/nvim-treesitter',
+        }
+
     },
 }
