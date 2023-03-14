@@ -95,11 +95,6 @@ vim.keymap.set('n', '<leader>fo', function() builtin.oldfiles() end,
     { desc = " see recently opened/edited files" }
 )
 
-vim.keymap.set('n', '<leader>fu',
-    function () require('telescope').extensions.undo.undo() end,
-    { desc = " see undo tree" }
-)
-
 -- Telescope for git
 vim.keymap.set('n', '<leader>gc', function() builtin.git_commits() end,
     { desc = " lists commits for current directory with diff preview" }
