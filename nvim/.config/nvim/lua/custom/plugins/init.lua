@@ -3,6 +3,7 @@ return {
 
     {
         'kyazdani42/nvim-tree.lua',
+        cmd = 'NvimTreeToggle',
         keys = {
             {'<leader>n', ':NvimTreeToggle<CR>', desc = "Toggle nvim-tree" }
         },
@@ -43,28 +44,15 @@ return {
     -- Various
     {
         'mbbill/undotree',
-        event = "VeryLazy"
-    },
-
-    {
-        'joeytwiddle/sexy_scroller.vim',
-        event = "BufReadPre",
+        keys = { {"<leader>u", vim.cmd.UndotreeToggle, desc = "Toggle Undotree"}}
     },
 
     {
         'windwp/nvim-autopairs',
-        event = 'VeryLazy',
+        lazy = true,
         config = function()
             require('nvim-autopairs').setup()
         end
-    },
-
-    {
-        'chentoast/marks.nvim',
-        event = 'VeryLazy',
-        config = function()
-            require('marks').setup()
-        end,
     },
 
     {
@@ -79,12 +67,12 @@ return {
 
     {
         'mechatroner/rainbow_csv',
-        event = "VeryLazy",
+        lazy = true,
     },
 
     {
         'kylechui/nvim-surround',
-        event = 'VeryLazy',
+        lazy = true,
         config = function()
             require('nvim-surround').setup()
         end

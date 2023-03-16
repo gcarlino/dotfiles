@@ -1,7 +1,8 @@
 return {
     {
         'EdenEast/nightfox.nvim',
-        event = "VimEnter",
+        -- event = "VimEnter",
+        lazy = false,
         priority = 1000,
         enabled = true,
         config = function()

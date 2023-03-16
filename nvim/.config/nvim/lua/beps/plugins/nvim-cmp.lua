@@ -3,8 +3,8 @@ local status, cmp = pcall(require, 'cmp')
 if not status then
     return
 end
-local status, luasnip = pcall(require, 'luasnip')
-if not status then
+local lstatus, luasnip = pcall(require, 'luasnip')
+if not lstatus then
     return
 end
 
@@ -68,7 +68,7 @@ cmp.setup({
         { name = "nvim_lua" },
         { name = "luasnip" },
         { name = "path" },
-        -- { name = "cmdline" },
+        { name = "cmdline" },
         { name = "latex_symbols" },
         { name = "dap" },
         { name = "buffer", keyword_length = 3 },
@@ -80,15 +80,6 @@ cmp.setup({
             mode = 'symbol_text',
             maxwidth = 50,
             ellipsis_char = '...',
-            -- menu = {
-            --     buffer        = "[buf]",
-            --     nvim_lsp      = "[LSP]",
-            --     nvim_lua      = "[lua]",
-            --     path          = "[path]",
-            --     luasnip       = "[snip]",
-                -- latex_symbols = "[Latex]",
-            --     cmdline       = "[cmd]",
-            -- },
         }),
     },
 

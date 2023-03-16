@@ -3,8 +3,8 @@ if not status then
     return
 end
 
-local status, dapui = pcall(require, 'dapui')
-if not status then
+local dstatus, dapui = pcall(require, 'dapui')
+if not dstatus then
     return
 end
 
@@ -46,6 +46,10 @@ end
 dapui.setup()
 
 require('telescope').load_extension('dap')
+local tstatus, telescope = pcall(require, 'telescope')
+if tstatus then
+    telescope.load_extension('dap')
+end
 
 -- Breakpoint symbols
 vim.fn.sign_define('DapBreakpoint', { text = '🔴', texthl = '', linehl = '', numhl = '' })

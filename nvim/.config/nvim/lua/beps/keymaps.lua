@@ -66,7 +66,7 @@ function _G.set_terminal_keymaps()
 end
 vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
 
--- Toggle backgournd color
+-- Toggle backgournd color TODO: move to colorscheme configuration
 vim.api.nvim_set_keymap("n", "<leader>b", "", {
     noremap = true,
     callback = function()
@@ -93,6 +93,3 @@ vim.api.nvim_set_keymap("n", "<leader>b", "", {
     desc = "Toggle background color"
 })
 
-vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle,
-    { desc = "Toggle Undotree" }
-)

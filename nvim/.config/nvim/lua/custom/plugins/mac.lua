@@ -5,11 +5,13 @@ else
         {
             'mrjones2014/dash.nvim',
             build = 'make install',
-            event = "VeryLazy",
+            lazy = true,
+            -- event = "VeryLazy",
         },
         {
             'epwalsh/obsidian.nvim',
-            event = 'VeryLazy',
+            lazy = true,
+            -- event = 'VeryLazy',
             config = function ()
                 require("obsidian").setup({
                     dir = "~/Simularia/Notes",

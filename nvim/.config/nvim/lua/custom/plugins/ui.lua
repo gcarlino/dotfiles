@@ -1,4 +1,5 @@
 return {
+
     {
         'nvim-lualine/lualine.nvim',
         event = "VeryLazy",
@@ -6,6 +7,7 @@ return {
             require('beps.plugins.lualine')
         end
     },
+
     {
         'alvarosevilla95/luatab.nvim',
         event = "VeryLazy",
@@ -16,9 +18,10 @@ return {
             })
         end
     },
+
     {
         'kevinhwang91/nvim-ufo',
-        event = "BufRead",
+        event = "VeryLazy",
         dependencies = {
             { 'kevinhwang91/promise-async' },
             {
@@ -53,21 +56,40 @@ return {
             require("ufo").setup()
         end
     },
+
     {
         'lukas-reineke/indent-blankline.nvim',
-        event = "VeryLazy",
-        -- event = "BufReadPre",
+        event = { "BufReadPost", "BufNewFile" },
         config = function()
             require('indent_blankline').setup({
                 show_current_context = true,
             })
         end,
     },
+
     {
         'lukas-reineke/virt-column.nvim',
-        event = "VeryLazy",
+        event = { "BufReadPost", "BufNewFile" },
         config = function ()
             require('virt-column').setup({})
         end
-    }
+    },
+
+    {
+        'nvim-tree/nvim-web-devicons',
+        lazy = true,
+    },
+
+    {
+        'joeytwiddle/sexy_scroller.vim',
+        event = { "BufReadPost", "BufNewFile" },
+    },
+
+    {
+        'chentoast/marks.nvim',
+        event = { "BufReadPost", "BufNewFile" },
+        config = function()
+            require('marks').setup()
+        end,
+    },
 }

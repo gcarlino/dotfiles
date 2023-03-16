@@ -14,16 +14,19 @@ return {
             { 'hrsh7th/cmp-nvim-lua' },
             { 'jalvesaq/cmp-nvim-r' },
             { 'hrsh7th/cmp-nvim-lsp-signature-help' },
-            "saadparwaiz1/cmp_luasnip",
-            'hrsh7th/cmp-buffer',
-            'rcarriga/cmp-dap',
-            'kdheepak/cmp-latex-symbols',
+            { 'saadparwaiz1/cmp_luasnip' },
+            { 'hrsh7th/cmp-buffer' },
+            { 'rcarriga/cmp-dap' },
+            { 'kdheepak/cmp-latex-symbols' },
+            { 'onsails/lspkind-nvim' },
         }
     },
+
     {
         "saadparwaiz1/cmp_luasnip",
         ft = "lua",
         dependencies = { "L3MON4D3/LuaSnip" }
     },
-    { 'onsails/lspkind-nvim', lazy = true },
+
+    { 'L3MON4D3/LuaSnip', lazy = true }
 }
