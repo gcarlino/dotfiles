@@ -44,12 +44,13 @@ return {
     -- Various
     {
         'mbbill/undotree',
+        event = { "BufReadPost" },
         keys = { {"<leader>u", vim.cmd.UndotreeToggle, desc = "Toggle Undotree"}}
     },
 
     {
         'windwp/nvim-autopairs',
-        lazy = true,
+        event = { "BufReadPost", "BufNewFile" },
         config = function()
             require('nvim-autopairs').setup()
         end
@@ -67,14 +68,14 @@ return {
 
     {
         'mechatroner/rainbow_csv',
-        lazy = true,
+        event = 'VeryLazy'
     },
 
     {
         'kylechui/nvim-surround',
-        lazy = true,
+        event = "VeryLazy",
         config = function()
-            require('nvim-surround').setup()
+            require('nvim-surround').setup({})
         end
     },
 }
