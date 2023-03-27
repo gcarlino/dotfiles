@@ -16,6 +16,14 @@ return {
     },
 
     {
+        'f-person/git-blame.nvim',
+        cmd = 'GitBlameToggle',
+        keys = {
+            {'<leader>gt', ':GitBlameToggle<CR>', desc = "Toggle git blame."}
+        }
+    },
+
+    {
         'sindrets/diffview.nvim',
         keys = {
             { '<leader>vo', ':DiffviewOpen<CR>', desc = "Open Diffview tab."},
@@ -35,6 +43,9 @@ return {
                 },
             })
             vim.opt.fillchars = vim.opt.fillchars + 'diff:╱'
-        end
+        end,
+        dependencies = {
+            'nvim-lua/plenary.nvim'
+        }
     }
 }
