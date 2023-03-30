@@ -5,7 +5,10 @@ return {
         event = "VeryLazy",
         config = function()
             require('beps.plugins.lualine')
-        end
+        end,
+        dependencies = {
+            'nvim-tree/nvim-web-devicons'
+        }
     },
 
     {
