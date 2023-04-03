@@ -18,9 +18,6 @@ return {
         config = function()
             require('beps.plugins.lsp')
         end,
-        -- dependencies = {
-        -- }
-        --
     },
 
     {
