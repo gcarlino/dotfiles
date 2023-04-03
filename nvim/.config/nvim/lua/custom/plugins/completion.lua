@@ -3,7 +3,7 @@ return {
     {
         "hrsh7th/nvim-cmp",
         version = false,
-        event = { "InsertEnter", "CmdlineEnter"},
+        event = { 'InsertEnter', 'CmdlineEnter'},
         config = function ()
             require('beps.plugins.nvim-cmp')
         end,
@@ -14,7 +14,7 @@ return {
 
     {
         'hrsh7th/cmp-cmdline',
-        event = 'InsertEnter',
+        event = { 'CmdlineEnter' },
         dependencies = 'nvim-cmp'
     },
 
@@ -66,7 +66,7 @@ return {
     },
 
     {
-        -- TODO:: fix event
+        -- TODO;; fix event
         'rcarriga/cmp-dap',
         event = { 'CmdlineEnter', 'InsertEnter'},
         dependencies = 'hrsh7th/nvim-cmp'
