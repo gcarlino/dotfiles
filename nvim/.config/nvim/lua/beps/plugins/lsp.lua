@@ -15,37 +15,6 @@ for type, icon in pairs(signs) do
     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
--- local status, saga = pcall(require, 'lspsaga')
--- if not status then
---     return
--- end
---
--- -- Lspsaga setup
--- saga.setup({
---   symbol_in_winbar = {
---     enable = false,
---     separator = ' ',
---     hide_keyword = true,
---     show_file = true,
---     folder_level = 2,
---   },
--- })
--- saga.init_lsp_saga({
---     border_style = "rounded",
---     show_outline = {
---         win_width = 35,
---         auto_preview = false,
---     }
--- })
-
--- vim.keymap.set('n', '<leader>di', function() require('telescope.builtin').diagnostics() end,
---     { desc = "Document diagnostics" })
--- vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, keymapOpts)
--- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = "Goto previous diagnostic" })
--- vim.keymap.aset('n', ']d', vim.diagnostic.goto_next, { desc = "Goto next diagnostic" })
--- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist,
---     { desc = "Add buffer diagnostic to the location list" })
-
 local lstatus, lspconfig = pcall(require, 'lspconfig')
 if not lstatus then
     return
