@@ -6,6 +6,7 @@ vim.diagnostic.config({
     severity_sort = true,
     float = {
         border = 'rounded',
+        source = 'always'
     }
 })
 
@@ -19,6 +20,14 @@ local lstatus, lspconfig = pcall(require, 'lspconfig')
 if not lstatus then
     return
 end
+
+local lsp_defaults = lspconfig.util.default_config
+
+lsp_defaults.capabilities = vim.tbl_deep_extend(
+    'force',
+    lsp_defaults.capabilities,
+    require('cmp_nvim_lsp').default_capabilities()
+)
 
 lspconfig.pylsp.setup({})
 lspconfig.lua_ls.setup({
@@ -67,11 +76,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('UserLspConfig', {}),
     callback = function(ev)
         -- Enable completion triggered by <c-x><c-o>
-        vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+        -- vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
         -- Buffer local mappings.
         -- See `:help vim.lsp.*` for documentation on any of the below functions
-        -- local opts = { buffer = ev.buf }
         vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, optsDesc(ev, 'LSP goto declaration'))
         vim.keymap.set('n', 'gd', vim.lsp.buf.definition, optsDesc(ev, 'LSP goto definition'))
         vim.keymap.set('n', 'K', vim.lsp.buf.hover, optsDesc(ev, 'LSP show hover information.'))
@@ -80,41 +88,41 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, optsDesc(ev, 'LSP add workspace folder'))
         vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, optsDesc(ev, 'LSP remove workspace folder'))
         vim.keymap.set('n', '<space>wl',
-        function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
-        optsDesc(ev, 'LSP list workspace folders'))
+            function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
+            optsDesc(ev, 'LSP list workspace folders'))
         vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, optsDesc(ev, 'LSP type definition.'))
         vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, optsDesc(ev, 'LSP buffer rename'))
         vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, optsDesc(ev, 'LSP buffer code action.'))
         vim.keymap.set('n', 'gr', vim.lsp.buf.references, optsDesc(ev, 'LSP references.'))
         vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end,
-        optsDesc(ev, 'LSP buffer format'))
+            optsDesc(ev, 'LSP buffer format'))
 
         -- Telescope LSP commands
         vim.keymap.set('n', '<leader>lt', function() require('telescope.builtin').diagnostics() end,
-            optsDesc(ev, 'LSP document diagnostics ')
-        )
+            optsDesc(ev, 'LSP document diagnostics '))
         vim.keymap.set('n', '<leader>lr',
             function() require('telescope.builtin').lsp_references() end,
-            { desc = 'LSP refs for word under cursor ' }
-        )
+            { desc = 'LSP refs for word under cursor ' })
         vim.keymap.set('n', '<leader>ls',
             function() require('telescope.builtin').lsp_document_symbols() end,
-            { desc = 'LSP document symbols ' }
-        )
+            { desc = 'LSP document symbols ' })
 
         -- additional capabilities
-        local capabilities = vim.lsp.protocol.make_client_capabilities()
+        -- local capabilities = vim.lsp.protocol.make_client_capabilities()
 
-        -- nvim-cmp supports additional completion capabilities
-        -- capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-        capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+        -- -- nvim-cmp supports additional completion capabilities
+        -- -- capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+        -- local cstatus, cmp = pcall(require, 'cmp_nvim_lsp')
+        -- if cstatus then
+        --     capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+        -- end
     end,
     -- callback = function(args)
     --
     --     -- additional capabilities
     --     local capabilities = vim.lsp.protocol.make_client_capabilities()
     --
-    --     -- nvim-cmp supports additional completion capabilities
+    --     -- nvim-cdmp supports additional completion capabilities
     --     -- capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
     --     capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
     --
