@@ -7,14 +7,20 @@ return {
         enabled = true,
         config = function()
             require('nightfox').setup({
-                terminal_colors = false
+                options = {
+                    terminal_colors = false,
+                    styles = {
+                        comments = 'italic',
+                    }
+                }
             })
             vim.cmd.colorscheme('nordfox')
         end,
     },
+
     {
-        "catppuccin/nvim",
-        name = "catppuccin",
+        'catppuccin/nvim',
+        name = 'catppuccin',
         priority = 1000,
         enabled = false,
         config = function ()
@@ -26,6 +32,25 @@ return {
                 },
             })
             vim.cmd.colorscheme('catppuccin')
+        end
+    },
+
+    {
+        'folke/tokyonight.nvim',
+        lazy = false,
+        priority = 1000,
+        enabled = false,
+        config = function ()
+            require('tokyonight').setup({
+                style = 'storm',
+                light_style = 'day',
+                styles = {
+                    floats = 'dark'
+                },
+                sidebars = { "qf", "help" },
+                lualine_bold = false,
+            })
+            vim.cmd.colorscheme('tokyonight')
         end
     }
 }
