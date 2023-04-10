@@ -4,7 +4,7 @@ return {
         -- event = "VimEnter",
         lazy = false,
         priority = 1000,
-        enabled = true,
+        enabled = false,
         config = function()
             require('nightfox').setup({
                 options = {
@@ -22,7 +22,7 @@ return {
         'catppuccin/nvim',
         name = 'catppuccin',
         priority = 1000,
-        enabled = false,
+        enabled = true,
         config = function ()
             require('catppuccin').setup({
                 flavour = "frappe",
