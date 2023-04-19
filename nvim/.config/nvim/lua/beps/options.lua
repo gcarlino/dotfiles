@@ -35,11 +35,8 @@ opt.updatetime = 200
 opt.wrap = false
 opt.colorcolumn = '80'
 
--- Enable spell check
--- opt.spell = true
--- disable spell checking in terminal
+-- Spell check is enabled by filet type
 opt.spelllang = { 'en_us', 'it' } -- Spellcheck languages
-vim.api.nvim_create_autocmd("TermOpen", { pattern = "term://*", command = "setlocal nospell" })
 
 -- Highlight on yank
 local yankHighlightGroup = vim.api.nvim_create_augroup("YankHighlight", { clear = true })

@@ -63,6 +63,11 @@ return {
             require('toggleterm').setup {
                 open_mapping = [[<c-q>]],
             }
+            -- disable spell checking in terminal
+            vim.api.nvim_create_autocmd("TermOpen", {
+                pattern = "term://*",
+                callback = function () vim.o.spell = false end
+            })
         end
     },
 
