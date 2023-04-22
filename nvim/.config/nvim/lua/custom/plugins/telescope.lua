@@ -1,6 +1,6 @@
 return {
     {
-        'nvim-telescope/telescope.nvim',
+        'nvim-telescope/telescope.nvim', tag = '0.1.1',
         -- cmd = 'Telescope',
         event = "VeryLazy",
         config = function()
