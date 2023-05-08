@@ -31,16 +31,17 @@ return {
                 'luukvbaal/statuscol.nvim',
                 config = function()
                     local builtin = require("statuscol.builtin")
-                    require("statuscol").setup(
-                    {
+                    require("statuscol").setup({
                         relculright = true,
                         segments = {
-                            {text = {builtin.foldfunc}, click = "v:lua.ScFa"},
                             {text = {"%s"}, click = "v:lua.ScSa"},
-                            {text = {builtin.lnumfunc, " "}, click = "v:lua.ScLa"}
+                            {text = {builtin.lnumfunc, " "}, click = "v:lua.ScLa"},
+                            {
+                                text = {builtin.foldfunc, " "},
+                                click = "v:lua.ScFa",
+                            }
                         }
-                    }
-                    )
+                    })
                 end
             },
         },
@@ -56,7 +57,12 @@ return {
             vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
             vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
 
-            require("ufo").setup()
+            -- Treesitter as the main provider
+            require("ufo").setup({
+                provider_selector = function (bufnr, filetype, buftype)
+                    return {'treesitter', 'indent'}
+                end
+            })
         end
     },
 

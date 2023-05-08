@@ -65,10 +65,12 @@ treesitter.setup({
     },
 })
 
--- Tree-sitter base folding
-vim.o.foldmethod = 'expr'
-vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
-vim.cmd('set nofoldenable')
+-- Treesitter folding configured in ufo plugin
+
+-- -- Tree-sitter base folding
+-- vim.o.foldmethod = 'expr'
+-- vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
+-- vim.cmd('set nofoldenable')
 --
 -- -- Open all folds
 -- vim.api.nvim_create_autocmd(
