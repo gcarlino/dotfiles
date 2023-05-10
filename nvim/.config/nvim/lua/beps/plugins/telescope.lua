@@ -28,6 +28,9 @@ telescope.setup {
                 n = { ["<c-b>"] = require("telescope.actions").delete_buffer, },
             },
         },
+        find_files = {
+			find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
+        },
     },
     preview = {
         hide_on_startup = false
@@ -67,7 +70,7 @@ vim.keymap.set('n', '<leader>fs',
     { desc = " file browser" }
 )
 
-vim.keymap.set('n', '<leader>ff', function() builtin.find_files({hidden = true}) end,
+vim.keymap.set('n', '<leader>ff', function() builtin.find_files() end,
     { desc = " find files" }
 )
 

@@ -33,9 +33,11 @@
   "nvim-tree.lua": { "branch": "master", "commit": "270c95556cad96d18ca547d86ae65927334b108b" },
   "nvim-treesitter": { "branch": "master", "commit": "78b3a8229356e7d7eb62d1da4fe723dcff16076e" },
   "nvim-treesitter-textobjects": { "branch": "master", "commit": "35a60f093fa15a303874975f963428a5cd24e4a0" },
+  "nvim-ufo": { "branch": "main", "commit": "45aede6f5c4981156df3ddeeae01c4290e43e104" },
   "nvim-web-devicons": { "branch": "master", "commit": "986875b7364095d6535e28bd4aac3a9357e91bbe" },
   "obsidian.nvim": { "branch": "main", "commit": "0418505ff7d1e06460450a02b9209d03f4c2a50d" },
   "plenary.nvim": { "branch": "master", "commit": "9ac3e9541bbabd9d73663d757e4fe48a675bb054" },
+  "promise-async": { "branch": "main", "commit": "e94f35161b8c5d4a4ca3b6ff93dd073eb9214c0e" },
   "rainbow_csv": { "branch": "master", "commit": "7453a3f9679f0c753ec9d77f9ea8588778f35aeb" },
   "sexy_scroller.vim": { "branch": "master", "commit": "4f6780102ac74e3473e9f6f3d48b6041975e4300" },
   "statuscol.nvim": { "branch": "main", "commit": "7ee8d982331019fec3a90ec87b98d6b4405cacbe" },
@@ -51,5 +53,5 @@
   "vim-fugitive": { "branch": "master", "commit": "5f0d280b517cacb16f59316659966c7ca5e2bea2" },
   "vimtex": { "branch": "master", "commit": "18255a2370812696138cb415a5b02925d33ef569" },
   "virt-column.nvim": { "branch": "master", "commit": "93b40ea038f676f5a72d7d1f2336fe7b051fc0ce" },
-  "which-key.nvim": { "branch": "main", "commit": "af8f26bfbb61b5f722c9fbc72b296dc9db0bcfdc" }
+  "which-key.nvim": { "branch": "main", "commit": "309db5d2b4cf2db8bda84cf3384882458611347b" }
 }
