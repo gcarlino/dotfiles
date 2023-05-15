@@ -34,7 +34,7 @@ return {
         'catppuccin/nvim',
         name = 'catppuccin',
         priority = 1000,
-        enabled = true,
+        enabled = false,
         config = function ()
             require('catppuccin').setup({
                 flavour = "macchiato",
@@ -48,12 +48,16 @@ return {
     },
 
     {
-          "olimorris/onedarkpro.nvim",
-          priority = 1000,
-          enabled = false,
-          config = function ()
-            vim.cmd.colorscheme('onedark')
-          end
+        'navarasu/onedark.nvim',
+        priority = 1000,
+        enabled = true,
+        config = function ()
+            require('onedark').setup({
+                style = 'dark',
+                toggle_style_key = '<leader>ts',
+            })
+            require('onedark').load()
+        end
     },
 
     {
