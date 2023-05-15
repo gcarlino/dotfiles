@@ -4,7 +4,7 @@ return {
         -- event = "VimEnter",
         lazy = false,
         priority = 1000,
-        enabled = true,
+        enabled = false,
         config = function()
             require('nightfox').setup({
                 options = {
@@ -19,32 +19,31 @@ return {
     },
 
     {
-        'catppuccin/nvim',
-        name = 'catppuccin',
+        'sainnhe/edge',
+        lazy = false,
         priority = 1000,
         enabled = false,
         config = function ()
-            require('catppuccin').setup({
-                flavour = "frappe",
-                background = {
-                    dark = 'frappe',
-                    light = 'latte',
-                },
-            })
-            vim.cmd.colorscheme('catppuccin')
+            vim.g.edge_style='aura'
+            vim.g.edge_better_performance = 1
+            vim.cmd.colorscheme('edge')
         end
     },
 
     {
-        'rose-pine/neovim',
-        name = 'rose-pine',
+        'catppuccin/nvim',
+        name = 'catppuccin',
         priority = 1000,
-        enabled = false,
+        enabled = true,
         config = function ()
-            require('rose-pine').setup({
-                variant = 'moon'
+            require('catppuccin').setup({
+                flavour = "macchiato",
+                background = {
+                    dark = 'macchiato',
+                    light = 'latte',
+                },
             })
-            vim.cmd.colorscheme('rose-pine')
+            vim.cmd.colorscheme('catppuccin-macchiato')
         end
     },
 
