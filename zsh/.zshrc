@@ -126,6 +126,7 @@ if [[ $OS == "Darwin" ]] {
 
 } elif [[ $OS == "Linux" ]] {
     export PATH=$HOME/.local/bin:${HOME}/node_modules/.bin/:/home/exe64:$PATH
+    export PATH=/usr/local/cuda-12.1/bin${PATH:+:${PATH}}
 } fi
 
 # export PATH="/usr/local/opt/gdal2-python/bin:$PATH"
