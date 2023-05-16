@@ -80,7 +80,9 @@ return {
         'lukas-reineke/virt-column.nvim',
         event = { "BufReadPost", "BufNewFile" },
         config = function ()
-            require('virt-column').setup({})
+            require('virt-column').setup({
+                char = "│"
+            })
         end
     },
 
