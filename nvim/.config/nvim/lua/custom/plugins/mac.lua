@@ -11,7 +11,8 @@ else
         {
             'epwalsh/obsidian.nvim',
             event = 'VeryLazy',
-            config = function ()
+            enabled = false,
+            config = function()
                 require("obsidian").setup({
                     dir = "~/Simularia/Notes",
                     completion = {
