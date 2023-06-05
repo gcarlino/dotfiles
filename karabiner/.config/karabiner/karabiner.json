@@ -109,7 +109,8 @@
                                             "caps_lock",
                                             "left_shift",
                                             "left_control",
-                                            "left_option"
+                                            "left_option",
+                                            "left_command"
                                         ]
                                     }
                                 },
