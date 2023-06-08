@@ -123,3 +123,8 @@ vim.keymap.set('n', '<leader>ed',
     { desc = " edit dotfiles" }
 )
 
+-- Reopen last used telescope window keeping focus to current buffer
+vim.keymap.set("n", ";",
+    "<cmd>lua require('telescope.builtin').resume(require('telescope.themes').get_ivy({}))<cr>",
+    { desc = " Resume telescope" }
+)
