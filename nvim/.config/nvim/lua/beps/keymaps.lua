@@ -25,7 +25,7 @@ vim.keymap.set('n', '<C-l>', '<C-w>l', {desc = 'Move to right split.'})
 -- vim.keymap.set('n', '<leader>v', ':e $MYVIMRC<CR>', { desc = "Edit init.lua" })
 
 -- No highlight
-vim.keymap.set('n', '<leader>c', ':noh<CR>', { desc = "No highlight" })
+vim.keymap.set('n', '<C-c>', ':noh<CR>', { desc = "No highlight" })
 
 -- Move lines around
 vim.api.nvim_set_keymap('n', '<M-k>', ':m .-2<CR>==', { noremap = true })
@@ -103,3 +103,5 @@ vim.api.nvim_set_keymap("n", "<leader>b", "", {
     desc = "Toggle background color"
 })
 
+-- -- Map jk to ESC  
+-- vim.keymap.set('i', 'jk', '<ESC>', {})
