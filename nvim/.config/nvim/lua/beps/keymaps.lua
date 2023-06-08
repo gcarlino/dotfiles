@@ -6,6 +6,10 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
+-- Page up and down and stay in the middle
+vim.keymap.set("n", "<c-d>", "<c-d>zz", {})
+vim.keymap.set("n", "<c-u>", "<c-u>zz", {})
+
 -- yank in system clipboard
 vim.keymap.set({"n", "v"}, "<leader>y", "\"+y")
 
