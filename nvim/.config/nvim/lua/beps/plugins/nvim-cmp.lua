@@ -30,7 +30,7 @@ cmp.setup({
         { name = "luasnip", keyword_length = 2 },
         { name = "buffer", keyword_length = 3 },
         { name = "path" },
-        { name = "cmdline" },
+        -- { name = "cmdline" },
         { name = "latex_symbols" },
         { name = "dap" },
         { name = "cmp_nvim_r" },
@@ -117,7 +117,8 @@ cmp.setup.cmdline(':', {
     mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources({
         { name = 'path', keyword_length = 3 },
-        { name = 'cmdline', keyword_length = 2 }
+        { name = 'cmdline', keyword_length = 2 },
+        { name = 'buffer'}
     })
 })
 
