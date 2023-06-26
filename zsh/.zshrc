@@ -181,7 +181,7 @@ export FZF_DEFAULT_OPTS='--height 50% --layout=reverse --border --inline-info'
 export FZF_DEFAULT_COMMAND='fd --type f'
 
 # Default editor
-export EDITOR=vim
+export EDITOR=nvim
 
 # Disable python bytecode files
 export PYTHONDONTWRITEBYTECODE=1
