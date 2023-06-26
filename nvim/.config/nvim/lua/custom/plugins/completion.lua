@@ -98,6 +98,7 @@ return {
     {
         'L3MON4D3/LuaSnip',
         event = 'InsertCharPre',
+        dependencies = { "rafamadriz/friendly-snippets" }
     },
 
 }
