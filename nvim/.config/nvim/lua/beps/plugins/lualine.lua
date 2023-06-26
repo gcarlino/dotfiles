@@ -1,4 +1,9 @@
-local filename_symbols = { modified = ' ●', alternate_file = ' #', directory = ' ' }
+local filename_symbols = {
+    modified = ' ●',
+    alternate_file = ' #',
+    directory = ' ',
+    newfile = ' '
+}
 
 
 local function getCWD()
@@ -131,8 +136,9 @@ require 'lualine'.setup {
             {
                 'filename',
                 file_status = true,
-                path = 1,
-                shorting_target = 50,
+                newfile_status = true,
+                path = 0,
+                shorting_target = 40,
                 color = {
                     gui = 'italic',
                     -- fg = 'pink'
