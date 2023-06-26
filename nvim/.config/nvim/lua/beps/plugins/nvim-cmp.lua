@@ -30,7 +30,7 @@ cmp.setup({
         { name = "luasnip", keyword_length = 2 },
         { name = "buffer", keyword_length = 3 },
         { name = "path" },
-        -- { name = "cmdline" },
+        { name = "cmdline" },
         { name = "latex_symbols" },
         { name = "dap" },
         { name = "cmp_nvim_r" },
@@ -40,11 +40,14 @@ cmp.setup({
         documentation = cmp.config.window.bordered(),
     },
     mapping = cmp.mapping.preset.insert({
-        ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-f>"] = cmp.mapping.scroll_docs(4),
-        ["<C-Space>"] = cmp.mapping.complete({}),
+        ["<C-u>"] = cmp.mapping.scroll_docs(-4),
+        ["<C-d>"] = cmp.mapping.scroll_docs(4),
         ["<C-e>"] = cmp.mapping.abort(),
-        ['<CR>'] = cmp.mapping.confirm({ select = false }),
+        ["<C-Space>"] = cmp.mapping.complete({}),
+        ['<CR>'] = cmp.mapping.confirm({
+            behaviour = cmp.ConfirmBehavior.Replace,
+            select = true,
+        }),
         ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_next_item()
@@ -55,7 +58,7 @@ cmp.setup({
             else
                 fallback()
             end
-        end),
+        end, { 'i', 's' }),
         ["<S-Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_prev_item()
@@ -64,7 +67,7 @@ cmp.setup({
             else
                 fallback()
             end
-        end),
+        end, { 'i', 's' }),
     }),
     -- nvim-cmp by defaults disables autocomplete for prompt buffers
     enabled = function()
@@ -77,11 +80,13 @@ cmp.setup({
             mode = 'symbol',
             maxwidth = 50,
             menu = ({
-                buffer = '[Buffer]',
+                buffer = '[Buf]',
                 nvim_lsp = '[LSP]',
-                luasnip = '[Luasnip]',
+                luasnip = '[Snip]',
                 nvim_lua = '[Lua]',
                 latex_symbols = '[Latex]',
+                path = '[Path]',
+                cmdline = '[Cmd]',
             }),
             ellipsis_char = '...',
         }),
@@ -104,6 +109,14 @@ cmp.setup.filetype({ 'markdown', 'text' }, {
     })
 })
 
+cmp.setup.filetype({'html'}, {
+    sources = cmp.config.sources({
+        { name = 'luasnip', keyword_length = 1 },
+        { name = 'path', keyword_length = 3 },
+        { name = 'buffer' },
+    })
+})
+
 -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline({ '/', '?' }, {
     mapping = cmp.mapping.preset.cmdline(),
@@ -117,7 +130,11 @@ cmp.setup.cmdline(':', {
     mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources({
         { name = 'path', keyword_length = 3 },
-        { name = 'cmdline', keyword_length = 2 },
+        {
+            name = 'cmdline',
+            keyword_length = 2,
+            ignore_cmds = { 'Man', '!' }
+        },
         { name = 'buffer'}
     })
 })
