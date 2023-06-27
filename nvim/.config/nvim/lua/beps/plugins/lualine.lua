@@ -90,7 +90,7 @@ require 'lualine'.setup {
                 'mode',
                 icons_enabled = true,
                 icon = '',
-                fmt = trunc(100, 1, 0, true),
+                fmt = trunc(90, 1, 0, true),
             }
         },
         -- lualine_b = {
@@ -106,8 +106,8 @@ require 'lualine'.setup {
         lualine_b = {
             {
                 'branch',
-                -- color = { fg = colors.pink.dim, }
-                fmt = trunc(100, 4, 80, true),
+                color = { fg = 'CornflowerBlue' },
+                fmt = trunc(90, 4, 60, true),
 
             },
             {
@@ -115,12 +115,17 @@ require 'lualine'.setup {
                 source = diff_source,
                 -- symbols = { added = ' ', modified = '柳', removed = ' ' },
                 symbols = { added = ' ', modified = ' ', removed = ' ' },
+                fmt = trunc(0, 0, 90, true),
             },
             {
                 'diagnostics',
                 sources = { 'nvim_diagnostic' },
                 -- symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
                 symbols = { error = " ", warn = " ", hint = " ", info = " " },
+                fmt = trunc(0, 0, 90, true),
+                on_click = function ()
+                    vim.diagnostic.setqflist()
+                end
             },
         },
         lualine_c = {
@@ -129,9 +134,6 @@ require 'lualine'.setup {
                 icon_only = true,
                 colored = false,
                 padding = { left = 1, right = 0 },
-                -- color = {
-                --     fg = 'pink',
-                -- },
             },
             {
                 'filename',
@@ -139,37 +141,43 @@ require 'lualine'.setup {
                 newfile_status = true,
                 path = 0,
                 shorting_target = 40,
-                color = {
-                    gui = 'italic',
-                    -- fg = 'pink'
-                },
+                -- color = {
+                --     gui = 'italic',
+                --     -- fg = 'pink'
+                -- },
                 symbols = filename_symbols,
+                on_click = function ()
+                    local fpath = vim.fn.fnamemodify(vim.fn.expand('%:p'), ":~")
+                    print(fpath)
+                end
             }
         },
         lualine_x = {
             {
                 getLSP,
-                icon = ' ',
+                icon = '',
                 color = {
                     -- fg = 'pink',
+                    fg = 'violet',
                     gui = 'italic',
-                    -- fg = colors.pink.dim,
-                    -- gui = 'bold',
                 },
-                fmt = trunc(100, 4, 90, true)
+                fmt = trunc(90, 3, 80, true)
             },
         },
         lualine_y = {
             {
                 'fileformat',
+                color = { fg = 'CornflowerBlue' },
                 padding = { left = 1, right = 1 },
             },
             {
                 'encoding',
+                color = { fg = 'CornflowerBlue' },
                 padding = {left = 0, right = 1 }
             },
             {
                 'filesize',
+                color = { fg = 'CornflowerBlue' },
                 padding = {left = 0, right = 1 }
             }
         },
@@ -183,5 +191,13 @@ require 'lualine'.setup {
                 padding = {left = 1, right = 1}
             }
         }
+    },
+    inactive_sections = {
+        lualine_a = {},
+        lualine_b = {},
+        lualine_c = { 'filename' },
+        lualine_x = { 'location' },
+        lualine_y = {},
+        lualine_z = {}
     },
 }
