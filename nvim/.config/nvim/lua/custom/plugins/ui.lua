@@ -92,11 +92,6 @@ return {
     },
 
     {
-        'joeytwiddle/sexy_scroller.vim',
-        event = { "BufReadPost", "BufNewFile" },
-    },
-
-    {
         'chentoast/marks.nvim',
         event = { "BufReadPost", "BufNewFile" },
         config = function()
