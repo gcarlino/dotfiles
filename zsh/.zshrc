@@ -118,7 +118,7 @@ if [[ $OS == "Darwin" ]] {
     export PATH=$PATH:/usr/local/gfortran/bin
 
     # Homebrew
-    export HOMEBREW_NO_ANALYTICS=1
+    # export HOMEBREW_NO_ANALYTICS=1
     # export HOMEBREW_INSTALL_FROM_API=1 
 
     # broot
