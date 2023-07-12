@@ -11,13 +11,62 @@
 --   cmake     pip3 install cmake-language-server
 --   clangd    apt install clangd
 --   markdown: marksman
+--
+-- Usiamo mason per rendere l'installazione semplice su tutte le piattaforme.
+--
 return {
+    {
+        "williamboman/mason.nvim",
+        build = ":MasonUpdate", -- :MasonUpdate updates registry contents
+    },
+
+    {
+        "williamboman/mason-lspconfig.nvim",
+    },
+
     {
         'neovim/nvim-lspconfig',
         event = { "BufReadPre", "BufNewFile" },
         config = function()
             require('beps.plugins.lsp')
         end,
+        dependencies = {
+            'williamboman/mason.nvim',
+            'williamboman/mason-lspconfig.nvim',
+        }
+    },
+
+    {
+        "mfussenegger/nvim-lint",
+        config = function ()
+            local lint = require("lint")
+            lint.linters_by_ft = {
+                python = { 'flake8', }
+            }
+            vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+                callback = function ()
+                    lint.try_lint()
+                end,
+                -- callback = function(opts)
+                --     if vim.bo[opts.buf].filetype == 'python' then
+                --         lint.try_lint()
+                --     end
+                -- end,
+            })
+        end
+    },
+
+    {
+        'mhartington/formatter.nvim',
+        config = function ()
+            require('formatter').setup({
+                filetype = {
+                    python = {
+                        require("formatter.filetypes.python").black
+                    }
+                }
+            })
+        end
     },
 
     {
