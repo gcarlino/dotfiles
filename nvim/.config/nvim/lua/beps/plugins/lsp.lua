@@ -32,7 +32,29 @@ lsp_defaults.capabilities = vim.tbl_deep_extend(
     require('cmp_nvim_lsp').default_capabilities()
 )
 
-lspconfig.pylsp.setup({})
+lspconfig.pylsp.setup({
+    settings = {
+        pylsp = {
+            plugins = {
+                pycodestyle = {
+                    enabled = false,
+                },
+                maccabe = {
+                    enabled = false,
+                },
+                pyflakes = {
+                    enabled = false,
+                },
+                flake8 = {
+                    enabled = true,
+                    ignore = { 'E203' },
+                    maxLineLength = 88,
+                }
+            }
+        }
+    }
+})
+
 lspconfig.lua_ls.setup({
     settings = {
         Lua = {

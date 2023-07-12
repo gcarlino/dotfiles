@@ -24,34 +24,22 @@ return {
         "williamboman/mason-lspconfig.nvim",
     },
 
-    {
-        'neovim/nvim-lspconfig',
-        event = { "BufReadPre", "BufNewFile" },
-        config = function()
-            require('beps.plugins.lsp')
-        end,
-        dependencies = {
-            'williamboman/mason.nvim',
-            'williamboman/mason-lspconfig.nvim',
-        }
-    },
-
+    -- Currently disabled since python linters are managed by pylsp
     {
         "mfussenegger/nvim-lint",
+        enabled = false,
         config = function ()
             local lint = require("lint")
-            lint.linters_by_ft = {
-                python = { 'flake8', }
-            }
+
+            -- lint.linters_by_ft = {
+            --     lua = { 'selene' }
+            -- }
+
+            -- lint on save
             vim.api.nvim_create_autocmd({ "BufWritePost" }, {
                 callback = function ()
                     lint.try_lint()
                 end,
-                -- callback = function(opts)
-                --     if vim.bo[opts.buf].filetype == 'python' then
-                --         lint.try_lint()
-                --     end
-                -- end,
             })
         end
     },
@@ -67,6 +55,18 @@ return {
                 }
             })
         end
+    },
+
+    {
+        'neovim/nvim-lspconfig',
+        event = { "BufReadPre", "BufNewFile" },
+        config = function()
+            require('beps.plugins.lsp')
+        end,
+        dependencies = {
+            'williamboman/mason.nvim',
+            'williamboman/mason-lspconfig.nvim',
+        }
     },
 
     {
