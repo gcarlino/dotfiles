@@ -45,7 +45,7 @@ return {
             local lint = require("lint")
 
             -- lint.linters_by_ft = {
-            --     lua = { 'selene' }
+            --     html = { 'tidy' }
             -- }
 
             -- lint on save
@@ -70,7 +70,10 @@ return {
                     },
                     lua = {
                         require("formatter.filetypes.lua").stylua
-                    }
+                    },
+                    toml = {
+                        require("formatter.filetypes.toml").taplo()
+                    },
                 }
             })
         end
