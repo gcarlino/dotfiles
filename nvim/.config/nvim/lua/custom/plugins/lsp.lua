@@ -16,8 +16,21 @@
 --
 return {
     {
+        'neovim/nvim-lspconfig',
+        event = { "BufReadPre", "BufNewFile" },
+        config = function()
+            require('beps.plugins.lsp')
+        end,
+        dependencies = {
+            'williamboman/mason.nvim',
+            'williamboman/mason-lspconfig.nvim',
+        }
+    },
+
+    {
         "williamboman/mason.nvim",
         build = ":MasonUpdate", -- :MasonUpdate updates registry contents
+        cmd = "Mason",
     },
 
     {
@@ -28,7 +41,7 @@ return {
     {
         "mfussenegger/nvim-lint",
         enabled = false,
-        config = function ()
+        config = function()
             local lint = require("lint")
 
             -- lint.linters_by_ft = {
@@ -37,7 +50,7 @@ return {
 
             -- lint on save
             vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-                callback = function ()
+                callback = function()
                     lint.try_lint()
                 end,
             })
@@ -46,7 +59,10 @@ return {
 
     {
         'mhartington/formatter.nvim',
-        config = function ()
+        keys = {
+            { "<leader>F", "<cmd>Format<cr>", desc = "Format" },
+        },
+        config = function()
             require('formatter').setup({
                 filetype = {
                     python = {
@@ -55,18 +71,6 @@ return {
                 }
             })
         end
-    },
-
-    {
-        'neovim/nvim-lspconfig',
-        event = { "BufReadPre", "BufNewFile" },
-        config = function()
-            require('beps.plugins.lsp')
-        end,
-        dependencies = {
-            'williamboman/mason.nvim',
-            'williamboman/mason-lspconfig.nvim',
-        }
     },
 
     {
