@@ -112,6 +112,10 @@ if [[ $OS == "Darwin" ]] {
     # kitty ssh
     alias s='kitty +kitten ssh'
 
+    # Dark background
+    alias kittyDark='kitty +kitten themes --reload-in=all Github\ Dark'
+    alias kittyLight='kitty +kitten themes --reload-in=all Github\ Light'
+
     # Personal bin
     export PATH=~/bin:~/.local/bin:~/.cargo/bin:$PATH
     export PATH=/usr/local/sbin:$PATH
