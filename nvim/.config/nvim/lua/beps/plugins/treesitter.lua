@@ -7,7 +7,7 @@ end
 -- Parsers must be installed manually via :TSInstall
 treesitter.setup({
     ensure_installed = {
-        'help', 'json', 'yaml', 'toml', 'html', 'css',
+        'vimdoc', 'json', 'yaml', 'toml', 'html', 'css',
         'markdown', 'markdown_inline', 'latex',
         'lua', 'vim', 'dockerfile', 'python', 'fortran', 'c', 'r', 'cmake', 'bash', 'diff',
         'cuda', 'regex'
