@@ -117,8 +117,8 @@ if [[ $OS == "Darwin" ]] {
     alias kittyLight='kitty +kitten themes --reload-in=all Github\ Light'
 
     # Personal bin
-    export PATH=~/bin:~/.local/bin:~/.cargo/bin:$PATH
-    export PATH=/usr/local/sbin:$PATH
+    export PATH=~/bin:~/.local/bin:/opt/homebrew/bin:~/.cargo/bin:$PATH
+    export PATH=/usr/local/sbin:/opt/homebrew/sbin/:$PATH
     export PATH=$PATH:/usr/local/gfortran/bin
 
     # Homebrew
