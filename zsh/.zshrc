@@ -232,4 +232,5 @@ if [[ $OS == "Linux" ]] ; then
 
 fi
 
-
+# iterm2 shell integration
+[ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
