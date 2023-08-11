@@ -32,7 +32,8 @@ function M.config_dap()
     require('dap.ext.vscode').load_launchjs('./.nvim-dap/launch.json')
 
     -- Python debug
-    require('dap-python').setup('~/.virtualenvs/neovim3/bin/python')
+    -- require('dap-python').setup('~/.virtualenvs/neovim3/bin/python')
+    require('dap-python').setup("/opt/homebrew/bin/python3")
 
 end
 
