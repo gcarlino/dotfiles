@@ -28,19 +28,28 @@ return {
     },
 
     {
-        'kyazdani42/nvim-tree.lua',
+        'nvim-tree/nvim-tree.lua',
+        verstion = "*",
         cmd = 'NvimTreeToggle',
         keys = {
             {'<leader>n', ':NvimTreeToggle<CR>', desc = "Toggle nvim-tree" }
         },
         config = function()
             require('nvim-tree').setup({
-                hijack_netrw = false,
-                git = {
-                    ignore = false
+                view = {
+                    width = 30,
+                },
+                renderer = {
+                    group_empty = true,
+                },
+                filters = {
+                    custom = {'.DS_Store'}
                 }
             })
         end,
+        dependencies = {
+            "nvim-tree/nvim-web-devicons"
+        },
     },
 
     {

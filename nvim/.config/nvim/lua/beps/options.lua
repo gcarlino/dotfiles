@@ -38,6 +38,10 @@ opt.colorcolumn = '80'
 -- Spell check is enabled by filet type
 opt.spelllang = { 'en_us', 'it' } -- Spellcheck languages
 
+-- Disable netrw (as required by nvim-tree)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 -- Highlight on yank
 local yankHighlightGroup = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
