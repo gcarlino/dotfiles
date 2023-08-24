@@ -49,20 +49,3 @@ end
 -- Open the current file in the default program (on Mac this should just be just `open`)
 vim.keymap.set('n', '<leader>x', ':!open %<cr><cr>')
 
--- Obsidian
-vim.keymap.set('n', '<leader>oo', ':ObsidianOpen<CR>', {desc = "Open Obsidian"})
-vim.keymap.set('n', '<leader>on', ':ObsidianNew<CR>', {desc = "Create a new note in obsidian vault"})
-vim.keymap.set('n', '<leader>os', ':ObsidianSearch<CR>', {desc = "Search in obsidian vault  "})
-vim.keymap.set('n', '<leader>oq', ':ObsidianQuickSwitch<CR>', {desc = "Quick switch with  "})
-vim.keymap.set(
-  "n",
-  "gf",
-  function()
-    if require('obsidian').util.cursor_on_markdown_link() then
-      return "<cmd>ObsidianFollowLink<CR>"
-    else
-      return "gf"
-    end
-  end,
-  { noremap = false, expr = true, desc = "Follow link"}
-)
