@@ -1,5 +1,5 @@
--- LSP
 -- Installati a mano i server di:
+-- LSP
 --   R         install.packages("languageserver")
 --   Python:   pip install pyplsp
 --   Fortran:  pip install -U fortran-language-server
@@ -16,14 +16,14 @@
 --
 return {
     {
-        'neovim/nvim-lspconfig',
+        "neovim/nvim-lspconfig",
         event = { "BufReadPre", "BufNewFile" },
         config = function()
-            require('beps.plugins.lsp')
+            require("beps.plugins.lsp")
         end,
         dependencies = {
-            'williamboman/mason.nvim',
-            'williamboman/mason-lspconfig.nvim',
+            "williamboman/mason.nvim",
+            "williamboman/mason-lspconfig.nvim",
         }
     },
 

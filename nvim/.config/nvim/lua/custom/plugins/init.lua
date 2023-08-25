@@ -1,8 +1,8 @@
 return {
-    { 'nvim-lua/plenary.nvim', lazy = true },
+    { "nvim-lua/plenary.nvim", lazy = true },
 
     {
-        'folke/trouble.nvim',
+        "folke/trouble.nvim",
         event = { "BufReadPost", "BufNewFile" },
         config = function ()
             require('trouble').setup({})
@@ -28,7 +28,7 @@ return {
     },
 
     {
-        'nvim-tree/nvim-tree.lua',
+        "nvim-tree/nvim-tree.lua",
         verstion = "*",
         cmd = 'NvimTreeToggle',
         keys = {
@@ -53,7 +53,7 @@ return {
     },
 
     {
-        'jalvesaq/Nvim-R',
+        "jalvesaq/Nvim-R",
         ft = 'r',
         config = function()
             vim.cmd([[
@@ -75,18 +75,18 @@ return {
     },
 
     {
-        'lervag/vimtex',
+        "lervag/vimtex",
     },
 
     -- Various
     {
-        'mbbill/undotree',
+        "mbbill/undotree",
         event = { "BufReadPost" },
         keys = { {"<leader>u", vim.cmd.UndotreeToggle, desc = "Toggle Undotree"}}
     },
 
     {
-        'windwp/nvim-autopairs',
+        "windwp/nvim-autopairs",
         event = { "BufReadPost", "BufNewFile" },
         config = function()
             require('nvim-autopairs').setup()
@@ -94,7 +94,7 @@ return {
     },
 
     {
-        'akinsho/toggleterm.nvim',
+        "akinsho/toggleterm.nvim",
         event = 'VeryLazy',
         opts = {
             open_mapping = [[<c-q>]],
@@ -102,15 +102,15 @@ return {
     },
 
     {
-        'mechatroner/rainbow_csv',
+        "mechatroner/rainbow_csv",
         event = 'VeryLazy'
     },
 
     {
-        'kylechui/nvim-surround',
+        "kylechui/nvim-surround",
         event = "VeryLazy",
         config = function()
-            require('nvim-surround').setup({})
+            require('nvim-surround').setup()
         end
     },
 
