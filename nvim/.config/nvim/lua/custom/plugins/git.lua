@@ -1,10 +1,10 @@
 -- Git
 return {
     {
-        'lewis6991/gitsigns.nvim',
+        "lewis6991/gitsigns.nvim",
         event = { "BufReadPre", "BufNewFile" },
         config = function ()
-            require('beps.plugins.gitsigns')
+            require("beps.plugins.gitsigns")
         end
     },
 
@@ -13,14 +13,6 @@ return {
         cmd = 'G',
         -- lazy = true,
         -- event = "VeryLazy"
-    },
-
-    {
-        'f-person/git-blame.nvim',
-        cmd = 'GitBlameToggle',
-        keys = {
-            {'<leader>gt', ':GitBlameToggle<CR>', desc = "Toggle git blame."}
-        }
     },
 
     {
