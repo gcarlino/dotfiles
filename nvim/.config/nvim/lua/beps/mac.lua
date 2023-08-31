@@ -49,3 +49,21 @@ end
 -- Open the current file in the default program (on Mac this should just be just `open`)
 vim.keymap.set('n', '<leader>x', ':!open %<cr><cr>')
 
+
+-- Obsidian
+vim.keymap.set("n", "gf", function()
+  if require("obsidian").util.cursor_on_markdown_link() then
+    return "<cmd>ObsidianFollowLink<CR>"
+  else
+    return "gf"
+  end
+end, { noremap = false, expr = true })
+
+vim.keymap.set('n', '<leader>oo', ":ObsidianOpen<CR>", {desc = "Obsidian: open a note in the Obsidian app."})
+vim.keymap.set('n', '<leader>on', ":ObsidianNew<CR>", {desc = "Obsidian: create a new."})
+vim.keymap.set('n', '<leader>oq', ":ObsidianQuickSwitch<CR>", {desc = "Obsidian: quickly switch to another note in the vault."})
+vim.keymap.set('n', '<leader>of', ":ObsidianFollowLink<CR>", {desc = "Obsidian: follow a note reference."})
+vim.keymap.set('n', '<leader>ob', ":ObsidianBacklinks<CR>", {desc = "Obsidian: get a location list of references to the current buffer."})
+vim.keymap.set('n', '<leader>os', ":ObsidianSearch<CR>", {desc = "Obsidian: search for notes in your vault."})
+vim.keymap.set('n', '<leader>ol', ":ObsidianLink<CR>", {desc = "Obsidian: link an in-line visual selection of text to a note."})
+vim.keymap.set('n', '<leader>oc', ":ObsidianLinkNew<CR>", {desc = "Obsidian: create a new note and link it to an in-line visual selection of text."})
