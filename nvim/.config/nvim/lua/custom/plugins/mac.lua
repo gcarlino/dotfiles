@@ -12,6 +12,7 @@ else
         {
             "epwalsh/obsidian.nvim",
             lazy = true,
+            enabled = false,
             event = { "BufReadPre /Users/beps/Simularia/Notes/**.md" },
             dependencies = {
                 "nvim-lua/plenary.nvim",
