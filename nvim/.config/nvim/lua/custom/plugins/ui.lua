@@ -23,48 +23,84 @@ return {
     },
 
     {
-        'kevinhwang91/nvim-ufo',
-        event = "VeryLazy",
-        dependencies = {
-            { 'kevinhwang91/promise-async' },
-            {
-                'luukvbaal/statuscol.nvim',
-                config = function()
-                    local builtin = require("statuscol.builtin")
-                    require("statuscol").setup({
-                        relculright = true,
-                        segments = {
-                            {text = {"%s"}, click = "v:lua.ScSa"},
-                            {text = {builtin.lnumfunc, " "}, click = "v:lua.ScLa"},
-                            {
-                                text = {builtin.foldfunc, " "},
-                                click = "v:lua.ScFa",
-                            }
-                        }
-                    })
-                end
-            },
-        },
-        config = function ()
-            -- Fold options
-            vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
-            vim.o.foldcolumn = "1" -- '0' is not bad
-            vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-            vim.o.foldlevelstart = 99
-            vim.o.foldenable = true
-
-            -- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
-            vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
-            vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
-
-            -- Treesitter as the main provider
-            require("ufo").setup({
-                provider_selector = function (bufnr, filetype, buftype)
-                    return {'treesitter', 'indent'}
-                end
+        "luukvbaal/statuscol.nvim", config = function()
+            local builtin = require("statuscol.builtin")
+            require("statuscol").setup({
+                setopt = true,
+                relculright = true,
+                segments = {
+                    { text = { builtin.lnumfunc },
+                        auto = true,
+                        click = "v:lua.ScLa", },
+                    {
+                        sign = {
+                            name = { ".*" },
+                            maxwidth = 1,
+                            colwidth = 1,
+                            auto = false,
+                            wrap = true
+                        },
+                        click = "v:lua.ScSa"
+                    },
+                    {
+                        sign = {
+                            name = { "Diagnostic" },
+                            maxwidth = 2,
+                            colwidth = 1,
+                            auto = false
+                        },
+                        click = "v:lua.ScSa"
+                    },
+                    { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
+                }
             })
-        end
+        end,
     },
+
+    -- {
+    --     'kevinhwang91/nvim-ufo',
+    --     event = "VeryLazy",
+    --     enabled = false,
+    --     dependencies = {
+    --         { 'kevinhwang91/promise-async' },
+    --         {
+    --             'luukvbaal/statuscol.nvim',
+    --             config = function()
+    --                 local builtin = require("statuscol.builtin")
+    --                 require("statuscol").setup({
+    --                     relculright = true,
+    --                     segments = {
+    --                         {text = {"%s"}, click = "v:lua.ScSa"},
+    --                         {text = {builtin.lnumfunc, " "}, click = "v:lua.ScLa"},
+    --                         {
+    --                             text = {builtin.foldfunc, " "},
+    --                             click = "v:lua.ScFa",
+    --                         }
+    --                     }
+    --                 })
+    --             end
+    --         },
+    --     },
+    --     config = function ()
+    --         -- Fold options
+    --         vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+    --         vim.o.foldcolumn = "1" -- '0' is not bad
+    --         vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+    --         vim.o.foldlevelstart = 99
+    --         vim.o.foldenable = true
+    --
+    --         -- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
+    --         vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
+    --         vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
+    --
+    --         -- Treesitter as the main provider
+    --         require("ufo").setup({
+    --             provider_selector = function (bufnr, filetype, buftype)
+    --                 return {'treesitter', 'indent'}
+    --             end
+    --         })
+    --     end
+    -- },
 
     {
         'lukas-reineke/indent-blankline.nvim',

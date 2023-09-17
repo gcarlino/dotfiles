@@ -62,15 +62,27 @@ vim.opt.listchars = {
     eol = '↲',
     nbsp = '␣'
 }
+
 vim.api.nvim_create_autocmd("InsertEnter", {
     pattern = "*",
     callback = function()
         vim.opt.list = true
     end
 })
+
 vim.api.nvim_create_autocmd({ "VimEnter", "BufEnter", "InsertLeave" }, {
     pattern = "*",
     callback = function()
         vim.opt.list = false
     end
 })
+
+-- Folding
+vim.o.foldmethod = "expr"
+vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+
+vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+vim.o.foldcolumn = "1"
+vim.o.foldlevel = 1
+vim.o.foldlevelstart = 10
+vim.o.foldenable = true
