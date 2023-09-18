@@ -1,33 +1,33 @@
-local status, treesitter = pcall(require, 'nvim-treesitter.configs')
+local status, treesitterConfigs = pcall(require, 'nvim-treesitter.configs')
 if not status then
     print('Treesitter is not available.')
     return
 end
 
 -- Parsers must be installed manually via :TSInstall
-treesitter.setup({
+treesitterConfigs.setup({
     ensure_installed = {
-        'vimdoc', 'json', 'yaml', 'toml', 'html', 'css',
-        'markdown', 'markdown_inline', 'latex',
-        'lua', 'vim', 'dockerfile', 'python', 'fortran', 'c', 'r', 'cmake', 'bash', 'diff',
-        'cuda', 'regex'
+        "vimdoc", "json", "yaml", "toml", "html", "css",
+        "markdown", "markdown_inline", "latex",
+        "lua", "vim", "dockerfile", "python", "fortran", "c", "r", "cmake", "bash", "diff",
+        "cuda", "regex"
     },
     sync_install = false,
     auto_install = true,
-    additional_vim_regex_highlighting = false,
+    -- additional_vim_regex_highlighting = false,
+    ignore_install = {},
     highlight = {
         enable = true,
+        additional_vim_regex_highlighting = false,
     },
-    indent = {
-        enable = true,
-    },
+    indent = { enable = true },
     incremental_selection = {
         enable = true,
         keymaps = {
-            init_selection = '<Enter>',
-            node_incremental = '<Enter>',
-            -- scope_incremental = 'grc',
-            node_decremental = '<BS>',
+            init_selection = "gnn",
+            node_incremental = "grn",
+            scope_incremental = "grc",
+            node_decremental = "grm",
         },
     },
     textobjects = {
