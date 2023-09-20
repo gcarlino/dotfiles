@@ -1,4 +1,5 @@
--- Installati a mano i server di:
+-- Usiamo mason per rendere l'installazione semplice su tutte le piattaforme.
+--
 -- LSP
 --   R         install.packages("languageserver")
 --   Python:   pip install pyplsp
@@ -12,29 +13,29 @@
 --   clangd    apt install clangd
 --   markdown: marksman
 --
--- Usiamo mason per rendere l'installazione semplice su tutte le piattaforme.
---
 return {
+    {
+        "williamboman/mason.nvim",
+        config = function ()
+            require("mason").setup()
+        end
+    },
+
+    {
+        "williamboman/mason-lspconfig.nvim",
+        config = function ()
+            require("mason-lspconfig").setup()
+        end
+    },
+
     {
         "neovim/nvim-lspconfig",
         event = { "BufReadPre", "BufNewFile" },
         config = function()
             require("beps.plugins.lsp")
         end,
-        dependencies = {
-            "williamboman/mason.nvim",
-            "williamboman/mason-lspconfig.nvim",
-        }
-    },
-
-    {
-        "williamboman/mason.nvim",
-        build = ":MasonUpdate", -- :MasonUpdate updates registry contents
-        cmd = "Mason",
-    },
-
-    {
-        "williamboman/mason-lspconfig.nvim",
+        -- dependencies = {
+        -- }
     },
 
     -- Currently disabled since python linters are managed by pylsp
@@ -79,19 +80,4 @@ return {
         end
     },
 
-    {
-        'glepnir/lspsaga.nvim',
-        branch = 'main',
-        event = { "BufReadPre", "BufNewFile" },
-        -- event = "BufRead",
-        enabled = false,
-        config = function()
-            require('beps.plugins.lsp')
-        end,
-        dependencies = {
-            'nvim-tree/nvim-web-devicons',
-            'nvim-treesitter/nvim-treesitter',
-        }
-
-    },
 }
