@@ -117,8 +117,7 @@ return {
         event = { "BufReadPost", "BufNewFile" },
         config = function ()
             require('virt-column').setup({
-                char = "│",
-                vim.cmd[[highlight VirtColumn guifg=LightGray]]
+                char = "│" ,
             })
         end
     },
