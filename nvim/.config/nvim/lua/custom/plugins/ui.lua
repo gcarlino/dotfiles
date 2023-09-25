@@ -43,7 +43,7 @@ return {
                         sign = {
                             name = { "DiagnosticSign" },
                             maxwidth = 1,
-                            colwidth = 1,
+                            colwidth = 2,
                             auto = false
                         },
                         click = "v:lua.ScSa"
