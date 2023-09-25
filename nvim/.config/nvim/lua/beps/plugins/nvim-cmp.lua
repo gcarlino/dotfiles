@@ -103,6 +103,7 @@ cmp.setup({
 -- Use
 cmp.setup.filetype({ 'markdown', 'text' }, {
     sources = cmp.config.sources({
+        { name = "nvim_lsp" },
         { name = 'latex_symbols' },
         { name = 'buffer' },
         { name = 'path', keyword_length = 3}
