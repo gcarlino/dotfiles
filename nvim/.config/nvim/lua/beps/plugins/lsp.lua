@@ -17,6 +17,7 @@ for type, icon in pairs(signs) do
     vim.fn.sign_define(hl, { icon = icon, texthl = hl, numhl = hl })
 end
 
+-- lspconfig
 local lstatus, lspconfig = pcall(require, 'lspconfig')
 if not lstatus then
     return
@@ -76,25 +77,35 @@ lspconfig.lua_ls.setup({
         },
     },
 })
+
 lspconfig.texlab.setup({})
+
 lspconfig.clangd.setup({})
+
 lspconfig.cmake.setup({})
+
 lspconfig.fortls.setup({
     filetypes = { 'fortran', 'fortran77' },
 })
+
 lspconfig.marksman.setup({})
+
 lspconfig.r_language_server.setup({})
 
+-- Global mappings
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
 
-local optsDesc = function(ev, mdesc)
+-- mapping description function
+local optsDesc = function (ev, mdesc)
     local opts = { buffer = ev.buf, noremap = true, silent = true, desc = mdesc }
     return opts
 end
 
+-- Use LspAttach autocommand to only map the following keys after the
+-- language server attaches to the current buffer
 vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('UserLspConfig', {}),
     callback = function(ev)
@@ -105,6 +116,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
         -- See `:help vim.lsp.*` for documentation on any of the below functions
         vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, optsDesc(ev, 'LSP goto declaration'))
         vim.keymap.set('n', 'gd', vim.lsp.buf.definition, optsDesc(ev, 'LSP goto definition'))
+        -- vim.keymap.set('n', 'gr', vim.lsp.buf.references, optsDesc(ev, 'LSP references.'))
+        vim.keymap.set('n', "gr", function ()
+            require("telescope.builtin").lsp_references()
+        end,
+            optsDesc(ev, "LSP reference")
+        )
+
         vim.keymap.set('n', 'K', vim.lsp.buf.hover, optsDesc(ev, 'LSP show hover information.'))
         vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, optsDesc(ev, 'Show implementation.'))
         vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, optsDesc(ev, 'LSP signature help'))
@@ -116,7 +134,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, optsDesc(ev, 'LSP type definition.'))
         vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, optsDesc(ev, 'LSP buffer rename'))
         vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, optsDesc(ev, 'LSP buffer code action.'))
-        vim.keymap.set('n', 'gr', vim.lsp.buf.references, optsDesc(ev, 'LSP references.'))
         vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end,
             optsDesc(ev, 'LSP buffer format'))
 
