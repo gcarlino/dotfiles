@@ -59,10 +59,17 @@ return {
 
     {
         'lukas-reineke/indent-blankline.nvim',
+        main = "ibl",
+        opts = {},
         event = { "BufReadPost", "BufNewFile" },
         config = function()
-            require('indent_blankline').setup({
-                show_current_context = true,
+            require("ibl").setup( {
+                indent = {
+                    char = "│" ,
+                },
+                scope = {
+                    enabled = true
+                }
             })
         end,
     },
