@@ -46,7 +46,6 @@ end
 -- nvim-dap-ui
 dapui.setup()
 
-require('telescope').load_extension('dap')
 local tstatus, telescope = pcall(require, 'telescope')
 if tstatus then
     telescope.load_extension('dap')
@@ -56,9 +55,19 @@ end
 vim.fn.sign_define('DapBreakpoint', { icon = '●', text = '●', texthl = "DiagnosticSignError", linehl = '', numhl = '' })
 vim.fn.sign_define('DapBreakpointCondition', { icon = '●', text = '●', texthl = "DiagnosticSignWarning", linehl = '', numhl = '' })
 
---
--- key mappings
---
+-- DAP virtual text
+local nstatus, nvim_dap_virtual_text = pcall(require, 'nvim-dap-virtual-text')
+if not nstatus then
+   return
+end
+nvim_dap_virtual_text.setup({
+    virt_text_win_col = 80,
+})
+
+
+------------------
+-- key mappings --
+------------------
 
 -- Clear configurations, reload and continue
 vim.keymap.set("n", "<leader>dd",
@@ -88,6 +97,7 @@ vim.keymap.set('n', '<F8>', function() dap.run_to_cursor() end,
     { desc = "DAP: debug run to cursor" })
 vim.keymap.set('n', '<F9>', function() dap.toggle_breakpoint() end,
     { desc = "DAP: debug toggle breakpoint" })
+
 vim.keymap.set('n', '<leader>db', function() dap.set_breakpoint(vim.fn.input("Breakpoint condition: ")) end,
     { desc = "DAP: debug set breakpoint condition" })
 vim.keymap.set('n', '<leader>dx',
@@ -102,9 +112,7 @@ vim.keymap.set('n', '<leader>dc', function() dapui.close({}) end,
     { desc = "DAP: debug close dap-ui" })
 
 -- hover
-vim.keymap.set({ 'n', 'x' }, '<leader>i', function()
-    -- dapui.eval(nil, { enter = true, context = "repl" }) end,
-    dapui.eval(nil, { enter = true, context = "repl" }) end,
+vim.keymap.set({ 'n', 'x' }, '<leader>i', function() dapui.eval() end,
     { desc = "DAP: open a floating window containing the result of evaluting an expression" })
 
 -- Reload launch json configuration
@@ -112,21 +120,7 @@ vim.keymap.set('n', '<leader>dl', function() require("dap.ext.vscode").load_laun
     { desc = "DAP: load ./.nvim-dap/launch.json with debugger configuration" })
 
 -- Use nvim-dap events to open and close the windows automatically
-dap.listeners.after.event_initialized["dapui_config"] = function()
-    dapui.open({})
-end
-dap.listeners.before.event_terminated["dapui_config"] = function()
-    dapui.close({})
-end
-dap.listeners.before.event_exited["dapui_config"] = function()
-    dapui.close({})
-end
+dap.listeners.after.event_initialized["dapui_config"] = function() dapui.open({}) end
+dap.listeners.before.event_terminated["dapui_config"] = function() dapui.close({}) end
+dap.listeners.before.event_exited["dapui_config"] = function() dapui.close({}) end
 
--- DAP virtual text
-local status, nvim_dap_virtual_text = pcall(require, 'nvim-dap-virtual-text')
-if not status then
-   return
-end
-nvim_dap_virtual_text.setup({
-    virt_text_win_col = 80,
-})
