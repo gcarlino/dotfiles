@@ -23,7 +23,8 @@ return {
     },
 
     {
-        "luukvbaal/statuscol.nvim", config = function()
+        "luukvbaal/statuscol.nvim",
+        config = function()
             local builtin = require("statuscol.builtin")
             require("statuscol").setup({
                 setopt = true,
@@ -31,7 +32,7 @@ return {
                 segments = {
                     {
                         sign = {
-                            name = { ".*" },
+                            text = { ".*" },
                             maxwidth = 1,
                             colwidth = 1,
                             auto = false,
@@ -48,10 +49,15 @@ return {
                         },
                         click = "v:lua.ScSa"
                     },
-                    { text = { builtin.lnumfunc },
+                    {
+                        text = { builtin.lnumfunc },
                         auto = true,
-                        click = "v:lua.ScLa", },
-                    { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
+                        click = "v:lua.ScLa"
+                    },
+                    {
+                        text = { builtin.foldfunc },
+                        click = "v:lua.ScFa"
+                    },
                 }
             })
         end,
