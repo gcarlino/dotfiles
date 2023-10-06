@@ -11,8 +11,6 @@ return {
     {
         'tpope/vim-fugitive',
         cmd = 'G',
-        -- lazy = true,
-        -- event = "VeryLazy"
     },
 
     {
