@@ -58,24 +58,24 @@ return {
     },
 
     {
-        'lukas-reineke/indent-blankline.nvim',
+        "lukas-reineke/indent-blankline.nvim",
+        enabled = false,
         main = "ibl",
         opts = {},
-        event = { "BufReadPost", "BufNewFile" },
-        config = function()
+        config = function ()
             require("ibl").setup( {
                 indent = {
                     char = "│" ,
-                },
-                scope = {
-                    enabled = true
                 }
-            })
-        end,
+            }
+
+            )
+        end
     },
 
     {
         'lukas-reineke/virt-column.nvim',
+        enabled = false,
         event = { "BufReadPost", "BufNewFile" },
         config = function ()
             require('virt-column').setup({
@@ -86,6 +86,7 @@ return {
 
     {
         'chentoast/marks.nvim',
+        enabled = false,
         event = { "BufReadPost", "BufNewFile" },
         config = function()
             require('marks').setup()
