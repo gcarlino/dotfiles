@@ -146,7 +146,7 @@ require 'lualine'.setup {
                 -- },
                 symbols = filename_symbols,
                 on_click = function ()
-                    local fpath = vim.fn.fnamemodify(vim.fn.expand('%:p'), ":~")
+                    local fpath = vim.fn.expand('%:~')
                     print(fpath)
                 end
             }
