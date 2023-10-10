@@ -35,7 +35,7 @@ return {
                             text = { ".*" },
                             maxwidth = 1,
                             colwidth = 1,
-                            auto = false,
+                            auto = true,
                             wrap = true
                         },
                         click = "v:lua.ScSa"
@@ -45,7 +45,7 @@ return {
                             name = { "DiagnosticSign" },
                             maxwidth = 1,
                             colwidth = 2,
-                            auto = false
+                            auto = true
                         },
                         click = "v:lua.ScSa"
                     },
