@@ -24,6 +24,7 @@ return {
 
     {
         "luukvbaal/statuscol.nvim",
+        enabled = true,
         config = function()
             local builtin = require("statuscol.builtin")
             require("statuscol").setup({
@@ -65,14 +66,23 @@ return {
 
     {
         "lukas-reineke/indent-blankline.nvim",
-        enabled = false,
+        enabled = true,
         main = "ibl",
-        opts = {},
         config = function ()
             require("ibl").setup( {
+                scope = {
+                    include = {
+                        node_type = {
+                            lua = {
+                                "return_statement",
+                                "table_constructor"
+                            },
+                        }
+                    }
+                },
                 indent = {
                     char = "│" ,
-                }
+                },
             }
 
             )
