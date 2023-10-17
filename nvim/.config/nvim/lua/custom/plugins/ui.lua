@@ -71,6 +71,8 @@ return {
         config = function ()
             require("ibl").setup( {
                 scope = {
+                    show_start = false,
+                    show_end = false,
                     include = {
                         node_type = {
                             lua = {
