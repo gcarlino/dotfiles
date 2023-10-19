@@ -5,22 +5,27 @@ if not status then
 end
 
 -- Parsers must be installed manually via :TSInstall
+---@diagnostic disable: missing-fields
 treesitterConfigs.setup({
     ensure_installed = {
-        "vimdoc", "json", "yaml", "toml", "html", "css",
+        "vim", "vimdoc",
+        "json", "yaml", "toml",
+        "html", "css",
         "markdown", "markdown_inline", "latex",
-        "lua", "vim", "dockerfile", "python", "fortran", "c", "r", "cmake", "bash", "diff",
-        "cuda", "regex"
+        "lua", "python", "fortran", "c", "r",
+        "cmake", "bash", "diff", "regex"
     },
     sync_install = false,
     auto_install = true,
-    -- additional_vim_regex_highlighting = false,
     ignore_install = {},
+
     highlight = {
         enable = true,
         additional_vim_regex_highlighting = false,
     },
-    indent = { enable = true },
+    indent = {
+        enable = true
+    },
     incremental_selection = {
         enable = true,
         keymaps = {
