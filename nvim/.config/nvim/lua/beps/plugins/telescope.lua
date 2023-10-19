@@ -4,11 +4,18 @@ if not status then
     return
 end
 
+local actions = require("telescope.actions")
+local trouble = require("trouble.providers.telescope")
+
 telescope.setup {
     defaults = {
         mappings = {
             i = {
-                ['<M-v>'] = require('telescope.actions.layout').toggle_preview
+                ['<M-v>'] = require('telescope.actions.layout').toggle_preview,
+                ["<M-t>"] = trouble.open_with_trouble,
+            },
+            n = {
+                ["<M-t>"] = trouble.open_with_trouble,
             }
         },
         sorting_strategy = 'ascending',
@@ -24,8 +31,8 @@ telescope.setup {
             -- ignore_current_buffer = true,
             sort_mru = true,
             mappings = {
-                i = { ["<c-b>"] = require("telescope.actions").delete_buffer, },
-                n = { ["<c-b>"] = require("telescope.actions").delete_buffer, },
+                i = { ["<c-b>"] = actions.delete_buffer, },
+                n = { ["<c-b>"] = actions.delete_buffer, },
             },
         },
         find_files = {

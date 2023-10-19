@@ -47,7 +47,7 @@ if vim.g.neovide then
 end
 
 -- Open the current file in the default program (on Mac this should just be just `open`)
-vim.keymap.set('n', '<leader>x', ':!open %<cr><cr>')
+-- vim.keymap.set('n', '<leader>x', ':!open %<cr><cr>')
 
 
 -- Obsidian

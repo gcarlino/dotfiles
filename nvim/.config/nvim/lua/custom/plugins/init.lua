@@ -4,25 +4,28 @@ return {
     {
         "folke/trouble.nvim",
         event = { "BufReadPost", "BufNewFile" },
+        -- opts = {
+        --     mode = "document_diagnostics"
+        -- },
         config = function ()
             require('trouble').setup({})
-            vim.keymap.set("n", "<leader>tt", "<cmd>TroubleToggle<cr>",
-                {silent = true, noremap = true}
+            vim.keymap.set("n", "<leader>xx", function () require("trouble").toggle() end,
+                { silent = true, noremap = true, desc = "Trouble: toggle the list." }
             )
-            vim.keymap.set("n", "<leader>tw", "<cmd>TroubleToggle workspace_diagnostics<cr>",
-                {silent = true, noremap = true}
+            vim.keymap.set("n", "<leader>xw", function () require("trouble").toggle("workspace_diagnostics") end,
+                { silent = true, noremap = true, desc = "Trouble: workspace diagnostics." }
             )
-            vim.keymap.set("n", "<leader>td", "<cmd>TroubleToggle document_diagnostics<cr>",
-                {silent = true, noremap = true}
+            vim.keymap.set("n", "<leader>xd", function () require("trouble").toggle("document_diagnostics") end,
+                {silent = true, noremap = true, desc = "Trouble: document diagnostics."}
             )
-            vim.keymap.set("n", "<leader>tl", "<cmd>TroubleToggle loclist<cr>",
-                {silent = true, noremap = true}
+            vim.keymap.set("n", "<leader>xl", function () require("trouble").toggle("loclist") end,
+                {silent = true, noremap = true, desc = "Trouble: items from the window's location list."}
             )
-            vim.keymap.set("n", "<leader>tq", "<cmd>TroubleToggle quickfix<cr>",
-                {silent = true, noremap = true}
+            vim.keymap.set("n", "<leader>xq", function() require("trouble").toggle("quickfix") end,
+                {silent = true, noremap = true, desc = "Trouble: quickfix items."}
             )
-            vim.keymap.set("n", "gR", "<cmd>TroubleToggle lsp_references<cr>",
-                {silent = true, noremap = true}
+            vim.keymap.set("n", "gR", function() require("trouble").toggle("lsp_references") end,
+                {silent = true, noremap = true, desc = "Trouble: references of the word under the cursor."}
             )
         end,
     },
