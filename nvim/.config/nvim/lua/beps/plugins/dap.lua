@@ -1,32 +1,30 @@
-local status, dap = pcall(require, 'dap')
-if not status then
-    return
-end
-
-local dstatus, dapui = pcall(require, 'dapui')
-if not dstatus then
-    return
-end
-
 local M = {}
+
+local dap = require("dap")
+local dapui = require("dapui")
 
 -- Function to configure adapters
 function M.config_dap()
 
     -- C/C++/Rust (via vscode-cpptools)
-    local cppdbgPath = ""
+    local codelldbPath = ""
     if vim.fn.has("mac") == 1 then
-        cppdbgPath = '/Users/beps/.vscode-server/extension/debugAdapters/bin/OpenDebugAD7'
+        codelldbPath = "/Users/beps/.local/share/nvim/mason/packages/codelldb/codelldb"
     else
-        cppdbgPath = '/home/carlino/.vscode-server/extension/debugAdapters/bin/OpenDebugAD7'
+        codelldbPath = "/home/carlino/.local/share/nvim/mason/packages/codelldb/codelldb"
     end
 
-    dap.adapters.fortran = {
-        id = 'cppdbg',
-        type = 'executable',
-        command = cppdbgPath,
-        -- options = {}  TODO: kill telemetry
+    dap.adapters.cpp = {
+        type = "server",
+        port = "${port}",
+        executable = {
+            command = codelldbPath,
+            args = {"--port", "${port}"}
+        }
+
     }
+    dap.adapters.c = dap.adapters.cpp
+    dap.adapters.fortran = dap.adapters.cpp
 
     -- Load local configurations
     require('dap.ext.vscode').load_launchjs('./.nvim-dap/launch.json')
@@ -39,6 +37,8 @@ end
 
 -- Clear configurations
 function M.clear_configurations()
+    dap.configurations.cpp = {}
+    dap.configurations.c = {}
     dap.configurations.python = {}
     dap.configurations.fortran = {}
 end
