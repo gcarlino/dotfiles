@@ -75,21 +75,21 @@ vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
 vim.api.nvim_set_keymap("n", "<leader>b", "", {
     noremap = true,
     callback = function()
-        local _background = vim.api.nvim_get_option("background")
+        local _background = vim.api.nvim_get_option_value("background", {})
         if (_background == "light") then
 
             -- If colorscheme is nightfox (catpuccin is automatic)
-            local status = pcall(require, 'nightfox')
+            local status = pcall(require, "nightfox")
             if status then
                 vim.cmd('colorscheme nordfox')
             end
 
-            local ostatus = pcall(require, 'onedarkpro')
+            local ostatus = pcall(require, "onedarkpro")
             if ostatus then
                 vim.cmd('colorscheme onedark')
             end
 
-            vim.api.nvim_set_option('background', 'dark')
+            vim.api.nvim_set_option_value("background", "dark", {})
         else
             -- If colorscheme is nightfox (catpuccin is automatic)
             local status = pcall(require, 'nightfox')
@@ -102,10 +102,10 @@ vim.api.nvim_set_keymap("n", "<leader>b", "", {
                 vim.cmd('colorscheme onelight')
             end
 
-            vim.api.nvim_set_option('background', 'light')
+            vim.api.nvim_set_option_value("background", "light", {})
         end
     end,
-    desc = "Toggle background color"
+    desc = "Toggle background color."
 })
 
 -- -- Map jk to ESC  
