@@ -12,10 +12,11 @@
 --   cmake     pip3 install cmake-language-server
 --   clangd    apt install clangd
 --   markdown: marksman
---
+
 return {
     {
         "williamboman/mason.nvim",
+        event = "VeryLazy",
         config = function ()
             require("mason").setup()
         end
@@ -23,18 +24,22 @@ return {
 
     {
         "williamboman/mason-lspconfig.nvim",
+        event = "VeryLazy",
         config = function ()
             require("mason-lspconfig").setup()
-        end
+        end,
     },
 
     {
         "neovim/nvim-lspconfig",
-        event = { "BufReadPre", "BufNewFile" },
+        -- event = { "BufReadPre", "BufNewFile" },
+        event = "VeryLazy",
         config = function()
             require("beps.plugins.lsp")
         end,
         -- dependencies = {
+        --     "williamboman/mason.nvim",
+        --     "williamboman/mason-lspconfig.nvim",
         -- }
     },
 
@@ -79,5 +84,4 @@ return {
             })
         end
     },
-
 }

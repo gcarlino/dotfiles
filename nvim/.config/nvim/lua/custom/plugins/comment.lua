@@ -1,19 +1,14 @@
 return {
     {
         'numToStr/Comment.nvim',
-        event = { "BufReadPost", "BufNewFile" },
-        -- event = "VeryLazy",
-        config = function()
-            require('Comment').setup()
-        end
+        event = "VeryLazy",
+        opts = {},
     },
+
     {
         "folke/todo-comments.nvim",
-        event = { "BufReadPost", "BufNewFile" },
-        -- event = "VeryLazy",
-        config = function()
-            require("todo-comments").setup {
-            }
-        end
+        event = "VeryLazy",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        opts = {}
     }
 }

@@ -2,7 +2,9 @@ return {
     {
         'nvim-treesitter/nvim-treesitter',
         version = false,
-        event = { "BufReadPost", "BufNewFile" },
+        -- event = { "BufReadPost", "BufNewFile" },
+        event = "VeryLazy",
+        cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
         build = ":TSUpdate",
         config = function ()
             require('beps.plugins.treesitter')
