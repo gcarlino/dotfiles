@@ -6,28 +6,39 @@ local dapui = require("dapui")
 -- Function to configure adapters
 function M.config_dap()
 
-    -- C/C++/Rust (via vscode-cpptools)
-    local codelldbPath = ""
-    if vim.fn.has("mac") == 1 then
-        codelldbPath = "/Users/beps/.local/share/nvim/mason/packages/codelldb/codelldb"
-    else
-        codelldbPath = "/home/carlino/.local/share/nvim/mason/packages/codelldb/codelldb"
-    end
-
-    dap.adapters.cpp = {
+    dap.adapters.codelldb = {
         type = "server",
         port = "${port}",
         executable = {
-            command = codelldbPath,
+            command = vim.fn.stdpath('data') .. '/mason/packages/codelldb/codelldb',
             args = {"--port", "${port}"}
         }
 
     }
-    dap.adapters.c = dap.adapters.cpp
-    dap.adapters.fortran = dap.adapters.cpp
+    dap.adapters.cpp = dap.adapters.codelldb
+    dap.adapters.c = dap.adapters.codelldb
+    dap.adapters.fortran = dap.adapters.codelldb
 
     -- Load local configurations
     require('dap.ext.vscode').load_launchjs('./.nvim-dap/launch.json')
+
+    -- dap.configurations.cpp = {
+    --     {
+    --         name = "Launch file",
+    --         type = "codelldb",
+    --         request = "launch",
+    --         program = function()
+    --             return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+    --         end,
+    --         cwd = '${workspaceFolder}',
+    --         args = {
+    --             "/media/disc2/massimiliano/PROJ_SHPTODONCAR/SHPTODONCAR/esempio/grafo_connesso.shp",
+    --             "-id",
+    --             "id"
+    --         },
+    --         stopOnEntry = false,
+    --     },
+    -- }
 
     -- Python debug
     -- require('dap-python').setup('~/.virtualenvs/neovim3/bin/python')
@@ -37,15 +48,17 @@ end
 
 -- Clear configurations
 function M.clear_configurations()
+    dap.configurations.codelldb = {}
     dap.configurations.cpp = {}
     dap.configurations.c = {}
-    dap.configurations.python = {}
     dap.configurations.fortran = {}
+    dap.configurations.python = {}
 end
 
 -- nvim-dap-ui
 dapui.setup()
 
+-- telescope
 local tstatus, telescope = pcall(require, 'telescope')
 if tstatus then
     telescope.load_extension('dap')
