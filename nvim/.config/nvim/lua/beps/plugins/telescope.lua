@@ -11,10 +11,12 @@ telescope.setup {
     defaults = {
         mappings = {
             i = {
-                ['<M-v>'] = require('telescope.actions.layout').toggle_preview,
+                ["<M-v>"] = require('telescope.actions.layout').toggle_preview,
                 ["<M-t>"] = trouble.open_with_trouble,
+                ["<C-h>"] = "which_key",
             },
             n = {
+                ["<M-v>"] = require('telescope.actions.layout').toggle_preview,
                 ["<M-t>"] = trouble.open_with_trouble,
             }
         },
@@ -25,6 +27,18 @@ telescope.setup {
             prompt_position = 'top',
             preview_width = 0.5
         },
+        dynamic_preview_title = true,
+        file_ignore_patterns = { "^.git/"},
+        -- vimgrep_arguments = {
+        --     "rg",
+        --     "--color=never",
+        --     "--no-heading",
+        --     "--with-filename",
+        --     "--line-number",
+        --     "--column",
+        --     "--smart-case",
+        --     "--iglob !**/.git/*"
+        -- }
     },
     pickers = {
         buffers = {
@@ -36,11 +50,14 @@ telescope.setup {
             },
         },
         find_files = {
-			find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
+            -- find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
+            no_ignore = true,
+            hidden = true,
         },
-    },
-    preview = {
-        hide_on_startup = false
+        live_grep = {
+            no_ignore = true,
+            hidden = true,
+        }
     },
     extensions = {
         file_browser = {
@@ -48,7 +65,7 @@ telescope.setup {
             respect_gitignore = false,
             hidden = true,
         },
-        dash = { },
+        dash = {},
         ["ui-select"] = {
             require("telescope.themes").get_dropdown()
         },
@@ -124,7 +141,7 @@ vim.keymap.set('n', '<leader>gb', function() builtin.git_bcommits() end,
 )
 
 -- Search for dotfiles
-vim.keymap.set('n', '<leader>ed',
+vim.keymap.set('n', '<leader>fd',
     function()
         builtin.git_files {
             cwd = "~/.dotfiles/",
