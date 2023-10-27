@@ -30,7 +30,8 @@ vim.keymap.set('n', '<C-l>', '<C-w>l', {desc = 'Move to right split.'})
 
 -- No highlight
 -- vim.keymap.set('n', '<C-c>', ':noh<CR>', { desc = "No highlight" })
-vim.keymap.set('n', '<leader><CR>', ':noh<CR>', { desc = "No highlight" })
+-- vim.keymap.set('n', '<leader><CR>', ':noh<CR>', { desc = "No highlight" })
+vim.keymap.set('n', "/<esc>", ":noh<CR>", { desc = "No highlight" })
 
 -- Move lines around
 vim.api.nvim_set_keymap('n', '<M-k>', ':m .-2<CR>==', { noremap = true })
