@@ -55,39 +55,28 @@ return {
     {
         "lukas-reineke/indent-blankline.nvim",
         event = "VeryLazy",
-        opts = {
-            indent = {
-                char = "│",
-                tab_char = "│",
-            },
-            -- scope = { enabled = false },
-            scope = {
-                show_start = false,
-                show_end = false,
-                include = {
-                    node_type = {
-                        lua = {
-                            "return_statement",
-                            "table_constructor"
-                        },
+        main = "ibl",
+        config = function ()
+            require("ibl").setup({
+                indent = {
+                    char =  "▏",
+                    tab_char =  "▏",
+                },
+                scope = {
+                    enabled = true,
+                    show_start = false,
+                    show_end = false,
+                    include = {
+                        node_type = {
+                            lua = {
+                                "return_statement",
+                                "table_constructor"
+                            }
+                        }
                     }
                 }
-            },
-            exclude = {
-                filetypes = {
-                    "help",
-                    "alpha",
-                    "neo-tree",
-                    "Trouble",
-                    "lazy",
-                    "mason",
-                    "notify",
-                    "toggleterm",
-                    "lazyterm",
-                },
-            },
-        },
-        main = "ibl",
+            })
+        end
     },
 
     {
