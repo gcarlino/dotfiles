@@ -153,6 +153,12 @@ require 'lualine'.setup {
         },
         lualine_x = {
             {
+                'selectioncount',
+            },
+            {
+                'searchcount'
+            },
+            {
                 getLSP,
                 icon = '',
                 color = {
@@ -188,7 +194,7 @@ require 'lualine'.setup {
             {
                 'progress',
                 padding = {left = 1, right = 1}
-            }
+            },
         }
     },
     inactive_sections = {
