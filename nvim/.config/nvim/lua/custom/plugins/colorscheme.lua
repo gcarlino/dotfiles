@@ -53,7 +53,7 @@ return {
         enabled = true,
         config = function ()
             require('onedark').setup({
-                style = 'dark',
+                style = 'light',
                 toggle_style_key = '<leader>ts',
             })
             require('onedark').load()
