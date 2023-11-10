@@ -18,6 +18,7 @@ function M.config_dap()
     dap.adapters.cpp = dap.adapters.codelldb
     dap.adapters.c = dap.adapters.codelldb
     dap.adapters.fortran = dap.adapters.codelldb
+    dap.adapters.fortran08 = dap.adapters.codelldb
 
     -- Load local configurations
     require('dap.ext.vscode').load_launchjs('./.nvim-dap/launch.json')
@@ -110,6 +111,9 @@ vim.keymap.set('n', '<F8>', function() dap.run_to_cursor() end,
     { desc = "DAP: debug run to cursor" })
 vim.keymap.set('n', '<F9>', function() dap.toggle_breakpoint() end,
     { desc = "DAP: debug toggle breakpoint" })
+
+vim.keymap.set("n", "<F6>", function() dap.up() end, { desc = "DAP: up in the stack." })
+vim.keymap.set("n", "<F7>", function() dap.down() end, { desc = "DAP: downupup in the stack." })
 
 vim.keymap.set('n', '<leader>db', function() dap.set_breakpoint(vim.fn.input("Breakpoint condition: ")) end,
     { desc = "DAP: debug set breakpoint condition" })
