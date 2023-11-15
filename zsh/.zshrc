@@ -71,8 +71,8 @@ source $ZSH/oh-my-zsh.sh
 # Get OS
 OS="$(uname -s)"
 
-
 export MANPATH="/usr/local/man:$MANPATH"
+export MANPAGER="nvim +Man!"
 
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
