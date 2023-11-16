@@ -83,12 +83,6 @@ return {
 
     -- Various
     {
-        "mbbill/undotree",
-        event = { "BufReadPost" },
-        keys = { {"<leader>u", vim.cmd.UndotreeToggle, desc = "Toggle Undotree"}}
-    },
-
-    {
         "windwp/nvim-autopairs",
         event = { "BufReadPost", "BufNewFile" },
         config = function()
