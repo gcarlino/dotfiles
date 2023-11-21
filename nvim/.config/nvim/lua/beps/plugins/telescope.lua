@@ -28,7 +28,7 @@ telescope.setup {
             preview_width = 0.5
         },
         dynamic_preview_title = true,
-        file_ignore_patterns = { "^.git/"},
+        file_ignore_patterns = { "^.git/" },
         -- vimgrep_arguments = {
         --     "rg",
         --     "--color=never",
@@ -65,7 +65,7 @@ telescope.setup {
             respect_gitignore = false,
             hidden = true,
         },
-        dash = {},
+        -- dash = {},
         ["ui-select"] = {
             require("telescope.themes").get_dropdown()
         },
@@ -76,7 +76,6 @@ telescope.setup {
 require('telescope').load_extension 'file_browser'
 require('telescope').load_extension('fzf')
 require("telescope").load_extension("ui-select")
-
 
 -- Keymaps
 local builtin = require('telescope.builtin')

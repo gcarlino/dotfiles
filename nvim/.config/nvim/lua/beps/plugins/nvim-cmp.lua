@@ -1,13 +1,14 @@
 -- hrsh7th/nvim-cmp
-local status, cmp = pcall(require, 'cmp')
-if not status then
-    return
-end
-local lstatus, luasnip = pcall(require, 'luasnip')
-if not lstatus then
-    return
-end
-
+-- local status, cmp = pcall(require, 'cmp')
+-- if not status then
+--     return
+-- end
+-- local lstatus, luasnip = pcall(require, 'luasnip')
+-- if not lstatus then
+--     return
+-- end
+local cmp = require('cmp')
+local luasnip = require('luasnip')
 local lspkind = require('lspkind')
 
 local has_words_before = function()
@@ -15,9 +16,10 @@ local has_words_before = function()
     return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
-vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
-
 cmp.setup({
+    completion = {
+        completeopt = "menu, menuone, noselect",
+    },
     snippet = {
         expand = function(args)
             luasnip.lsp_expand(args.body)
@@ -31,7 +33,13 @@ cmp.setup({
         { name = "buffer", keyword_length = 3 },
         { name = "path" },
         -- { name = "cmdline" },
-        { name = "latex_symbols" },
+        {
+            name = "latex_symbols",
+            option = {
+                strategy = 0, -- show the command and insert the symbol
+                -- strategy = 2, -- show and insert the command
+            }
+        },
         { name = "dap" },
         { name = "cmp_nvim_r" },
     },
@@ -71,7 +79,8 @@ cmp.setup({
     }),
     -- nvim-cmp by defaults disables autocomplete for prompt buffers
     enabled = function()
-        return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
+        -- return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
+        return vim.api.nvim_get_option_value("buftype", {buf = 0}) ~= "prompt"
             or require("cmp_dap").is_dap_buffer()
     end,
     formatting = {
@@ -122,7 +131,7 @@ cmp.setup.filetype({'html'}, {
 cmp.setup.cmdline({ '/', '?' }, {
     mapping = cmp.mapping.preset.cmdline(),
     sources = {
-        { name = 'buffer', keyword_length = 3 }
+        { name = 'buffer' }
     }
 })
 
@@ -130,16 +139,21 @@ cmp.setup.cmdline({ '/', '?' }, {
 cmp.setup.cmdline(':', {
     mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources({
-        { name = 'path', keyword_length = 3 },
+        {
+            name = 'path',
+            keyword_length = 3
+        },
         {
             name = 'cmdline',
-            keyword_length = 2,
             ignore_cmds = { 'Man', '!' }
         },
-        { name = 'buffer'}
+        {
+            name = 'buffer',
+            keyword_length = 3
+        }
     })
 })
 
 -- Load snippets
-require('luasnip.loaders.from_vscode').lazy_load()
+-- require('luasnip.loaders.from_vscode').lazy_load()
 -- }}}

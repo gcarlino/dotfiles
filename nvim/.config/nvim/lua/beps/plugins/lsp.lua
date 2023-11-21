@@ -18,17 +18,14 @@ for type, icon in pairs(signs) do
 end
 
 -- lspconfig
-local lstatus, lspconfig = pcall(require, 'lspconfig')
-if not lstatus then
-    return
-end
+local lspconfig = require("lspconfig")
+local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
 local lsp_defaults = lspconfig.util.default_config
-
 lsp_defaults.capabilities = vim.tbl_deep_extend(
     'force',
     lsp_defaults.capabilities,
-    require('cmp_nvim_lsp').default_capabilities()
+    cmp_nvim_lsp.default_capabilities()
 )
 
 lspconfig.pylsp.setup({

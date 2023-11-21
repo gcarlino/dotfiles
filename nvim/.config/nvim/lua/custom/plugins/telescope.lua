@@ -2,8 +2,8 @@ return {
     {
         'nvim-telescope/telescope.nvim',
         -- tag = '0.1.1',
-        cmd = 'Telescope',
-        -- event = "VeryLazy",
+        -- cmd = 'Telescope',
+        event = "VeryLazy",
         config = function()
             require('beps.plugins.telescope')
         end,
@@ -18,6 +18,11 @@ return {
             { 'nvim-telescope/telescope-ui-select.nvim' },
             "nvim-telescope/telescope-dap.nvim",
         }
+    },
+
+    {
+        "nvim-lua/plenary.nvim",
+        event = "VeryLazy"
     },
 
     {

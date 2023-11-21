@@ -1,31 +1,32 @@
 return {
-    { "nvim-lua/plenary.nvim", lazy = true },
+    -- { "nvim-lua/plenary.nvim", lazy = true },
 
     {
         "folke/trouble.nvim",
         event = { "BufReadPost", "BufNewFile" },
+        dependencies = { "nvim-tree/nvim-web-devicons" },
         -- opts = {
         --     mode = "document_diagnostics"
         -- },
-        config = function ()
+        config = function()
             require('trouble').setup({})
-            vim.keymap.set("n", "<leader>xx", function () require("trouble").toggle() end,
+            vim.keymap.set("n", "<leader>xx", function() require("trouble").toggle() end,
                 { silent = true, noremap = true, desc = "Trouble: toggle the list." }
             )
-            vim.keymap.set("n", "<leader>xw", function () require("trouble").toggle("workspace_diagnostics") end,
+            vim.keymap.set("n", "<leader>xw", function() require("trouble").toggle("workspace_diagnostics") end,
                 { silent = true, noremap = true, desc = "Trouble: workspace diagnostics." }
             )
-            vim.keymap.set("n", "<leader>xd", function () require("trouble").toggle("document_diagnostics") end,
-                {silent = true, noremap = true, desc = "Trouble: document diagnostics."}
+            vim.keymap.set("n", "<leader>xd", function() require("trouble").toggle("document_diagnostics") end,
+                { silent = true, noremap = true, desc = "Trouble: document diagnostics." }
             )
-            vim.keymap.set("n", "<leader>xl", function () require("trouble").toggle("loclist") end,
-                {silent = true, noremap = true, desc = "Trouble: items from the window's location list."}
+            vim.keymap.set("n", "<leader>xl", function() require("trouble").toggle("loclist") end,
+                { silent = true, noremap = true, desc = "Trouble: items from the window's location list." }
             )
             vim.keymap.set("n", "<leader>xq", function() require("trouble").toggle("quickfix") end,
-                {silent = true, noremap = true, desc = "Trouble: quickfix items."}
+                { silent = true, noremap = true, desc = "Trouble: quickfix items." }
             )
             vim.keymap.set("n", "gR", function() require("trouble").toggle("lsp_references") end,
-                {silent = true, noremap = true, desc = "Trouble: references of the word under the cursor."}
+                { silent = true, noremap = true, desc = "Trouble: references of the word under the cursor." }
             )
         end,
     },
@@ -35,7 +36,7 @@ return {
         verstion = "*",
         cmd = 'NvimTreeToggle',
         keys = {
-            {'<leader>n', ':NvimTreeToggle<CR>', desc = "Toggle nvim-tree" }
+            { '<leader>n', ':NvimTreeToggle<CR>', desc = "Toggle nvim-tree" }
         },
         config = function()
             require('nvim-tree').setup({
@@ -46,7 +47,7 @@ return {
                     group_empty = true,
                 },
                 filters = {
-                    custom = {'.DS_Store'}
+                    custom = { '.DS_Store' }
                 }
             })
         end,
@@ -113,10 +114,11 @@ return {
 
     {
         "linux-cultist/venv-selector.nvim",
-        dependencies = { "neovim/nvim-lspconfig", "nvim-telescope/telescope.nvim" },
         config = true,
-        -- Optional: needed only if you want to type `:VenvSelect` without a keymapping
-        event = "VeryLazy",
-
-    }
+        ft = "python",
+        dependencies = {
+            "neovim/nvim-lspconfig",
+            "nvim-telescope/telescope.nvim"
+        },
+    },
 }

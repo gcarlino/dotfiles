@@ -1,8 +1,8 @@
 return {
     {
         "lewis6991/gitsigns.nvim",
-        event = "VeryLazy",
-        -- event = { "BufReadPre", "BufNewFile" },
+        -- event = "VeryLazy",
+        event = { "BufReadPre", "BufNewFile" },
         config = function ()
             require("beps.plugins.gitsigns")
         end

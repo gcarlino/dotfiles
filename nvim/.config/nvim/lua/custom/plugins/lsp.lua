@@ -15,32 +15,24 @@
 
 return {
     {
-        "williamboman/mason.nvim",
-        event = "VeryLazy",
-        config = function ()
-            require("mason").setup()
-        end
-    },
-
-    {
-        "williamboman/mason-lspconfig.nvim",
-        event = "VeryLazy",
-        config = function ()
-            require("mason-lspconfig").setup()
-        end,
-    },
-
-    {
         "neovim/nvim-lspconfig",
-        -- event = { "BufReadPre", "BufNewFile" },
-        event = "VeryLazy",
+        event = { "BufReadPre", "BufNewFile" },
         config = function()
             require("beps.plugins.lsp")
         end,
-        -- dependencies = {
-        --     "williamboman/mason.nvim",
-        --     "williamboman/mason-lspconfig.nvim",
-        -- }
+        dependencies = {
+            "williamboman/mason.nvim",
+            "williamboman/mason-lspconfig.nvim",
+            "hrsh7th/cmp-nvim-lsp",
+        }
+    },
+
+    {
+        "williamboman/mason.nvim",
+        cmd = "Mason",
+        config = function ()
+            require("mason").setup()
+        end
     },
 
     -- Currently disabled since python linters are managed by pylsp
@@ -49,11 +41,9 @@ return {
         enabled = false,
         config = function()
             local lint = require("lint")
-
             -- lint.linters_by_ft = {
             --     html = { 'tidy' }
             -- }
-
             -- lint on save
             vim.api.nvim_create_autocmd({ "BufWritePost" }, {
                 callback = function()
