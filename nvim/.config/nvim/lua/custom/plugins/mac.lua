@@ -11,24 +11,26 @@ else
 
         {
             "epwalsh/obsidian.nvim",
+            version = "*",
             lazy = true,
-            enabled = false,
-            event = { "BufReadPre /Users/beps/Simularia/Notes/**.md" },
+            ft = "markdown",
             dependencies = {
                 "nvim-lua/plenary.nvim",
-                "hrsh7th/nvim-cmp",
+                -- "hrsh7th/nvim-cmp",
             },
             opts = {
-                dir = "~/Simularia/Notes/",
-                mappings = {
-                    -- ["gf"] = require("obsidian.mapping").gf_passthrough(),
+                workspaces = {
+                    {
+                        name = "Simularia",
+                        path= "~/Simularia/Notes/",
+                    },
                 },
                 completion = {
                     nvim_cmp = true,
-                    prepend_note_id = false,
+                    -- prepend_note_id = false,
                 },
                 open_app_foreground = true,
             }
-        }
+        },
     }
 end
