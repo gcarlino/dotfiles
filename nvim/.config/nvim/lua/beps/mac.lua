@@ -28,11 +28,12 @@ vim.keymap.set('n', '<leader>mk', ':!open -a "/Applications/Marked 2.app" "%"<CR
     { desc = "Preview with Marked app", silent = true })
 
 -- Open Dash for documentation *** KEYMAP NOT WORKING ***
-vim.keymap.set('n','<leader>ds',
-    function() require('dash.providers.telescope').dash(
-            { bang = false, initial_text = vim.fn.expand("<cword>") })
-    end,
-    { desc = "Search with Dash app." })
+-- vim.keymap.set('n', '<leader>ds',
+--     function()
+--         require('dash.providers.telescope').dash(
+--             { bang = false, initial_text = vim.fn.expand("<cword>") })
+--     end,
+--     { desc = "Search with Dash app." })
 --
 -- vimr
 -- if vim.fn.has("gui_vimr") == 1 then

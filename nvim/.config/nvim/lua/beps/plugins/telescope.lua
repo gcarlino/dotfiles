@@ -1,9 +1,4 @@
-local status, telescope = pcall(require, 'telescope')
-if not status then
-    print('Telescope is not available.')
-    return
-end
-
+local telescope = require("telescope")
 local actions = require("telescope.actions")
 local trouble = require("trouble.providers.telescope")
 
@@ -13,7 +8,7 @@ telescope.setup {
             i = {
                 ["<M-v>"] = require('telescope.actions.layout').toggle_preview,
                 ["<M-t>"] = trouble.open_with_trouble,
-                ["<C-h>"] = "which_key",
+                -- ["<C-h>"] = "which_key",
             },
             n = {
                 ["<M-v>"] = require('telescope.actions.layout').toggle_preview,
@@ -73,9 +68,10 @@ telescope.setup {
 }
 
 -- Load extensions
-require('telescope').load_extension 'file_browser'
-require('telescope').load_extension('fzf')
-require("telescope").load_extension("ui-select")
+telescope.load_extension('fzf')
+telescope.load_extension 'file_browser'
+telescope.load_extension("ui-select")
+-- telescope.load_extension("dap")
 
 -- Keymaps
 local builtin = require('telescope.builtin')

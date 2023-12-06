@@ -56,14 +56,14 @@ function M.clear_configurations()
     dap.configurations.python = {}
 end
 
--- nvim-dap-ui
-dapui.setup()
-
 -- telescope
 local tstatus, telescope = pcall(require, 'telescope')
 if tstatus then
     telescope.load_extension('dap')
 end
+
+-- nvim-dap-ui
+dapui.setup()
 
 -- Breakpoint symbols
 vim.fn.sign_define('DapBreakpoint', { icon = '●', text = '●', texthl = "DiagnosticSignError", linehl = '', numhl = '' })
@@ -88,7 +88,8 @@ vim.keymap.set("n", "<leader>dd",
     function()
         M.clear_configurations()
         M.config_dap()
-        dap.continue()
+        -- dap.continue()
+        telescope.extensions.dap.configurations{}
     end,
     { desc = "DAP: debug load configurations with Telescope" }
 )
@@ -131,6 +132,21 @@ vim.keymap.set('n', '<leader>dc', function() dapui.close({}) end,
 -- hover
 vim.keymap.set({ 'n', 'x' }, '<leader>i', function() dapui.eval() end,
     { desc = "DAP: open a floating window containing the result of evaluting an expression" })
+
+vim.keymap.set({'n', 'v'}, '<Leader>dh', function()
+    require('dap.ui.widgets').hover()
+end, { desc = "DAP: expression in a floating window" })
+vim.keymap.set({'n', 'v'}, '<Leader>dp', function()
+    require('dap.ui.widgets').preview()
+end, { desc = "DAP: expression in the preview window" })
+vim.keymap.set('n', '<Leader>df', function()
+    local widgets = require('dap.ui.widgets')
+    widgets.centered_float(widgets.frames)
+end, { desc = "DAP: print the stack frames" })
+vim.keymap.set('n', '<Leader>ds', function()
+    local widgets = require('dap.ui.widgets')
+    widgets.centered_float(widgets.scopes)
+    end, { desc = "DAP: print variables in the current scopes" })
 
 -- Reload launch json configuration
 vim.keymap.set('n', '<leader>dl', function() require("dap.ext.vscode").load_launchjs("./.nvim-dap/launch.json") end,

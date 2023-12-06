@@ -1,7 +1,15 @@
 return {
     {
+        "arzg/vim-colors-xcode",
+        lazy = false,
+        priority = 1000,
+        config = function ()
+            -- vim.cmd.colorscheme("xcodelight")
+        end
+    },
+
+    {
         'EdenEast/nightfox.nvim',
-        -- event = "VimEnter",
         lazy = false,
         priority = 1000,
         enabled = false,
@@ -14,7 +22,7 @@ return {
                     }
                 }
             })
-            vim.cmd.colorscheme('nordfox')
+            -- vim.cmd.colorscheme('nordfox')
         end,
     },
 
@@ -22,11 +30,11 @@ return {
         'sainnhe/edge',
         lazy = false,
         priority = 1000,
-        enabled = false,
+        enabled = true,
         config = function ()
             vim.g.edge_style='aura'
             vim.g.edge_better_performance = 1
-            vim.cmd.colorscheme('edge')
+            -- vim.cmd.colorscheme('edge')
         end
     },
 
@@ -34,7 +42,7 @@ return {
         'catppuccin/nvim',
         name = 'catppuccin',
         priority = 1000,
-        enabled = false,
+        enabled = true,
         config = function ()
             require('catppuccin').setup({
                 flavour = "macchiato",
@@ -43,7 +51,7 @@ return {
                     light = 'latte',
                 },
             })
-            vim.cmd.colorscheme('catppuccin-macchiato')
+            -- vim.cmd.colorscheme('catppuccin-macchiato')
         end
     },
 
@@ -75,7 +83,7 @@ return {
                 sidebars = { "qf", "help" },
                 lualine_bold = false,
             })
-            vim.cmd.colorscheme('tokyonight')
+            -- vim.cmd.colorscheme('tokyonight')
         end
     },
 
@@ -83,12 +91,12 @@ return {
         'projekt0n/github-nvim-theme',
         lazy = false, -- make sure we load this during startup if it is your main colorscheme
         priority = 1000, -- make sure to load this before all the other start plugins
-        enabled = false,
+        enabled = true,
         config = function()
             require('github-theme').setup({
                 -- ...
             })
 
-            vim.cmd('colorscheme github_dark')
+            -- vim.cmd('colorscheme github_dark')
         end,
     }}

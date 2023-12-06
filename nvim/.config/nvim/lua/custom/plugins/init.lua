@@ -1,5 +1,23 @@
 return {
-    -- { "nvim-lua/plenary.nvim", lazy = true },
+    { "nvim-lua/plenary.nvim", lazy = true },
+
+    {
+        "folke/which-key.nvim",
+        event = "VeryLazy",
+        config = function()
+            -- vim.o.timeout = true
+            -- vim.o.timeoutlen = 400
+            require("which-key").setup({
+                window = {
+                    border = 'single'
+                },
+                disable = {
+                    buftypes = {},
+                    filetypes = { "TelescopePrompt" },
+                },
+            })
+        end,
+    },
 
     {
         "folke/trouble.nvim",
@@ -33,24 +51,25 @@ return {
 
     {
         "nvim-tree/nvim-tree.lua",
-        verstion = "*",
+        version = "*",
         cmd = 'NvimTreeToggle',
         keys = {
             { '<leader>n', ':NvimTreeToggle<CR>', desc = "Toggle nvim-tree" }
         },
-        config = function()
-            require('nvim-tree').setup({
-                view = {
-                    width = 30,
-                },
-                renderer = {
-                    group_empty = true,
-                },
-                filters = {
-                    custom = { '.DS_Store' }
-                }
-            })
-        end,
+        opts = {},
+        -- config = function()
+        --     require('nvim-tree').setup({
+        --         view = {
+        --             width = 30,
+        --         },
+        --         renderer = {
+        --             group_empty = true,
+        --         },
+        --         filters = {
+        --             custom = { '.DS_Store' }
+        --         }
+        --     })
+        -- end,
         dependencies = {
             "nvim-tree/nvim-web-devicons"
         },
@@ -80,6 +99,7 @@ return {
 
     {
         "lervag/vimtex",
+        ft = "tex",
         config = function()
             vim.g.vimtex_view_method = 'skim'
             vim.g.vimtex_view_skim_activate = 1

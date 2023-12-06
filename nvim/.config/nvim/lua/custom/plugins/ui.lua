@@ -3,7 +3,7 @@ return {
         "lewis6991/gitsigns.nvim",
         -- event = "VeryLazy",
         event = { "BufReadPre", "BufNewFile" },
-        config = function ()
+        config = function()
             require("beps.plugins.gitsigns")
         end
     },
@@ -40,7 +40,7 @@ return {
                 setopt = true,
                 relculright = true,
                 segments = {
-                    { text = { "%s" }, click = "v:lua.ScSa" },
+                    { text = { "%s" },             click = "v:lua.ScSa" },
                     {
                         text = { builtin.lnumfunc, " " },
                         condition = { true, builtin.not_empty },
@@ -56,11 +56,11 @@ return {
         "lukas-reineke/indent-blankline.nvim",
         event = "VeryLazy",
         main = "ibl",
-        config = function ()
+        config = function()
             require("ibl").setup({
                 indent = {
-                    char =  "▏",
-                    tab_char =  "▏",
+                    char = "▏",
+                    tab_char = "▏",
                 },
                 scope = {
                     enabled = true,
@@ -83,9 +83,9 @@ return {
         'lukas-reineke/virt-column.nvim',
         enabled = false,
         event = "VeryLazy",
-        config = function ()
+        config = function()
             require('virt-column').setup({
-                char = "│" ,
+                char = "│",
             })
         end
     },
@@ -93,10 +93,10 @@ return {
     {
         'chentoast/marks.nvim',
         enabled = false,
-        event = { "BufReadPost", "BufNewFile" },
+        event = "VeryLazy",
+        -- event = { "BufReadPost", "BufNewFile" },
         config = function()
             require('marks').setup()
         end,
     },
 }
-

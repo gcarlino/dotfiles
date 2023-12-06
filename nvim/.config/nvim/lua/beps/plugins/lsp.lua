@@ -90,10 +90,10 @@ lspconfig.marksman.setup({})
 lspconfig.r_language_server.setup({})
 
 -- Global mappings
-vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
-vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
+vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, { desc = "Diagnostics" })
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = "Previous diagnostics" })
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = "Next diagnostics" })
+vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, { desc = "Diagnostics loclist" })
 
 -- mapping description function
 local optsDesc = function (ev, mdesc)
@@ -122,7 +122,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
         vim.keymap.set('n', 'K', vim.lsp.buf.hover, optsDesc(ev, 'LSP show hover information.'))
         vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, optsDesc(ev, 'Show implementation.'))
-        vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, optsDesc(ev, 'LSP signature help'))
+        vim.keymap.set('n', '<leader>k', vim.lsp.buf.signature_help, optsDesc(ev, 'LSP signature help'))
         vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, optsDesc(ev, 'LSP add workspace folder'))
         vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, optsDesc(ev, 'LSP remove workspace folder'))
         vim.keymap.set('n', '<space>wl',

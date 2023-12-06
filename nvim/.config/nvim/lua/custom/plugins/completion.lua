@@ -26,7 +26,8 @@ return {
 
     {
         'L3MON4D3/LuaSnip',
-        event = 'InsertCharPre',
+        lazy = true,
+        -- event = 'InsertCharPre',
         dependencies = {
             "rafamadriz/friendly-snippets",
             -- "saadparwaiz1/cmp_luasnip",
