@@ -1,24 +1,19 @@
 return {
+
     {
         "mfussenegger/nvim-dap",
         -- cmd = "DapContinue",
         event = "VeryLazy",
         -- event = { "BufReadPost", "BufNewFile" },
-        config = function()
-            require('beps.plugins.dap')
-        end,
         dependencies = {
+            "rcarriga/nvim-dap-ui",
             "nvim-telescope/telescope-dap.nvim",
             "mfussenegger/nvim-dap-python",
             "theHamsta/nvim-dap-virtual-text",
-        }
+        },
+        config = function()
+            require('beps.plugins.dap')
+        end,
     },
 
-    {
-        "rcarriga/nvim-dap-ui",
-        lazy = true,
-        dependencies = {
-            "mfussenegger/nvim-dap"
-        },
-    },
 }

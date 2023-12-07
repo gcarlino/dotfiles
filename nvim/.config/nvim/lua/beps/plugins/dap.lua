@@ -96,36 +96,48 @@ vim.keymap.set("n", "<leader>dd",
 
 vim.keymap.set('n', '<F5>', function() dap.continue() end,
     { desc = "DAP: debug continue" })
+
 vim.keymap.set('n', '<F4>', function() dap.run_last() end,
     { desc = "DAP: debug run last configuration" })
+
 vim.keymap.set('n', '<F3>', function() dap.pause() end,
     { desc = "DAP: debug pause" })
+
 vim.keymap.set('n', '<F2>', function() dap.terminate() end,
     { desc = "DAP: debug terminate" })
+
 vim.keymap.set('n', '<F10>', function() dap.step_over() end,
     { desc = "DAP: debug step over" })
+
 vim.keymap.set('n', '<F11>', function() dap.step_into() end,
     { desc = "DAP: debug step into" })
+
 vim.keymap.set('n', '<F12>', function() dap.step_out() end,
     { desc = "DAP: debug step out" })
+
 vim.keymap.set('n', '<F8>', function() dap.run_to_cursor() end,
     { desc = "DAP: debug run to cursor" })
+
 vim.keymap.set('n', '<F9>', function() dap.toggle_breakpoint() end,
     { desc = "DAP: debug toggle breakpoint" })
 
 vim.keymap.set("n", "<F6>", function() dap.up() end, { desc = "DAP: up in the stack." })
+
 vim.keymap.set("n", "<F7>", function() dap.down() end, { desc = "DAP: downupup in the stack." })
 
 vim.keymap.set('n', '<leader>db', function() dap.set_breakpoint(vim.fn.input("Breakpoint condition: ")) end,
     { desc = "DAP: debug set breakpoint condition" })
+
 vim.keymap.set('n', '<leader>dx',
     function()
         dap.disconnect()
         dap.close()
     end,
     { desc = "DAP: debug disconnect" })
+
 vim.keymap.set('n', '<leader>dt', function() dapui.toggle({}) end,
     { desc = "DAP: debug toggle dap-ui" })
+
 vim.keymap.set('n', '<leader>dc', function() dapui.close({}) end,
     { desc = "DAP: debug close dap-ui" })
 
@@ -136,13 +148,16 @@ vim.keymap.set({ 'n', 'x' }, '<leader>i', function() dapui.eval() end,
 vim.keymap.set({'n', 'v'}, '<Leader>dh', function()
     require('dap.ui.widgets').hover()
 end, { desc = "DAP: expression in a floating window" })
+
 vim.keymap.set({'n', 'v'}, '<Leader>dp', function()
     require('dap.ui.widgets').preview()
 end, { desc = "DAP: expression in the preview window" })
+
 vim.keymap.set('n', '<Leader>df', function()
     local widgets = require('dap.ui.widgets')
     widgets.centered_float(widgets.frames)
 end, { desc = "DAP: print the stack frames" })
+
 vim.keymap.set('n', '<Leader>ds', function()
     local widgets = require('dap.ui.widgets')
     widgets.centered_float(widgets.scopes)
