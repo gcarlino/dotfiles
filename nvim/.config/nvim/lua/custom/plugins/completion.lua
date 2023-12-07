@@ -18,7 +18,7 @@ return {
             'L3MON4D3/LuaSnip',
             "rafamadriz/friendly-snippets",
             'saadparwaiz1/cmp_luasnip',
-            'rcarriga/cmp-dap',
+            -- 'rcarriga/cmp-dap',
             'jalvesaq/cmp-nvim-r',
             'kdheepak/cmp-latex-symbols',
         },

@@ -1,7 +1,6 @@
 local M = {}
 
 local dap = require("dap")
-local dapui = require("dapui")
 
 -- Function to configure adapters
 function M.config_dap()
@@ -63,6 +62,7 @@ if tstatus then
 end
 
 -- nvim-dap-ui
+local dapui = require("dapui")
 dapui.setup()
 
 -- Breakpoint symbols

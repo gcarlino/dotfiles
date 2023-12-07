@@ -3,8 +3,8 @@ return {
         'nvim-telescope/telescope.nvim',
         -- tag = '0.1.5',
         branch = "0.1.x",
-        cmd = 'Telescope',
-        -- event = "VeryLazy",
+        -- cmd = 'Telescope',
+        event = "VeryLazy",
         config = function()
             require('beps.plugins.telescope')
         end,
