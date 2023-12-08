@@ -1,27 +1,19 @@
 return {
     { "nvim-lua/plenary.nvim", lazy = true },
 
+    -- measure startuptime
     {
-        "folke/which-key.nvim",
-        event = "VeryLazy",
+        "dstein64/vim-startuptime",
+        cmd = "StartupTime",
         config = function()
-            -- vim.o.timeout = true
-            -- vim.o.timeoutlen = 400
-            require("which-key").setup({
-                window = {
-                    border = 'single'
-                },
-                disable = {
-                    buftypes = {},
-                    filetypes = { "TelescopePrompt" },
-                },
-            })
+            vim.g.startuptime_tries = 10
         end,
     },
 
     {
         "folke/trouble.nvim",
-        event = { "BufReadPost", "BufNewFile" },
+        -- event = { "BufReadPost", "BufNewFile" },
+        lazy = true,
         dependencies = { "nvim-tree/nvim-web-devicons" },
         -- opts = {
         --     mode = "document_diagnostics"
@@ -53,6 +45,9 @@ return {
         "nvim-tree/nvim-tree.lua",
         version = "*",
         cmd = 'NvimTreeToggle',
+        dependencies = {
+            "nvim-tree/nvim-web-devicons"
+        },
         keys = {
             { '<leader>n', ':NvimTreeToggle<CR>', desc = "Toggle nvim-tree" }
         },
@@ -70,9 +65,6 @@ return {
         --         }
         --     })
         -- end,
-        dependencies = {
-            "nvim-tree/nvim-web-devicons"
-        },
     },
 
     {

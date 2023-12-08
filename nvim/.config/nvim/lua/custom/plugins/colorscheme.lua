@@ -1,11 +1,57 @@
 return {
+
+    {
+        'navarasu/onedark.nvim',
+        priority = 1000,
+        enabled = true,
+        config = function()
+            require('onedark').setup({
+                style = 'light',
+                transparent = false,
+
+                toggle_style_key = '<leader>ts',
+                toggle_style_list = {"dark", "warm", "light"},
+
+            })
+            require('onedark').load()
+        end
+    },
+
+    {
+        'catppuccin/nvim',
+        name = 'catppuccin',
+        enabled = true,
+        opts = {
+            integrations = {
+                cmp = true,
+                gitsigns = true,
+                indent_blankline = { enabled = true },
+                markdown = true,
+                telescope = true,
+                treesitter = true,
+                treesitter_context = true,
+                which_key = true,
+                neotree = true,
+                mason = true,
+                native_lsp = {
+                    enabled = true,
+                    underlines = {
+                        errors = { "undercurl" },
+                        hints = { "undercurl" },
+                        warnings = { "undercurl" },
+                        information = { "undercurl" },
+                    }
+                }
+            },
+        },
+    },
+
     {
         "arzg/vim-colors-xcode",
         lazy = false,
         priority = 1000,
-        config = function ()
-            -- vim.cmd.colorscheme("xcodelight")
-        end
+        enabled = false,
+        opts = {},
     },
 
     {
@@ -31,40 +77,10 @@ return {
         lazy = false,
         priority = 1000,
         enabled = true,
-        config = function ()
-            vim.g.edge_style='aura'
+        config = function()
+            vim.g.edge_style = 'aura'
             vim.g.edge_better_performance = 1
             -- vim.cmd.colorscheme('edge')
-        end
-    },
-
-    {
-        'catppuccin/nvim',
-        name = 'catppuccin',
-        priority = 1000,
-        enabled = true,
-        config = function ()
-            require('catppuccin').setup({
-                flavour = "macchiato",
-                background = {
-                    dark = 'macchiato',
-                    light = 'latte',
-                },
-            })
-            -- vim.cmd.colorscheme('catppuccin-macchiato')
-        end
-    },
-
-    {
-        'navarasu/onedark.nvim',
-        priority = 1000,
-        enabled = true,
-        config = function ()
-            require('onedark').setup({
-                style = 'light',
-                toggle_style_key = '<leader>ts',
-            })
-            require('onedark').load()
         end
     },
 
@@ -73,7 +89,7 @@ return {
         lazy = false,
         priority = 1000,
         enabled = false,
-        config = function ()
+        config = function()
             require('tokyonight').setup({
                 style = 'storm',
                 light_style = 'day',
@@ -89,9 +105,9 @@ return {
 
     {
         'projekt0n/github-nvim-theme',
-        lazy = false, -- make sure we load this during startup if it is your main colorscheme
+        lazy = false,    -- make sure we load this during startup if it is your main colorscheme
         priority = 1000, -- make sure to load this before all the other start plugins
-        enabled = true,
+        enabled = false,
         config = function()
             require('github-theme').setup({
                 -- ...
@@ -99,4 +115,4 @@ return {
 
             -- vim.cmd('colorscheme github_dark')
         end,
-    }}
+    } }

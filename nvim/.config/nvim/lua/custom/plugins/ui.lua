@@ -1,4 +1,26 @@
 return {
+
+    { "nvim-tree/nvim-web-devicons", lazy = true },
+
+    {
+        "folke/which-key.nvim",
+        event = "VeryLazy",
+        enables = false,
+        config = function()
+            -- vim.o.timeout = true
+            -- vim.o.timeoutlen = 400
+            require("which-key").setup({
+                window = {
+                    border = 'single'
+                },
+                disable = {
+                    buftypes = {},
+                    filetypes = { "TelescopePrompt" },
+                },
+            })
+        end,
+    },
+
     {
         "lewis6991/gitsigns.nvim",
         -- event = "VeryLazy",
@@ -11,12 +33,12 @@ return {
     {
         'nvim-lualine/lualine.nvim',
         event = "VeryLazy",
+        dependencies = {
+            'nvim-tree/nvim-web-devicons'
+        },
         config = function()
             require('beps.plugins.lualine')
         end,
-        dependencies = {
-            'nvim-tree/nvim-web-devicons'
-        }
     },
 
     {

@@ -138,7 +138,7 @@ require 'lualine'.setup {
                 'filename',
                 file_status = true,
                 newfile_status = true,
-                path = 0,
+                path = 3,
                 shorting_target = 40,
                 -- color = {
                 --     gui = 'italic',
