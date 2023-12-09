@@ -69,7 +69,7 @@ return {
 
     {
         "jalvesaq/Nvim-R",
-        ft = 'r',
+        lazy = false,
         config = function()
             vim.cmd([[
                 let R_assign_map = '<M-->'

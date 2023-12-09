@@ -33,6 +33,7 @@ opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 opt.undofile = true
 opt.updatetime = 200
 opt.wrap = false
+opt.breakindent = true
 opt.colorcolumn = '80'
 
 -- Spell check is enabled by filet type

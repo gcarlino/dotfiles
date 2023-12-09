@@ -40,7 +40,7 @@ cmp.setup({
                 -- strategy = 2, -- show and insert the command
             }
         },
-        -- { name = "dap" },
+        { name = "dap" },
         { name = "cmp_nvim_r" },
     },
     window = {

@@ -131,8 +131,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, optsDesc(ev, 'LSP type definition.'))
         vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, optsDesc(ev, 'LSP buffer rename'))
         vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, optsDesc(ev, 'LSP buffer code action.'))
-        vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end,
-            optsDesc(ev, 'LSP buffer format'))
+        -- vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end,
+        --     optsDesc(ev, 'LSP buffer format'))
 
         -- Telescope LSP commands
         vim.keymap.set('n', '<leader>lt', function() require('telescope.builtin').diagnostics() end,

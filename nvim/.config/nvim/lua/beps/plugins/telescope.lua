@@ -77,9 +77,9 @@ telescope.load_extension("ui-select")
 local builtin = require('telescope.builtin')
 
 -- Reopen last used telescope window keeping focus to current buffer
-vim.keymap.set("n", ";",
-    "<cmd>lua require('telescope.builtin').resume(require('telescope.themes').get_ivy({}))<cr>",
-    { desc = " Resume telescope" })
+-- vim.keymap.set("n", ";",
+--     "<cmd>lua require('telescope.builtin').resume(require('telescope.themes').get_ivy({}))<cr>",
+--     { desc = " Resume telescope" })
 
 vim.keymap.set('n', '<leader>p', function() builtin.commands() end,
     { desc = " lists plugin/commands and runs them on `<cr>`" }

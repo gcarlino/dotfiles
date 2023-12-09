@@ -6,12 +6,8 @@ return {
         enabled = true,
         config = function()
             require('onedark').setup({
-                style = 'light',
-                transparent = false,
-
-                toggle_style_key = '<leader>ts',
-                toggle_style_list = {"dark", "warm", "light"},
-
+                -- style = 'light',
+                -- transparent = true,
             })
             require('onedark').load()
         end
@@ -48,10 +44,12 @@ return {
 
     {
         "arzg/vim-colors-xcode",
+        enabled = false,
         lazy = false,
         priority = 1000,
-        enabled = false,
-        opts = {},
+        config = function()
+            -- vim.cmd.colorscheme('xcode')
+        end
     },
 
     {
@@ -107,12 +105,11 @@ return {
         'projekt0n/github-nvim-theme',
         lazy = false,    -- make sure we load this during startup if it is your main colorscheme
         priority = 1000, -- make sure to load this before all the other start plugins
-        enabled = false,
+        enabled = true,
         config = function()
             require('github-theme').setup({
                 -- ...
             })
-
-            -- vim.cmd('colorscheme github_dark')
+            -- vim.cmd.colorscheme("github_light")
         end,
     } }

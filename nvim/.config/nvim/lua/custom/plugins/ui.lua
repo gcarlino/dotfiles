@@ -5,20 +5,19 @@ return {
     {
         "folke/which-key.nvim",
         event = "VeryLazy",
-        enables = false,
-        config = function()
-            -- vim.o.timeout = true
-            -- vim.o.timeoutlen = 400
-            require("which-key").setup({
-                window = {
-                    border = 'single'
-                },
-                disable = {
-                    buftypes = {},
-                    filetypes = { "TelescopePrompt" },
-                },
-            })
+        init = function()
+            vim.o.timeout = true
+            vim.o.timeoutlen = 1000
         end,
+        opts = {
+            window = {
+                border = "single",
+            },
+            disable = {
+                buftypes = {},
+                filetypes = { "TelescopePrompt" },
+            },
+        },
     },
 
     {
