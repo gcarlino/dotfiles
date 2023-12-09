@@ -72,7 +72,7 @@ source $ZSH/oh-my-zsh.sh
 OS="$(uname -s)"
 
 export MANPATH="/usr/local/man:$MANPATH"
-export MANPAGER="nvim +Man!"
+export MANPAGER='nvim -c "set cmdheight=0" +Man!'
 
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
@@ -84,9 +84,7 @@ export LC_ALL=en_US.UTF-8
 # For a full list of active aliases, run `alias`.
 alias rm='rm -i'
 alias mv='mv -i'
-# alias vim='nvim'
 alias view='nvim -R'
-# alias vi='nvim'
 alias less='less -FRX'
 if type "lsd" > /dev/null ; then
     alias ls="lsd"
@@ -107,36 +105,6 @@ alias docker-clean-containers='docker ps -a | grep Exited | awk "{print \$1}" | 
 # Weather in Torino
 alias weather='curl wttr.in/Torino'
 
-# System dependent PATH
-if [[ $OS == "Darwin" ]] {
-    # kitty ssh
-    alias s='kitty +kitten ssh'
-
-    # Dark background
-    alias kittyDark='kitty +kitten themes --reload-in=all Github\ Dark'
-    alias kittyLight='kitty +kitten themes --reload-in=all Github\ Light'
-
-    # Personal bin
-    export PATH=~/bin:~/.local/bin:/opt/homebrew/bin:~/.cargo/bin:$PATH
-    export PATH=/usr/local/sbin:/opt/homebrew/sbin/:$PATH
-    export PATH=$PATH:/usr/local/gfortran/bin
-
-    # Homebrew
-    # export HOMEBREW_NO_ANALYTICS=1
-    # export HOMEBREW_INSTALL_FROM_API=1 
-
-    # broot
-    source /Users/beps/.config/broot/launcher/bash/br
-
-    # Notes
-    export notes=/Users/beps/Simularia/Notes
-    alias fs='cd $notes; nvim "$(rg --files $notes | fzf)"'
-
-} elif [[ $OS == "Linux" ]] {
-    export PATH=$HOME/.local/bin:${HOME}/node_modules/.bin/:/home/exe64:$PATH
-    export PATH=/usr/local/cuda-12.1/bin${PATH:+:${PATH}}
-} fi
-
 # export PATH="/usr/local/opt/gdal2-python/bin:$PATH"
 # export GDAL_DRIVER_PATH=/usr/local/lib/gdalplugins
 # export LDFLAGS="-L/usr/local/opt/gdal2/lib"
@@ -150,10 +118,6 @@ if [[ $OS == "Darwin" ]] {
 
 # PATH to R personal library
 #export R_LIBS_USER=$HOME/Library/R/4.x/library
-
-
-# Add hostname to prompt
-# PROMPT="%{$fg[green]%}%m%{$reset_color%} ${PROMPT}"
 
 # enable spell check
 setopt correct
@@ -185,7 +149,8 @@ bindkey '^ ' autosuggest-execute
 
 # FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_OPTS='--height 50% --layout=reverse --border --inline-info'
+# export FZF_DEFAULT_OPTS='--height 50% --layout=reverse --border --inline-info'
+export FZF_DEFAULT_OPTS='--height 50% --border --layout=reverse'
 export FZF_DEFAULT_COMMAND='fd --type f'
 
 # Default editor
@@ -194,8 +159,35 @@ export EDITOR=nvim
 # Disable python bytecode files
 export PYTHONDONTWRITEBYTECODE=1
 
+# System dependent PATH
+if [[ $OS == "Darwin" ]] {
+    # kitty ssh
+    alias s='kitty +kitten ssh'
 
-if [[ $OS == "Linux" ]] ; then
+    # Dark background
+    alias kittyDark='kitty +kitten themes --reload-in=all Github\ Dark'
+    alias kittyLight='kitty +kitten themes --reload-in=all Github\ Light'
+
+    # Homebrew
+    # export HOMEBREW_NO_ANALYTICS=1
+    # export HOMEBREW_INSTALL_FROM_API=1 
+
+    # broot
+    source /Users/beps/.config/broot/launcher/bash/br
+
+    # Notes
+    export notes=/Users/beps/Simularia/Notes
+    alias fs='cd $notes; nvim "$(rg --files $notes | fzf)"'
+
+    # Personal bin
+    export PATH=~/bin:~/.local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:~/.cargo/bin:$PATH
+    # export PATH=/usr/local/sbin:/opt/homebrew/sbin/:$PATH
+    # export PATH=$PATH:/usr/local/gfortran/bin
+
+    # iterm2 shell integration
+    [ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
+
+} elif [[ $OS == "Linux" ]] {
     # FZF
     source /usr/share/doc/fzf/examples/completion.zsh
     source /usr/share/doc/fzf/examples/key-bindings.zsh
@@ -230,11 +222,11 @@ if [[ $OS == "Linux" ]] ; then
     fi
 
     # module load nvhpc/22.5
-    
+
     # Permanently change umask
     umask 002
 
-fi
+    export PATH=$HOME/.local/bin:${HOME}/node_modules/.bin/:/home/exe64:$PATH
+    export PATH=/usr/local/cuda-12.1/bin${PATH:+:${PATH}}
+} fi
 
-# iterm2 shell integration
-[ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
