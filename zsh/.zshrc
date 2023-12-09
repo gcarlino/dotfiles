@@ -128,6 +128,10 @@ if [[ $OS == "Darwin" ]] {
     # broot
     source /Users/beps/.config/broot/launcher/bash/br
 
+    # Notes
+    export notes=/Users/beps/Simularia/Notes
+    alias fs='cd $notes; nvim "$(rg --files $notes | fzf)"'
+
 } elif [[ $OS == "Linux" ]] {
     export PATH=$HOME/.local/bin:${HOME}/node_modules/.bin/:/home/exe64:$PATH
     export PATH=/usr/local/cuda-12.1/bin${PATH:+:${PATH}}
