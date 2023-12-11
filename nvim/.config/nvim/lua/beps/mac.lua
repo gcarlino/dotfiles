@@ -20,7 +20,7 @@ end
 
 vim.keymap.set('n', '<leader>sg', function() M.simulnotes() end, {
     desc = "Grep Simularia notes with Telescope" })
-vim.keymap.set('n', '<leader>sf', function() M.simultitles() end, {
+vim.keymap.set('n', '<leader>sn', function() M.simultitles() end, {
     desc = "List Simularia notes with Telescope" })
 
 -- Preview markdown with Marked.app
