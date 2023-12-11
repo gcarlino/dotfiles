@@ -8,6 +8,21 @@ export ZSH=$HOME/.oh-my-zsh
 # ZSH_THEME="robbyrussell"
 ZSH_THEME="daveverwer"
 
+# Time info to right prompt
+function preexec() {
+  timer=$(($(print -P %D{%s%6.})/1000))
+}
+
+function precmd() {
+  if [ $timer ]; then
+    now=$(($(print -P %D{%s%6.})/1000))
+    elapsed=$(($now-$timer))
+
+    export RPROMPT="%F{green}${elapsed}ms [%*] %{$reset_color%}"
+    unset timer
+  fi
+}
+
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
@@ -71,9 +86,6 @@ source $ZSH/oh-my-zsh.sh
 # Get OS
 OS="$(uname -s)"
 
-export MANPATH="/usr/local/man:$MANPATH"
-export MANPAGER='nvim -c "set cmdheight=0" +Man!'
-
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
@@ -97,6 +109,8 @@ alias lt='ls --tree'
 alias tree='tree -C'
 # alias cat='bat --paging=never'
 
+export MANPATH="/usr/local/man:$MANPATH"
+export MANPAGER='nvim -c "set cmdheight=0" +Man!'
 
 # Remove unused docker images:
 alias docker-clean-images='docker images | grep none | awk "{print \$3}" | xargs docker rmi'
