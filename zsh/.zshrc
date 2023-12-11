@@ -191,7 +191,7 @@ if [[ $OS == "Darwin" ]] {
 
     # Notes
     export notes=/Users/beps/Simularia/Notes
-    alias fs='cd $notes; nvim "$(rg --files $notes | fzf)"'
+    alias sn='cd $notes; nvim "$(rg --files $notes | fzf)"'
 
     # Personal bin
     export PATH=~/bin:~/.local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:~/.cargo/bin:$PATH
