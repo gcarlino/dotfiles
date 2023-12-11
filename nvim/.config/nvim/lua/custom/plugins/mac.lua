@@ -29,6 +29,7 @@ else
                     nvim_cmp = true,
                     -- prepend_note_id = false,
                 },
+                disable_frontmatter = true,
                 open_app_foreground = true,
             }
         },
