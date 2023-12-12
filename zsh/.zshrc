@@ -198,9 +198,6 @@ if [[ $OS == "Darwin" ]] {
     # export PATH=/usr/local/sbin:/opt/homebrew/sbin/:$PATH
     # export PATH=$PATH:/usr/local/gfortran/bin
 
-    # iterm2 shell integration
-    [ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
-
 } elif [[ $OS == "Linux" ]] {
     # FZF
     source /usr/share/doc/fzf/examples/completion.zsh
@@ -243,4 +240,7 @@ if [[ $OS == "Darwin" ]] {
     export PATH=$HOME/.local/bin:${HOME}/node_modules/.bin/:/home/exe64:$PATH
     export PATH=/usr/local/cuda-12.1/bin${PATH:+:${PATH}}
 } fi
+
+# iterm2 shell integration
+[ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
 
