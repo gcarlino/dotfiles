@@ -1,5 +1,7 @@
-options(radian.editing_mode = "vi")
-options(radian.emacs_bindings_in_vi_insert_mode = TRUE)
+options(radian.color_scheme = "xcode")
+
+# options(radian.editing_mode = "vi")
+# options(radian.emacs_bindings_in_vi_insert_mode = TRUE)
 
 # highlight matching bracket
 options(radian.highlight_matching_bracket = TRUE)
@@ -8,5 +10,5 @@ options(radian.highlight_matching_bracket = TRUE)
 # In the following example, `esc` + `-` sends `<-` and `esc` + `m` sends `%>%`.
 options(radian.escape_key_map = list(
     list(key = "-", value = " <- "),
-    list(key = "m", value = " %>% ")
+    list(key = "right", value = " %>% ")
 ))
