@@ -20,10 +20,14 @@ vim.keymap.set("n", "]t", ":tabnext<cr>", { desc = "Next tab" })
 vim.keymap.set("n", "[t", ":tabprevious<cr>", { desc = "Previous tab" })
 
 -- Splits
-vim.keymap.set('n', '<C-h>', '<C-w>h', {desc = 'Move to left split.'})
-vim.keymap.set('n', '<C-j>', '<C-w>j', {desc = 'Move to lower split.'})
-vim.keymap.set('n', '<C-k>', '<C-w>k', {desc = 'Move to upper split.'})
-vim.keymap.set('n', '<C-l>', '<C-w>l', {desc = 'Move to right split.'})
+vim.keymap.set('n', '<C-h>', '<C-w>h', { desc = 'Move to left split.' })
+vim.keymap.set('n', '<C-j>', '<C-w>j', { desc = 'Move to lower split.' })
+vim.keymap.set('n', '<C-k>', '<C-w>k', { desc = 'Move to upper split.' })
+vim.keymap.set('n', '<C-l>', '<C-w>l', { desc = 'Move to right split.' })
+
+-- Change split size
+vim.keymap.set({ 'n', 't'}, '<M-l>', '5<C-w><', { noremap = false })
+vim.keymap.set({ 'n', 't'}, '<M-h>', '5<C-w>>', { noremap = false })
 
 -- Edit config file
 -- vim.keymap.set('n', '<leader>v', ':e $MYVIMRC<CR>', { desc = "Edit init.lua" })
