@@ -11,7 +11,7 @@ vim.keymap.set("n", "<c-d>", "<c-d>zz", {})
 vim.keymap.set("n", "<c-u>", "<c-u>zz", {})
 
 -- yank in system clipboard
-vim.keymap.set({"n", "v"}, "<leader>y", "\"+y")
+-- vim.keymap.set({"n", "v"}, "<leader>y", "\"+y")
 
 -- Tabs
 vim.keymap.set('n', '<leader>to', ':tabnew<CR>', { desc = 'Open tab' })
@@ -29,13 +29,8 @@ vim.keymap.set('n', '<C-l>', '<C-w>l', { desc = 'Move to right split.' })
 vim.keymap.set({ 'n', 't'}, '<M-l>', '5<C-w><', { noremap = false })
 vim.keymap.set({ 'n', 't'}, '<M-h>', '5<C-w>>', { noremap = false })
 
--- Edit config file
--- vim.keymap.set('n', '<leader>v', ':e $MYVIMRC<CR>', { desc = "Edit init.lua" })
-
 -- No highlight
 vim.keymap.set('n', '<C-c>', ':noh<CR>', { desc = "No highlight" })
--- vim.keymap.set('n', '<leader><CR>', ':noh<CR>', { desc = "No highlight" })
--- vim.keymap.set('n', "/<esc>", ":noh<CR>", { desc = "No highlight" })
 
 -- Move lines around
 vim.api.nvim_set_keymap('n', '<M-k>', ':m .-2<CR>==', { noremap = true })
@@ -112,6 +107,3 @@ vim.api.nvim_set_keymap("n", "<leader>b", "", {
     end,
     desc = "Toggle background color."
 })
-
--- -- Map jk to ESC  
--- vim.keymap.set('i', 'jk', '<ESC>', {})
