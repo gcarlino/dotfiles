@@ -1,6 +1,9 @@
 return {
 
-    { "nvim-tree/nvim-web-devicons", lazy = true },
+    {
+        "nvim-tree/nvim-web-devicons",
+        lazy = true
+    },
 
     {
         "folke/which-key.nvim",
@@ -42,7 +45,6 @@ return {
 
     {
         "akinsho/bufferline.nvim",
-        event = "VeryLazy",
         dependencies = { "nvim-tree/nvim-web-devicons" },
         keys = {
             { "<Tab>",   "<Cmd>BufferLineCycleNext<CR>", desc = "Next tab" },

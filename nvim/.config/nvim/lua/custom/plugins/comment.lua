@@ -3,6 +3,11 @@ return {
         'numToStr/Comment.nvim',
         event = "VeryLazy",
         opts = {},
+        -- config = function ()
+        --     -- vim.keymap.set("n", "<D-/>", ":lua require('Comment.api').toggle.linewise.current(); vim.cmd('normal j')<CR>", {silent=true})
+        --     vim.keymap.set("n", "<D-/>", ":lua require('Comment.api').toggle.linewise.current()<CR>", {silent=true})
+        --     vim.keymap.set("v", "<D-/>", ":lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>", {silent=true})
+        -- end
     },
 
     {
