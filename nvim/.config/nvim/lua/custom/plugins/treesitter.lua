@@ -25,6 +25,11 @@ return {
                 },
                 indent = { enable = true },
             })
+
+            -- Folding
+            vim.o.foldmethod = "expr"
+            vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+
         end,
     },
 }
