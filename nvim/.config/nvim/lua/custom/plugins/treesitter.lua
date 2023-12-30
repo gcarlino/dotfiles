@@ -2,7 +2,7 @@ return {
     {
         'nvim-treesitter/nvim-treesitter',
         version = false,
-        event = "VeryLazy",
+        -- event = "VeryLazy",
         -- event = { "BufReadPost", "BufWritePost", "BufNewFile" },
         build = ":TSUpdate",
         config = function ()
@@ -13,12 +13,12 @@ return {
                     "vim", "vimdoc", "json", "yaml", "toml",
                     "html", "css",
                     "markdown", "markdown_inline", "latex",
-                    "lua", "python", "fortran", "c", "r",
+                    "lua", "python", "c", "r",
                     "cmake", "bash", "diff", "regex"
                 },
                 sync_install = false,
                 auto_install = true,
-                ignore_install = {},
+                ignore_install = { "fortran" },
                 highlight = {
                     enable = true,
                     additional_vim_regex_highlighting = false,

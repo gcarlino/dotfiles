@@ -7,10 +7,10 @@ local fortran77 = function()
     return "fortran"
 end
 
-vim.filetype.add({
-    extension = {
-        cuf = 'fortran',
-        f = fortran77,
-        f90 = fortran77,
-    }
-})
+-- vim.filetype.add({
+--     extension = {
+--         cuf = 'fortran',
+--         f = fortran77,
+--         f90 = fortran77,
+--     }
+-- })
