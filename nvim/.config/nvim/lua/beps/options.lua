@@ -35,9 +35,10 @@ opt.updatetime = 200
 opt.wrap = false
 opt.breakindent = true
 opt.colorcolumn = '80'
+opt.hlsearch = false
 
--- Spell check is enabled by filet type
-opt.spelllang = { 'en_us', 'it' } -- Spellcheck languages
+-- Spell check is enabled by file type
+opt.spelllang = { 'en_us', 'it' }
 
 -- Disable netrw (as required by nvim-tree)
 vim.g.loaded_netrw = 1
