@@ -18,12 +18,23 @@ return {
                 },
                 sync_install = false,
                 auto_install = true,
-                ignore_install = { "fortran" },
+                ignore_install = { },
+                -- ignore_install = { "fortran" },
                 highlight = {
                     enable = true,
                     additional_vim_regex_highlighting = false,
+                    disable = { "fortran" }
                 },
-                indent = { enable = true },
+                indent = {
+                    enable = true,
+                    -- disable = { "fortran" }
+                },
+                incremental_selection = { enable = true },
+                textobjects = {
+                    enable = true,
+                    lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
+                },
+                modules = { },
             })
 
             -- Folding
