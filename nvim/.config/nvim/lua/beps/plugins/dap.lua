@@ -22,23 +22,23 @@ function M.config_dap()
     -- Load local configurations
     require('dap.ext.vscode').load_launchjs('./.nvim-dap/launch.json')
 
-    -- dap.configurations.cpp = {
-    --     {
-    --         name = "Launch file",
-    --         type = "codelldb",
-    --         request = "launch",
-    --         program = function()
-    --             return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-    --         end,
-    --         cwd = '${workspaceFolder}',
-    --         args = {
-    --             "/media/disc2/massimiliano/PROJ_SHPTODONCAR/SHPTODONCAR/esempio/grafo_connesso.shp",
-    --             "-id",
-    --             "id"
-    --         },
-    --         stopOnEntry = false,
-    --     },
-    -- }
+    dap.configurations.cpp = {
+        {
+            name = "Launch file",
+            type = "codelldb",
+            request = "launch",
+            program = function()
+                return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+            end,
+            cwd = '${workspaceFolder}',
+            args = {
+                -- "/media/disc2/massimiliano/PROJ_SHPTODONCAR/SHPTODONCAR/esempio/grafo_connesso.shp",
+                -- "-id",
+                -- "id"
+            },
+            stopOnEntry = false,
+        },
+    }
 
     -- Python debug
     -- require('dap-python').setup('~/.virtualenvs/neovim3/bin/python')
