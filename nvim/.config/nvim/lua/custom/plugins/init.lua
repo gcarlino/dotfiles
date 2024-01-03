@@ -72,9 +72,9 @@ return {
         lazy = false,
         config = function()
             vim.cmd([[
-                let R_assign_map = '<M-->'
+                let R_assign_map = '--'
                 let rout_follow_colorscheme = 1
-                let r_syntax_folding = 1
+                " let r_syntax_folding = 1
 
                 " For radian
                 let R_app = "radian"
@@ -82,6 +82,9 @@ return {
                 let R_hl_term = 0
                 let R_args = ['--no-save']
                 let R_bracketed_paste = 1
+
+                let R_min_editor_width = 80
+                let R_rconsole_width = 1000
 
                 set nofoldenable
                 autocmd VimLeave * if exists("g:SendCmdToR") && string(g:SendCmdToR) != "function('SendCmdToR_fake')" | call RQuit("nosave") | endif
