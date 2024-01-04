@@ -71,27 +71,32 @@ return {
         "jalvesaq/Nvim-R",
         lazy = false,
         config = function()
-            vim.cmd([[
-                let R_assign_map = '--'
-                let rout_follow_colorscheme = 1
-                " let r_syntax_folding = 1
+            -- For radian
+            -- vim.g.R_app = "radian"
+            -- vim.g.R_cmd = "R"
+            -- vim.g.R_args = {'--no-save'}
+            -- vim.g.R_hl_term = 0
+            -- vim.g.R_bracketed_paste = 1
 
-                " For radian
-                let R_app = "radian"
-                let R_cmd = "R"
-                let R_hl_term = 0
-                let R_args = ['--no-save']
-                let R_bracketed_paste = 1
+            -- Nvim-R does not set the working directory in any way
+            vim.g.R_nvim_wd = -1
+            vim.g.rout_follow_colorscheme = 1
+            vim.g.R_assign_map = '--'
 
-                let R_min_editor_width = 80
-                let R_rconsole_width = 1000
+            vim.g.R_min_editor_width = 80
+            vim.g.R_rconsole_width = 1000
 
-                set nofoldenable
-                autocmd VimLeave * if exists("g:SendCmdToR") && string(g:SendCmdToR) != "function('SendCmdToR_fake')" | call RQuit("nosave") | endif
-            ]])
+            -- vim.o.foldenable = false
+
             -- Shortcuts for package development
             vim.keymap.set("n", "<LocalLeader>dl", ":call g:SendCmdToR('devtools::load_all()')<CR>", { desc = "R: devtools::load_all()", silent = true })
             vim.keymap.set("n", "<LocalLeader>dd", ":call g:SendCmdToR('devtools::document()')<CR>", { desc = "R: devtools::document()", silent = true })
+
+            -- Close R automatically only
+            -- vim.cmd([[
+            --     autocmd VimLeave * if exists("g:SendCmdToR") && string(g:SendCmdToR) != "function('SendCmdToR_fake')" | call RQuit("nosave") | endif
+            --     ]])
+
         end,
     },
 
