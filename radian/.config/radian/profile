@@ -12,3 +12,6 @@ options(radian.escape_key_map = list(
     list(key = "-", value = " <- "),
     list(key = "right", value = " %>% ")
 ))
+
+# This is a workaround for the large space below the command line
+options(radian.complete_while_typing = FALSE)
