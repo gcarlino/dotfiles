@@ -31,7 +31,13 @@ cmp.setup({
         { name = "nvim_lua" },
         { name = "luasnip", keyword_length = 2 },
         { name = "buffer", keyword_length = 3 },
-        { name = "path" },
+        { name = "path",
+            option = {
+                get_cwd = function ()
+                    return vim.fn.getcwd()
+                end
+            },
+        },
         { name = "cmdline" },
         {
             name = "latex_symbols",
