@@ -1,9 +1,6 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+# Set your language environment
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
@@ -14,41 +11,20 @@ export ZSH=$HOME/.oh-my-zsh
 # ZSH_THEME="gallifrey"
 # ZSH_THEME="robbyrussell"
 # ZSH_THEME="daveverwer"
+
+# powerlevel10k 
+# https://github.com/romkatv/powerlevel10k
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
-# Time info to right prompt
-function preexec() {
-  timer=$(($(print -P %D{%s%6.})/1000))
-}
-
-function precmd() {
-  if [ $timer ]; then
-    now=$(($(print -P %D{%s%6.})/1000))
-    elapsed=$(($now-$timer))
-
-    export RPROMPT="%F{green}${elapsed}ms [%*] %{$reset_color%}"
-    unset timer
-  fi
-}
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion. Case
-# sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
 DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=7
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
 ENABLE_CORRECTION="true"
@@ -61,42 +37,28 @@ COMPLETION_WAITING_DOTS="true"
 # much, much faster.
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 if [[ -n "$plugins" ]]; then read -A plugins <<< "$plugins"; else
 plugins=(
+    git
     aliases
-    colored-man-pages
     isodate
     nmap
     rsync
     sudo
     macos
     zsh-autosuggestions
-    # zsh-syntax-highlighting
+    zsh-syntax-highlighting
+    z
 )
 fi
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-
-# Get OS
-OS="$(uname -s)"
-
-# You may need to manually set your language environment
-export LANG=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -124,20 +86,6 @@ export MANPAGER='nvim -c "set cmdheight=0" +Man!'
 alias docker-clean-images='docker images | grep none | awk "{print \$3}" | xargs docker rmi'
 alias docker-clean-containers='docker ps -a | grep Exited | awk "{print \$1}" | xargs docker rm'
 
-# Weather in Torino
-alias weather='curl wttr.in/Torino'
-
-# export PATH="/usr/local/opt/gdal2-python/bin:$PATH"
-# export GDAL_DRIVER_PATH=/usr/local/lib/gdalplugins
-# export LDFLAGS="-L/usr/local/opt/gdal2/lib"
-# export CPPFLAGS="-I/usr/local/opt/gdal2/include"
-# export PKG_CONFIG_PATH="/usr/local/opt/gdal2/lib/pkgconfig"
-
-# export LD_LIBRARY_PATH="/usr/local/lib"
-# export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig"
-# 
-# export PATH=$PKG_CONFIG_PATH:$PATH
-
 # PATH to R personal library
 #export R_LIBS_USER=$HOME/Library/R/4.x/library
 
@@ -145,7 +93,8 @@ alias weather='curl wttr.in/Torino'
 setopt correct
 export SPROMPT="Correct $fg[red]%R$reset_color to $fg[green]%r$reset_color? [Yes, No, Abort, Edit] "
 
-# zsh autosuggest (see https://github.com/zsh-users/zsh-autosuggestions)
+# zsh autosuggest 
+# https://github.com/zsh-users/zsh-autosuggestions
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=1"
 # ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#e4e4e4"
 ZSH_AUTOSUGGEST_STRATEGY=(history)
@@ -155,9 +104,9 @@ ZSH_AUTOSUGGEST_COMPLETION_IGNORE+=('git *', 'cvs *')
 # ctrl-space = execute autosuggest
 bindkey '^ ' autosuggest-execute
 
-# Ruby
-# export PATH="/usr/local/opt/ruby/bin:$PATH"
-# export PATH="$HOME/.gem/ruby/2.7.0/bin:$PATH"
+# zsh syntax highlighters
+# https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters.md
+ZSH_HIGHLIGHT_HIGHLIGHTERS+=(brackets pattern cursor)
 
 # pyenv
 # export PYENV_ROOT="$HOME/.pyenv"
@@ -165,9 +114,6 @@ bindkey '^ ' autosuggest-execute
 # if command -v pyenv 1>/dev/null 2>&1; then
    # eval "$(pyenv init -)"
 # fi
-
-# bat
-# export BAT_THEME=GitHub
 
 # FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -182,11 +128,12 @@ export EDITOR=nvim
 export PYTHONDONTWRITEBYTECODE=1
 
 # System dependent PATH
+OS="$(uname -s)"
 if [[ $OS == "Darwin" ]] {
     # kitty ssh
     alias s='kitty +kitten ssh'
 
-    # Dark background
+    # kity dark and light background
     alias kittyDark='kitty +kitten themes --reload-in=all Github\ Dark'
     alias kittyLight='kitty +kitten themes --reload-in=all Github\ Light'
 
@@ -194,17 +141,12 @@ if [[ $OS == "Darwin" ]] {
     # export HOMEBREW_NO_ANALYTICS=1
     # export HOMEBREW_INSTALL_FROM_API=1 
 
-    # broot
-    source /Users/beps/.config/broot/launcher/bash/br
-
     # Notes
-    export notes=/Users/beps/Simularia/Notes
+    notes=/Users/beps/Simularia/Notes
     alias sn='cd $notes; nvim "$(rg --files $notes | fzf)"'
 
     # Personal bin
     export PATH=~/bin:~/.local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:~/.cargo/bin:$PATH
-    # export PATH=/usr/local/sbin:/opt/homebrew/sbin/:$PATH
-    # export PATH=$PATH:/usr/local/gfortran/bin
 
 } elif [[ $OS == "Linux" ]] {
     # FZF
@@ -214,7 +156,6 @@ if [[ $OS == "Darwin" ]] {
     # Compilation flags
     # export ARCHFLAGS="-arch x86_64"
 
-    #
     # # Code Saturne
     # export cspath=/home/carlino/Code_Saturne/6.1.0/code_saturne-6.1.0/arch/Linux_x86_64/bin
     # alias code_saturne="$cspath/code_saturne"
