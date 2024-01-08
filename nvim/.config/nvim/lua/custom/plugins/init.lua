@@ -51,20 +51,7 @@ return {
         keys = {
             { '<leader>n', ':NvimTreeToggle<CR>', desc = "Toggle nvim-tree" }
         },
-        opts = {},
-        -- config = function()
-        --     require('nvim-tree').setup({
-        --         view = {
-        --             width = 30,
-        --         },
-        --         renderer = {
-        --             group_empty = true,
-        --         },
-        --         filters = {
-        --             custom = { '.DS_Store' }
-        --         }
-        --     })
-        -- end,
+        opts = { },
     },
 
     {
@@ -126,11 +113,6 @@ return {
         opts = {
             open_mapping = [[<c-q>]],
         }
-    },
-
-    {
-        "mechatroner/rainbow_csv",
-        event = 'VeryLazy'
     },
 
     {
