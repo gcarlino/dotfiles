@@ -52,7 +52,6 @@ plugins=(
     macos
     zsh-autosuggestions
     zsh-syntax-highlighting
-    z
 )
 fi
 
