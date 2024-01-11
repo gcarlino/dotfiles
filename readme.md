@@ -1,27 +1,31 @@
-# Managing dotfiles with GNU stow
+# dotfiles
 
-1. Install `GNU stow` for linux
+Managed with [stow](https://codys.club/blog/2015/07/07/managing-your-dotfiles-with-gnu-stow/).
+
+## Installation
+
+Install `GNU stow` for linux:
 
 ```{sh}
 sudo apt install stow
 ```
 
-or the mac with homebrew:
+or for the mac with homebrew (or equivalent with MacPorts):
 
 ```{sh}
 brew install stow
 ```
-
-or equivalent for MacPorts.
 See [documentation](https://www.gnu.org/software/stow/) for more information.
 
-2. Clone repository as:
+## Usage
+
+Clone repository as:
 
 ```{sh}
 git clone https://github.com/gcarlino/dotfiles.git ${HOME}/.dotfiles
 ```
 
-3. Use `stow` to install **dotfiles**, as:
+and use `stow` to install **dotfiles**, as:
 
 ```{sh}
 stow -v nvim
