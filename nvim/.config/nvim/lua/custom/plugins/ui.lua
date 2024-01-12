@@ -25,7 +25,6 @@ return {
 
     {
         "lewis6991/gitsigns.nvim",
-        -- event = "VeryLazy",
         event = { "BufReadPre", "BufNewFile" },
         config = function()
             require("beps.plugins.gitsigns")
@@ -45,6 +44,7 @@ return {
 
     {
         "akinsho/bufferline.nvim",
+        event = "TabNew",
         dependencies = { "nvim-tree/nvim-web-devicons" },
         keys = {
             { "<Tab>",   "<Cmd>BufferLineCycleNext<CR>", desc = "Next tab" },
@@ -129,13 +129,4 @@ return {
         end
     },
 
-    {
-        'chentoast/marks.nvim',
-        enabled = false,
-        event = "VeryLazy",
-        -- event = { "BufReadPost", "BufNewFile" },
-        config = function()
-            require('marks').setup()
-        end,
-    },
 }
