@@ -88,7 +88,7 @@ vim.api.nvim_create_autocmd("TermOpen", {
 })
 
 -- Folding in treesitter
-vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+-- vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 -- vim.o.fillchars = [[eob: ,fold: ,foldopen:⊟,foldsep: ,foldclose:⊞]]
 vim.o.foldcolumn = "1"
 vim.o.foldlevel = 99

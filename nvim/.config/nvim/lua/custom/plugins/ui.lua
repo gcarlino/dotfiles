@@ -65,6 +65,9 @@ return {
         enabled = true,
         event = "VeryLazy",
         config = function()
+            vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:❯]]
+            vim.cmd("highlight FoldColumn guifg=" .. vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID('Comment')), 'fg'))
+
             local builtin = require("statuscol.builtin")
             require("statuscol").setup({
                 setopt = true,
@@ -80,7 +83,6 @@ return {
                 },
             })
         end,
-        vim.cmd("highlight FoldColumn guifg=" .. vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID('Comment')), 'fg'))
     },
 
     {
