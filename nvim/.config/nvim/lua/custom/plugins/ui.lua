@@ -70,25 +70,17 @@ return {
                 setopt = true,
                 relculright = true,
                 segments = {
-                    {
-                        text = { "%s" },
-                        click = "v:lua.ScSa",
-                    },
+                    { text = { "%s" }, click = "v:lua.ScSa", },
                     {
                         text = { builtin.lnumfunc, " " },
                         condition = { true, builtin.not_empty },
                         click = "v:lua.ScLa",
                     },
-                    {
-                        text = { builtin.foldfunc },
-                        click = "v:lua.ScFa",
-                    },
-                    {
-                        text = {" "},
-                    }
+                    { text = { builtin.foldfunc, " " }, click = "v:lua.ScFa", },
                 },
             })
         end,
+        vim.cmd("highlight FoldColumn guifg=" .. vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID('Comment')), 'fg'))
     },
 
     {
