@@ -3,3 +3,5 @@ nvim/.config/nvim/plugin/
 tmux/.config/tmux/plugins/
 *.bak
 *.log
+
+karabiner/.config/karabiner/automatic_backups/
