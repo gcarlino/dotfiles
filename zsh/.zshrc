@@ -192,5 +192,5 @@ if [[ $OS == "Darwin" ]] {
 # iterm2 shell integration
 [ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# To customize prompt, run `p10k configure` or edit ~/.dotfiles/powerlevel10k/.p10k.zsh.
+[[ ! -f ~/.dotfiles/powerlevel10k/.p10k.zsh ]] || source ~/.dotfiles/powerlevel10k/.p10k.zsh
