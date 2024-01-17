@@ -24,14 +24,6 @@ return {
     },
 
     {
-        "lewis6991/gitsigns.nvim",
-        event = { "BufReadPre", "BufNewFile" },
-        config = function()
-            require("beps.plugins.gitsigns")
-        end
-    },
-
-    {
         'nvim-lualine/lualine.nvim',
         event = "VeryLazy",
         dependencies = {
