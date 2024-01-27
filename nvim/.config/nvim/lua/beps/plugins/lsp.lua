@@ -18,6 +18,9 @@ for type, icon in pairs(signs) do
     vim.fn.sign_define(hl, { icon = icon, text = icon, texthl = hl, numhl = hl })
 end
 
+require("mason").setup()
+require("mason-lspconfig").setup()
+
 -- lspconfig
 local lspconfig = require("lspconfig")
 local cmp_nvim_lsp = require("cmp_nvim_lsp")

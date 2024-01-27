@@ -14,6 +14,15 @@
 --   markdown: marksman
 
 return {
+
+    {
+        "williamboman/mason.nvim",
+        -- cmd = "Mason",
+        -- config = function ()
+        --     require("mason").setup()
+        -- end
+    },
+
     {
         "neovim/nvim-lspconfig",
         event = { "BufReadPre", "BufNewFile" },
@@ -25,14 +34,6 @@ return {
             "williamboman/mason-lspconfig.nvim",
             "hrsh7th/cmp-nvim-lsp",
         }
-    },
-
-    {
-        "williamboman/mason.nvim",
-        cmd = "Mason",
-        config = function ()
-            require("mason").setup()
-        end
     },
 
     -- Currently disabled since python linters are managed by pylsp
