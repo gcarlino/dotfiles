@@ -106,13 +106,11 @@ return {
 
     {
         'lukas-reineke/virt-column.nvim',
-        enabled = false,
-        event = "VeryLazy",
-        config = function()
-            require('virt-column').setup({
-                char = "│",
-            })
-        end
+        enabled = true,
+        opts = {
+            char = "│",
+            highlight = "IblIndent"
+        }
     },
 
 }
