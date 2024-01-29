@@ -12,10 +12,9 @@ else
         {
             "epwalsh/obsidian.nvim",
             version = "*",
-            ft = "markdown",
             event = {
-                "BufReadPre " .. vim.fn.expand "~" .. "/Simularia/Notes",
-                "BufNewFile " .. vim.fn.expand "~" .. "/Simularia/Notes",
+                "BufReadPre " .. vim.fn.expand "~" .. "/Simularia/Notes/**.md",
+                "BufNewFile " .. vim.fn.expand "~" .. "/Simularia/Notes/**.md",
             },
             dependencies = {
                 "nvim-lua/plenary.nvim",

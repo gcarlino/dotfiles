@@ -2,7 +2,7 @@
 return {
     {
         "hrsh7th/nvim-cmp",
-        version = false,
+        -- version = false,
         event = { 'InsertEnter', 'CmdlineEnter'},
         config = function ()
             require('beps.plugins.nvim-cmp')
@@ -26,6 +26,9 @@ return {
 
     {
         'L3MON4D3/LuaSnip',
+        run = "make install_jsregexp",
+        version = "v2.*",
+        build = "make install_jdregexp",
         lazy = true,
         -- event = 'InsertCharPre',
         dependencies = {

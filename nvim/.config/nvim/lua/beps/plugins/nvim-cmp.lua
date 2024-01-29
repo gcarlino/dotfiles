@@ -12,25 +12,26 @@ local luasnip = require('luasnip')
 local lspkind = require('lspkind')
 
 local has_words_before = function()
-    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+  unpack = unpack or table.unpack
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
 cmp.setup({
-    completion = {
-        completeopt = "menu, menuone, noselect",
-    },
+    -- completion = {
+    --     completeopt = "menu, menuone, noselect",
+    -- },
     snippet = {
         expand = function(args)
             luasnip.lsp_expand(args.body)
         end,
     },
     sources = {
-        { name = "nvim_lsp", keyword_length = 1 },
+        { name = "nvim_lsp" },
         { name = "nvim_lsp_signature_help" },
         { name = "nvim_lua" },
-        { name = "luasnip", keyword_length = 2 },
-        { name = "buffer", keyword_length = 3 },
+        { name = "luasnip" },
+        { name = "buffer" },
         { name = "path",
             option = {
                 get_cwd = function ()
@@ -38,7 +39,7 @@ cmp.setup({
                 end
             },
         },
-        { name = "cmdline" },
+        -- { name = "cmdline" },
         {
             name = "latex_symbols",
             option = {
@@ -107,19 +108,6 @@ cmp.setup({
             ellipsis_char = '...',
         }),
     },
-    -- formatting = {
-    --     format = function(entry, vim_item)
-    --         if vim.tbl_contains({ 'path' }, entry.source.name) then
-    --             local icon, hl_group = require('nvim-web-devicons').get_icon(entry:get_completion_item().label)
-    --             if icon then
-    --                 vim_item.kind = icon
-    --                 vim_item.kind_hl_group = hl_group
-    --                 return vim_item
-    --             end
-    --         end
-    --         return require('lspkind').cmp_format({ with_text = false })(entry, vim_item)
-    --     end
-    -- },
     view = {
         entries = 'custom'
     },
@@ -130,19 +118,19 @@ cmp.setup({
 })
 
 -- Use
-cmp.setup.filetype({ 'markdown', 'text' }, {
+cmp.setup.filetype({ 'markdown', 'text', 'yaml' }, {
     sources = cmp.config.sources({
         { name = "nvim_lsp" },
         { name = 'latex_symbols' },
         { name = 'buffer' },
-        { name = 'path', keyword_length = 3}
+        { name = 'path' }
     })
 })
 
 cmp.setup.filetype({'html'}, {
     sources = cmp.config.sources({
-        { name = 'luasnip', keyword_length = 1 },
-        { name = 'path', keyword_length = 3 },
+        { name = 'luasnip' },
+        { name = 'path' },
         { name = 'buffer' },
     })
 })
@@ -159,21 +147,11 @@ cmp.setup.cmdline({ '/', '?' }, {
 cmp.setup.cmdline(':', {
     mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources({
-        {
-            name = 'path',
-            keyword_length = 3
-        },
+        { name = 'path', },
         {
             name = 'cmdline',
             ignore_cmds = { 'Man', '!' }
         },
-        {
-            name = 'buffer',
-            keyword_length = 3
-        }
+        { name = 'buffer' }
     })
 })
-
--- Load snippets
--- require('luasnip.loaders.from_vscode').lazy_load()
--- }}}
