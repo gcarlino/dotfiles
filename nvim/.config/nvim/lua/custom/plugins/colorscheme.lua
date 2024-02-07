@@ -5,9 +5,9 @@ return {
         priority = 1000,
         enabled = true,
         config = function()
+            vim.o.background='light'
             require('onedark').setup({
-                -- style = 'light',
-                -- transparent = true,
+                style = 'light',
             })
             require('onedark').load()
         end
@@ -86,7 +86,7 @@ return {
         'folke/tokyonight.nvim',
         lazy = false,
         priority = 1000,
-        enabled = false,
+        enabled = true,
         config = function()
             require('tokyonight').setup({
                 style = 'storm',
@@ -112,4 +112,5 @@ return {
             })
             -- vim.cmd.colorscheme("github_light")
         end,
-    } }
+    }
+}
