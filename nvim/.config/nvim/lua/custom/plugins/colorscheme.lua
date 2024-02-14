@@ -44,7 +44,7 @@ return {
 
     {
         "arzg/vim-colors-xcode",
-        enabled = false,
+        enabled = true,
         lazy = false,
         priority = 1000,
         config = function()
