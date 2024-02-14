@@ -104,6 +104,7 @@ cmp.setup({
                 latex_symbols = '[Latex]',
                 path = '[Path]',
                 cmdline = '[Cmd]',
+                cmp_nvim_r = '[R]'
             }),
             ellipsis_char = '...',
         }),
