@@ -71,7 +71,11 @@ return {
                         condition = { true, builtin.not_empty },
                         click = "v:lua.ScLa",
                     },
-                    { text = { builtin.foldfunc, " " }, click = "v:lua.ScFa", },
+                    {
+                        text = { builtin.foldfunc, " " },
+                        click = "v:lua.ScFa",
+                        -- hi = "NonText",
+                    },
                 },
             })
         end,
@@ -109,7 +113,7 @@ return {
         enabled = true,
         opts = {
             char = "│",
-            highlight = "IblIndent"
+            highlight = "iblindent"
         }
     },
 
