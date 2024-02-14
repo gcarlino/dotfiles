@@ -52,7 +52,7 @@ vim.keymap.set("n", "[q", ":cprevious<cr>", { desc = "Previous item in quickfix 
 -- vim.keymap.set('n', '<leader>n', ':NvimTreeToggle<CR>', { noremap = true, silent = true, desc = "Toggle nvim-tree." })
 
 -- Allow gf to open non-existent files
-vim.keymap.set('', 'gf', ':edit <cfile><CR>')
+-- vim.keymap.set('', 'gf', ':edit <cfile><CR>')
 
 -- Reselect visual selection after indenting
 vim.keymap.set('v', '<', '<gv')
