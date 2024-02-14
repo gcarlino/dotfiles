@@ -26,18 +26,19 @@ return {
 
     {
         'L3MON4D3/LuaSnip',
-        run = "make install_jsregexp",
         version = "v2.*",
-        build = "make install_jdregexp",
         lazy = true,
-        -- event = 'InsertCharPre',
         dependencies = {
             "rafamadriz/friendly-snippets",
             -- "saadparwaiz1/cmp_luasnip",
         },
         config = function ()
+            local ls = require("luasnip")
+            ls.config.set_config({
+                history = true,
+                updateevents = "TextChanged,TextChangedI"
+            })
             require('luasnip.loaders.from_vscode').lazy_load()
         end
     },
-
 }
