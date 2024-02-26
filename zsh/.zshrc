@@ -155,9 +155,9 @@ if [[ $OS == "Darwin" ]] {
         eval "$__conda_setup"
     else
         if [ -f "/Users/beps/miniconda3/etc/profile.d/conda.sh" ]; then
-            . "/Users/beps/miniconda3/etc/profile.d/conda.sh"
+# . "/Users/beps/miniconda3/etc/profile.d/conda.sh"  # commented out by conda initialize
         else
-            export PATH="/Users/beps/miniconda3/bin:$PATH"
+# export PATH="/Users/beps/miniconda3/bin:$PATH"  # commented out by conda initialize
         fi
     fi
     unset __conda_setup
@@ -206,7 +206,10 @@ if [[ $OS == "Darwin" ]] {
 } fi
 
 # iterm2 shell integration
-[ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
+# [ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
+
+# wezterm shell integration
+[[ -f $HOME/.config/wezterm/wezterm.sh ]] && source $HOME/.config/wezterm/wezterm.sh
 
 # To customize prompt, run `p10k configure` or edit ~/.dotfiles/powerlevel10k/.p10k.zsh.
 [[ ! -f ~/.dotfiles/powerlevel10k/.p10k.zsh ]] || source ~/.dotfiles/powerlevel10k/.p10k.zsh
