@@ -1,10 +1,12 @@
 local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
 
+-- Hyperlinks
+config.hyperlink_rules = wezterm.default_hyperlink_rules()
+
 config.color_scheme = "Tomorrow"
 
 config.font = wezterm.font 'MesloLGS NF'
-
 
 -- Tab bar
 config.hide_tab_bar_if_only_one_tab = true
@@ -112,6 +114,10 @@ config.keys = {
     { key = 'k', mods = 'CMD', action = act.ActivatePaneDirection 'Up' },
     { key = 'h', mods = 'CMD', action = act.ActivatePaneDirection 'Left' },
     { key = 'l', mods = 'CMD', action = act.ActivatePaneDirection 'Right' },
+    -- Scroll to prompt
+    { key = 'UpArrow', mods = 'SHIFT', action = act.ScrollToPrompt(-1) },
+  { key = 'DownArrow', mods = 'SHIFT', action = act.ScrollToPrompt(1) },
+
 }
 
 config.front_end = "WebGpu"
