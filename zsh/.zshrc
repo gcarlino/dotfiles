@@ -78,7 +78,7 @@ alias lt='ls --tree'
 alias tree='tree -C'
 # alias cat='bat --paging=never'
 
-export MANPATH="/usr/local/man:$MANPATH"
+#export MANPATH="/usr/local/man:$MANPATH"
 export MANPAGER='nvim -c "set cmdheight=0" +Man!'
 
 # Remove unused docker images:
@@ -115,8 +115,6 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS+=(brackets pattern cursor)
 # fi
 
 # FZF
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-# export FZF_DEFAULT_OPTS='--height 50% --layout=reverse --border --inline-info'
 export FZF_DEFAULT_OPTS='--height 50% --border --layout=reverse'
 export FZF_DEFAULT_COMMAND='fd --type f'
 
@@ -129,6 +127,10 @@ export PYTHONDONTWRITEBYTECODE=1
 # System dependent PATH
 OS="$(uname -s)"
 if [[ $OS == "Darwin" ]] {
+    # fzf
+    source /opt/local/share/fzf/shell/key-bindings.zsh
+    source /opt/local/share/fzf/shell/completion.zsh
+
     # kitty ssh
     alias s='kitty +kitten ssh'
 
@@ -145,23 +147,25 @@ if [[ $OS == "Darwin" ]] {
     alias sn='cd $notes; nvim "$(rg --files $notes | fzf)"'
 
     # Personal bin
-    export PATH=~/bin:~/.local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:~/.cargo/bin:$PATH
+    # export PATH=~/bin:~/.local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:~/.cargo/bin:$PATH
+    export PATH=~/bin:~/.local/bin:/opt/local/bin:/opt/local/sbin:~/.cargo/bin:/opt/gfortran/bin:$PATH
 
+    export MANPATH=/opt/local/share/man:$MANPATH
 
-    # >>> conda initialize >>>
-    # !! Contents within this block are managed by 'conda init' !!
-    __conda_setup="$('/Users/beps/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-    if [ $? -eq 0 ]; then
-        eval "$__conda_setup"
-    else
-        if [ -f "/Users/beps/miniconda3/etc/profile.d/conda.sh" ]; then
-# . "/Users/beps/miniconda3/etc/profile.d/conda.sh"  # commented out by conda initialize
-        else
-# export PATH="/Users/beps/miniconda3/bin:$PATH"  # commented out by conda initialize
-        fi
-    fi
-    unset __conda_setup
-    # <<< conda initialize <<<
+#    # >>> conda initialize >>>
+#    # !! Contents within this block are managed by 'conda init' !!
+#    __conda_setup="$('/Users/beps/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+#    if [ $? -eq 0 ]; then
+#        eval "$__conda_setup"
+#    else
+#        if [ -f "/Users/beps/miniconda3/etc/profile.d/conda.sh" ]; then
+## . "/Users/beps/miniconda3/etc/profile.d/conda.sh"  # commented out by conda initialize
+#        else
+## export PATH="/Users/beps/miniconda3/bin:$PATH"  # commented out by conda initialize
+#        fi
+#    fi
+#    unset __conda_setup
+#    # <<< conda initialize <<<
 
 } elif [[ $OS == "Linux" ]] {
     # FZF
