@@ -140,4 +140,10 @@ config.keys = {
     },
 }
 
+
+-- Dead keys for accented characters: left Option key performs composition
+-- right Option does not. (As it is standard on the mac)
+config.send_composed_key_when_left_alt_is_pressed = true
+config.send_composed_key_when_right_alt_is_pressed = false
+
 return config
