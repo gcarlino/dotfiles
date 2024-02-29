@@ -120,10 +120,12 @@ config.keys = {
         action = act.SplitVertical { domain = 'CurrentPaneDomain' }, },
 
     -- Move between panes
-    { key = 'j', mods = 'CMD', action = act.ActivatePaneDirection 'Down' },
-    { key = 'k', mods = 'CMD', action = act.ActivatePaneDirection 'Up' },
-    { key = 'h', mods = 'CMD', action = act.ActivatePaneDirection 'Left' },
-    { key = 'l', mods = 'CMD', action = act.ActivatePaneDirection 'Right' },
+    -- { key = 'j', mods = 'CTRL', action = act.ActivatePaneDirection 'Down' },
+    -- { key = 'k', mods = 'CTRL', action = act.ActivatePaneDirection 'Up' },
+    -- { key = 'h', mods = 'CTRL', action = act.ActivatePaneDirection 'Left' },
+    -- { key = 'l', mods = 'CTRL', action = act.ActivatePaneDirection 'Right' },
+    { key = '[', mods = 'CMD', action = act.ActivatePaneDirection 'Prev' },
+    { key = ']', mods = 'CMD', action = act.ActivatePaneDirection 'Next' },
 
     -- Scroll to prompt
     { key = 'UpArrow', mods = 'SHIFT', action = act.ScrollToPrompt(-1) },
