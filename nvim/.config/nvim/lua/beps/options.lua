@@ -1,44 +1,43 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ';'
 
-local opt = vim.opt
-
-opt.autowrite = true
-opt.clipboard = 'unnamedplus' -- Copy to system clipboard
-opt.confirm = true -- ask for confirmation instead of erroring
-opt.cursorline = true
-opt.diffopt = 'internal,filler,closeoff,vertical'
-opt.expandtab = true
-opt.ignorecase = true
-opt.laststatus = 0
-opt.number = true
-opt.relativenumber = true
-opt.scrolloff = 4
-opt.sidescrolloff = 4
-opt.shiftround = true
-opt.shiftwidth = 4
-opt.shortmess:append({ I = true }) -- disable the splash screen
-opt.showmode = false
-opt.signcolumn = 'yes'
-opt.smartcase = true
-opt.smartindent = true
-opt.softtabstop = 4
-opt.splitbelow = true
-opt.splitright = true
-opt.tabstop = 4
-opt.termguicolors = true
-opt.timeoutlen = 300
-opt.title = true
-opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
-opt.undofile = true
-opt.updatetime = 200
-opt.wrap = false
-opt.breakindent = true
-opt.colorcolumn = '80'
-opt.hlsearch = false
+vim.opt.autowrite = true
+vim.opt.clipboard = 'unnamedplus' -- Copy to system clipboard
+vim.opt.confirm = true -- ask for confirmation instead of erroring
+vim.opt.cursorline = true
+vim.opt.diffopt = 'internal,filler,closeoff,vertical'
+vim.opt.expandtab = true
+vim.opt.ignorecase = true
+vim.opt.laststatus = 0
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.scrolloff = 8
+vim.opt.sidescrolloff = 4
+vim.opt.shiftround = true
+vim.opt.shiftwidth = 4
+vim.opt.shortmess:append({ I = true }) -- disable the splash screen
+vim.opt.showmode = false
+vim.opt.signcolumn = 'yes'
+vim.opt.smartcase = true
+vim.opt.smartindent = true
+vim.opt.softtabstop = 4
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+vim.opt.tabstop = 4
+vim.opt.termguicolors = true
+vim.opt.timeoutlen = 300
+vim.opt.title = true
+vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+vim.opt.undofile = true
+vim.opt.updatetime = 200
+vim.opt.wrap = false
+vim.opt.breakindent = true
+vim.opt.colorcolumn = '80'
+vim.opt.hlsearch = true
+vim.opt.inccommand= 'split'
 
 -- Spell check is enabled by file type
-opt.spelllang = { 'en_us', 'it' }
+vim.opt.spelllang = { 'en_us', 'it' }
 
 -- Disable netrw (as required by nvim-tree)
 vim.g.loaded_netrw = 1
@@ -90,7 +89,7 @@ vim.api.nvim_create_autocmd("TermOpen", {
 -- Folding in treesitter
 -- vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 -- vim.o.fillchars = [[eob: ,fold: ,foldopen:⊟,foldsep: ,foldclose:⊞]]
-vim.o.foldcolumn = "1"
-vim.o.foldlevel = 99
-vim.o.foldlevelstart = 99
-vim.o.foldenable = true
+vim.opt.foldcolumn = "1"
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
+vim.opt.foldenable = true
