@@ -20,7 +20,7 @@ telescope.setup {
         layout_strategies = 'flex',
         layout_config = {
             prompt_position = 'top',
-            preview_width = 0.5
+            -- preview_width = 0.5
         },
         dynamic_preview_title = true,
         file_ignore_patterns = { "^.git/" },
@@ -76,64 +76,50 @@ telescope.load_extension("ui-select")
 -- Keymaps
 local builtin = require('telescope.builtin')
 
--- Reopen last used telescope window keeping focus to current buffer
--- vim.keymap.set("n", ";",
---     "<cmd>lua require('telescope.builtin').resume(require('telescope.themes').get_ivy({}))<cr>",
---     { desc = " Resume telescope" })
+vim.keymap.set('n', '<leader>p', builtin.commands,
+    { desc = " lists plugin/commands and runs them on `<cr>`" })
 
-vim.keymap.set('n', '<leader>p', function() builtin.commands() end,
-    { desc = " lists plugin/commands and runs them on `<cr>`" }
-)
-
-vim.keymap.set('n', '<leader><space>', function() builtin.buffers() end,
-    { desc = " show buffers" }
-)
+vim.keymap.set('n', '<leader><space>', builtin.buffers, { desc = " show buffers" })
 
 vim.keymap.set('n', '<leader>fs',
     function() require('telescope').extensions.file_browser.file_browser() end,
-    { desc = " file browser" }
-)
+    { desc = " file browser" })
 
-vim.keymap.set('n', '<leader>ff', function() builtin.find_files() end,
-    { desc = " find files" }
-)
+vim.keymap.set('n', '<leader>fg', builtin.live_grep,
+    { desc = " search for a string and get results live as you type." })
 
-vim.keymap.set('n', '<leader>fb', function() builtin.current_buffer_fuzzy_find() end,
-    { desc = " fuzzy find in current buffer" }
-)
+vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = '[F]ind [R]esume'})
 
-vim.keymap.set('n', '<leader>fh', function() builtin.help_tags() end,
-    { desc = " find help" }
-)
+vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = " find files" })
 
-vim.keymap.set('n', '<leader>fw', function() builtin.grep_string() end,
-    { desc = " searches for string under your cursor in your current working directory" }
-)
+vim.keymap.set('n', '<leader>fb', function ()
+    builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+        winblend = 10,
+        previewer = false,
+    })
+    end, { desc = " fuzzy find in the current buffer" })
 
-vim.keymap.set('n', '<leader>fg', function() builtin.live_grep() end,
-    { desc = " search for a string and get results live as you type." }
-)
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = " [F]ind [H]elp" })
 
-vim.keymap.set('n', '<leader>fk', function() builtin.keymaps() end,
-    { desc = " seaarch keymaps" }
-)
+vim.keymap.set('n', '<leader>ft', builtin.builtin, { desc = "[F]ind [Select] Telescope" })
 
-vim.keymap.set('n', '<leader>fo', function() builtin.oldfiles() end,
-    { desc = " see recently opened/edited files" }
-)
+vim.keymap.set('n', '<leader>fw', builtin.grep_string,
+    { desc = " searches for string under your cursor in your current working directory" })
+
+vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = " seaarch keymaps" })
+
+vim.keymap.set('n', '<leader>fo', builtin.oldfiles,
+    { desc = " see recently opened/edited files" })
 
 -- Telescope for git
-vim.keymap.set('n', '<leader>gc', function() builtin.git_commits() end,
-    { desc = " lists commits for current directory with diff preview" }
-)
+vim.keymap.set('n', '<leader>gc', builtin.git_commits,
+    { desc = " lists commits for current directory with diff preview" })
 
-vim.keymap.set('n', '<leader>gs', function() builtin.git_status() end,
-    { desc = " lists git status for current directory" }
-)
+vim.keymap.set('n', '<leader>gs', builtin.git_status,
+    { desc = " lists git status for current directory" })
 
-vim.keymap.set('n', '<leader>gb', function() builtin.git_bcommits() end,
-    { desc = " lists commits for current buffer with diff preview" }
-)
+vim.keymap.set('n', '<leader>gb', builtin.git_bcommits,
+    { desc = " lists commits for current buffer with d--[[  ]]iff preview" })
 
 -- Search for dotfiles
 vim.keymap.set('n', '<leader>fd',
