@@ -1,3 +1,9 @@
+-- Global mappings
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostics" })
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostics" })
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = "Open diagnostics [Q]uickfix list" })
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = "Show diagnostics [E]rror messages" })
+
 -- Move around selection
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
@@ -20,10 +26,10 @@ vim.keymap.set("n", "]t", ":tabnext<cr>", { desc = "Next tab" })
 vim.keymap.set("n", "[t", ":tabprevious<cr>", { desc = "Previous tab" })
 
 -- Splits
-vim.keymap.set('n', '<C-h>', '<C-w>h', { desc = 'Move to left split.' })
-vim.keymap.set('n', '<C-j>', '<C-w>j', { desc = 'Move to lower split.' })
-vim.keymap.set('n', '<C-k>', '<C-w>k', { desc = 'Move to upper split.' })
-vim.keymap.set('n', '<C-l>', '<C-w>l', { desc = 'Move to right split.' })
+vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to left split.' })
+vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to lower split.' })
+vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to upper split.' })
+vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to right split.' })
 
 -- Change split size
 vim.keymap.set({ 'n', 't'}, '<M-l>', '5<C-w><', { noremap = false })
@@ -53,10 +59,6 @@ vim.keymap.set("n", "[q", ":cprevious<cr>", { desc = "Previous item in quickfix 
 
 -- Allow gf to open non-existent files
 -- vim.keymap.set('', 'gf', ':edit <cfile><CR>')
-
--- Reselect visual selection after indenting
-vim.keymap.set('v', '<', '<gv')
-vim.keymap.set('v', '>', '>gv')
 
 -- Mappings to make moving in and out of a terminal easier once toggled,
 -- whilst still keeping it open
