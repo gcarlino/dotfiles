@@ -49,7 +49,7 @@ plugins=(
     nmap
     rsync
     sudo
-    macos
+    # macos
     zsh-autosuggestions
     zsh-syntax-highlighting
 )
@@ -138,19 +138,21 @@ if [[ $OS == "Darwin" ]] {
     alias kittyDark='kitty +kitten themes --reload-in=all Github\ Dark'
     alias kittyLight='kitty +kitten themes --reload-in=all Github\ Light'
 
-    # Homebrew
-    # export HOMEBREW_NO_ANALYTICS=1
-    # export HOMEBREW_INSTALL_FROM_API=1 
-
     # Notes
     notes=/Users/beps/Simularia/Notes
     alias sn='cd $notes; nvim "$(rg --files $notes | fzf)"'
 
     # Personal bin
-    # export PATH=~/bin:~/.local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:~/.cargo/bin:$PATH
-    export PATH=~/bin:~/.local/bin:/opt/local/bin:/opt/local/sbin:~/.cargo/bin:/opt/gfortran/bin:$PATH
+    export PATH=~/bin:~/.local/bin:~/Library/Python/3.11/bin:/opt/local/bin:/opt/local/sbin:/opt/gfortran/bin:$PATH
 
     export MANPATH=/opt/local/share/man:$MANPATH
+
+    # Python pkg-config
+    export PKG_CONFIG_PATH=/opt/local/Library/Frameworks/Python.framework/Versions/Current/lib/pkgconfig
+
+    # Configure mac native clang to use macports patshs
+    export CPPFLAGS='-isystem/opt/local/include'
+    export LDFLAGS='-L/opt/local/lib'
 
 #    # >>> conda initialize >>>
 #    # !! Contents within this block are managed by 'conda init' !!
@@ -187,8 +189,6 @@ if [[ $OS == "Darwin" ]] {
 
     # export LD_LIBRARY_PATH=/usr/local/cuda-11.5/lib64\
     #     ${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
-
-    # alias luamake=/home/carlino/lua-language-server/3rd/luamake/luamake
 
     if [ -d /etc/profile.d ]; then
         setopt no_nomatch
