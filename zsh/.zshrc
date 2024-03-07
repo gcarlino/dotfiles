@@ -154,21 +154,6 @@ if [[ $OS == "Darwin" ]] {
     export CPPFLAGS='-isystem/opt/local/include'
     export LDFLAGS='-L/opt/local/lib'
 
-#    # >>> conda initialize >>>
-#    # !! Contents within this block are managed by 'conda init' !!
-#    __conda_setup="$('/Users/beps/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-#    if [ $? -eq 0 ]; then
-#        eval "$__conda_setup"
-#    else
-#        if [ -f "/Users/beps/miniconda3/etc/profile.d/conda.sh" ]; then
-## . "/Users/beps/miniconda3/etc/profile.d/conda.sh"  # commented out by conda initialize
-#        else
-## export PATH="/Users/beps/miniconda3/bin:$PATH"  # commented out by conda initialize
-#        fi
-#    fi
-#    unset __conda_setup
-#    # <<< conda initialize <<<
-
 } elif [[ $OS == "Linux" ]] {
     # FZF
     source /usr/share/doc/fzf/examples/completion.zsh
