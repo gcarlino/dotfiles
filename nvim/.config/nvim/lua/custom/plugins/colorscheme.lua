@@ -16,7 +16,7 @@ return {
     {
         'catppuccin/nvim',
         name = 'catppuccin',
-        enabled = true,
+        enabled = false,
         opts = {
             integrations = {
                 cmp = true,
@@ -44,7 +44,7 @@ return {
 
     {
         "arzg/vim-colors-xcode",
-        enabled = true,
+        enabled = false,
         lazy = false,
         priority = 1000,
         config = function()
@@ -74,7 +74,7 @@ return {
         'sainnhe/edge',
         lazy = false,
         priority = 1000,
-        enabled = true,
+        enabled = false,
         config = function()
             vim.g.edge_style = 'aura'
             vim.g.edge_better_performance = 1
@@ -86,7 +86,7 @@ return {
         'folke/tokyonight.nvim',
         lazy = false,
         priority = 1000,
-        enabled = true,
+        enabled = false,
         config = function()
             require('tokyonight').setup({
                 style = 'storm',
@@ -105,7 +105,7 @@ return {
         'projekt0n/github-nvim-theme',
         lazy = false,    -- make sure we load this during startup if it is your main colorscheme
         priority = 1000, -- make sure to load this before all the other start plugins
-        enabled = true,
+        enabled = false,
         config = function()
             require('github-theme').setup({
                 -- ...
