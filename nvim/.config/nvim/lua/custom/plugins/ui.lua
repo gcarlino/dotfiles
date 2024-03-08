@@ -38,10 +38,10 @@ return {
         "akinsho/bufferline.nvim",
         event = "TabNew",
         dependencies = { "nvim-tree/nvim-web-devicons" },
-        keys = {
-            { "<Tab>",   "<Cmd>BufferLineCycleNext<CR>", desc = "Next tab" },
-            { "<S-Tab>", "<Cmd>BufferLineCyclePrev<CR>", desc = "Prev tab" },
-        },
+        -- keys = {
+        --     { "<Tab>",   "<Cmd>BufferLineCycleNext<CR>", desc = "Next tab" },
+        --     { "<S-Tab>", "<Cmd>BufferLineCyclePrev<CR>", desc = "Prev tab" },
+        -- },
         opts = {
             options = {
                 mode = "tabs",
@@ -110,6 +110,7 @@ return {
 
     {
         'lukas-reineke/virt-column.nvim',
+        event = "VeryLazy",
         enabled = true,
         opts = {
             char = "│",
