@@ -93,77 +93,64 @@ lspconfig.marksman.setup({})
 
 lspconfig.r_language_server.setup({})
 
--- Global mappings
-vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, { desc = "Diagnostics" })
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = "Previous diagnostics" })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = "Next diagnostics" })
-vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, { desc = "Diagnostics loclist" })
-
--- mapping description function
-local optsDesc = function (ev, mdesc)
-    local opts = { buffer = ev.buf, noremap = true, silent = true, desc = mdesc }
-    return opts
-end
-
 -- Use LspAttach autocommand to only map the following keys after the
 -- language server attaches to the current buffer
 vim.api.nvim_create_autocmd('LspAttach', {
-    group = vim.api.nvim_create_augroup('UserLspConfig', {}),
-    callback = function(ev)
-        -- Enable completion triggered by <c-x><c-o>
-        -- vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+    group = vim.api.nvim_create_augroup('UserLSPConfig', { clear = true }),
+    callback = function(event)
+        -- mapping key and description
+        local map = function(keys, func, desc)
+            vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
+        end
 
         -- Buffer local mappings.
         -- See `:help vim.lsp.*` for documentation on any of the below functions
-        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, optsDesc(ev, 'LSP goto declaration'))
-        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, optsDesc(ev, 'LSP goto definition'))
-        -- vim.keymap.set('n', 'gr', vim.lsp.buf.references, optsDesc(ev, 'LSP references.'))
-        vim.keymap.set('n', "gr", function () require("telescope.builtin").lsp_references() end, optsDesc(ev, "LSP reference")
-        )
+        map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
 
-        vim.keymap.set('n', 'K', vim.lsp.buf.hover, optsDesc(ev, 'LSP show hover information.'))
-        vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, optsDesc(ev, 'Show implementation.'))
-        vim.keymap.set('n', '<leader>k', vim.lsp.buf.signature_help, optsDesc(ev, 'LSP signature help'))
+        map('gr', require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
 
-        vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, optsDesc(ev, 'LSP add workspace folder'))
-        vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, optsDesc(ev, 'LSP remove workspace folder'))
-        vim.keymap.set('n', '<space>wl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
-            optsDesc(ev, 'LSP list workspace folders'))
+        map('gi', require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementations.")
 
-        vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, optsDesc(ev, 'LSP type definition.'))
-        vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, optsDesc(ev, 'LSP buffer rename'))
-        vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, optsDesc(ev, 'LSP buffer code action.'))
-        -- vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end,
+        map('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition.')
+
+        map('K', vim.lsp.buf.hover, 'show hover information.')
+
+        map('<leader>rn', vim.lsp.buf.rename, 'Buffer [r]e[n]ame')
+
+        map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+
+        map('<leader>k', vim.lsp.buf.signature_help, 'signature help')
+
+        map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+        -- vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end,
         --     optsDesc(ev, 'LSP buffer format'))
 
-        vim.keymap.set('n', '<leader>lt', function() require('telescope.builtin').diagnostics() end,
-            optsDesc(ev, 'LSP document diagnostics '))
-        vim.keymap.set('n', '<leader>ls', function() require('telescope.builtin').lsp_document_symbols() end,
-            { desc = 'LSP document symbols ' })
+        map('<leader>lt', require('telescope.builtin').diagnostics, 'document diagnostics')
 
-        -- additional capabilities
-        -- local capabilities = vim.lsp.protocol.make_client_capabilities()
+        map('<leader>ls', require('telescope.builtin').lsp_document_symbols, "[L]ist document [S]ymbols")
 
-        -- -- nvim-cmp supports additional completion capabilities
-        -- -- capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-        -- local cstatus, cmp = pcall(require, 'cmp_nvim_lsp')
-        -- if cstatus then
-        --     capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-        -- end
+        map("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
+
+        map('<leader>wa', vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd folder")
+
+        map('<leader>wr', vim.lsp.buf.remove_workspace_folder, "[W]orkspace [R]emove folder")
+
+        map('<leader>wl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
+            '[W]orkspace [L]ist folders')
+
+        -- When you move your cursor, the highlights will be cleared (the second autocommand).
+        local client = vim.lsp.get_client_by_id(event.data.client_id)
+        if client and client.server_capabilities.documentHighlightProvider then
+            vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+                buffer = event.buf,
+                callback = vim.lsp.buf.document_highlight,
+            })
+
+            vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+                buffer = event.buf,
+                callback = vim.lsp.buf.clear_references,
+            })
+        end
+
     end,
-    -- callback = function(args)
-    --
-    --     -- additional capabilities
-    --     local capabilities = vim.lsp.protocol.make_client_capabilities()
-    --
-    --     -- nvim-cdmp supports additional completion capabilities
-    --     -- capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-    --     capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-    --
-    --     -- -- tell the sever the capability of foldingRange
-    --     -- capabilities.textDocument.foldingRange = {
-    --     --     dynamicRegistration = false,
-    --     --     lineFoldingOnly = true
-    --     -- }
-    -- end
 })
