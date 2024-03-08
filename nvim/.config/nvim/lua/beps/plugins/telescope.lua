@@ -92,12 +92,12 @@ vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = '[F]ind [R]esume'})
 
 vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = " find files" })
 
-vim.keymap.set('n', '<leader>fb', function ()
+vim.keymap.set('n', '<leader>/', function ()
     builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
         winblend = 10,
         previewer = false,
     })
-    end, { desc = " fuzzy find in the current buffer" })
+    end, { desc = " [/] fuzzy find in current buffer" })
 
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = " [F]ind [H]elp" })
 

@@ -1,10 +1,8 @@
 return {
     {
         'nvim-telescope/telescope.nvim',
-        -- tag = '0.1.5',
         branch = "0.1.x",
-        -- cmd = 'Telescope',
-        event = "VeryLazy",
+        event = "VimEnter",
         config = function()
             require('beps.plugins.telescope')
         end,
@@ -14,6 +12,7 @@ return {
             { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
             { 'nvim-telescope/telescope-ui-select.nvim' },
             -- { "nvim-telescope/telescope-dap.nvim" },
+            { 'nvim-tree/nvim-web-devicons' }
         }
     },
 
@@ -61,7 +60,7 @@ return {
             {
                 "<leader>fc",
                 "<cmd>Telescope cmdline<cr>",
-                desc = "  Telescope commandline."
+                desc = " Telescope commandline."
             },
         },
         opts = {},
