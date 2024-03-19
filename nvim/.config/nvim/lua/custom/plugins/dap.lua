@@ -6,7 +6,6 @@ return {
         event = "VeryLazy",
         -- event = { "BufReadPost", "BufNewFile" },
         dependencies = {
-            "rcarriga/nvim-dap-ui",
             "mfussenegger/nvim-dap-python",
             "theHamsta/nvim-dap-virtual-text",
             "nvim-telescope/telescope-dap.nvim",
@@ -17,4 +16,12 @@ return {
         end,
     },
 
+    {
+        "rcarriga/nvim-dap-ui",
+        event = "VeryLazy",
+        dependencies = {
+            "mfussenegger/nvim-dap",
+             "nvim-neotest/nvim-nio"
+        }
+    },
 }
