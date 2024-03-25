@@ -19,7 +19,7 @@ return {
             "rafamadriz/friendly-snippets",
             'saadparwaiz1/cmp_luasnip',
             'rcarriga/cmp-dap',
-            'jalvesaq/cmp-nvim-r',
+            "R-nvim/cmp-r",
             'kdheepak/cmp-latex-symbols',
         },
     },

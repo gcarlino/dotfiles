@@ -46,7 +46,32 @@ return {
     },
 
     {
+        "R-nvim/R.nvim",
+        lazy = false,
+        config = function ()
+            local opts = {
+                R_args = {"--quiet", "--no-save"},
+                hook = {
+                    after_config = function()
+                        if vim.o.syntax ~= "rbrowser" then
+                            vim.api.nvim_buf_set_keymap(0, "n", "<Enter>", "<Plug>RDSendLine", {})
+                            vim.api.nvim_buf_set_keymap(0, "v", "<Enter>", "<Plug>RSendSelection", {})
+                            vim.api.nvim_buf_set_keymap(0, "n", "<LocalLeader>dl", ":call g:SendCmdToR('devtools::load_all()')<CR>", { desc = "R: devtools::load_all()", silent = true })
+                            vim.api.nvim_buf_set_keymap(0, "n", "<LocalLeader>dd", ":call g:SendCmdToR('devtools::document()')<CR>", { desc = "R: devtools::document()", silent = true })
+                        end
+                    end
+                },
+                min_editor_width = 80,
+                r_console_width = 1000,
+            }
+            require("r").setup(opts)
+
+        end
+    },
+
+    {
         "jalvesaq/Nvim-R",
+        enabled = false,
         lazy = false,
         config = function()
             -- For radian
