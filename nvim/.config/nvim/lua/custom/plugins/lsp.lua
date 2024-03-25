@@ -28,6 +28,8 @@ return {
         }
     },
 
+    { "folke/neodev.nvim", opts = {} },
+
     -- Currently disabled since python linters are managed by pylsp
     {
         "mfussenegger/nvim-lint",

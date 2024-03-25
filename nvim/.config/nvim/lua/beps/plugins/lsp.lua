@@ -18,6 +18,8 @@ for type, icon in pairs(signs) do
     vim.fn.sign_define(hl, { icon = icon, text = icon, texthl = hl, numhl = hl })
 end
 
+require("neodev").setup()
+
 require("mason").setup()
 require("mason-lspconfig").setup()
 
@@ -58,6 +60,9 @@ lspconfig.pylsp.setup({
 lspconfig.lua_ls.setup({
     settings = {
         Lua = {
+            completion = {
+                callSnippet = "Replace"
+            },
             runtime = {
                 -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
                 version = 'LuaJIT',

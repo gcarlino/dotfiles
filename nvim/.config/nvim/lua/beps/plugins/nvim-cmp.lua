@@ -39,7 +39,6 @@ cmp.setup({
                 end
             },
         },
-        { name = "cmdline" },
         {
             name = "latex_symbols",
             option = {
