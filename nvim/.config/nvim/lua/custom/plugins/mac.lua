@@ -31,8 +31,17 @@ else
                     nvim_cmp = true,
                     -- prepend_note_id = false,
                 },
+                ui = {
+                    enable = false
+                },
                 disable_frontmatter = true,
                 open_app_foreground = true,
+                follow_url_func = function(url)
+                    -- Open the URL in the default web browser.
+                    vim.fn.jobstart({"open", url})  -- Mac OS
+                    -- vim.fn.jobstart({"xdg-open", url})  -- linux
+                end,
+
             }
         },
     }
