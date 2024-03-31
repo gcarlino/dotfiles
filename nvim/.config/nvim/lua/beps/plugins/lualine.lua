@@ -5,7 +5,6 @@ local filename_symbols = {
     newfile = ' '
 }
 
-
 local function getCWD()
     local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ":~")
     return vim.fn.pathshorten(cwd)
@@ -200,7 +199,7 @@ require 'lualine'.setup {
     inactive_sections = {
         lualine_a = {},
         lualine_b = {},
-        lualine_c = { 'filename' },
+        lualine_c = { { 'filename', path = 3, shorting_target = 20 } },
         lualine_x = { 'location' },
         lualine_y = {},
         lualine_z = {}
