@@ -5,11 +5,16 @@ local filename_symbols = {
     newfile = ' '
 }
 
-local function getCWD()
-    local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ":~")
-    return vim.fn.pathshorten(cwd)
-end
+-- local function getCWD()
+--     local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ":~")
+--     return vim.fn.pathshorten(cwd)
+-- end
 
+-- Get position as <current line>|<total lines>|<cursor column>|<total columns>
+local function myLocation()
+    local linelength = vim.api.nvim_strwidth(vim.api.nvim_get_current_line())
+    return '%l|%L│%2v|' .. linelength
+end
 
 --- @param trunc_width number trunctates component when screen width is less then trunc_width
 --- @param trunc_len number truncates component to trunc_len number of chars
@@ -138,7 +143,7 @@ require 'lualine'.setup {
                 file_status = true,
                 newfile_status = true,
                 path = 3,
-                shorting_target = 40,
+                shorting_target = 20,
                 -- color = {
                 --     gui = 'italic',
                 --     -- fg = 'pink'
@@ -187,13 +192,14 @@ require 'lualine'.setup {
         },
         lualine_z = {
             {
-                'location',
-                padding = {left = 1, right = 0}
-            },
-            {
-                'progress',
+                -- 'location',
+                myLocation,
                 padding = {left = 1, right = 1}
             },
+            -- {
+            --     'progress',
+            --     padding = {left = 1, right = 1}
+            -- },
         }
     },
     inactive_sections = {
