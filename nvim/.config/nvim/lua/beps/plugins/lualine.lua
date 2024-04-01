@@ -112,7 +112,7 @@ require 'lualine'.setup {
                 'branch',
                 color = { fg = 'CornflowerBlue' },
                 fmt = trunc(90, 4, 60, true),
-
+                padding = { left = 1, right = 0 },
             },
             {
                 'diff',
