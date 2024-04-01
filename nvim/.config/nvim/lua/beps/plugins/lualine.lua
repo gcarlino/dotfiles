@@ -123,6 +123,7 @@ require 'lualine'.setup {
             },
             {
                 'diagnostics',
+                icon = { '', color = { fg = 'CornflowerBlue' } },
                 sources = { 'nvim_diagnostic' },
                 symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
                 fmt = trunc(0, 0, 90, true),
