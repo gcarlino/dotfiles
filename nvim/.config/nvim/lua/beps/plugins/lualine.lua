@@ -113,20 +113,22 @@ require 'lualine'.setup {
         lualine_b = {
             {
                 'branch',
-                color = { fg = 'CornflowerBlue' },
+                -- color = { fg = 'CornflowerBlue' },
                 fmt = trunc(90, 4, 60, true),
-                padding = { left = 1, right = 0 },
+                padding = { left = 1, right = 1 },
             },
             {
                 'diff',
                 source = diff_source,
-                -- symbols = { added = ' ', modified = '柳', removed = ' ' },
-                symbols = { added = ' ', modified = ' ', removed = ' ' },
+                symbols = { added = ' ', modified = '柳', removed = ' ' },
+                -- symbols = { added = ' ', modified = ' ', removed = ' ' },
+                padding = { left = 0, right = 1 },
                 fmt = trunc(0, 0, 90, true),
             },
             {
                 'diagnostics',
-                icon = { '', color = { fg = 'CornflowerBlue' } },
+                icon = { '' },
+                -- icon = { '', color = { fg = 'CornflowerBlue' } },
                 sources = { 'nvim_diagnostic' },
                 symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
                 fmt = trunc(0, 0, 90, true),
@@ -137,17 +139,11 @@ require 'lualine'.setup {
         },
         lualine_c = {
             {
-                'filetype',
-                icon_only = true,
-                colored = false,
-                padding = { left = 1, right = 0 },
-            },
-            {
                 'filename',
                 file_status = true,
                 newfile_status = true,
                 path = 3,
-                shorting_target = 20,
+                shorting_target = 80,
                 -- color = {
                 --     gui = 'italic',
                 --     -- fg = 'pink'
@@ -161,30 +157,34 @@ require 'lualine'.setup {
         },
         lualine_x = {
             {
+                'filetype',
+                icon_only = true,
+                -- colored = false,
+                padding = { left = 0, right = 0 },
+            },
+            {
                 getLSP,
-                icon = '',
-                color = {
-                    -- fg = 'pink',
-                    fg = 'violet',
-                    gui = 'italic',
-                },
-                fmt = trunc(90, 3, 80, true)
+                -- icon = '',
+                -- color = {
+                --     -- fg = 'pink',
+                --     fg = 'violet',
+                --     gui = 'italic',
+                -- },
+                fmt = trunc(90, 3, 80, true),
+                padding = { left = 0, right = 1 },
             },
         },
         lualine_y = {
             {
                 'fileformat',
-                color = { fg = 'CornflowerBlue' },
                 padding = { left = 1, right = 1 },
             },
             {
                 'encoding',
-                color = { fg = 'CornflowerBlue' },
                 padding = {left = 0, right = 1 }
             },
             {
                 'filesize',
-                color = { fg = 'CornflowerBlue' },
                 padding = {left = 0, right = 1 }
             }
         },
@@ -207,7 +207,7 @@ require 'lualine'.setup {
     inactive_sections = {
         lualine_a = {},
         lualine_b = {},
-        lualine_c = { { 'filename', path = 3, shorting_target = 20 } },
+        lualine_c = { { 'filename', path = 3, shorting_target = 10 } },
         lualine_x = { 'location' },
         lualine_y = {},
         lualine_z = {}
