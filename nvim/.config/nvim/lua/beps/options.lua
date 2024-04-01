@@ -15,7 +15,6 @@ vim.opt.scrolloff = 8
 vim.opt.sidescrolloff = 4
 vim.opt.shiftround = true
 vim.opt.shiftwidth = 4
-vim.opt.shortmess:append({ I = true }) -- disable the splash screen
 vim.opt.showmode = false
 vim.opt.signcolumn = 'yes'
 vim.opt.smartcase = true
@@ -35,6 +34,8 @@ vim.opt.breakindent = true
 vim.opt.colorcolumn = '80'
 vim.opt.hlsearch = true
 vim.opt.inccommand= 'split'
+
+vim.opt.shortmess:append({ S = true }) -- disable search count
 
 -- Spell check is enabled by file type
 vim.opt.spelllang = { 'en_us', 'it' }
