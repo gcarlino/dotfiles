@@ -35,7 +35,7 @@ vim.opt.colorcolumn = '80'
 vim.opt.hlsearch = true
 vim.opt.inccommand= 'split'
 
-vim.opt.shortmess:append({ S = true }) -- disable search count
+-- vim.opt.shortmess:append({ S = true }) -- disable search count
 
 -- Spell check is enabled by file type
 vim.opt.spelllang = { 'en_us', 'it' }

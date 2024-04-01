@@ -188,14 +188,14 @@ require 'lualine'.setup {
             }
         },
         lualine_z = {
-            {
-                'selectioncount',
-                padding = { left = 1, right = 0 },
-            },
-            {
-                'searchcount',
-                padding = { left = 1, right = 0 },
-            },
+            -- {
+            --     'selectioncount',
+            --     padding = { left = 1, right = 0 },
+            -- },
+            -- {
+            --     'searchcount',
+            --     padding = { left = 1, right = 0 },
+            -- },
             {
                 -- 'location',
                 myLocation,
