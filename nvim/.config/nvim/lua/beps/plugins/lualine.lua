@@ -15,7 +15,8 @@ local filename_symbols = {
 -- Get position as <current line>|<total lines>|<cursor column>|<total columns>
 local function myLocation()
     local linelength = vim.api.nvim_strwidth(vim.api.nvim_get_current_line())
-    return '%l|%L│%2v|' .. linelength
+    linelength = string.format('%3d', linelength)
+    return '%l|%L│%3v|' .. linelength
 end
 
 --- Return function that can format the component accordingly
