@@ -15,14 +15,14 @@ return {
                     end,
                     vim.api.nvim_buf_set_keymap(0,
                         "n",
-                        "<LocalLeader>dl",
+                        "<LocalLeader>cl",
 						"<Cmd>lua require('r.send').cmd('devtools::load_all()')<CR>",
                         { desc = "R: devtools::load_all()", silent = true }
                     ),
                     vim.api.nvim_buf_set_keymap(0,
                         "n",
-                        "<LocalLeader>dd",
-						"<Cmd>lua require('r.send').cmd('devtools::load_all()')<CR>",
+                        "<LocalLeader>cd",
+						"<Cmd>lua require('r.send').cmd('devtools::document()')<CR>",
                         { desc = "R: devtools::document()", silent = true }
                     ),
                 },
