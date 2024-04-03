@@ -26,6 +26,13 @@ config.window_frame = {
     inactive_titlebar_bg = '#FFFFFF',
 }
 
+config.window_padding = {
+    left = 2,
+    right = 2,
+    top = 2,
+    bottom = 2,
+}
+
 config.colors = {
   tab_bar = {
     -- The color of the strip that goes along the top of the window
