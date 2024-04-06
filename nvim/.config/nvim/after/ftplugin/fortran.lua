@@ -1,6 +1,17 @@
-vim.o.tabstop = 2
-vim.o.shiftwidth = 2
-vim.cmd('let fortran_do_enddo=1')
+-- Change options if fortran77 or note
+if vim.fn.search("^C", "nw", 500) ~= 0 then
+    vim.opt_local.tabstop = 6
+    vim.opt_local.shiftwidth = 6
+    vim.opt_local.softtabstop = 6
+    vim.bo.commentstring = "C%s"
+else
+    vim.opt_local.tabstop = 2
+    vim.opt_local.shiftwidth = 2
+    vim.opt_local.softtabstop = 2
+end
+
+-- vim.o.syntax = "fortran"
+-- vim.cmd('let fortran_free_source=1')
 
 -- The following lines are to config the LSP without nvim-lspconfig
 --

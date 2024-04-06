@@ -1,9 +1,10 @@
-vim.g.fortran_fixed_source = 1
-vim.o.tabstop = 6
-vim.o.shiftwidth = 6
-vim.o.softtabstop = 6
-vim.bo.commentstring = "C%s"
-
+-- vim.o.syntax = "fortran"
+-- vim.cmd('let fortran_fixed_source=1')
+-- vim.bo.commentstring = "C%s"
+-- vim.o.tabstop = 6
+-- vim.o.shiftwidth = 6
+-- vim.o.softtabstop = 6
+--
 -- -- require('lsp.fortls')
 -- vim.lsp.start({
 --     name = 'fortls',
