@@ -73,6 +73,10 @@ function _G.set_terminal_keymaps()
 end
 vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
 
+-- vim.keymap.set("n", "<D-/>", ":lua require('Comment.api').toggle.linewise.current(); vim.cmd('normal j')<CR>", {silent=true})
+-- vim.keymap.set("n", "<D-/>", ":lua require('Comment.api').toggle.linewise.current()<CR>", {silent=true})
+-- vim.keymap.set("v", "<D-/>", ":lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>", {silent=true})
+
 -- Toggle backgournd color TODO: move to colorscheme configuration
 vim.api.nvim_set_keymap("n", "<leader>b", "", {
     noremap = true,
