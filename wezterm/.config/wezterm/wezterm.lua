@@ -8,6 +8,9 @@ config.initial_rows = 28
 -- Do not quit when all windows are closed
 config.quit_when_all_windows_are_closed = false
 
+-- Do not display confirmation prompt
+config.window_close_confirmation = 'NeverPrompt'
+
 -- Hyperlinks
 config.hyperlink_rules = wezterm.default_hyperlink_rules()
 
