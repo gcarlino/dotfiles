@@ -28,7 +28,7 @@ return {
                 },
                 auto_start = "always",
                 min_editor_width = 80,
-                r_console_width = 1000,
+                rconsole_width = 1000,
 
                 disable_cmds = {
                     "RClearConsole",
