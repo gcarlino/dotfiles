@@ -18,7 +18,7 @@ for type, icon in pairs(signs) do
     vim.fn.sign_define(hl, { icon = icon, text = icon, texthl = hl, numhl = hl })
 end
 
-require("neodev").setup()
+require("neodev").setup({ })
 
 require("mason").setup()
 require("mason-lspconfig").setup()
