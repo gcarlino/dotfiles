@@ -35,8 +35,8 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to right split.'
 vim.keymap.set({ 'n', 't'}, '<M-l>', '5<C-w><', { noremap = false })
 vim.keymap.set({ 'n', 't'}, '<M-h>', '5<C-w>>', { noremap = false })
 
--- No highlight
-vim.keymap.set('n', '<C-c>', ':noh<CR>', { desc = "No highlight" })
+-- Clear highlight
+vim.keymap.set('n', '<ESC>', '<cmd>nohlsearch<CR>')
 
 -- Move lines around
 vim.api.nvim_set_keymap('n', '<M-k>', ':m .-2<CR>==', { noremap = true })
