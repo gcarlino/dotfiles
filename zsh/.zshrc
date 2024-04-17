@@ -49,7 +49,7 @@ plugins=(
     nmap
     rsync
     sudo
-    # macos
+    macos
     zsh-autosuggestions
     zsh-syntax-highlighting
 )
@@ -143,7 +143,7 @@ if [[ $OS == "Darwin" ]] {
     alias sn='cd $notes; nvim "$(rg --files $notes | fzf)"'
 
     # Personal bin
-    export PATH=~/bin:~/.local/bin:~/Library/Python/3.11/bin:/opt/local/libexec/gnubin:/opt/local/bin:/opt/local/sbin:/opt/gfortran/bin:$PATH
+    export PATH=~/bin:~/.local/bin:~/Library/Python/3.12/bin:/opt/local/libexec/gnubin:/opt/local/bin:/opt/local/sbin:/opt/gfortran/bin:$PATH
 
     export MANPATH=/opt/local/share/man:$MANPATH
 
