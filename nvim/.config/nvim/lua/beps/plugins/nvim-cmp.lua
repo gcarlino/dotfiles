@@ -1,23 +1,9 @@
--- hrsh7th/nvim-cmp
--- local status, cmp = pcall(require, 'cmp')
--- if not status then
---     return
--- end
--- local lstatus, luasnip = pcall(require, 'luasnip')
--- if not lstatus then
---     return
--- end
 local cmp = require('cmp')
 local luasnip = require('luasnip')
 local lspkind = require('lspkind')
 
--- local has_words_before = function()
---   unpack = unpack or table.unpack
---   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
---   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
--- end
-
 cmp.setup({
+
     -- completion = {
     --     completeopt = "menu, menuone, noselect",
     -- },
@@ -32,27 +18,14 @@ cmp.setup({
         { name = "nvim_lua" },
         { name = "luasnip" },
         { name = "buffer" },
-        { name = "path",
-            option = {
-                get_cwd = function ()
-                    return vim.fn.getcwd()
-                end
-            },
-        },
-        {
-            name = "latex_symbols",
-            option = {
-                strategy = 0, -- show the command and insert the symbol
-                -- strategy = 2, -- show and insert the command
-            }
-        },
-        { name = "dap" },
+        { name = "path" },
+        -- { name = "dap" },
         { name = "cmp_r"},
     },
-    window = {
-        completion = cmp.config.window.bordered(),
-        documentation = cmp.config.window.bordered(),
-    },
+    -- window = {
+    --     completion = cmp.config.window.bordered(),
+    --     documentation = cmp.config.window.bordered(),
+    -- },
     mapping = cmp.mapping.preset.insert({
         ["<C-u>"] = cmp.mapping.scroll_docs(-4),
         ["<C-d>"] = cmp.mapping.scroll_docs(4),
@@ -63,7 +36,6 @@ cmp.setup({
 
         ["<C-Space>"] = cmp.mapping.complete({}),
         ["<C-y>"] = cmp.mapping.confirm { select = true },
-        ['<CR>'] = cmp.mapping.confirm({ select = true }),
 
         -- <c-l> will move you to the right of each of the expansion locations.
         -- <c-h> is similar, except moving you backwards.
@@ -111,25 +83,32 @@ cmp.setup({
         native_menu = false,
         ghost_text = true
     }
+
 })
 
 -- Use
 cmp.setup.filetype({ 'markdown', 'text', 'yaml' }, {
     sources = cmp.config.sources({
         { name = "nvim_lsp" },
-        { name = 'latex_symbols' },
+        {
+            name = "latex_symbols",
+            option = {
+                strategy = 0, -- show the command and insert the symbol
+                -- strategy = 2, -- show and insert the command
+            }
+        },
         { name = 'buffer' },
         { name = 'path' }
     })
 })
 
-cmp.setup.filetype({'html'}, {
-    sources = cmp.config.sources({
-        { name = 'luasnip' },
-        { name = 'path' },
-        { name = 'buffer' },
-    })
-})
+-- cmp.setup.filetype({'html'}, {
+--     sources = cmp.config.sources({
+--         { name = 'luasnip' },
+--         { name = 'path' },
+--         { name = 'buffer' },
+--     })
+-- })
 
 -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline({ '/', '?' }, {
@@ -148,6 +127,5 @@ cmp.setup.cmdline(':', {
             name = 'cmdline',
             ignore_cmds = { 'Man', '!' }
         },
-        { name = 'buffer' }
     })
 })
