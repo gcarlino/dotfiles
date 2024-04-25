@@ -8,7 +8,6 @@ telescope.setup {
             i = {
                 ["<M-v>"] = require('telescope.actions.layout').toggle_preview,
                 ["<M-t>"] = trouble.open_with_trouble,
-                -- ["<C-h>"] = "which_key",
             },
             n = {
                 ["<M-v>"] = require('telescope.actions.layout').toggle_preview,
@@ -76,21 +75,21 @@ telescope.load_extension("ui-select")
 -- Keymaps
 local builtin = require('telescope.builtin')
 
-vim.keymap.set('n', '<leader>p', builtin.commands,
-    { desc = " lists plugin/commands and runs them on `<cr>`" })
+vim.keymap.set('n', '<leader>fp', builtin.commands,
+    { desc = " [f]ind [p]lugin/commands and runs them on `<cr>`" })
 
-vim.keymap.set('n', '<leader><space>', builtin.buffers, { desc = " show buffers" })
+vim.keymap.set('n', '<leader><space>', builtin.buffers,
+    { desc = " [f]ind [ ] open buffers" })
 
 vim.keymap.set('n', '<leader>fs',
     function() require('telescope').extensions.file_browser.file_browser() end,
-    { desc = " file browser" })
+    { desc = " [f]ile [s]earch in browser" })
 
-vim.keymap.set('n', '<leader>fg', builtin.live_grep,
-    { desc = " search for a string and get results live as you type." })
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = " [f]ind by [g]rep." })
 
-vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = '[F]ind [R]esume'})
+vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = " [f]ind [r]esume"})
 
-vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = " find files" })
+vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = " [f]ind [f]iles" })
 
 vim.keymap.set('n', '<leader>/', function ()
     builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
@@ -99,27 +98,34 @@ vim.keymap.set('n', '<leader>/', function ()
     })
     end, { desc = " [/] fuzzy find in current buffer" })
 
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = " [F]ind [H]elp" })
+vim.keymap.set("n", "<leader>f/", function()
+    builtin.live_grep({
+        grep_open_files = true,
+        prompt_title = "Live Grep in Open Files",
+    })
+    end, { desc = " [f]ind [/] in open files" })
 
-vim.keymap.set('n', '<leader>ft', builtin.builtin, { desc = "[F]ind [Select] Telescope" })
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = " [f]ind [h]elp" })
+
+vim.keymap.set('n', '<leader>ft', builtin.builtin, { desc = " [f]ind [select] Telescope" })
 
 vim.keymap.set('n', '<leader>fw', builtin.grep_string,
-    { desc = " searches for string under your cursor in your current working directory" })
+    { desc = " [f] [w]ord under cursor in working directory" })
 
-vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = " seaarch keymaps" })
+vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = " [f]ind [k]eymaps" })
 
 vim.keymap.set('n', '<leader>fo', builtin.oldfiles,
-    { desc = " see recently opened/edited files" })
+    { desc = " [f]ind recently [o]pened/edited files" })
 
--- Telescope for git
-vim.keymap.set('n', '<leader>gc', builtin.git_commits,
-    { desc = " lists commits for current directory with diff preview" })
-
-vim.keymap.set('n', '<leader>gs', builtin.git_status,
-    { desc = " lists git status for current directory" })
-
-vim.keymap.set('n', '<leader>gb', builtin.git_bcommits,
-    { desc = " lists commits for current buffer with d--[[  ]]iff preview" })
+-- -- Telescope for git
+-- vim.keymap.set('n', '<leader>gc', builtin.git_commits,
+--     { desc = " lists commits for current directory with diff preview" })
+--
+-- vim.keymap.set('n', '<leader>gs', builtin.git_status,
+--     { desc = " lists git status for current directory" })
+--
+-- vim.keymap.set('n', '<leader>gb', builtin.git_bcommits,
+--     { desc = " lists commits for current buffer with d--[[  ]]iff preview" })
 
 -- Search for dotfiles
 vim.keymap.set('n', '<leader>fd',
@@ -130,5 +136,5 @@ vim.keymap.set('n', '<leader>fd',
             layout_strategies = "horizontal",
         }
     end,
-    { desc = " edit dotfiles" }
+    { desc = " [f]ind [d]otfiles" }
 )

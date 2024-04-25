@@ -130,8 +130,8 @@ vim.keymap.set('n', '<leader>dt', function() dapui.toggle({}) end, { desc = "DAP
 vim.keymap.set('n', '<leader>dc', function() dapui.close({}) end, { desc = "DAP: debug close dap-ui" })
 
 -- hover
-vim.keymap.set({ 'n', 'x' }, '<leader>i', function() dapui.eval() end,
-    { desc = "DAP: open a floating window containing the result of evaluting an expression" })
+vim.keymap.set({ 'n', 'x' }, '<leader>di', function() dapui.eval() end,
+    { desc = "DAP: [i]nspect: eval the expression" })
 
 vim.keymap.set({'n', 'v'}, '<Leader>dh', function()
     require('dap.ui.widgets').hover()

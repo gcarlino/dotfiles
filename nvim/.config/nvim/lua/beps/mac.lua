@@ -24,8 +24,8 @@ vim.keymap.set('n', '<leader>sn', function() M.simultitles() end, {
     desc = "List Simularia notes with Telescope" })
 
 -- Preview markdown with Marked.app
-vim.keymap.set('n', '<leader>mk', ':!open -a "/Applications/Marked 2.app" "%"<CR>',
-    { desc = "Preview with Marked app", silent = true })
+vim.keymap.set('n', '<leader>m', ':!open -a "/Applications/Marked 2.app" "%"<CR>',
+    { desc = "Preview with Marked", silent = true })
 
 -- Open Dash for documentation *** KEYMAP NOT WORKING ***
 -- vim.keymap.set('n', '<leader>ds',

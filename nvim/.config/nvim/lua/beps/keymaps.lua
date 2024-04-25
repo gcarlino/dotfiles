@@ -20,8 +20,8 @@ vim.keymap.set("n", "<c-u>", "<c-u>zz", {})
 -- vim.keymap.set({"n", "v"}, "<leader>y", "\"+y")
 
 -- Tabs
-vim.keymap.set('n', '<leader>to', ':tabnew<CR>', { desc = 'Open tab' })
-vim.keymap.set('n', '<leader>tc', ':tabclose<CR>', { desc = 'Close tab' })
+-- vim.keymap.set('n', '<leader>o', ':tabnew<CR>', { desc = '[o]pen tab' })
+-- vim.keymap.set('n', '<leader>c', ':tabclose<CR>', { desc = '[c]lose tab' })
 vim.keymap.set("n", "]t", ":tabnext<cr>", { desc = "Next tab" })
 vim.keymap.set("n", "[t", ":tabprevious<cr>", { desc = "Previous tab" })
 
@@ -46,9 +46,9 @@ vim.api.nvim_set_keymap('i', '<M-k>', '<ESC>:m .-2<CR>==gi', { noremap = true })
 vim.api.nvim_set_keymap('v', '<M-j>', ":m '>+1<CR>gv==gv", { noremap = true })
 vim.api.nvim_set_keymap('v', '<M-k>', ":m '<-2<CR>gv==gv", { noremap = true })
 
--- Change current directory to working file path
-vim.keymap.set('n', '<leader>cd', '<cmd>cd %:p:h<CR>:pwd<CR>',
-    { noremap = true, silent = true, desc = "Change current directory to working file path." })
+-- -- Change current directory to working file path
+-- vim.keymap.set('n', '<leader>cd', '<cmd>cd %:p:h<CR>:pwd<CR>',
+--     { noremap = true, silent = true, desc = "Change current directory to working file path." })
 
 -- Quickfixlist navigation
 vim.keymap.set("n", "]q", ":cnext<cr>", { desc = "Next item in quickfix list" })
@@ -78,7 +78,7 @@ vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
 -- vim.keymap.set("v", "<D-/>", ":lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>", {silent=true})
 
 -- Toggle backgournd color TODO: move to colorscheme configuration
-vim.api.nvim_set_keymap("n", "<leader>b", "", {
+vim.api.nvim_set_keymap("n", "<leader>tc", "", {
     noremap = true,
     callback = function()
         local _background = vim.api.nvim_get_option_value("background", {})
@@ -111,5 +111,5 @@ vim.api.nvim_set_keymap("n", "<leader>b", "", {
             vim.api.nvim_set_option_value("background", "light", {})
         end
     end,
-    desc = "Toggle background color."
+    desc = "[T]oggle background [c]olor."
 })

@@ -145,6 +145,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
         -- When you move your cursor, the highlights will be cleared (the second autocommand).
         local client = vim.lsp.get_client_by_id(event.data.client_id)
+
         if client and client.server_capabilities.documentHighlightProvider then
             vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
                 buffer = event.buf,
@@ -156,6 +157,19 @@ vim.api.nvim_create_autocmd('LspAttach', {
                 callback = vim.lsp.buf.clear_references,
             })
         end
+
+        -- The following autocommand is used to enable inlay hints in your
+        -- code, if the language server you are using supports them
+        -- This may be unwanted, since they displace some of your code
+        if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
+            map("<leader>th", function()
+                vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+                end, "[T]oggle Inlay [H]ints")
+        end
+        -- if client.supports_method("textDocument/inlayHint") then
+        --     vim.lsp.inlay_hint.enable(true, { bufnr = event.buf })
+        -- end
+        --
 
     end,
 })
