@@ -12,10 +12,12 @@ else
         {
             "epwalsh/obsidian.nvim",
             version = "*",
-            event = {
-                "BufReadPre " .. vim.fn.expand "~" .. "/Simularia/Notes/**.md",
-                "BufNewFile " .. vim.fn.expand "~" .. "/Simularia/Notes/**.md",
-            },
+            lazy = true,
+            ft = "markdown",
+            -- event = {
+            --     "BufReadPre " .. vim.fn.expand "~" .. "/Simularia/Notes/**.md",
+            --     "BufNewFile " .. vim.fn.expand "~" .. "/Simularia/Notes/**.md",
+            -- },
             dependencies = {
                 "nvim-lua/plenary.nvim",
                 "hrsh7th/nvim-cmp",
@@ -26,6 +28,20 @@ else
                         name = "Simularia",
                         path= "~/Simularia/Notes/",
                     },
+                    {
+                        name = "no-vault",
+                        path = function ()
+                            return assert(vim.fn.getcwd())
+                        end,
+                        overrides = {
+                            notes_subdir = vim.NIL,
+                            new_notes_location = "current_dir",
+                            templates = {
+                                subdir = vim.NIL,
+                            },
+                            disable_frontmatter = true,
+                        }
+                    }
                 },
                 completion = {
                     nvim_cmp = true,
