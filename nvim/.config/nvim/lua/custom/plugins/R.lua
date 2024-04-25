@@ -49,37 +49,11 @@ return {
             -- vim.g.r_indent_align_args = 0
 
             -- Highlight R output using normal colourscheme
-            vim.g.rout_follow_colorscheme = true
+            -- vim.g.rout_follow_colorscheme = true
 
+            -- vim.keymap.set("n", "<LocalLeader>dl", ":call g:SendCmdToR('devtools::load_all()')<CR>", { desc = "R: devtools::load_all()", silent = true })
+            -- vim.keymap.set("n", "<LocalLeader>dd", ":call g:SendCmdToR('devtools::document()')<CR>", { desc = "R: devtools::document()", silent = true })
         end
-    },
-
-    {
-        "jalvesaq/Nvim-R",
-        enabled = false,
-        lazy = false,
-        config = function()
-            -- For radian
-            -- vim.g.R_app = "radian"
-            -- vim.g.R_cmd = "R"
-            -- vim.g.R_args = {'--no-save'}
-            -- vim.g.R_hl_term = 0
-            -- vim.g.R_bracketed_paste = 1
-
-            -- Nvim-R does not set the working directory in any way
-            vim.g.R_nvim_wd = -1
-            vim.g.rout_follow_colorscheme = 1
-            vim.g.R_assign_map = '--'
-
-            vim.g.R_min_editor_width = 80
-            vim.g.R_rconsole_width = 1000
-
-            -- vim.o.foldenable = false
-
-            -- Shortcuts for package development
-            vim.keymap.set("n", "<LocalLeader>dl", ":call g:SendCmdToR('devtools::load_all()')<CR>", { desc = "R: devtools::load_all()", silent = true })
-            vim.keymap.set("n", "<LocalLeader>dd", ":call g:SendCmdToR('devtools::document()')<CR>", { desc = "R: devtools::document()", silent = true })
-        end,
     },
 
 }
