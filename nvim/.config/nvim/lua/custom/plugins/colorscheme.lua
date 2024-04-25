@@ -76,7 +76,7 @@ return {
         'folke/tokyonight.nvim',
         lazy = false,
         priority = 1000,
-        enabled = false,
+        enabled = true,
         config = function()
             require('tokyonight').setup({
                 style = 'storm',
