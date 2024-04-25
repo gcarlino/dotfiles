@@ -29,6 +29,11 @@ return {
                 auto_start = "always",
                 min_editor_width = 80,
                 rconsole_width = 1000,
+                Rout_more_colors = true,
+                listmethods = true,
+                -- R starts in Neovim working directory
+                setwd = "nvim",
+                applescript = true,
 
                 disable_cmds = {
                     "RClearConsole",
