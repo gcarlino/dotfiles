@@ -1,6 +1,8 @@
 return {
     { "nvim-lua/plenary.nvim", lazy = true },
 
+    { 'mechatroner/rainbow_csv' },
+
     {
         "folke/trouble.nvim",
         -- event = { "BufReadPost", "BufNewFile" },
