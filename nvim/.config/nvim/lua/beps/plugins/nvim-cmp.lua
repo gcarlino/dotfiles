@@ -18,7 +18,13 @@ cmp.setup({
         { name = "nvim_lua" },
         { name = "luasnip" },
         { name = "buffer" },
-        { name = "path" },
+        { name = "path",
+            option = {
+                get_cwd = function ()
+                    return vim.fn.getcwd()
+                end
+            },
+        },
         -- { name = "dap" },
         { name = "cmp_r"},
     },
@@ -85,6 +91,8 @@ cmp.setup({
     }
 
 })
+
+require("cmp_r").setup({ })
 
 -- Use
 cmp.setup.filetype({ 'markdown', 'text', 'yaml' }, {
