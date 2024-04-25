@@ -15,6 +15,8 @@ config.window_close_confirmation = 'NeverPrompt'
 config.hyperlink_rules = wezterm.default_hyperlink_rules()
 
 config.color_scheme = "Tomorrow"
+-- config.color_scheme = 'Tokyo Night'
+-- config.color_scheme = 'Tokyo Night Day'
 
 config.font = wezterm.font 'MesloLGS NF'
 
