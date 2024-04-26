@@ -112,6 +112,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
         -- See `:help vim.lsp.*` for documentation on any of the below functions
         map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
 
+        -- Default mappings
+        -- crn for rename
+        -- crr for code actions
+        -- gr for references
+        -- <C-S> (in Insert mode) for signature help
         map('gr', require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
 
         map('gi', require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementations.")
