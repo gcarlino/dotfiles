@@ -9,26 +9,27 @@ return {
                 hook = {
                     after_config = function()
                         if vim.o.syntax ~= "rbrowser" then
-                            vim.api.nvim_buf_set_keymap(0, "n", "<Enter>", "<Plug>RDSendLine", {})
-                            vim.api.nvim_buf_set_keymap(0, "v", "<Enter>", "<Plug>RSendSelection", {})
+                            -- vim.api.nvim_buf_set_keymap(0, "n", "<Enter>", "<Plug>RDSendLine", {})
+                            vim.keymap.set("n", "<Enter>", "<Plug>RDSendLine", {})
+                            -- vim.api.nvim_buf_set_keymap(0, "v", "<Enter>", "<Plug>RSendSelection", {})
+                            vim.keymap.set("v", "<Enter>", "<Plug>RSendSelection", {})
+                            vim.keymap.set("n",
+                                "<LocalLeader>cl",
+                                "<Cmd>lua require('r.send').cmd('devtools::load_all()')<CR>",
+                                { desc = "R: devtools::load_all()", silent = true }
+                            )
+                            vim.keymap.set(
+                                "n",
+                                "<LocalLeader>cd",
+                                "<Cmd>lua require('r.send').cmd('devtools::document()')<CR>",
+                                { desc = "R: devtools::document()", silent = true }
+                            )
                         end
                     end,
-                    vim.api.nvim_buf_set_keymap(0,
-                        "n",
-                        "<LocalLeader>cl",
-						"<Cmd>lua require('r.send').cmd('devtools::load_all()')<CR>",
-                        { desc = "R: devtools::load_all()", silent = true }
-                    ),
-                    vim.api.nvim_buf_set_keymap(0,
-                        "n",
-                        "<LocalLeader>cd",
-						"<Cmd>lua require('r.send').cmd('devtools::document()')<CR>",
-                        { desc = "R: devtools::document()", silent = true }
-                    ),
                 },
                 auto_start = "always",
                 min_editor_width = 80,
-                rconsole_width = 1000,
+                rconsole_width = 100,
                 Rout_more_colors = true,
                 listmethods = true,
                 -- R starts in Neovim working directory
