@@ -7,19 +7,16 @@ return {
             local opts = {
                 R_args = {"--quiet", "--no-save"},
                 hook = {
-                    after_config = function()
+                    on_filetype = function()
                         if vim.o.syntax ~= "rbrowser" then
-                            -- vim.api.nvim_buf_set_keymap(0, "n", "<Enter>", "<Plug>RDSendLine", {})
-                            vim.keymap.set("n", "<Enter>", "<Plug>RDSendLine", {})
-                            -- vim.api.nvim_buf_set_keymap(0, "v", "<Enter>", "<Plug>RSendSelection", {})
-                            vim.keymap.set("v", "<Enter>", "<Plug>RSendSelection", {})
-                            vim.keymap.set("n",
+                            vim.api.nvim_buf_set_keymap(0, "n", "<Enter>", "<Plug>RDSendLine", {})
+                            vim.api.nvim_buf_set_keymap(0, "v", "<Enter>", "<Plug>RSendSelection", {})
+                            vim.api.nvim_buf_set_keymap(0, "n",
                                 "<LocalLeader>cl",
                                 "<Cmd>lua require('r.send').cmd('devtools::load_all()')<CR>",
                                 { desc = "R: devtools::load_all()", silent = true }
                             )
-                            vim.keymap.set(
-                                "n",
+                            vim.api.nvim_buf_set_keymap(0, "n",
                                 "<LocalLeader>cd",
                                 "<Cmd>lua require('r.send').cmd('devtools::document()')<CR>",
                                 { desc = "R: devtools::document()", silent = true }
@@ -35,6 +32,7 @@ return {
                 -- R starts in Neovim working directory
                 setwd = "nvim",
                 applescript = true,
+                pdfviewer = "open",
 
                 disable_cmds = {
                     "RClearConsole",
@@ -52,8 +50,6 @@ return {
             -- Highlight R output using normal colourscheme
             -- vim.g.rout_follow_colorscheme = true
 
-            -- vim.keymap.set("n", "<LocalLeader>dl", ":call g:SendCmdToR('devtools::load_all()')<CR>", { desc = "R: devtools::load_all()", silent = true })
-            -- vim.keymap.set("n", "<LocalLeader>dd", ":call g:SendCmdToR('devtools::document()')<CR>", { desc = "R: devtools::document()", silent = true })
         end
     },
 
