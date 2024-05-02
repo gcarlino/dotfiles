@@ -7,12 +7,12 @@ return {
 
     {
         "folke/which-key.nvim",
-        -- event = "VeryLazy",
-        event = "VimEnter",
-        -- init = function()
-        --     -- vim.o.timeout = true
-        --     -- vim.o.timeoutlen = 1000
-        -- end,
+        event = "VeryLazy",
+        -- event = "VimEnter",
+        init = function()
+            vim.o.timeout = true
+            vim.o.timeoutlen = 1000
+        end,
         -- opts = {
         --     window = {
         --         border = "single",
@@ -38,6 +38,10 @@ return {
 				["<leader>t"] = { name = "[T]oggle", _ = "which_key_ignore" },
 				["<leader>h"] = { name = "Git [H]unk", _ = "which_key_ignore" },
 			})
+			-- visual mode
+			require("which-key").register({
+				["<leader>h"] = { "Git [H]unk" },
+			}, { mode = "v" })
         end
 
     },
