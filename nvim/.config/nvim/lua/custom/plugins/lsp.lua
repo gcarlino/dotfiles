@@ -22,9 +22,10 @@ return {
             require("beps.plugins.lsp")
         end,
         dependencies = {
-            "williamboman/mason.nvim",
+			{ "williamboman/mason.nvim", config = true },
             "williamboman/mason-lspconfig.nvim",
             "hrsh7th/cmp-nvim-lsp",
+			{ "j-hui/fidget.nvim", opts = {} },
             { "folke/neodev.nvim", opts = {} },
         }
     },

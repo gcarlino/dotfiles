@@ -125,13 +125,16 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
         map('K', vim.lsp.buf.hover, 'show hover information.')
 
-        map('<leader>rn', vim.lsp.buf.rename, 'Buffer [r]e[n]ame')
+        -- Disabled because of default keymap `crn`
+        -- map('<leader>rn', vim.lsp.buf.rename, 'Buffer [r]e[n]ame')
 
         map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
         map('<leader>k', vim.lsp.buf.signature_help, 'signature help')
 
-        map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+        -- Disabled because of default keymap `crr`
+        -- map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+
         -- vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end,
         --     optsDesc(ev, 'LSP buffer format'))
 
