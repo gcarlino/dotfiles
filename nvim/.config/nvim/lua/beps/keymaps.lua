@@ -75,7 +75,7 @@ end
 vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
 
 -- Toggle line wrap
-vim.keymap.set("n", "<leader>tw", ":set wrap!<CR>", { desc = "[T]oggle [w]rap" })
+vim.keymap.set("n", "<leader>tw", ":set wrap!<CR>", { desc = "[T]oggle line [w]rap" })
 
 -- Toggle backgournd color TODO: move to colorscheme configuration
 vim.api.nvim_set_keymap("n", "<leader>tc", "", {
