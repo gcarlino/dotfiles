@@ -3,7 +3,7 @@ return {
     {
         'navarasu/onedark.nvim',
         priority = 1000,
-        enabled = true,
+        enabled = false,
         config = function()
             vim.o.background='light'
             require('onedark').setup({
@@ -87,7 +87,7 @@ return {
                 sidebars = { "qf", "help" },
                 lualine_bold = false,
             })
-            -- vim.cmd.colorscheme('tokyonight')
+            vim.cmd.colorscheme('tokyonight-storm')
         end
     },
 
