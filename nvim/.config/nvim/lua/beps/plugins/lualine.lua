@@ -115,14 +115,14 @@ require 'lualine'.setup {
                 'branch',
                 -- color = { fg = 'CornflowerBlue' },
                 fmt = trunc(90, 4, 60, true),
-                padding = { left = 1, right = 1 },
+                -- padding = { left = 1, right = 1 },
             },
             {
                 'diff',
                 source = diff_source,
                 symbols = { added = ' ', modified = '柳', removed = ' ' },
                 -- symbols = { added = ' ', modified = ' ', removed = ' ' },
-                padding = { left = 0, right = 1 },
+                padding = { left = 1, right = 1 },
                 fmt = trunc(0, 0, 90, true),
             },
             {
