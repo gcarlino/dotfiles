@@ -1,11 +1,3 @@
-local filename_symbols = {
-    modified = ' ●',
-    alternate_file = ' #',
-    directory = ' ',
-    newfile = ' '
-}
-
-
 -- local function getCWD()
 --     local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ":~")
 --     return vim.fn.pathshorten(cwd)
@@ -68,8 +60,7 @@ end
 
 require 'lualine'.setup {
     extensions = {
-        'nvim-tree', 'toggleterm', 'nvim-dap-ui', 'fugitive',
-        'fzf', 'quickfix'
+        'nvim-tree', 'toggleterm', 'nvim-dap-ui', 'fugitive', 'fzf', 'quickfix'
     },
     options = {
         theme = 'auto',
@@ -97,25 +88,14 @@ require 'lualine'.setup {
                 'mode',
                 icons_enabled = true,
                 icon = '',
-                fmt = trunc(90, 1, 0, true),
+                -- fmt = trunc(90, 1, 0, true),
+                fmt = function(str) return str:sub(1,1) end,
             }
         },
-        -- lualine_b = {
-        --     {
-        --         getCWD,
-        --         icon = ' ',
-        --         color = {
-        --             fg = colors.blue.bright,
-        --             gui = 'italic',
-        --         },
-        --     },
-        -- },
         lualine_b = {
             {
                 'branch',
-                -- color = { fg = 'CornflowerBlue' },
                 fmt = trunc(90, 4, 60, true),
-                -- padding = { left = 1, right = 1 },
             },
             {
                 'diff',
@@ -128,7 +108,6 @@ require 'lualine'.setup {
             {
                 'diagnostics',
                 icon = { '' },
-                -- icon = { '', color = { fg = 'CornflowerBlue' } },
                 sources = { 'nvim_diagnostic' },
                 symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
                 fmt = trunc(0, 0, 90, true),
@@ -144,11 +123,12 @@ require 'lualine'.setup {
                 newfile_status = true,
                 path = 3,
                 shorting_target = 80,
-                -- color = {
-                --     gui = 'italic',
-                --     -- fg = 'pink'
-                -- },
-                symbols = filename_symbols,
+                symbols =  {
+                    modified = ' ●',
+                    alternate_file = ' #',
+                    directory = ' ',
+                    newfile = ' '
+                },
                 on_click = function ()
                     local fpath = vim.fn.expand('%:~')
                     print(fpath)
@@ -164,12 +144,6 @@ require 'lualine'.setup {
             },
             {
                 getLSP,
-                -- icon = '',
-                -- color = {
-                --     -- fg = 'pink',
-                --     fg = 'violet',
-                --     gui = 'italic',
-                -- },
                 fmt = trunc(90, 3, 80, true),
                 padding = { left = 0, right = 1 },
             },
@@ -189,16 +163,7 @@ require 'lualine'.setup {
             }
         },
         lualine_z = {
-            -- {
-            --     'selectioncount',
-            --     padding = { left = 1, right = 0 },
-            -- },
-            -- {
-            --     'searchcount',
-            --     padding = { left = 1, right = 0 },
-            -- },
             {
-                -- 'location',
                 myLocation,
                 padding = {left = 1, right = 1}
             },
