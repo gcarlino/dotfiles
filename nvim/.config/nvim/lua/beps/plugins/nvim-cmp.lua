@@ -1,12 +1,14 @@
 local cmp = require('cmp')
 local luasnip = require('luasnip')
+luasnip.config.setup({})
+-- require('luasnip.loaders.from_vscode').lazy_load()
 local lspkind = require('lspkind')
 
 cmp.setup({
-
     -- completion = {
     --     completeopt = "menu, menuone, noselect",
     -- },
+    -- completion = { completeopt = "menu,menuone,noinsert" },
     snippet = {
         expand = function(args)
             luasnip.lsp_expand(args.body)
@@ -14,7 +16,7 @@ cmp.setup({
     },
     sources = {
         { name = "nvim_lsp" },
-        { name = "nvim_lsp_signature_help" },
+        { name = 'nvim_lsp_signature_help' },
         { name = "nvim_lua" },
         { name = "luasnip" },
         { name = "buffer" },
@@ -25,7 +27,7 @@ cmp.setup({
                 end
             },
         },
-        -- { name = "dap" },
+        { name = "dap" },
         { name = "cmp_r"},
     },
     -- window = {
@@ -33,15 +35,20 @@ cmp.setup({
     --     documentation = cmp.config.window.bordered(),
     -- },
     mapping = cmp.mapping.preset.insert({
+        -- Select the next item
+        ["<C-n>"] = cmp.mapping.select_next_item(),
+        -- Select the prvious item
+        ["<C-p>"] = cmp.mapping.select_prev_item(),
+
+        -- Scroll the documentaiton windo up and down
         ["<C-u>"] = cmp.mapping.scroll_docs(-4),
         ["<C-d>"] = cmp.mapping.scroll_docs(4),
         ["<C-a>"] = cmp.mapping.abort(),
 
-        ["<C-n>"] = cmp.mapping.select_next_item(),
-        ["<C-p>"] = cmp.mapping.select_prev_item(),
-
+        -- Accept the completion.
+        ["<C-y>"] = cmp.mapping.confirm({ select = true }),
+        -- Manually trigger a completion
         ["<C-Space>"] = cmp.mapping.complete({}),
-        ["<C-y>"] = cmp.mapping.confirm { select = true },
 
         -- <c-l> will move you to the right of each of the expansion locations.
         -- <c-h> is similar, except moving you backwards.

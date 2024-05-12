@@ -14,22 +14,15 @@ return {
             'hrsh7th/cmp-nvim-lua',
             {
                 'L3MON4D3/LuaSnip',
-                version = "v2.*",
-                lazy = true,
+                build = (function ()
+                    return "make install_jsregexp"
+                end)(),
                 dependencies = {
                     "rafamadriz/friendly-snippets",
                 },
-                config = function ()
-                    local ls = require("luasnip")
-                    ls.config.set_config({
-                        history = true,
-                        updateevents = "TextChanged,TextChangedI"
-                    })
-                    require('luasnip.loaders.from_vscode').lazy_load()
-                end
             },
             'saadparwaiz1/cmp_luasnip',
-            -- 'rcarriga/cmp-dap',
+            'rcarriga/cmp-dap',
             "R-nvim/cmp-r",
             'kdheepak/cmp-latex-symbols',
         },
