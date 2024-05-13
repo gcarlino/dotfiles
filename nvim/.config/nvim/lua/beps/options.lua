@@ -34,6 +34,7 @@ vim.opt.breakindent = true
 vim.opt.colorcolumn = '80'
 vim.opt.hlsearch = true
 vim.opt.inccommand= 'split'
+vim.opt.conceallevel = 1
 
 vim.opt.maxmempattern = 9999
 
