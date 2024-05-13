@@ -33,8 +33,8 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to upper split.'
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to right split.' })
 
 -- Change split size
-vim.keymap.set({ 'n', 't'}, '<M-l>', '5<C-w><', { noremap = false })
-vim.keymap.set({ 'n', 't'}, '<M-h>', '5<C-w>>', { noremap = false })
+vim.keymap.set({ 'n', 't'}, '<M-h>', '5<C-w><', { noremap = false })
+vim.keymap.set({ 'n', 't'}, '<M-l>', '5<C-w>>', { noremap = false })
 
 -- Clear highlight
 vim.keymap.set('n', '<ESC>', '<cmd>nohlsearch<CR>')
