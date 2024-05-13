@@ -14,10 +14,16 @@ else
             version = "*",
             lazy = true,
             ft = "markdown",
-            -- event = {
-            --     "BufReadPre " .. vim.fn.expand "~" .. "/Simularia/Notes/**.md",
-            --     "BufNewFile " .. vim.fn.expand "~" .. "/Simularia/Notes/**.md",
-            -- },
+            keys = {
+                { '<leader>oo', ':ObsidianOpen<CR>', desc = '[O]pen [O]bsidian' },
+                { '<leader>on', ':ObsidianNew<CR>', desc = '[O]bsidian [N]ew' },
+                { '<leader>ob', ':ObsidianBacklinks<CR>', desc = '[O]bsidian [B]acklinks' },
+                { '<leader>os', ':ObsidianSearch<CR>', desc = '[O]bsidian [S]earch'},
+                { '<leader>ot', ':ObsidianTemplate<CR>', desc = '[O]bsidian [T]emplate'},
+                { '<leader>ow', ':ObsidianWorkspace<CR>', desc = '[O]bsidian [W]orkspace'},
+                { '<leader>op', ':ObsidianPasteImg<CR>', desc = '[O]bsidian [P]aste image'},
+                { '<leader>oc', ':ObsidianToggleCheckbox<CR>', desc = '[O]bsidian toggle [C]heckbox'},
+            },
             dependencies = {
                 "nvim-lua/plenary.nvim",
                 "hrsh7th/nvim-cmp",
@@ -27,6 +33,10 @@ else
                     {
                         name = "Simularia",
                         path= "~/Simularia/Notes/",
+                    },
+                    {
+                        name = "Contatti",
+                        path= "~/Simularia/Contatti/",
                     },
                     {
                         name = "no-vault",
@@ -43,12 +53,17 @@ else
                         }
                     }
                 },
+                templates = {
+                    folder = "~/Simularia/Notes/templates",
+                    date_format = "%Y-%m-%d",
+                    time_format = "%H:%M",
+                },
                 completion = {
                     nvim_cmp = true,
                     -- prepend_note_id = false,
                 },
                 ui = {
-                    enable = false
+                    enable = true
                 },
                 disable_frontmatter = true,
                 open_app_foreground = true,
