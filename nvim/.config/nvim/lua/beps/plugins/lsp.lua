@@ -18,86 +18,85 @@ for type, icon in pairs(signs) do
     vim.fn.sign_define(hl, { icon = icon, text = icon, texthl = hl, numhl = hl })
 end
 
-require("neodev").setup({ })
-
-require("mason").setup()
-require("mason-lspconfig").setup()
-
--- lspconfig
-local lspconfig = require("lspconfig")
-local cmp_nvim_lsp = require("cmp_nvim_lsp")
-
-local lsp_defaults = lspconfig.util.default_config
-lsp_defaults.capabilities = vim.tbl_deep_extend(
-    'force',
-    lsp_defaults.capabilities,
-    cmp_nvim_lsp.default_capabilities()
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = vim.tbl_deep_extend(
+    "force",
+    capabilities,
+    require("cmp_nvim_lsp").default_capabilities()
 )
 
-lspconfig.pylsp.setup({
-    settings = {
-        pylsp = {
-            plugins = {
-                pycodestyle = {
-                    enabled = false,
-                },
-                maccabe = {
-                    enabled = false,
-                },
-                pyflakes = {
-                    enabled = false,
-                },
-                flake8 = {
-                    enabled = true,
-                    ignore = { 'E203' },
-                    maxLineLength = 88,
+local servers = {
+    pylsp = {
+        settings = {
+            pylsp = {
+                plugins = {
+                    pycodestyle = {
+                        enabled = false,
+                    },
+                    maccabe = {
+                        enabled = false,
+                    },
+                    pyflakes = {
+                        enabled = false,
+                    },
+                    flake8 = {
+                        enabled = true,
+                        ignore = { 'E203' },
+                        maxLineLength = 88,
+                    }
                 }
             }
         }
-    }
-})
-
-lspconfig.lua_ls.setup({
-    settings = {
-        Lua = {
-            completion = {
-                callSnippet = "Replace"
-            },
-            runtime = {
-                -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-                version = 'LuaJIT',
-            },
-            diagnostics = {
-                -- Get the language server to recognize the `vim` global
-                globals = { 'vim' },
-            },
-            workspace = {
-                -- Make the server aware of Neovim runtime files
-                library = vim.api.nvim_get_runtime_file("", true),
-                checkThirdParty = false
-            },
-            -- Do not send telemetry data containing a randomized but unique identifier
-            telemetry = {
-                enable = false,
+    },
+    lua_ls = {
+        settings = {
+            Lua = {
+                completion = {
+                    callSnippet = "Replace"
+                },
+                runtime = {
+                    -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+                    version = 'LuaJIT',
+                },
+                diagnostics = {
+                    -- Get the language server to recognize the `vim` global
+                    globals = { 'vim' },
+                },
+                workspace = {
+                    -- Make the server aware of Neovim runtime files
+                    library = vim.api.nvim_get_runtime_file("", true),
+                    checkThirdParty = false
+                },
+                -- Do not send telemetry data containing a randomized but unique identifier
+                telemetry = {
+                    enable = false,
+                },
             },
         },
     },
+    texlab = {},
+    clangd = {},
+    cmake= {},
+    fortls = {
+        filetypes = { 'fortran', 'fortran77' },
+    },
+    marksman = {},
+    r_language_server = {},
+    taplo = {},
+}
+
+require("mason").setup()
+require("mason-lspconfig").setup({
+    handlers = {
+        function(server_name)
+            local server = servers[server_name] or {}
+            server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+            require("lspconfig")[server_name].setup(server)
+        end
+    }
 })
 
-lspconfig.texlab.setup({})
-
-lspconfig.clangd.setup({})
-
-lspconfig.cmake.setup({})
-
-lspconfig.fortls.setup({
-    filetypes = { 'fortran', 'fortran77' },
-})
-
-lspconfig.marksman.setup({})
-
-lspconfig.r_language_server.setup({})
-
+-- lspconfig
 -- Use LspAttach autocommand to only map the following keys after the
 -- language server attaches to the current buffer
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -123,7 +122,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
         map('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition.')
 
-        map('K', vim.lsp.buf.hover, 'show hover information.')
+        map('K', vim.lsp.buf.hover, 'Hover information.')
 
         -- Disabled because of default keymap `crn`
         map('<leader>rn', vim.lsp.buf.rename, 'Buffer [r]e[n]ame')
@@ -135,10 +134,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
         -- Disabled because of default keymap `crr`
         map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
-        -- vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end,
-        --     optsDesc(ev, 'LSP buffer format'))
+        map('<leader>lf', function() vim.lsp.buf.format { async = true } end, 'buffer [F]ormat')
 
-        map('<leader>lt', require('telescope.builtin').diagnostics, 'document diagnostics')
+        map('<leader>ld', require('telescope.builtin').diagnostics, 'document [D]iagnostics')
 
         map('<leader>ls', require('telescope.builtin').lsp_document_symbols, "[L]ist document [S]ymbols")
 
@@ -153,15 +151,19 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
         -- When you move your cursor, the highlights will be cleared (the second autocommand).
         local client = vim.lsp.get_client_by_id(event.data.client_id)
+            if client and client.server_capabilities.documentHighlightProvider then
+                local highlight_augroup =
+            vim.api.nvim_create_augroup("nvim-lsp-highlight", { clear = false })
 
-        if client and client.server_capabilities.documentHighlightProvider then
             vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
                 buffer = event.buf,
+                group = highlight_augroup,
                 callback = vim.lsp.buf.document_highlight,
             })
 
             vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
                 buffer = event.buf,
+                group = highlight_augroup,
                 callback = vim.lsp.buf.clear_references,
             })
         end
@@ -169,15 +171,24 @@ vim.api.nvim_create_autocmd('LspAttach', {
         -- The following autocommand is used to enable inlay hints in your
         -- code, if the language server you are using supports them
         -- This may be unwanted, since they displace some of your code
+        -- if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
+        --     map("<leader>th", function()
+        --         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+        --         end, "[T]oggle Inlay [H]ints")
+        -- end
         if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
             map("<leader>th", function()
                 vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
                 end, "[T]oggle Inlay [H]ints")
         end
-        -- if client.supports_method("textDocument/inlayHint") then
-        --     vim.lsp.inlay_hint.enable(true, { bufnr = event.buf })
-        -- end
-        --
 
+    end,
+})
+
+vim.api.nvim_create_autocmd("LspDetach", {
+    group = vim.api.nvim_create_augroup("nvim-lsp-detach", { clear = true }),
+    callback = function(event)
+        vim.lsp.buf.clear_references()
+        vim.api.nvim_clear_autocmds({ group = "nvim-lsp-highlight", buffer = event.buf })
     end,
 })
