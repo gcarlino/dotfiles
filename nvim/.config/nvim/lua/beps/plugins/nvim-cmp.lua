@@ -1,24 +1,15 @@
-local cmp = require('cmp')
-local luasnip = require('luasnip')
-luasnip.config.setup({})
--- require('luasnip.loaders.from_vscode').lazy_load()
+vim.opt.completeopt = { "menu", "menuone", "noselect" }
+
 local lspkind = require('lspkind')
+lspkind.init {}
+
+local cmp = require('cmp')
 
 cmp.setup({
-    -- completion = {
-    --     completeopt = "menu, menuone, noselect",
-    -- },
-    -- completion = { completeopt = "menu,menuone,noinsert" },
-    snippet = {
-        expand = function(args)
-            luasnip.lsp_expand(args.body)
-        end,
-    },
     sources = {
         { name = "nvim_lsp" },
         { name = 'nvim_lsp_signature_help' },
         { name = "nvim_lua" },
-        { name = "luasnip" },
         { name = "buffer" },
         { name = "path",
             option = {
@@ -30,40 +21,28 @@ cmp.setup({
         { name = "dap" },
         { name = "cmp_r"},
     },
-    -- window = {
-    --     completion = cmp.config.window.bordered(),
-    --     documentation = cmp.config.window.bordered(),
-    -- },
-    mapping = cmp.mapping.preset.insert({
-        -- Select the next item
-        ["<C-n>"] = cmp.mapping.select_next_item(),
-        -- Select the prvious item
-        ["<C-p>"] = cmp.mapping.select_prev_item(),
 
-        -- Scroll the documentaiton windo up and down
-        ["<C-u>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-d>"] = cmp.mapping.scroll_docs(4),
+    mapping =  {
+        ["<C-n>"] = cmp.mapping.select_next_item{ behavior = cmp.SelectBehavior.Insert },
+        ["<C-p>"] = cmp.mapping.select_prev_item{ behavior = cmp.SelectBehavior.Insert },
         ["<C-a>"] = cmp.mapping.abort(),
-
         -- Accept the completion.
-        ["<C-y>"] = cmp.mapping.confirm({ select = true }),
-        -- Manually trigger a completion
-        ["<C-Space>"] = cmp.mapping.complete({}),
+        ["<C-y>"] = cmp.mapping(
+            cmp.mapping.confirm {
+                behavior = cmp.SelectBehavior.Insert,
+                select = true,
+            },
+            { "i", "c" }
+        ),
+    },
 
-        -- <c-l> will move you to the right of each of the expansion locations.
-        -- <c-h> is similar, except moving you backwards.
-        ["<C-l>"] = cmp.mapping(function()
-            if luasnip.expand_or_locally_jumpable() then
-                luasnip.expand_or_jump()
-            end
-        end, { "i", "s" }),
-        ["<C-h>"] = cmp.mapping(function()
-            if luasnip.locally_jumpable(-1) then
-                luasnip.jump(-1)
-            end
-        end, { "i", "s" }),
+    -- Enable luasnip to handle snipper expansion for nvim-cmp
+    snippet = {
+        expand = function(args)
+            require("luasnip").lsp_expand(args.body)
+        end,
+    },
 
-    }),
     -- nvim-cmp by defaults disables autocomplete for prompt buffers
     enabled = function()
         -- return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
@@ -71,6 +50,7 @@ cmp.setup({
         -- return vim.api.nvim_get_option_value("buftype", {buf = 0}) ~= "prompt"
         --     or require("cmp_dap").is_dap_buffer()
     end,
+
     formatting = {
         fields = { 'abbr', 'kind', 'menu' },
         format = lspkind.cmp_format({
@@ -89,13 +69,14 @@ cmp.setup({
             ellipsis_char = '...',
         }),
     },
-    view = {
-        entries = 'custom'
-    },
-    experimental = {
-        native_menu = false,
-        ghost_text = true
-    }
+
+    -- view = {
+    --     entries = 'custom'
+    -- },
+    -- experimental = {
+    --     native_menu = false,
+    --     ghost_text = true
+    -- }
 
 })
 
@@ -117,14 +98,6 @@ cmp.setup.filetype({ 'markdown', 'text', 'yaml' }, {
     })
 })
 
--- cmp.setup.filetype({'html'}, {
---     sources = cmp.config.sources({
---         { name = 'luasnip' },
---         { name = 'path' },
---         { name = 'buffer' },
---     })
--- })
-
 -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline({ '/', '?' }, {
     mapping = cmp.mapping.preset.cmdline(),
@@ -144,3 +117,21 @@ cmp.setup.cmdline(':', {
         },
     })
 })
+
+local luasnip = require('luasnip')
+luasnip.config.setup({})
+
+-- <c-k> will move you to the right of each of the expansion locations.
+vim.keymap.set({ "i", "s" }, "<c-k>", function()
+    if luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+    end
+end, { silent = true })
+
+-- <c-j> is similar, except moving you backwards.
+vim.keymap.set({ "i", "s" }, "<c-j>", function()
+        if luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+    end
+end, { silent = true })
+

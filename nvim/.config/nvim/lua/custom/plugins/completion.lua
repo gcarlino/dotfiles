@@ -21,7 +21,6 @@ return {
                     "rafamadriz/friendly-snippets",
                 },
             },
-            'saadparwaiz1/cmp_luasnip',
             'rcarriga/cmp-dap',
             "R-nvim/cmp-r",
             'kdheepak/cmp-latex-symbols',
