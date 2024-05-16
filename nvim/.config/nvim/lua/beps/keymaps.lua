@@ -63,16 +63,17 @@ vim.keymap.set("n", "[q", ":cprevious<cr>", { desc = "Previous item in quickfix 
 
 -- Mappings to make moving in and out of a terminal easier once toggled,
 -- whilst still keeping it open
-function _G.set_terminal_keymaps()
-    local opts = { buffer = 0 }
-    vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
-    vim.keymap.set('t', '<C-w><C-h>', [[<Cmd>wincmd h<CR>]], opts)
-    vim.keymap.set('t', '<C-w><C-j>', [[<Cmd>wincmd j<CR>]], opts)
-    vim.keymap.set('t', '<C-w><C-k>', [[<Cmd>wincmd k<CR>]], opts)
-    vim.keymap.set('t', '<C-w><C-l>', [[<Cmd>wincmd l<CR>]], opts)
-end
-vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
-
+vim.api.nvim_create_autocmd({ "TermOpen" }, {
+    pattern = "*",
+    callback = function()
+        local opts = { buffer = 0 }
+        vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
+        vim.keymap.set('t', '<C-w><C-h>', [[<Cmd>wincmd h<CR>]], opts)
+        vim.keymap.set('t', '<C-w><C-j>', [[<Cmd>wincmd j<CR>]], opts)
+        vim.keymap.set('t', '<C-w><C-k>', [[<Cmd>wincmd k<CR>]], opts)
+        vim.keymap.set('t', '<C-w><C-l>', [[<Cmd>wincmd l<CR>]], opts)
+    end
+})
 -- Toggle line wrap
 vim.keymap.set("n", "<leader>tw", ":set wrap!<CR>", { desc = "[T]oggle line [w]rap" })
 
