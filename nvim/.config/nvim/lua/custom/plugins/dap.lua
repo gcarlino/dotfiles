@@ -2,13 +2,14 @@ return {
 
     {
         "mfussenegger/nvim-dap",
-        -- cmd = "DapContinue",
-        event = "VeryLazy",
-        -- event = { "BufReadPost", "BufNewFile" },
+        event = { "BufReadPost", "BufNewFile" },
         dependencies = {
-            "mfussenegger/nvim-dap-python",
+            "rcarriga/nvim-dap-ui",
             "theHamsta/nvim-dap-virtual-text",
+            "nvim-neotest/nvim-nio",
+            "mfussenegger/nvim-dap-python",
             "nvim-telescope/telescope-dap.nvim",
+            "williamboman/mason.nvim",
             -- 'rcarriga/cmp-dap',
         },
         config = function()
@@ -16,12 +17,4 @@ return {
         end,
     },
 
-    {
-        "rcarriga/nvim-dap-ui",
-        event = "VeryLazy",
-        dependencies = {
-            "mfussenegger/nvim-dap",
-             "nvim-neotest/nvim-nio"
-        }
-    },
 }
