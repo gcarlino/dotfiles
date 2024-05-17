@@ -56,7 +56,7 @@ dapui.setup()
 
 -- DAP virtual text
 local nvim_dap_virtual_text = require('nvim-dap-virtual-text')
-nvim_dap_virtual_text.setup({ virt_text_win_col = 80, })
+nvim_dap_virtual_text.setup({ virt_text_pos = 'eol', })
 
 -- Breakpoint symbols
 vim.fn.sign_define('DapBreakpoint', { icon = '●', text = '●', texthl = "DiagnosticSignError", linehl = '', numhl = '' })
