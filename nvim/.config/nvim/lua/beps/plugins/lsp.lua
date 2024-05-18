@@ -26,7 +26,9 @@ capabilities = vim.tbl_deep_extend(
 )
 
 local servers = {
+    basedpyright = { },
     pylsp = {
+        enabled = false,
         settings = {
             pylsp = {
                 plugins = {
@@ -51,26 +53,22 @@ local servers = {
     lua_ls = {
         settings = {
             Lua = {
-                completion = {
-                    callSnippet = "Replace"
-                },
-                runtime = {
-                    -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-                    version = 'LuaJIT',
-                },
+                completion = { callSnippet = "Replace" },
+                -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+                runtime = { version = 'LuaJIT', },
+                -- Get the language server to recognize the `vim` global
                 diagnostics = {
-                    -- Get the language server to recognize the `vim` global
                     globals = { 'vim' },
+                    -- disable = { "missing-fields" },
                 },
+                -- Make the server aware of Neovim runtime files
                 workspace = {
-                    -- Make the server aware of Neovim runtime files
                     library = vim.api.nvim_get_runtime_file("", true),
                     checkThirdParty = false
                 },
                 -- Do not send telemetry data containing a randomized but unique identifier
-                telemetry = {
-                    enable = false,
-                },
+                telemetry = { enable = false, },
+                hint = { enable = true },
             },
         },
     },
@@ -171,11 +169,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
         -- The following autocommand is used to enable inlay hints in your
         -- code, if the language server you are using supports them
         -- This may be unwanted, since they displace some of your code
-        -- if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
-        --     map("<leader>th", function()
-        --         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-        --         end, "[T]oggle Inlay [H]ints")
-        -- end
         if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
             map("<leader>th", function()
                 vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
