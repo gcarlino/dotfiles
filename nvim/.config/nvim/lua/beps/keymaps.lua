@@ -35,19 +35,21 @@ vim.keymap.set("n", "[t", ":tabprevious<cr>", { desc = "Previous tab" })
 -- Change split size
 vim.keymap.set({ 'n', 't'}, '<M-h>', '5<C-w><', { noremap = false })
 vim.keymap.set({ 'n', 't'}, '<M-l>', '5<C-w>>', { noremap = false })
+vim.keymap.set({ 'n', 't'}, '<M-j>', '5<C-w>-', { noremap = false })
+vim.keymap.set({ 'n', 't'}, '<M-k>', '5<C-w>+', { noremap = false })
 
 -- Clear highlight
 vim.keymap.set('n', '<ESC>', '<cmd>nohlsearch<CR>')
 
 -- Move lines around
-vim.api.nvim_set_keymap('n', '<M-k>', ':m .-2<CR>==', { noremap = true })
-vim.api.nvim_set_keymap('n', '<M-j>', ':m .+1<CR>==', { noremap = true })
-vim.api.nvim_set_keymap('i', '<M-j>', '<ESC>:m .+1<CR>==gi', { noremap = true })
-vim.api.nvim_set_keymap('i', '<M-k>', '<ESC>:m .-2<CR>==gi', { noremap = true })
-vim.api.nvim_set_keymap('v', '<M-j>', ":m '>+1<CR>gv==gv", { noremap = true })
-vim.api.nvim_set_keymap('v', '<M-k>', ":m '<-2<CR>gv==gv", { noremap = true })
+-- vim.api.nvim_set_keymap('n', '<M-k>', ':m .-2<CR>==', { noremap = true })
+-- vim.api.nvim_set_keymap('n', '<M-j>', ':m .+1<CR>==', { noremap = true })
+-- vim.api.nvim_set_keymap('i', '<M-j>', '<ESC>:m .+1<CR>==gi', { noremap = true })
+-- vim.api.nvim_set_keymap('i', '<M-k>', '<ESC>:m .-2<CR>==gi', { noremap = true })
+-- vim.api.nvim_set_keymap('v', '<M-j>', ":m '>+1<CR>gv==gv", { noremap = true })
+-- vim.api.nvim_set_keymap('v', '<M-k>', ":m '<-2<CR>gv==gv", { noremap = true })
 
--- -- Change current directory to working file path
+-- Change current directory to working file path
 -- vim.keymap.set('n', '<leader>cd', '<cmd>cd %:p:h<CR>:pwd<CR>',
 --     { noremap = true, silent = true, desc = "Change current directory to working file path." })
 
