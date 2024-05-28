@@ -8,7 +8,8 @@
 local function myLocation()
     local linelength = vim.api.nvim_strwidth(vim.api.nvim_get_current_line())
     linelength = string.format('%3d', linelength)
-    return '%l|%L│%3v|' .. linelength
+    -- return '%l|%L│%3v|' .. linelength
+    return '%3v/' .. linelength .. '│%l/%L'
 end
 
 --- Return function that can format the component accordingly
