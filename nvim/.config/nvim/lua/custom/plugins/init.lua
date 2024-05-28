@@ -1,7 +1,13 @@
 return {
     { "nvim-lua/plenary.nvim", lazy = true },
 
-    { 'mechatroner/rainbow_csv' },
+    {
+        "emmanueltouzery/decisive.nvim",
+        keys = {
+            { "<leader>cca", ":lua require('decisive').align_csv({})<CR>", desc = "Align CSV"},
+            { "<leader>ccA", ":lua require('decisive').align_csv_clear({})<CR>", desc = "Align CSV clear"},
+        }
+    },
 
     {
         "folke/trouble.nvim",
