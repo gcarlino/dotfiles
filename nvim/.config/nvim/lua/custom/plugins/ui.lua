@@ -138,7 +138,8 @@ return {
         enabled = true,
         opts = {
             char = "│",
-            highlight = "iblindent"
+            highlight = "iblindent",
+            virtcolumn = "80, 120",
         }
     },
 
