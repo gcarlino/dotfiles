@@ -22,13 +22,9 @@ return {
             { '<leader>vc', ':DiffviewClose<CR>', desc = "Close Diffview tab."},
         },
         config = function ()
-            -- require('beps.plugins.diffview')
             require('diffview').setup({
+                enhanced_diff_hl = true,
                 view = {
-                    default = {
-                        layout = "diff2_horizontal",
-                        -- layout = "diff2_vertical",
-                    },
                     merge_tool = {
                         layout = "diff3_mixed"
                     }
