@@ -23,6 +23,7 @@ else
                 { '<leader>ow', ':ObsidianWorkspace<CR>', desc = '[O]bsidian [W]orkspace'},
                 { '<leader>op', ':ObsidianPasteImg<CR>', desc = '[O]bsidian [P]aste image'},
                 { '<leader>oc', ':ObsidianToggleCheckbox<CR>', desc = '[O]bsidian toggle [C]heckbox'},
+                { '<leader>oi', ':ObsidianPasteImg<CR>', desc = '[O]bsidian paste [I]mage'},
             },
             dependencies = {
                 "nvim-lua/plenary.nvim",
