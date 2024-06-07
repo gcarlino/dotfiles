@@ -1,39 +1,73 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ';'
 
-vim.opt.autowrite = true
-vim.opt.clipboard = 'unnamedplus' -- Copy to system clipboard
-vim.opt.confirm = true -- ask for confirmation instead of erroring
+-- Write the contents of the file, if it has been modified
+-- FIXME: era abilitato. Dobbiemo tenerlo true?
+-- vim.opt.autowrite = true
+
+-- Sync clipboard between OS and neovim
+vim.opt.clipboard = 'unnamedplus'
+
+-- Ask for confirmation instead of erroring
+vim.opt.confirm = true
+
+-- Highlight the text line of the cursor
 vim.opt.cursorline = true
+
 vim.opt.diffopt = 'internal,filler,closeoff,vertical'
 vim.opt.expandtab = true
+
+-- Case insensitive searching unless one or more capital letter in the search term
 vim.opt.ignorecase = true
-vim.opt.laststatus = 0
+vim.opt.smartcase = true
+
+-- vim.opt.laststatus = 0
+
 vim.opt.number = true
 vim.opt.relativenumber = true
+
+-- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 8
 vim.opt.sidescrolloff = 4
+
 vim.opt.shiftround = true
 vim.opt.shiftwidth = 4
-vim.opt.showmode = false
-vim.opt.signcolumn = 'yes'
-vim.opt.smartcase = true
-vim.opt.smartindent = true
 vim.opt.softtabstop = 4
+vim.opt.tabstop = 4
+
+-- Don't show the mode (it's in the status line)
+vim.opt.showmode = false
+
+-- Always show signcolumn
+vim.opt.signcolumn = 'yes'
+
+-- vim.opt.smartindent = true
+vim.opt.breakindent = true
+
 vim.opt.splitbelow = true
 vim.opt.splitright = true
-vim.opt.tabstop = 4
+
 vim.opt.termguicolors = true
+
+-- Decrease mapped sequence wait time. Displays which-key popup sooner
 vim.opt.timeoutlen = 300
-vim.opt.title = true
-vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+
+-- vim.opt.title = true
+
+-- Save undo history
 vim.opt.undofile = true
+
+-- Decrease update time
 vim.opt.updatetime = 200
+
 vim.opt.wrap = false
-vim.opt.breakindent = true
+
 -- vim.opt.colorcolumn = '80'
 vim.opt.hlsearch = true
+
+-- Preview substitutions live
 vim.opt.inccommand= 'split'
+
 vim.opt.conceallevel = 1
 
 vim.opt.maxmempattern = 9999
@@ -82,13 +116,13 @@ vim.api.nvim_create_autocmd({ "VimEnter", "BufEnter", "InsertLeave" }, {
     end
 })
 
-vim.api.nvim_create_autocmd("TermOpen", {
-    pattern = "*",
-    callback = function()
-        vim.opt.number = false
-        vim.opt.relativenumber = false
-    end
-})
+-- vim.api.nvim_create_autocmd("TermOpen", {
+--     pattern = "*",
+--     callback = function()
+--         vim.opt.number = false
+--         vim.opt.relativenumber = false
+--     end
+-- })
 
 -- Folding in treesitter
 -- vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
