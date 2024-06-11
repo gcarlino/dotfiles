@@ -14,105 +14,97 @@ config.window_close_confirmation = 'NeverPrompt'
 -- Hyperlinks
 config.hyperlink_rules = wezterm.default_hyperlink_rules()
 
--- config.color_scheme = "Tomorrow"
-config.color_scheme = 'Tokyo Night Storm'
--- config.color_scheme = 'Tokyo Night Day'
+-- Native macOS fullscreen mode
+config.native_macos_fullscreen_mode = true
 
-config.font = wezterm.font 'MesloLGS NF'
+config.launch_menu = {
+    {
+        label = 'nvim',
+        args = { '/Users/beps/.local/bin/nvim' },
+    },
+    {
+        label = 'zsh',
+        args = { '/bin/zsh' },
+    },
+    {
+        label = 'bash',
+        args = { '/bin/bash', '-l' },
+    },
+}
+-- config.font_size = 12
+config.font = wezterm.font {
+    family = 'MesloLGS NF',
+    weight = 'Regular'
+}
+
+
+---@param arg { light: any, dark: any }
+---@return any
+local function depending_on_appearance(arg)
+    local appearance = wezterm.gui.get_appearance()
+    if appearance:find 'Dark' then
+        return arg.dark
+    else
+        return arg.light
+    end
+end
+
+-- config.color_scheme = 'Tokyo Night Storm'
+config.color_scheme = depending_on_appearance {
+    -- light = 'Tokyo Night Day',
+    light = 'Tokyo Night Storm',
+    dark = 'Tokyo Night Storm',
+}
 
 -- Tab bar
 config.hide_tab_bar_if_only_one_tab = true
-config.use_fancy_tab_bar = true
 
+-- Fancy tab bar appearance
 config.window_frame = {
-    font = wezterm.font { family = "SF Pro Text", weight = "Bold" },
-    font_size = 12,
-    active_titlebar_bg = '#FFFFFF',
-    inactive_titlebar_bg = '#FFFFFF',
+    font = wezterm.font { family = "SF Pro Text", weight = "Medium" },
+    font_size = 14,
+    active_titlebar_bg = '#F0F0F0',
+    inactive_titlebar_bg = '#F0F0F0',
+
 }
 
 config.window_padding = {
-    left = 2,
-    right = 2,
-    top = 2,
-    bottom = 2,
+    left = 10,
+    right = 10,
+    top = 5,
+    bottom = 0,
 }
 
 config.colors = {
   tab_bar = {
-    -- The color of the strip that goes along the top of the window
-    -- (does not apply when fancy tab bar is in use)
-    -- background = '#0b0022',
-    -- background = '#ffffff',
-
     -- The active tab is the one that has focus in the window
     active_tab = {
-      -- The color of the background area for the tab
-      -- bg_color = '#2b2042',
-      bg_color = '#c0c0c0',
-      -- The color of the text for the tab
-      -- fg_color = '#c0c0c0',
-      fg_color = '#2b2042',
-
-      -- Specify whether you want "Half", "Normal" or "Bold" intensity for the
-      -- label shown for this tab.
-      -- The default is "Normal"
-      intensity = 'Normal',
-
-      -- Specify whether you want "None", "Single" or "Double" underline for
-      -- label shown for this tab.
-      -- The default is "None"
-      underline = 'None',
-
-      -- Specify whether you want the text to be italic (true) or not (false)
-      -- for this tab.  The default is false.
-      italic = false,
-
-      -- Specify whether you want the text to be rendered with strikethrough (true)
-      -- or not for this tab.  The default is false.
-      strikethrough = false,
+      bg_color = '#24283b',
+      fg_color = '#ffffff',
     },
 
     -- Inactive tabs are the tabs that do not have focus
     inactive_tab = {
-      -- bg_color = '#1b1032',
       bg_color = '#EEEEEE',
       fg_color = '#808080',
-
-      -- The same options that were listed under the `active_tab` section above
-      -- can also be used for `inactive_tab`.
     },
 
-    -- You can configure some alternate styling when the mouse pointer
-    -- moves over inactive tabs
+    -- Alternate styling when the mouse pointer moves over inactive tabs
     inactive_tab_hover = {
-      bg_color = '#3b3052',
-      fg_color = '#909090',
-      italic = true,
-
-      -- The same options that were listed under the `active_tab` section above
-      -- can also be used for `inactive_tab_hover`.
+      bg_color = '#DDDDDD',
+      fg_color = '#808080',
     },
 
     -- The new tab button that let you create new tabs
     new_tab = {
-      -- bg_color = '#1b1032',
-      bg_color = '#EEEEEE',
+      bg_color = '#f0F0F0',
       fg_color = '#808080',
-
-      -- The same options that were listed under the `active_tab` section above
-      -- can also be used for `new_tab`.
     },
 
-    -- You can configure some alternate styling when the mouse pointer
-    -- moves over the new tab button
+    -- Alternate styling when the mouse pointer moves over the new tab button
     new_tab_hover = {
-      bg_color = '#3b3052',
-      fg_color = '#909090',
-      italic = true,
-
-      -- The same options that were listed under the `active_tab` section above
-      -- can also be used for `new_tab_hover`.
+      bg_color = '#DDDDDD',
+      fg_color = '#808080',
     },
   },
 }
@@ -124,31 +116,66 @@ local act = wezterm.action
 config.keys = {
 
     -- This will create a new split and run your default program inside it
-    { key = 'd', mods = 'CMD',
-        action = act.SplitHorizontal { domain = 'CurrentPaneDomain' }, },
+    {
+        key = 'd', mods = 'CMD',
+        action = act.SplitHorizontal { domain = 'CurrentPaneDomain' },
+    },
 
     -- This will create a new split and run your default program inside it
-    { key = 'D', mods = 'CMD',
-        action = act.SplitVertical { domain = 'CurrentPaneDomain' }, },
+    {
+        key = 'D', mods = 'CMD',
+        action = act.SplitVertical { domain = 'CurrentPaneDomain' },
+    },
 
     -- Move between panes
     -- { key = 'j', mods = 'CTRL', action = act.ActivatePaneDirection 'Down' },
     -- { key = 'k', mods = 'CTRL', action = act.ActivatePaneDirection 'Up' },
     -- { key = 'h', mods = 'CTRL', action = act.ActivatePaneDirection 'Left' },
     -- { key = 'l', mods = 'CTRL', action = act.ActivatePaneDirection 'Right' },
-    { key = '[', mods = 'CMD', action = act.ActivatePaneDirection 'Prev' },
-    { key = ']', mods = 'CMD', action = act.ActivatePaneDirection 'Next' },
+    {
+        key = '[', mods = 'CMD',
+        action = act.ActivatePaneDirection 'Prev'
+    },
+    {
+        key = ']', mods = 'CMD',
+        action = act.ActivatePaneDirection 'Next'
+    },
 
-    -- Scroll to prompt
-    { key = 'UpArrow', mods = 'SHIFT', action = act.ScrollToPrompt(-1) },
-    { key = 'DownArrow', mods = 'SHIFT', action = act.ScrollToPrompt(1) },
+    -- Scroll to prompt (needs shell integration for wezterm)
+    {
+        key = 'UpArrow', mods = 'SHIFT',
+        action = act.ScrollToPrompt(-1)
+    },
+    {
+        key = 'DownArrow', mods = 'SHIFT',
+        action = act.ScrollToPrompt(1)
+    },
 
     -- Open settings
-    { key = ',', mods = 'CMD', action = act.SpawnCommandInNewWindow {
-        args = {
-            wezterm.home_dir .. '/.local/bin/nvim',
-            wezterm.config_file
-        } },
+    {
+        key = ',', mods = 'CMD',
+        action = act.SpawnCommandInNewWindow {
+            args = {
+                wezterm.home_dir .. '/.local/bin/nvim',
+                wezterm.config_file
+            }
+        },
+    },
+
+    -- Show pane selector
+    {
+        key = 'm', mods = 'CMD',
+        action = act.PaneSelect,
+    },
+    -- Show tab navigator
+    {
+        key = 'p', mods = 'CMD',
+        action = act.ShowTabNavigator,
+    },
+    -- Show launcher navigator
+    {
+        key = 'P', mods = 'CMD',
+        action = act.ShowLauncher,
     },
 }
 
