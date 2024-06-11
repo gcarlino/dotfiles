@@ -110,11 +110,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
         map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
 
         -- Default mappings
-        -- crn for rename
-        -- crr for code actions
-        -- gr for references
+        -- grn for rename
+        -- gra for code actions
+        -- grr for references
         -- <C-S> (in Insert mode) for signature help
-        map('gr', require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
+
+        -- Disabled because of default keymap 'grr'
+        -- map('gr', require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
 
         map('gi', require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementations.")
 
@@ -122,15 +124,15 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
         map('K', vim.lsp.buf.hover, 'Hover information.')
 
-        -- Disabled because of default keymap `crn`
-        map('<leader>rn', vim.lsp.buf.rename, 'Buffer [r]e[n]ame')
+        -- Disabled because of default keymap `grn`
+        -- map('<leader>rn', vim.lsp.buf.rename, 'Buffer [r]e[n]ame')
 
         map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
         map('<leader>k', vim.lsp.buf.signature_help, 'signature help')
 
-        -- Disabled because of default keymap `crr`
-        map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+        -- Disabled because of default keymap `gra`
+        -- map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
         map('<leader>lf', function() vim.lsp.buf.format { async = true } end, 'buffer [F]ormat')
 

@@ -1,9 +1,11 @@
 -- Global mappings
 -- Now defaults mapping
--- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostics" })
--- vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostics" })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = "Open diagnostics [Q]uickfix list" })
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = "Show diagnostics [E]rror messages" })
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setqflist, { desc = "Open diagnostics [Q]uickfix list" })
+vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { desc = "Show [D]iagnostics error messages" })
+
+-- Quickfixlist navigation
+vim.keymap.set("n", "]q", ":cnext<cr>", { desc = "Next item in quickfix list" })
+vim.keymap.set("n", "[q", ":cprevious<cr>", { desc = "Previous item in quickfix list" })
 
 -- Move around selection
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
@@ -17,12 +19,7 @@ vim.keymap.set("n", "N", "Nzzzv")
 vim.keymap.set("n", "<c-d>", "<c-d>zz", {})
 vim.keymap.set("n", "<c-u>", "<c-u>zz", {})
 
--- yank in system clipboard
--- vim.keymap.set({"n", "v"}, "<leader>y", "\"+y")
-
 -- Tabs
--- vim.keymap.set('n', '<leader>o', ':tabnew<CR>', { desc = '[o]pen tab' })
--- vim.keymap.set('n', '<leader>c', ':tabclose<CR>', { desc = '[c]lose tab' })
 vim.keymap.set("n", "]t", ":tabnext<cr>", { desc = "Next tab" })
 vim.keymap.set("n", "[t", ":tabprevious<cr>", { desc = "Previous tab" })
 
@@ -52,10 +49,6 @@ vim.keymap.set('n', '<ESC>', '<cmd>nohlsearch<CR>')
 -- Change current directory to working file path
 -- vim.keymap.set('n', '<leader>cd', '<cmd>cd %:p:h<CR>:pwd<CR>',
 --     { noremap = true, silent = true, desc = "Change current directory to working file path." })
-
--- Quickfixlist navigation
-vim.keymap.set("n", "]q", ":cnext<cr>", { desc = "Next item in quickfix list" })
-vim.keymap.set("n", "[q", ":cprevious<cr>", { desc = "Previous item in quickfix list" })
 
 -- nvim-tree
 -- vim.keymap.set('n', '<leader>n', ':NvimTreeToggle<CR>', { noremap = true, silent = true, desc = "Toggle nvim-tree." })
