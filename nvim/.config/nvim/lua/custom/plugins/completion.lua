@@ -19,14 +19,18 @@ return {
                 end)(),
                 dependencies = {
                     "rafamadriz/friendly-snippets",
+                    config = function ()
+                        require('luasnip.loaders.from_vscode').lazy_load()
+                    end
                 },
             },
+			"saadparwaiz1/cmp_luasnip",
             'rcarriga/cmp-dap',
             "R-nvim/cmp-r",
             'kdheepak/cmp-latex-symbols',
         },
         config = function ()
-            require('beps.plugins.nvim-cmp')
+            require('beps.plugins.completion')
         end,
     },
 

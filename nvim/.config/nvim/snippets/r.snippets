@@ -1,0 +1,9 @@
+
+snippet #!
+     	#!/usr/bin/env Rscript
+
+snippet dt "data.table"
+    data.table[${1:i}, list(${2:j}), ${3:k}]
+
+snippet dti "data.table in-place"
+    data.table[${1:i}, let(${2:j}), ${3:k}]
