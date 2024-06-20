@@ -96,15 +96,6 @@ return {
             "neovim/nvim-lspconfig",
             "nvim-telescope/telescope.nvim"
         },
+    },
 
-        {
-            'stevearc/oil.nvim',
-            opts = {
-                view_options = {
-                    show_hidden = true,
-                },
-            },
-            -- Optional dependencies
-            dependencies = { "nvim-tree/nvim-web-devicons" },
-        }   },
 }
