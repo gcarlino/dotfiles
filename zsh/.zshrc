@@ -154,6 +154,9 @@ if [[ $OS == "Darwin" ]] {
     export CPPFLAGS='-isystem/opt/local/include'
     export LDFLAGS='-L/opt/local/lib'
 
+    # wezterm binary folder
+    export PATH="$PATH:/Applications/WezTerm.app/Contents/MacOS/"
+
 } elif [[ $OS == "Linux" ]] {
     # FZF
     source /usr/share/doc/fzf/examples/completion.zsh
