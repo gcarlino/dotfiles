@@ -90,11 +90,19 @@ return {
 
     {
         "linux-cultist/venv-selector.nvim",
-        config = true,
         ft = "python",
         dependencies = {
             "neovim/nvim-lspconfig",
+            "mfussenegger/nvim-dap",
+            "mfussenegger/nvim-dap-python",
             "nvim-telescope/telescope.nvim"
+        },
+        branch = "regexp",
+        config = function ()
+            require("venv-selector").setup()
+        end,
+        keys = {
+            { "<leader>vv", "<cmd>VenvSelect<cr>", "VenvSelect" }
         },
     },
 
