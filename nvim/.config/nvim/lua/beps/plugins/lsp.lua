@@ -1,22 +1,24 @@
+-- local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+-- local signs = { Error = "🤬", Warn = "🖐️", Hint = "☝️", Info = "🤓" , Other = "🤔"}
+local signs = { Error = '', Warn = '', Info = '', Hint = '', Other = "" }
 vim.diagnostic.config({
     virtual_text = false,
-    signs = true,
+    signs = {
+        text = {
+            [vim.diagnostic.severity.ERROR] = signs.Error,
+            [vim.diagnostic.severity.WARN] = signs.Warn,
+            [vim.diagnostic.severity.INFO] = signs.Info,
+            [vim.diagnostic.severity.HINT] = signs.Hint,
+        }
+    },
     underline = true,
     update_in_insert = false,
     severity_sort = true,
     float = {
         border = 'rounded',
-        source = 'always'
+        source = true,
     }
 })
-
--- local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
--- local signs = { Error = "🤬", Warn = "🖐️", Hint = "☝️", Info = "🤓" , Other = "🤔"}
-local signs = { Error = '', Warn = '', Info = '', Hint = '', Other = "" }
-for type, icon in pairs(signs) do
-    local hl = "DiagnosticSign" .. type
-    vim.fn.sign_define(hl, { icon = icon, text = icon, texthl = hl, numhl = hl })
-end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = vim.tbl_deep_extend(
@@ -26,7 +28,10 @@ capabilities = vim.tbl_deep_extend(
 )
 
 local servers = {
-    basedpyright = { },
+    -- python lsp server
+    basedpyright = {
+        enabled = true
+    },
     pylsp = {
         enabled = false,
         settings = {
@@ -94,13 +99,30 @@ require("mason-lspconfig").setup({
     }
 })
 
+-- Add border to some popup window
+-- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+--   vim.lsp.handlers.hover, {
+--     border = "single",
+--   }
+-- )
+--
+-- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+--   vim.lsp.handlers.signature_help, {
+--     border = "single",
+--   }
+-- )
+--
+-- require('lspconfig.ui.windows').default_options = {
+--   border = "single",
+-- }
+
 -- lspconfig
 -- Use LspAttach autocommand to only map the following keys after the
 -- language server attaches to the current buffer
 vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('UserLSPConfig', { clear = true }),
     callback = function(event)
-        -- mapping key and description
+        -- mapping key and description in normal mode
         local map = function(keys, func, desc)
             vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
         end
@@ -129,7 +151,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
         map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
-        map('<leader>k', vim.lsp.buf.signature_help, 'signature help')
+        -- map('<leader>k', vim.lsp.buf.signature_help, 'signature help')
 
         -- Disabled because of default keymap `gra`
         -- map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
