@@ -1,6 +1,3 @@
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ';'
-
 -- Write the contents of the file, if it has been modified
 -- FIXME: era abilitato. Dobbiemo tenerlo true?
 -- vim.opt.autowrite = true

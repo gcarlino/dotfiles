@@ -1,8 +1,6 @@
-require("beps.options")
-
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
   vim.fn.system({
     "git",
     "clone",
@@ -14,10 +12,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup("custom.plugins", {})
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ';'
 
-require("beps.disable_builtin")
-require("beps.keymaps")
-if vim.fn.has("mac") == 1 then
-    require("beps.mac")
-end
+require("lazy").setup("custom.plugins", {})
