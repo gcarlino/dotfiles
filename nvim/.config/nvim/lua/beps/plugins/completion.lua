@@ -73,26 +73,31 @@ cmp.setup({
     --     -- return vim.api.nvim_get_option_value("buftype", {buf = 0}) ~= "prompt"
     --     --     or require("cmp_dap").is_dap_buffer()
     -- end,
-   --
-   formatting = {
+
+    formatting = {
         fields = { 'abbr', 'kind', 'menu' },
         format = lspkind.cmp_format({
             mode = "symbol_text",
             maxwidth = 50,
             menu = ({
-                buffer = '[Buf]',
+                buffer = '[BUF]',
                 nvim_lsp = '[LSP]',
-                luasnip = '[LuaSnip]',
-                nvim_lua = '[Lua]',
-                latex_symbols = '[Latex]',
-                path = '[Path]',
-                cmdline = '[Cmd]',
-                cmp_r = '[R]'
+                luasnip = '[SNP]',
+                nvim_lua = '[LUA]',
+                latex_symbols = '[LTX]',
+                path = '[PTH]',
+                cmdline = '[CMD]',
+                cmp_r = '[R  ]'
             }),
             ellipsis_char = '...',
         }),
     },
-   --
+
+    -- Completion popup window border
+    -- window = {
+    --     completion = cmp.config.window.bordered(),
+    -- },
+    --
     -- view = {
     --     entries = 'custom'
     -- },
@@ -100,7 +105,7 @@ cmp.setup({
     --     native_menu = false,
     --     ghost_text = true
     -- }
-
+    --
 })
 
 require("cmp_r").setup({ })
