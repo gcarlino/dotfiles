@@ -17,22 +17,19 @@ telescope.setup {
         sorting_strategy = 'ascending',
         scroll_strategy = 'cycle',
         layout_strategies = 'flex',
-        layout_config = {
-            prompt_position = 'top',
-            -- preview_width = 0.5
-        },
+        layout_config = { prompt_position = 'top', },
         dynamic_preview_title = true,
-        file_ignore_patterns = { "^.git/" },
-        -- vimgrep_arguments = {
-        --     "rg",
-        --     "--color=never",
-        --     "--no-heading",
-        --     "--with-filename",
-        --     "--line-number",
-        --     "--column",
-        --     "--smart-case",
-        --     "--iglob !**/.git/*"
-        -- }
+        vimgrep_arguments = {
+            "rg",
+            "--color=never",
+            "--no-heading",
+            "--with-filename",
+            "--line-number",
+            "--column",
+            "--smart-case",
+            "--hidden",
+            "--glob=!**/.git/*"
+        }
     },
     pickers = {
         buffers = {
@@ -74,47 +71,48 @@ telescope.load_extension("ui-select")
 
 -- Keymaps
 local builtin = require('telescope.builtin')
+local set = vim.keymap.set
 
-vim.keymap.set('n', '<leader>fp', builtin.commands,
+set('n', '<leader>fp', builtin.commands,
     { desc = " [f]ind [p]lugin/commands and runs them on `<cr>`" })
 
-vim.keymap.set('n', '<leader><space>', builtin.buffers,
+set('n', '<leader><space>', builtin.buffers,
     { desc = " [f]ind [ ] open buffers" })
 
-vim.keymap.set('n', '<leader>fs',
+set('n', '<leader>fs',
     function() require('telescope').extensions.file_browser.file_browser() end,
     { desc = " [f]ile [s]earch in browser" })
 
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = " [f]ind by [g]rep." })
+set('n', '<leader>fg', builtin.live_grep, { desc = " [f]ind by [g]rep." })
 
-vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = " [f]ind [r]esume"})
+set('n', '<leader>fr', builtin.resume, { desc = " [f]ind [r]esume"})
 
-vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = " [f]ind [f]iles" })
+set('n', '<leader>ff', builtin.find_files, { desc = " [f]ind [f]iles" })
 
-vim.keymap.set('n', '<leader>/', function ()
+set('n', '<leader>/', function ()
     builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
         winblend = 10,
         previewer = false,
     })
     end, { desc = " [/] fuzzy find in current buffer" })
 
-vim.keymap.set("n", "<leader>f/", function()
+set("n", "<leader>f/", function()
     builtin.live_grep({
         grep_open_files = true,
         prompt_title = "Live Grep in Open Files",
     })
     end, { desc = " [f]ind [/] in open files" })
 
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = " [f]ind [h]elp" })
+set('n', '<leader>fh', builtin.help_tags, { desc = " [f]ind [h]elp" })
 
-vim.keymap.set('n', '<leader>ft', builtin.builtin, { desc = " [f]ind [select] Telescope" })
+set('n', '<leader>ft', builtin.builtin, { desc = " [f]ind [select] Telescope" })
 
-vim.keymap.set('n', '<leader>fw', builtin.grep_string,
+set('n', '<leader>fw', builtin.grep_string,
     { desc = " [f] [w]ord under cursor in working directory" })
 
-vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = " [f]ind [k]eymaps" })
+set('n', '<leader>fk', builtin.keymaps, { desc = " [f]ind [k]eymaps" })
 
-vim.keymap.set('n', '<leader>fo', builtin.oldfiles,
+set('n', '<leader>fo', builtin.oldfiles,
     { desc = " [f]ind recently [o]pened/edited files" })
 
 -- -- Telescope for git
@@ -128,7 +126,7 @@ vim.keymap.set('n', '<leader>fo', builtin.oldfiles,
 --     { desc = " lists commits for current buffer with d--[[  ]]iff preview" })
 
 -- Search for dotfiles
-vim.keymap.set('n', '<leader>fd',
+set('n', '<leader>fd',
     function()
         builtin.git_files {
             cwd = "~/.dotfiles/",
