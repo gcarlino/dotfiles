@@ -30,7 +30,7 @@ return {
             'kdheepak/cmp-latex-symbols',
         },
         config = function ()
-            require('beps.plugins.completion')
+            require('custom.completion')
         end,
     },
 

@@ -13,7 +13,7 @@ return {
             -- 'rcarriga/cmp-dap',
         },
         config = function()
-            require('beps.plugins.dap')
+            require('custom.dap')
         end,
     },
 

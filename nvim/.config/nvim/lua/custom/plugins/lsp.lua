@@ -19,7 +19,7 @@ return {
         "neovim/nvim-lspconfig",
         event = { "BufReadPre", "BufNewFile" },
         config = function()
-            require("beps.plugins.lsp")
+            require("custom.lsp")
         end,
         dependencies = {
 			{ "williamboman/mason.nvim", config = true },

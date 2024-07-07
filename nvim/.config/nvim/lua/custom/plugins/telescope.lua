@@ -4,7 +4,7 @@ return {
         -- cmd = 'Telescope',
         event = 'VimEnter',
         config = function()
-            require('beps.plugins.telescope')
+            require('custom.telescope')
         end,
         dependencies = {
             { 'nvim-lua/plenary.nvim' },

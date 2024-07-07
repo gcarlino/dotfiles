@@ -54,7 +54,7 @@ return {
             'nvim-tree/nvim-web-devicons'
         },
         config = function()
-            require('beps.plugins.lualine')
+            require('custom.lualine')
         end,
     },
 
