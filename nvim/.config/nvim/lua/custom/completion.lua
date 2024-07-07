@@ -6,7 +6,8 @@ lspkind.init {}
 local cmp = require('cmp')
 local luasnip = require('luasnip')
 luasnip.config.setup({})
-require('luasnip.loaders.from_snipmate').load({ paths = "./snippets"})
+-- Custom snippets
+require('luasnip.loaders.from_snipmate').lazy_load({paths = {"./snippets"}})
 
 cmp.setup({
     sources = {
@@ -15,13 +16,7 @@ cmp.setup({
         { name = 'nvim_lsp_signature_help' },
         { name = "nvim_lua" },
         { name = "buffer" },
-        { name = "path",
-            option = {
-                get_cwd = function ()
-                    return vim.fn.getcwd()
-                end
-            },
-        },
+        { name = "path" },
         { name = "dap" },
         { name = "cmp_r"},
         { name = 'cmp-latex-symbols'},
@@ -31,7 +26,6 @@ cmp.setup({
         ["<C-n>"] = cmp.mapping.select_next_item{ behavior = cmp.SelectBehavior.Insert },
         ["<C-p>"] = cmp.mapping.select_prev_item{ behavior = cmp.SelectBehavior.Insert },
         ["<C-a>"] = cmp.mapping.abort(),
-
         -- Accept the completion.
         ["<C-y>"] = cmp.mapping(
             cmp.mapping.confirm {
