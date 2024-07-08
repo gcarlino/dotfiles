@@ -8,41 +8,34 @@ return {
     {
         "folke/which-key.nvim",
         event = "VeryLazy",
-        -- event = "VimEnter",
-        init = function()
+        config = function ()
+            require('which-key').setup({
+                window = {
+                    border = 'single',
+                },
+            })
+
             vim.o.timeout = true
             vim.o.timeoutlen = 1000
-        end,
-        -- opts = {
-        --     window = {
-        --         border = "single",
-        --     },
-        --     disable = {
-        --         buftypes = {},
-        --         filetypes = {},
-        --     },
-        -- },
-        config = function ()
-            require('which-key').setup()
 
-			-- Document existing key chains
-			require("which-key").register({
+            -- Document existing key chains
+            require("which-key").register({
                 ["<leader>c"] = { name = "[C]ode", _ = "which_key_ignore" },
-				["<leader>d"] = { name = "[D]AP", _ = "which_key_ignore" },
-				["<leader>r"] = { name = "[R]ename", _ = "which_key_ignore" },
-				["<leader>f"] = { name = "[F]ind", _ = "which_key_ignore" },
-				["<leader>w"] = { name = "[W]orkspace", _ = "which_key_ignore" },
-				["<leader>l"] = { name = "[L]SP", _ = "which_key_ignore" },
-				["<leader>x"] = { name = "Trouble", _ = "which_key_ignore" },
-				["<leader>v"] = { name = "Diff[V]iew", _ = "which_key_ignore" },
-				["<leader>t"] = { name = "[T]oggle", _ = "which_key_ignore" },
-				["<leader>h"] = { name = "Git [H]unk", _ = "which_key_ignore" },
-				["<leader>o"] = { name = "[O]bsidian", _ = "which_key_ignore" },
-			})
-			-- visual mode
-			require("which-key").register({
-				["<leader>h"] = { "Git [H]unk" },
-			}, { mode = "v" })
+                ["<leader>d"] = { name = "[D]AP", _ = "which_key_ignore" },
+                ["<leader>r"] = { name = "[R]ename", _ = "which_key_ignore" },
+                ["<leader>f"] = { name = "[F]ind", _ = "which_key_ignore" },
+                ["<leader>w"] = { name = "[W]orkspace", _ = "which_key_ignore" },
+                ["<leader>l"] = { name = "[L]SP", _ = "which_key_ignore" },
+                ["<leader>x"] = { name = "Trouble", _ = "which_key_ignore" },
+                ["<leader>v"] = { name = "Diff[V]iew", _ = "which_key_ignore" },
+                ["<leader>t"] = { name = "[T]oggle", _ = "which_key_ignore" },
+                ["<leader>h"] = { name = "Git [H]unk", _ = "which_key_ignore" },
+                ["<leader>o"] = { name = "[O]bsidian", _ = "which_key_ignore" },
+            })
+            -- visual mode
+            require("which-key").register({
+                ["<leader>h"] = { "Git [H]unk" },
+            }, { mode = "v" })
         end
 
     },
