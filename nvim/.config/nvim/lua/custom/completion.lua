@@ -58,7 +58,7 @@ cmp.setup({
             luasnip.lsp_expand(args.body)
         end,
     },
-    completion = { completeopt = 'menu,menuone,noinsert' },
+    completion = { completeopt = 'menu,menuone,noselect' },
 
     -- nvim-cmp by defaults disables autocomplete for prompt buffers
     -- enabled = function()
