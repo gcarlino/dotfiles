@@ -19,6 +19,7 @@ telescope.setup {
         layout_strategies = 'flex',
         layout_config = { prompt_position = 'top', },
         dynamic_preview_title = true,
+        file_ignore_patterns = { '^.git/' },
         vimgrep_arguments = {
             "rg",
             "--color=never",
@@ -28,7 +29,7 @@ telescope.setup {
             "--column",
             "--smart-case",
             "--hidden",
-            "--glob=!**/.git/*"
+            "--glob=!**/.git/*"  -- It does not seem working
         }
     },
     pickers = {
