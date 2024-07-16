@@ -46,11 +46,6 @@ vim.opt.splitright = true
 
 vim.opt.termguicolors = true
 
--- Decrease mapped sequence wait time. Displays which-key popup sooner
-vim.opt.timeoutlen = 300
-
--- vim.opt.title = true
-
 -- Save undo history
 vim.opt.undofile = true
 
