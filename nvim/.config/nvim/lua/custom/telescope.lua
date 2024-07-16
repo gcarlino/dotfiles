@@ -75,10 +75,10 @@ local builtin = require('telescope.builtin')
 local set = vim.keymap.set
 
 set('n', '<leader>fp', builtin.commands,
-    { desc = " [f]ind [p]lugin/commands and runs them on `<cr>`" })
+    { desc = " [f]ind [p]lugin/commands" })
 
 set('n', '<leader><space>', builtin.buffers,
-    { desc = " [f]ind [ ] open buffers" })
+    { desc = " find in open buffers" })
 
 set('n', '<leader>fs',
     function() require('telescope').extensions.file_browser.file_browser() end,
@@ -92,7 +92,7 @@ set('n', '<leader>ff', builtin.find_files, { desc = " [f]ind [f]iles" })
 
 set('n', '<leader>/', function ()
     builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-        winblend = 10,
+        -- winblend = 10,
         previewer = false,
     })
     end, { desc = " [/] fuzzy find in current buffer" })
@@ -102,14 +102,14 @@ set("n", "<leader>f/", function()
         grep_open_files = true,
         prompt_title = "Live Grep in Open Files",
     })
-    end, { desc = " [f]ind [/] in open files" })
+    end, { desc = " [/] find in open files" })
 
 set('n', '<leader>fh', builtin.help_tags, { desc = " [f]ind [h]elp" })
 
-set('n', '<leader>ft', builtin.builtin, { desc = " [f]ind [select] Telescope" })
+set('n', '<leader>ft', builtin.builtin, { desc = " [f]ind builtin [t]elescope" })
 
 set('n', '<leader>fw', builtin.grep_string,
-    { desc = " [f] [w]ord under cursor in working directory" })
+    { desc = " [f]ind [w]ord under cursor in working directory" })
 
 set('n', '<leader>fk', builtin.keymaps, { desc = " [f]ind [k]eymaps" })
 
