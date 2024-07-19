@@ -19,7 +19,7 @@ return {
                 { "<leader>l", group = "[L]SP" },
                 { "<leader>o", group = "[O]bsidian" },
                 { "<leader>t", group = "[T]oggle" },
-                { "<leader>v", group = "Diff[V]iew + venv" },
+                -- { "<leader>v", group = "[V]env " },
                 { "<leader>w", group = "[W]orkspace" },
                 { "<leader>x", group = "Trouble" },
             },

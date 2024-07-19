@@ -3,7 +3,6 @@ return {
 
     {
         'tpope/vim-fugitive',
-        cmd = 'G',
     },
 
     {
@@ -16,6 +15,8 @@ return {
 
     {
         'sindrets/diffview.nvim',
+        enabled = false,
+        event = "VeryLazy",
         cmd = "DiffviewOpen",
         keys = {
             { '<leader>vo', ':DiffviewOpen<CR>', desc = "Open Diffview tab."},
