@@ -94,6 +94,16 @@ vim.opt.listchars = {
     nbsp = '␣'
 }
 
+-- fillchars
+vim.opt.fillchars = {
+    eob = ' ',
+    fold = ' ',
+    foldopen = '',
+    foldsep = ' ',
+    foldclose = '❯',
+    diff = '╱'
+}
+
 vim.api.nvim_create_autocmd("InsertEnter", {
     pattern = "*",
     callback = function()

@@ -19,7 +19,6 @@ return {
                 { "<leader>l", group = "[L]SP" },
                 { "<leader>o", group = "[O]bsidian" },
                 { "<leader>t", group = "[T]oggle" },
-                -- { "<leader>v", group = "[V]env " },
                 { "<leader>w", group = "[W]orkspace" },
                 { "<leader>x", group = "Trouble" },
             },
@@ -61,7 +60,6 @@ return {
         enabled = true,
         event = "VeryLazy",
         config = function()
-            vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:❯]]
             vim.cmd("highlight FoldColumn guifg=" .. vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID('Comment')), 'fg'))
 
             local builtin = require("statuscol.builtin")
