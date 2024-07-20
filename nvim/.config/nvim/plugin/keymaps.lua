@@ -31,10 +31,14 @@ set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to upper split.' })
 set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to right split.' })
 
 -- Change split size
-set({ 'n', 't'}, '<M-h>', '5<C-w><', { noremap = false })
-set({ 'n', 't'}, '<M-l>', '5<C-w>>', { noremap = false })
-set({ 'n', 't'}, '<M-j>', '5<C-w>-', { noremap = false })
-set({ 'n', 't'}, '<M-k>', '5<C-w>+', { noremap = false })
+set({ 'n', 't'}, '<C-S-h>', '5<C-w><', { noremap = false })
+set({ 'n', 't'}, '<C-S-l>', '5<C-w>>', { noremap = false })
+set({ 'n', 't'}, '<C-S-j>', '5<C-w>-', { noremap = false })
+set({ 'n', 't'}, '<C-S-k>', '5<C-w>+', { noremap = false })
+-- set({ 'n', 't'}, '<M-h>', '5<C-w><', { noremap = false })
+-- set({ 'n', 't'}, '<M-l>', '5<C-w>>', { noremap = false })
+-- set({ 'n', 't'}, '<M-j>', '5<C-w>-', { noremap = false })
+-- set({ 'n', 't'}, '<M-k>', '5<C-w>+', { noremap = false })
 
 -- Clear highlight
 set('n', '<ESC>', '<cmd>nohlsearch<CR>')
