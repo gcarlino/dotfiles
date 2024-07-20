@@ -1,0 +1,8 @@
+font-family = "MesloLGS NF"
+
+shell-integration-features = cursor,sudo,title
+
+window-theme = dark
+
+# theme = catppuccin-macchiato
+
