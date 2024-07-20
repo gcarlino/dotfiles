@@ -12,7 +12,8 @@ return {
                     "vim", "vimdoc", "json", "yaml", "toml",
                     "html", "css",
                     "markdown", "markdown_inline", "latex",
-                    "lua", "python", "c", "r",
+                    "lua", "luadoc",
+                    "python", "c", "r",
                     "cmake", "bash", "diff", "regex"
                 },
                 sync_install = false,
