@@ -11,12 +11,9 @@ return {
             'hrsh7th/cmp-cmdline',
             'hrsh7th/cmp-buffer',
             'hrsh7th/cmp-path',
-            'hrsh7th/cmp-nvim-lua',
             {
                 'L3MON4D3/LuaSnip',
-                build = (function ()
-                    return "make install_jsregexp"
-                end)(),
+                build = "make install_jsregexp",
                 dependencies = {
                     "rafamadriz/friendly-snippets",
                     config = function ()
@@ -24,7 +21,7 @@ return {
                     end
                 },
             },
-			"saadparwaiz1/cmp_luasnip",
+            "saadparwaiz1/cmp_luasnip",
             'rcarriga/cmp-dap',
             "R-nvim/cmp-r",
             'kdheepak/cmp-latex-symbols',

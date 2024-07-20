@@ -1,25 +1,26 @@
--- vim.opt.completeopt = { "menu", "menuone", "noselect" }
-
-local lspkind = require('lspkind')
-lspkind.init {}
-
 local cmp = require('cmp')
+local lspkind = require('lspkind')
 local luasnip = require('luasnip')
+
+lspkind.init {}
 luasnip.config.setup({})
+
 -- Custom snippets
 require('luasnip.loaders.from_snipmate').lazy_load({paths = {"./snippets"}})
 
+vim.opt.completeopt = 'menu,menuone,noinsert,noselect,preview'
+
 cmp.setup({
+
     sources = {
         { name = "nvim_lsp" },
         { name = 'luasnip' },
         { name = 'nvim_lsp_signature_help' },
-        { name = "nvim_lua" },
         { name = "buffer" },
         { name = "path" },
         { name = "dap" },
         { name = "cmp_r"},
-        { name = 'cmp-latex-symbols'},
+        { name = 'latex_symbols'},
     },
 
     mapping =  {
@@ -52,13 +53,12 @@ cmp.setup({
         end, { 'i', 's' }),
     },
 
-    -- Enable luasnip to handle snipper expansion for nvim-cmp
+    -- Enable luasnip to handle snippet expansion for nvim-cmp
     snippet = {
         expand = function(args)
             luasnip.lsp_expand(args.body)
         end,
     },
-    completion = { completeopt = 'menu,menuone,noselect' },
 
     -- nvim-cmp by defaults disables autocomplete for prompt buffers
     -- enabled = function()
@@ -74,35 +74,20 @@ cmp.setup({
             mode = "symbol_text",
             maxwidth = 50,
             menu = ({
-                buffer = '[BUF]',
+                buffer = '[Buffer]',
                 nvim_lsp = '[LSP]',
-                luasnip = '[SNP]',
-                nvim_lua = '[LUA]',
-                latex_symbols = '[LTX]',
-                path = '[PTH]',
-                cmdline = '[CMD]',
-                cmp_r = '[R  ]'
+                luasnip = '[Snippet]',
+                latex_symbols = '[Latex]',
+                path = '[Path]',
+                cmdline = '[Command]',
+                cmp_r = '[RStats]'
             }),
             ellipsis_char = '...',
         }),
     },
-
-    -- Completion popup window border
-    -- window = {
-    --     completion = cmp.config.window.bordered(),
-    -- },
-    --
-    -- view = {
-    --     entries = 'custom'
-    -- },
-    -- experimental = {
-    --     native_menu = false,
-    --     ghost_text = true
-    -- }
-    --
 })
 
-require("cmp_r").setup({ })
+require("cmp_r").setup({})
 
 -- Use
 cmp.setup.filetype({ 'markdown', 'text', 'yaml' }, {
@@ -139,18 +124,3 @@ cmp.setup.cmdline(':', {
         },
     })
 })
-
--- <c-k> will move you to the right of each of the expansion locations.
-vim.keymap.set({ "i", "s" }, "<c-k>", function()
-    if luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
-    end
-end, { silent = true })
-
--- <c-j> is similar, except moving you backwards.
-vim.keymap.set({ "i", "s" }, "<c-j>", function()
-        if luasnip.jumpable(-1) then
-        luasnip.jump(-1)
-    end
-end, { silent = true })
-
