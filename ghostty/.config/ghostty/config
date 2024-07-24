@@ -1,8 +1,21 @@
+# Custom configuration
+# see
+# `ghostty +show-config --default --docs | nvim -R`
+
 font-family = "MesloLGS NF"
+font-size = 13
 
-shell-integration-features = cursor,sudo,title
+# Disable ligatures
+font-feature = -calt
+font-feature = -liga
+font-feature = -dlig
 
-window-theme = dark
+#shell-integration-features = cursor,sudo,title
 
 # theme = catppuccin-macchiato
+macos-titlebar-style = native
 
+# Right option key as alt (meta)
+macos-option-as-alt = right
+
+copy-on-select = clipboard
