@@ -7,9 +7,9 @@
 -- Get position as <current line>|<total lines>|<cursor column>|<total columns>
 local function myLocation()
     local linelength = vim.api.nvim_strwidth(vim.api.nvim_get_current_line())
-    linelength = string.format('%3d', linelength)
+    local sLinelength = string.format('%-2d', linelength)
     -- return '%l|%L│%3v|' .. linelength
-    return '%3v/' .. linelength .. '│%l/%L'
+    return '‖%2v/' .. sLinelength .. ' ≣%3l/%-3L %P'
 end
 
 --- Return function that can format the component accordingly
@@ -18,28 +18,29 @@ end
 --- @param hide_width number hides component when window width is smaller then hide_width
 --- @param no_ellipsis boolean whether to disable adding '...' at end after truncation
 local function trunc(trunc_width, trunc_len, hide_width, no_ellipsis)
-  return function(str)
-    local win_width = vim.fn.winwidth(0)
-    if hide_width and win_width < hide_width then return ''
-    elseif trunc_width and trunc_len and win_width < trunc_width and #str > trunc_len then
-       return str:sub(1, trunc_len) .. (no_ellipsis and '' or '...')
+    return function(str)
+        local win_width = vim.fn.winwidth(0)
+        if hide_width and win_width < hide_width then
+            return ''
+        elseif trunc_width and trunc_len and win_width < trunc_width and #str > trunc_len then
+            return str:sub(1, trunc_len) .. (no_ellipsis and '' or '...')
+        end
+        return str
     end
-    return str
-  end
 end
 
 
--- External diff source
-local function diff_source()
-  local gitsigns = vim.b.gitsigns_status_dict
-  if gitsigns then
-    return {
-      added = gitsigns.added,
-      modified = gitsigns.changed,
-      removed = gitsigns.removed
-    }
-  end
-end
+-- -- External diff source
+-- local function diff_source()
+--     local gitsigns = vim.b.gitsigns_status_dict
+--     if gitsigns then
+--         return {
+--             added = gitsigns.added,
+--             modified = gitsigns.changed,
+--             removed = gitsigns.removed
+--         }
+--     end
+-- end
 
 
 local function getLSP()
@@ -61,7 +62,14 @@ end
 
 require 'lualine'.setup {
     extensions = {
-        'nvim-tree', 'toggleterm', 'nvim-dap-ui', 'fugitive', 'fzf', 'quickfix'
+        'nvim-tree',
+        'toggleterm',
+        'nvim-dap-ui',
+        'fugitive',
+        'fzf',
+        'quickfix',
+        'lazy',
+        'mason'
     },
     options = {
         theme = 'auto',
@@ -76,11 +84,12 @@ require 'lualine'.setup {
         component_separators = "",
 
         disabled_filetypes = {
-            winbar = { 'toggleterm', 'NvimTree', 'fugitive', 'qf',
-                'dapui_watches', 'dapui_stacks', 'dapui_breakpoints', 'dapui_scopes',
-                'dapui_repl', 'dapui_console', 'dap-repl',
-                'DiffviewFiles', 'DiffviewFileHistory',
-            }
+            -- statusbar = { 'fugitive' },
+            -- winbar = { 'toggleterm', 'NvimTree', 'fugitive', 'qf',
+            --     'dapui_watches', 'dapui_stacks', 'dapui_breakpoints', 'dapui_scopes',
+            --     'dapui_repl', 'dapui_console', 'dap-repl',
+            --     'DiffviewFiles', 'DiffviewFileHistory',
+            -- }
         },
     },
     sections = {
@@ -100,21 +109,23 @@ require 'lualine'.setup {
             },
             {
                 'diff',
-                source = diff_source,
-                symbols = { added = ' ', modified = '柳', removed = ' ' },
+                -- source = diff_source,
+                -- symbols = { added = ' ', modified = '󱗽 ', removed = ' ' },
                 -- symbols = { added = ' ', modified = ' ', removed = ' ' },
-                padding = { left = 1, right = 1 },
+                -- padding = { left = 1, right = 1 },
+                padding = { left = 0 },
                 fmt = trunc(0, 0, 90, true),
             },
             {
                 'diagnostics',
-                icon = { '' },
+                -- icon = { '' },
                 sources = { 'nvim_diagnostic' },
-                symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
+                symbols = { error = '', warn = '', info = '', hint = '' },
+                -- symbols = { error = vim.diagnostics.opts.signs.text.ERROR, },
                 fmt = trunc(0, 0, 90, true),
                 on_click = function ()
                     vim.diagnostic.setqflist()
-                end
+                end,
             },
         },
         lualine_c = {
@@ -125,10 +136,10 @@ require 'lualine'.setup {
                 path = 3,
                 shorting_target = 80,
                 symbols =  {
-                    modified = ' ●',
-                    alternate_file = ' #',
-                    directory = ' ',
-                    newfile = ' '
+                    modified = '●',
+                    alternate_file = '#',
+                    directory = ' ',
+                    newfile = ' '
                 },
                 on_click = function ()
                     local fpath = vim.fn.expand('%:~')
@@ -145,8 +156,8 @@ require 'lualine'.setup {
             },
             {
                 getLSP,
-                fmt = trunc(90, 3, 80, true),
                 padding = { left = 0, right = 1 },
+                fmt = trunc(92, 0, 92, true),
             },
         },
         lualine_y = {
@@ -156,17 +167,18 @@ require 'lualine'.setup {
             },
             {
                 'encoding',
-                padding = {left = 0, right = 1 }
+                padding = {left = 0, right = 1 },
+                fmt = trunc(92, 0, 92, true),
             },
             {
                 'filesize',
-                padding = {left = 0, right = 1 }
+                padding = {left = 0, right = 1 },
+                fmt = trunc(92, 0, 92, true),
             }
         },
         lualine_z = {
             {
                 myLocation,
-                padding = {left = 1, right = 1}
             },
         }
     },
