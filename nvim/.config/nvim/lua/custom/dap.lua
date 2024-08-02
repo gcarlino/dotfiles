@@ -5,6 +5,11 @@ local dap = require("dap")
 -- Function to configure adapters
 function M.config_dap()
 
+    dap.adapters.gdb = {
+        type = "executable",
+        command = "gdb",
+    }
+
     dap.adapters.codelldb = {
         type = "server",
         port = "${port}",
@@ -12,14 +17,18 @@ function M.config_dap()
             command = vim.fn.stdpath('data') .. '/mason/packages/codelldb/codelldb',
             args = {"--port", "${port}"}
         }
-
     }
-    dap.adapters.cpp = dap.adapters.codelldb
-    dap.adapters.c = dap.adapters.codelldb
+
+    dap.adapters.cppdbg = {
+        id = 'cppdbg',
+        type = 'executable',
+        command = vim.fn.stdpath('data') .. '/mason/packages/cpptools/extension/debugAdapters/bin/OpenDebugAD7'
+    }
 
     -- Load local configurations
-    require('dap.ext.vscode').load_launchjs('./.nvim-dap/launch.json')
+    require('dap.ext.vscode').load_launchjs('.nvim-dap/launch.json')
 
+    -- EXAMPLE configuration
     dap.configurations.cpp = {
         {
             name = "Launch file",
@@ -99,14 +108,14 @@ set('n', '<F1>', dap.continue, { desc = "DAP: debug continue" })
 set('n', '<F2>', dap.step_over, { desc = "DAP: debug step over" })
 set('n', '<F3>', dap.step_into, { desc = "DAP: debug step into" })
 set('n', '<F4>', dap.step_out, { desc = "DAP: debug step out" })
+set('n', '<F5>', dap.run_to_cursor, { desc = "DAP: debug run to cursor" })
 
-set('n', '<F5>', dap.run_last, { desc = "DAP: debug run last configuration" })
-set('n', '<F6>', dap.run_to_cursor, { desc = "DAP: debug run to cursor" })
+set("n", "<F7>", dap.up, { desc = "DAP: up in the stack." })
+set("n", "<F8>", dap.down, { desc = "DAP: down in the stack." })
+
+set('n', '<F9>', dap.run_last, { desc = "DAP: debug run last configuration" })
 set('n', '<F11>', dap.pause, { desc = "DAP: debug pause" })
 set('n', '<F12>', dap.terminate, { desc = "DAP: debug terminate" })
-
-set("n", "<F8>", dap.up, { desc = "DAP: up in the stack." })
-set("n", "<F9>", dap.down, { desc = "DAP: down in the stack." })
 
 set('n', '<leader>dx',
     function()
@@ -142,7 +151,7 @@ set('n', '<Leader>ds', function()
     end, { desc = "DAP: print variables in the current scopes" })
 
 -- Reload launch json configuration
-set('n', '<leader>dl', function() require("dap.ext.vscode").load_launchjs("./.nvim-dap/launch.json") end,
+set('n', '<leader>dl', function() require("dap.ext.vscode").load_launchjs(".nvim-dap/launch.json") end,
     { desc = "DAP: load ./.nvim-dap/launch.json with debugger configuration" })
 
 -- Use nvim-dap events to open and close the windows automatically
