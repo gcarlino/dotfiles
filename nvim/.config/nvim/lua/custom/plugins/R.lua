@@ -45,7 +45,7 @@ return {
 
             -- Use tidyverse-style indentation (instead of weird stackoverflow style)
             -- NB, only applies if indent = { enabled = false } in treesitter config
-            -- vim.g.r_indent_align_args = 0
+            vim.g.r_indent_align_args = 0
 
             -- Highlight R output using normal colourscheme
             -- vim.g.rout_follow_colorscheme = true
