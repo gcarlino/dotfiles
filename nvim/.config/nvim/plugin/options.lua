@@ -53,7 +53,6 @@ vim.opt.undofile = true
 vim.opt.updatetime = 200
 
 -- vim.opt.colorcolumn = '80'
-vim.opt.hlsearch = true
 
 -- Preview substitutions live
 vim.opt.inccommand= 'split'
