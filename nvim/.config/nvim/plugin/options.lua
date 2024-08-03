@@ -52,8 +52,6 @@ vim.opt.undofile = true
 -- Decrease update time
 vim.opt.updatetime = 200
 
-vim.opt.wrap = false
-
 -- vim.opt.colorcolumn = '80'
 vim.opt.hlsearch = true
 
