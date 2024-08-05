@@ -13,7 +13,9 @@ font-feature = -dlig
 #shell-integration-features = cursor,sudo,title
 
 # theme = catppuccin-macchiato
+# theme = catppuccin-latte
 macos-titlebar-style = tabs
+window-padding-color = extend
 
 # Right option key as alt (meta)
 macos-option-as-alt = right
