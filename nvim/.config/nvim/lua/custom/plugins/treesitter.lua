@@ -27,7 +27,7 @@ return {
                 },
                 indent = {
                     enable = true,
-                    disable = { "r" }
+                    disable = { "r", "fortran" }
                     -- disable = { "fortran" }
                 },
                 incremental_selection = {
