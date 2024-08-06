@@ -24,6 +24,7 @@ return {
             "saadparwaiz1/cmp_luasnip",
             'rcarriga/cmp-dap',
             "R-nvim/cmp-r",
+            "micangl/cmp-vimtex",
             'kdheepak/cmp-latex-symbols',
         },
         config = function ()

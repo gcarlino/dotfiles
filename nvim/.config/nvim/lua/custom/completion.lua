@@ -17,10 +17,11 @@ cmp.setup({
         { name = 'luasnip' },
         { name = 'nvim_lsp_signature_help' },
         { name = "buffer" },
-        { name = "path" },
+        { name = "path", },
         { name = "dap" },
-        { name = "cmp_r"},
-        { name = 'latex_symbols'},
+        { name = "cmp_r" },
+        { name = 'latex_symbols' },
+        { name = 'vimtex' },
     },
 
     mapping =  {
@@ -80,7 +81,8 @@ cmp.setup({
                 latex_symbols = '[Latex]',
                 path = '[Path]',
                 cmdline = '[Command]',
-                cmp_r = '[RStats]'
+                cmp_r = '[RStats]',
+                vimtex = '[vimtex]',
             }),
             ellipsis_char = '...',
         }),
@@ -103,6 +105,21 @@ cmp.setup.filetype({ 'markdown', 'text', 'yaml' }, {
         { name = 'buffer' },
         { name = 'path' }
     })
+})
+
+cmp.setup.filetype({ 'tex' }, {
+    sources = {
+        { name = 'vimtex' },
+        {
+            name = 'latex_symbols',
+            option = {
+                strategy = 2,
+            },
+        },
+        { name = 'buffer' },
+        { name = 'nvim_lsp' },
+        { name = 'path' }
+    }
 })
 
 -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
