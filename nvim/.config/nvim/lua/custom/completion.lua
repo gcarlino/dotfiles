@@ -17,7 +17,13 @@ cmp.setup({
         { name = 'luasnip' },
         { name = 'nvim_lsp_signature_help' },
         { name = "buffer" },
-        { name = "path", },
+        { name = "path",
+            option = {
+                get_cwd = function ()
+                    return vim.uv.cwd()
+                end
+            },
+        },
         { name = "dap" },
         { name = "cmp_r" },
         { name = 'latex_symbols' },
