@@ -48,7 +48,13 @@ return {
         keys = {
             { '<leader>n', ':NvimTreeToggle<CR>', desc = "Toggle nvim-tree" }
         },
-        opts = { },
+        opts = {
+            renderer = {
+                indent_markers = {
+                    enable = true,
+                },
+            },
+        },
     },
 
     {
@@ -67,6 +73,7 @@ return {
     -- Various
     {
         "windwp/nvim-autopairs",
+        enabled = false,
         event = { "BufReadPost", "BufNewFile" },
         config = function()
             require('nvim-autopairs').setup()
