@@ -1,9 +1,11 @@
 -- Write the contents of the file, if it has been modified
--- FIXME: era abilitato. Dobbiemo tenerlo true?
 -- vim.opt.autowrite = true
 
 -- Sync clipboard between OS and neovim
 vim.opt.clipboard = 'unnamedplus'
+
+-- This is to preserve creation date of files (see help)
+vim.opt.backupcopy = "yes"
 
 -- Ask for confirmation instead of erroring
 vim.opt.confirm = true
