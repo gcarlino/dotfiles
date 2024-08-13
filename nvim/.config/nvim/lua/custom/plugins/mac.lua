@@ -15,8 +15,7 @@ return {
             return vim.fn.has("mac") == 1
         end,
         version = "*",
-        lazy = true,
-        ft = "markdown",
+        event = "VeryLazy",
         keys = {
             { '<leader>oo', ':ObsidianOpen<CR>', desc = '[O]pen [O]bsidian' },
             { '<leader>on', ':ObsidianNew<CR>', desc = '[O]bsidian [N]ew' },
@@ -27,6 +26,7 @@ return {
             { '<leader>op', ':ObsidianPasteImg<CR>', desc = '[O]bsidian [P]aste image'},
             { '<leader>oc', ':ObsidianToggleCheckbox<CR>', desc = '[O]bsidian toggle [C]heckbox'},
             { '<leader>oi', ':ObsidianPasteImg<CR>', desc = '[O]bsidian paste [I]mage'},
+            { '<leader>of', ':ObsidianTags<CR>', desc = '[O]bsidian [F]ind tags'},
         },
         dependencies = {
             "nvim-lua/plenary.nvim",
