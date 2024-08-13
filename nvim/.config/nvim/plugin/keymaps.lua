@@ -103,3 +103,13 @@ vim.api.nvim_set_keymap("n", "<leader>tc", "", {
     end,
     desc = "[T]oggle background [c]olor."
 })
+
+-- Insert creation date/time of current buffer at cursor position
+set("n", "<LocalLeader>d", function()
+    local buf = vim.api.nvim_buf_get_name(0)
+    local sec = vim.uv.fs_stat(buf).birthtime.sec
+    local formattedDateTime = vim.fn.strftime("%Y-%m-%d %H:%M:%S", sec)
+    local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+    vim.api.nvim_buf_set_text(0, row - 1, col, row - 1, col, {formattedDateTime})
+end, { desc = "Insert creation datetime of current buffer" } )
+
