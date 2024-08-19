@@ -6,13 +6,13 @@ Managed with [stow](https://codys.club/blog/2015/07/07/managing-your-dotfiles-wi
 
 Install `GNU stow` for linux:
 
-```{sh}
+```sh
 sudo apt install stow
 ```
 
 or for the mac with homebrew (or equivalent with MacPorts):
 
-```{sh}
+```sh
 brew install stow
 ```
 See [documentation](https://www.gnu.org/software/stow/) for more information.
@@ -21,12 +21,12 @@ See [documentation](https://www.gnu.org/software/stow/) for more information.
 
 Clone repository as:
 
-```{sh}
+```sh
 git clone https://github.com/gcarlino/dotfiles.git ${HOME}/.dotfiles
 ```
 
 and use `stow` to install **dotfiles**, as:
 
-```{sh}
+```sh
 stow -v nvim
 ```
