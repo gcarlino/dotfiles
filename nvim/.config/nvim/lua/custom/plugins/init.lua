@@ -1,8 +1,9 @@
 return {
-    { "nvim-lua/plenary.nvim", lazy = true },
+    -- { "nvim-lua/plenary.nvim", lazy = true },
 
     {
         "emmanueltouzery/decisive.nvim",
+        event = "VeryLazy",
         keys = {
             { "<leader>cca", ":lua require('decisive').align_csv({})<CR>", desc = "Align CSV"},
             { "<leader>ccA", ":lua require('decisive').align_csv_clear({})<CR>", desc = "Align CSV clear"},
@@ -49,9 +50,20 @@ return {
             { '<leader>n', ':NvimTreeToggle<CR>', desc = "Toggle nvim-tree" }
         },
         opts = {
+            view = {
+                width = 35,
+            },
             renderer = {
                 indent_markers = {
                     enable = true,
+                },
+            },
+            actions = {
+                -- Disable window picker to work better with splits
+                open_file = {
+                    window_picker = {
+                        enable = false,
+                    },
                 },
             },
         },
