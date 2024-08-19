@@ -68,13 +68,11 @@ require 'lualine'.setup {
         'fugitive',
         'fzf',
         'quickfix',
-        'lazy',
-        'mason'
+        'man'
     },
     options = {
         theme = 'auto',
-        globalstatusline = false,
-       -- section_separatoRs = { left = '', right = '' },
+        -- section_separators = { left = '', right = '' },
         -- component_separators = { left = '', right = '' }
         -- section_separators = { left = '', right = '' },
         -- component_separators = { left = '', right = '' },
@@ -98,7 +96,6 @@ require 'lualine'.setup {
                 'mode',
                 icons_enabled = true,
                 icon = '',
-                -- fmt = trunc(90, 1, 0, true),
                 fmt = function(str) return str:sub(1,1) end,
             }
         },
@@ -113,15 +110,16 @@ require 'lualine'.setup {
                 -- symbols = { added = ' ', modified = '󱗽 ', removed = ' ' },
                 -- symbols = { added = ' ', modified = ' ', removed = ' ' },
                 -- padding = { left = 1, right = 1 },
-                padding = { left = 0 },
+                colored = true,
+                padding = { left = 0, right = 1 },
                 fmt = trunc(0, 0, 90, true),
             },
             {
                 'diagnostics',
-                -- icon = { '' },
+                icon = { '' },
                 sources = { 'nvim_diagnostic' },
                 symbols = { error = '', warn = '', info = '', hint = '' },
-                -- symbols = { error = vim.diagnostics.opts.signs.text.ERROR, },
+                padding = { right = 1 },
                 fmt = trunc(0, 0, 90, true),
                 on_click = function ()
                     vim.diagnostic.setqflist()
