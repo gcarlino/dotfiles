@@ -12,7 +12,7 @@ return {
 
     {
         "folke/trouble.nvim",
-        cmd = "Trouble",
+        event = "VeryLazy",
         dependencies = { "nvim-tree/nvim-web-devicons" },
         opts = {},
         keys = {
@@ -84,15 +84,6 @@ return {
 
     -- Various
     {
-        "windwp/nvim-autopairs",
-        enabled = false,
-        event = { "BufReadPost", "BufNewFile" },
-        config = function()
-            require('nvim-autopairs').setup()
-        end
-    },
-
-    {
         "akinsho/toggleterm.nvim",
         event = 'VeryLazy',
         opts = {
@@ -108,6 +99,8 @@ return {
 
     {
         "linux-cultist/venv-selector.nvim",
+        enabled = false,
+        event = "VeryLazy",
         branch = "regexp",
         dependencies = {
             "neovim/nvim-lspconfig",
