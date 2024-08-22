@@ -1,5 +1,8 @@
 [
  (function_definition)
- (if)
- (left_assignment)
+ (if_statement)
+ (for_statement)
+ (parameters)
+ (arguments)
  ] @fold
+
