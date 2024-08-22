@@ -14,16 +14,20 @@ return {
             {
                 'L3MON4D3/LuaSnip',
                 build = "make install_jsregexp",
+                opts = {},
                 dependencies = {
                     "rafamadriz/friendly-snippets",
                     config = function ()
                         require('luasnip.loaders.from_vscode').lazy_load()
+                        require('luasnip.loaders.from_snipmate').lazy_load({paths = {"./snippets"}})
                     end
                 },
             },
             "saadparwaiz1/cmp_luasnip",
-            'rcarriga/cmp-dap',
-            "R-nvim/cmp-r",
+            {
+                "R-nvim/cmp-r",
+                opts = {},
+            },
             "micangl/cmp-vimtex",
             'kdheepak/cmp-latex-symbols',
         },

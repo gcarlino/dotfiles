@@ -56,6 +56,9 @@ vim.opt.updatetime = 200
 
 -- vim.opt.colorcolumn = '80'
 
+-- Options for insert mode completions
+vim.opt.completeopt = 'menu,menuone,noinsert,noselect,preview'
+
 -- Preview substitutions live
 vim.opt.inccommand= 'split'
 

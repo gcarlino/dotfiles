@@ -2,14 +2,6 @@ local cmp = require('cmp')
 local lspkind = require('lspkind')
 local luasnip = require('luasnip')
 
-lspkind.init {}
-luasnip.config.setup({})
-
--- Custom snippets
-require('luasnip.loaders.from_snipmate').lazy_load({paths = {"./snippets"}})
-
-vim.opt.completeopt = 'menu,menuone,noinsert,noselect,preview'
-
 cmp.setup({
 
     sources = {
@@ -24,7 +16,6 @@ cmp.setup({
                 end
             },
         },
-        { name = "dap" },
         { name = "cmp_r" },
         { name = 'latex_symbols' },
         { name = 'vimtex' },
@@ -95,9 +86,6 @@ cmp.setup({
     },
 })
 
-require("cmp_r").setup({})
-
--- Use
 cmp.setup.filetype({ 'markdown', 'text', 'yaml' }, {
     sources = cmp.config.sources({
         { name = "nvim_lsp" },
