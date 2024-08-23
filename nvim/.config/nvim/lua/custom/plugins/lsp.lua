@@ -29,11 +29,13 @@ return {
         },
     },
 
-    { 'Bilal2453/luvit-meta', lazy = true },
+    {
+        'Bilal2453/luvit-meta',
+    },
 
     {
         "neovim/nvim-lspconfig",
-        event = { "BufReadPre", "BufNewFile" },
+        event = "VeryLazy",
         config = function()
             require("custom.lsp")
         end,

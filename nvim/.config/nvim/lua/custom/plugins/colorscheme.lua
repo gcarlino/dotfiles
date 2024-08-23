@@ -14,12 +14,10 @@ return {
 
     { "catppuccin/nvim",
         name = "catppuccin",
-        event = "VeryLazy"
     },
 
     {
         'folke/tokyonight.nvim',
-        event = "VeryLazy"
     },
 
 }

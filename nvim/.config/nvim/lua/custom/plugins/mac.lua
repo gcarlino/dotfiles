@@ -1,4 +1,5 @@
 return {
+
     {
         'mrjones2014/dash.nvim',
         cond = function ()
@@ -11,11 +12,12 @@ return {
 
     {
         "epwalsh/obsidian.nvim",
+        event = "VeryLazy",
         cond = function ()
             return vim.fn.has("mac") == 1
         end,
         version = "*",
-        event = "VeryLazy",
+        -- event = "VeryLazy",
         keys = {
             { '<leader>oo', ':ObsidianOpen<CR>', desc = '[O]pen [O]bsidian' },
             { '<leader>on', ':ObsidianNew<CR>', desc = '[O]bsidian [N]ew' },
@@ -79,4 +81,5 @@ return {
 
         }
     },
+
 }

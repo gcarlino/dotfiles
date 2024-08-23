@@ -2,8 +2,7 @@ return {
     {
         'nvim-treesitter/nvim-treesitter',
         version = false,
-        event = "VeryLazy",
-        -- event = { "BufReadPost", "BufWritePost", "BufNewFile" },
+        event = 'VeryLazy',
         build = ":TSUpdate",
         config = function ()
             local configs = require("nvim-treesitter.configs")

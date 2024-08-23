@@ -1,13 +1,7 @@
 return {
 
     {
-        "nvim-tree/nvim-web-devicons",
-        lazy = true
-    },
-
-    {
         "folke/which-key.nvim",
-        event = "VeryLazy",
         opts = {
             preset = "helix",
             delay = 800,
@@ -27,6 +21,7 @@ return {
 
     {
         'nvim-lualine/lualine.nvim',
+        lazy = false,
         dependencies = {
             'nvim-tree/nvim-web-devicons'
         },
@@ -39,10 +34,6 @@ return {
         "akinsho/bufferline.nvim",
         event = "TabNew",
         dependencies = { "nvim-tree/nvim-web-devicons" },
-        -- keys = {
-        --     { "<Tab>",   "<Cmd>BufferLineCycleNext<CR>", desc = "Next tab" },
-        --     { "<S-Tab>", "<Cmd>BufferLineCyclePrev<CR>", desc = "Prev tab" },
-        -- },
         opts = {
             options = {
                 mode = "tabs",
@@ -56,8 +47,7 @@ return {
 
     {
         "luukvbaal/statuscol.nvim",
-        enabled = true,
-        event = "VeryLazy",
+        event = "UIEnter",
         config = function()
             vim.cmd("highlight FoldColumn guifg=" .. vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID('Comment')), 'fg'))
 
@@ -84,7 +74,6 @@ return {
 
     {
         "lukas-reineke/indent-blankline.nvim",
-        event = "VeryLazy",
         main = "ibl",
         config = function()
             require("ibl").setup({

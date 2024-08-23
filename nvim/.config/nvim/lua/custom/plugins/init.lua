@@ -1,5 +1,8 @@
 return {
-    -- { "nvim-lua/plenary.nvim", lazy = true },
+
+    { "nvim-lua/plenary.nvim", },
+
+    { "nvim-tree/nvim-web-devicons", },
 
     {
         "emmanueltouzery/decisive.nvim",
@@ -7,7 +10,7 @@ return {
         keys = {
             { "<leader>cca", ":lua require('decisive').align_csv({})<CR>", desc = "Align CSV"},
             { "<leader>ccA", ":lua require('decisive').align_csv_clear({})<CR>", desc = "Align CSV clear"},
-        }
+       }
     },
 
     {
@@ -85,7 +88,7 @@ return {
     -- Various
     {
         "akinsho/toggleterm.nvim",
-        event = 'VeryLazy',
+        event = "VeryLazy",
         opts = {
             open_mapping = [[<c-q>]],
         }
@@ -93,24 +96,24 @@ return {
 
     {
         "kylechui/nvim-surround",
-        event = "VeryLazy",
+        event = 'VeryLazy',
         opts = {},
     },
 
-    {
-        "linux-cultist/venv-selector.nvim",
-        enabled = false,
-        event = "VeryLazy",
-        branch = "regexp",
-        dependencies = {
-            "neovim/nvim-lspconfig",
-            "mfussenegger/nvim-dap-python",
-            "nvim-telescope/telescope.nvim"
-        },
-        opts = {},
-        keys = {
-            { "<leader>vs", "<cmd>VenvSelect<cr>", desc = "VenvSelect" }
-        },
-    },
+    -- {
+    --     "linux-cultist/venv-selector.nvim",
+    --     enabled = false,
+    --     event = "VeryLazy",
+    --     branch = "regexp",
+    --     dependencies = {
+    --         "neovim/nvim-lspconfig",
+    --         "mfussenegger/nvim-dap-python",
+    --         "nvim-telescope/telescope.nvim"
+    --     },
+    --     opts = {},
+    --     keys = {
+    --         { "<leader>vs", "<cmd>VenvSelect<cr>", desc = "VenvSelect" }
+    --     },
+    -- },
 
 }

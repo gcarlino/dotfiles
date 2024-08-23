@@ -1,14 +1,12 @@
--- Git
 return {
 
     {
         'tpope/vim-fugitive',
-        event = "VeryLazy"
+        cmd = "G",
     },
 
     {
         "lewis6991/gitsigns.nvim",
-        -- event = { "BufReadPre", "BufNewFile" },
         event = "VeryLazy",
         opts = {
             on_attach = function(bufnr)
