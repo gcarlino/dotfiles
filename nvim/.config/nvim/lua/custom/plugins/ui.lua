@@ -2,6 +2,7 @@ return {
 
     {
         "folke/which-key.nvim",
+        event = "UIEnter",
         opts = {
             preset = "helix",
             delay = 800,
@@ -21,7 +22,7 @@ return {
 
     {
         'nvim-lualine/lualine.nvim',
-        lazy = false,
+        event = "UIEnter",
         dependencies = {
             'nvim-tree/nvim-web-devicons'
         },
@@ -74,6 +75,7 @@ return {
 
     {
         "lukas-reineke/indent-blankline.nvim",
+        event = "UIEnter",
         main = "ibl",
         config = function()
             require("ibl").setup({
@@ -100,7 +102,7 @@ return {
 
     {
         'lukas-reineke/virt-column.nvim',
-        event = "VeryLazy",
+        event = "UIEnter",
         enabled = true,
         opts = {
             char = "│",
