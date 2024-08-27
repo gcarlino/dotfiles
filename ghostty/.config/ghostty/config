@@ -2,22 +2,20 @@
 # see
 # `ghostty +show-config --default --docs | nvim -R`
 
-font-family = "MesloLGS NF"
-font-size = 13
+# font-family = MesloLGS NF
 
 # Disable ligatures
-font-feature = -calt
-font-feature = -liga
-font-feature = -dlig
+# font-feature = -calt
+# font-feature = -liga
+# font-feature = -dlig
 
 #shell-integration-features = cursor,sudo,title
 
-# theme = catppuccin-macchiato
 # theme = catppuccin-latte
 macos-titlebar-style = tabs
 window-padding-color = extend
+mouse-hide-while-typing = true
+copy-on-select = clipboard
 
 # Right option key as alt (meta)
 macos-option-as-alt = right
-
-copy-on-select = clipboard
