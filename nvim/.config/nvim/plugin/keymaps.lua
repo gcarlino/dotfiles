@@ -53,7 +53,7 @@ vim.api.nvim_create_autocmd({ "TermOpen" }, {
     pattern = "*",
     callback = function()
         local opts = { buffer = 0 }
-        set('t', '<esc>', [[<C-\><C-n>]], opts)
+        set('t', '<Esc><Esc>', [[<C-\><C-n>]], opts)
         set('t', '<C-w>h', [[<Cmd>wincmd h<CR>]], opts)
         set('t', '<C-w>j', [[<Cmd>wincmd j<CR>]], opts)
         set('t', '<C-w>k', [[<Cmd>wincmd k<CR>]], opts)
@@ -66,6 +66,18 @@ vim.api.nvim_create_autocmd({ "TermOpen" }, {
 })
 -- Toggle line wrap
 set("n", "<leader>tw", ":set wrap!<CR>", { desc = "[T]oggle line [w]rap" })
+
+-- Toggle conceallevel
+set("n", "<leader>tl",
+  function()
+    local cl = vim.api.nvim_get_option_value('conceallevel', {})
+        if cl == 1 then
+            vim.opt.conceallevel = 0
+        else
+            vim.opt.conceallevel = 1
+        end
+  end,
+    { desc = "[T]oggle conceal[L]evel" })
 
 -- Toggle backgournd color TODO: move to colorscheme configuration
 vim.api.nvim_set_keymap("n", "<leader>tc", "", {
