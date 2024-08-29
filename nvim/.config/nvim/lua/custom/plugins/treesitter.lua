@@ -12,7 +12,7 @@ return {
                     "html", "css",
                     "markdown", "markdown_inline", "latex",
                     "lua", "luadoc",
-                    "python", "c", "r",
+                    "python", "c", "r", "rnoweb",
                     "cmake", "bash", "diff", "regex"
                 },
                 sync_install = false,
