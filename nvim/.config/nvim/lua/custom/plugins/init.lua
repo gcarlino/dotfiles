@@ -100,20 +100,4 @@ return {
         opts = {},
     },
 
-    -- {
-    --     "linux-cultist/venv-selector.nvim",
-    --     enabled = false,
-    --     event = "VeryLazy",
-    --     branch = "regexp",
-    --     dependencies = {
-    --         "neovim/nvim-lspconfig",
-    --         "mfussenegger/nvim-dap-python",
-    --         "nvim-telescope/telescope.nvim"
-    --     },
-    --     opts = {},
-    --     keys = {
-    --         { "<leader>vs", "<cmd>VenvSelect<cr>", desc = "VenvSelect" }
-    --     },
-    -- },
-
 }
