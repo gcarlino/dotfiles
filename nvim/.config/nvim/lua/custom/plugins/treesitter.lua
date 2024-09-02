@@ -1,83 +1,45 @@
 return {
     {
         'nvim-treesitter/nvim-treesitter',
-        version = false,
+        -- version = false,
         event = 'VeryLazy',
         build = ":TSUpdate",
-        config = function ()
-            local configs = require("nvim-treesitter.configs")
-            configs.setup({
-                ensure_installed = {
-                    "vim", "vimdoc", "json", "yaml", "toml",
-                    "html", "css",
-                    "markdown", "markdown_inline", "latex",
-                    "lua", "luadoc",
-                    "python", "c", "r", "rnoweb",
-                    "cmake", "bash", "diff", "regex"
-                },
-                sync_install = false,
-                auto_install = true,
-                ignore_install = { },
-                -- ignore_install = { "fortran" },
-                highlight = {
-                    enable = true,
-                    additional_vim_regex_highlighting = false,
-                    disable = { "fortran" }
-                },
-                indent = {
-                    enable = true,
-                    disable = { "r", "fortran" }
-                    -- disable = { "fortran" }
-                },
-                incremental_selection = {
-                    enable = true,
-                    keymaps = {
-                        init_selection = "gnn",
-                        node_incremental = "grn",
-                        scope_incremental = "grc",
-                        node_decremental = "grm",
-                    }
-                },
-                textobjects = {
-                    select = {
-                        enable = true,
-                        lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
-                        keymaps = {
-                            -- You can use the capture groups defined in textobjects.scm
-                            ['af'] = '@function.outer',
-                            ['if'] = '@function.inner',
-                            ['ac'] = '@class.outer',
-                            ['ic'] = '@class.inner',
-                        },
-                    },
-                    move = {
-                        enable = true,
-                        set_jumps = true, -- whether to set jumps in the jumplist
-                        goto_next_start = {
-                            [']m'] = '@function.outer',
-                            [']]'] = '@class.outer',
-                        },
-                        goto_next_end = {
-                            [']M'] = '@function.outer',
-                            [']['] = '@class.outer',
-                        },
-                        goto_previous_start = {
-                            ['[m'] = '@function.outer',
-                            ['[['] = '@class.outer',
-                        },
-                        goto_previous_end = {
-                            ['[M'] = '@function.outer',
-                            ['[]'] = '@class.outer',
-                        },
-                    },
-                },
-                modules = { },
-            })
-
-            -- Folding
-            vim.o.foldmethod = "expr"
-            vim.o.foldexpr = "nvim_treesitter#foldexpr()"
-
-        end,
+        main = "nvim-treesitter.configs",
+        opts = {
+            ensure_installed = {
+                "vim", "vimdoc", "json", "yaml", "toml",
+                "html", "css",
+                "markdown", "markdown_inline", "latex",
+                "lua", "luadoc",
+                "python", "c", "r", "rnoweb",
+                "cmake", "bash", "diff", "regex"
+            },
+            sync_install = false,
+            auto_install = true,
+            highlight = {
+                enable = true,
+                -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+                -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+                -- Using this option may slow down your editor, and you may see some duplicate highlights.
+                -- Instead of true it can also be a list of languages
+                additional_vim_regex_highlighting = false,
+                disable = { 'fortran' },
+            },
+            indent = {
+                enable = true,
+                disable = { 'r', 'fortran' }
+            },
+            incremental_selection = {
+                enable = true,
+                keymaps = {
+                    init_selection = "gnn",
+                    node_incremental = "gnn",
+                    scope_incremental = "grc",
+                    node_decremental = "grm",
+                }
+            },
+            -- Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
+            -- Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+        },
     },
 }
