@@ -36,7 +36,6 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Add wisely, as too many plugins slow down shell startup.
 if [[ -n "$plugins" ]]; then read -A plugins <<< "$plugins"; else
 plugins=(
-    git
     aliases
     isodate
     nmap
@@ -114,9 +113,21 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS+=(brackets pattern cursor)
    # eval "$(pyenv init -)"
 # fi
 
-# FZF
+# Set up fzf key bindings and fuzzy completion
+if [[ -d "/opt/local/share/fzf/shell/" ]]  {
+    # Mac
+    source /opt/local/share/fzf/shell/key-bindings.zsh
+    source /opt/local/share/fzf/shell/completion.zsh
+} elif [[ -d "/usr/share/doc/fzf/examples" ]]  {
+    # Linux
+    source /usr/share/doc/fzf/examples/completion.zsh
+    source /usr/share/doc/fzf/examples/key-bindings.zsh
+}
+# fzf shell integration for v >= 0.48.0
+# source <(fzf --zsh)
+
 export FZF_DEFAULT_OPTS='--height 50% --border --layout=reverse'
-export FZF_DEFAULT_COMMAND='fd --type f'
+# export FZF_DEFAULT_COMMAND='fd --type f'
 
 # Default editor
 export EDITOR=nvim
@@ -124,25 +135,19 @@ export EDITOR=nvim
 # Disable python bytecode files
 export PYTHONDONTWRITEBYTECODE=1
 
+# eza default parameters
+EZA_PARAMS=(--git --group --icons --time-style=long-iso --color-scale=all)
+alias eza='eza ${EZA_PARAMS}'
+
 # System dependent PATH
 OS="$(uname -s)"
 if [[ $OS == "Darwin" ]] {
-    # fzf
-    source /opt/local/share/fzf/shell/key-bindings.zsh
-    source /opt/local/share/fzf/shell/completion.zsh
-
-    # kitty ssh
-    alias s='kitty +kitten ssh'
-
-    # kity dark and light background
-    alias kittyDark='kitty +kitten themes --reload-in=all Github\ Dark'
-    alias kittyLight='kitty +kitten themes --reload-in=all Github\ Light'
 
     # Notes
     notes=/Users/beps/Simularia/Notes
     alias sn='cd $notes; nvim "$(rg --files $notes | fzf)"'
 
-    # Personal bin
+    # Personal bin folders to PATH
     export PATH=~/bin:~/.local/bin:~/Library/Python/3.12/bin:/opt/local/libexec/gnubin:/opt/local/bin:/opt/local/sbin:/opt/gfortran/bin:$PATH
 
     export MANPATH=/opt/local/share/man:$MANPATH
@@ -154,13 +159,31 @@ if [[ $OS == "Darwin" ]] {
     export CPPFLAGS='-isystem/opt/local/include'
     export LDFLAGS='-L/opt/local/lib'
 
-    # wezterm binary folder
-    export PATH="$PATH:/Applications/WezTerm.app/Contents/MacOS/"
+    # kitty specifics
+    if [[ $TERM = "xterm-kitty" ]] ; then
+        # kitty ssh
+        alias s='kitty +kitten ssh'
+
+        # kity dark and light background
+        alias kittyDark='kitty +kitten themes --reload-in=all Github\ Dark'
+        alias kittyLight='kitty +kitten themes --reload-in=all Github\ Light'
+    fi
+
+    # iterm2 specifics
+    if [[ $LC_TERMINAL = "iTerm2" ]] ; then
+        # iterm2 shell integration
+        [ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
+    fi
+
+    # wezterm specifics
+    if [[ -v WEZTERM_EXECUTABLE ]] ; then
+        # wezterm shell integration
+        [[ -f $HOME/.config/wezterm/wezterm.sh ]] && source $HOME/.config/wezterm/wezterm.sh
+        # wezterm binary folder
+        export PATH="$PATH:/Applications/WezTerm.app/Contents/MacOS/"
+    fi
 
 } elif [[ $OS == "Linux" ]] {
-    # FZF
-    source /usr/share/doc/fzf/examples/completion.zsh
-    source /usr/share/doc/fzf/examples/key-bindings.zsh
 
     # Compilation flags
     # export ARCHFLAGS="-arch x86_64"
@@ -196,12 +219,6 @@ if [[ $OS == "Darwin" ]] {
     export PATH=$HOME/.local/bin:${HOME}/node_modules/.bin/:/home/exe64:$PATH
     export PATH=/usr/local/cuda-12.1/bin${PATH:+:${PATH}}
 } fi
-
-# iterm2 shell integration
-# [ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
-
-# wezterm shell integration
-[[ -f $HOME/.config/wezterm/wezterm.sh ]] && source $HOME/.config/wezterm/wezterm.sh
 
 # To customize prompt, run `p10k configure` or edit ~/.dotfiles/powerlevel10k/.p10k.zsh.
 [[ ! -f ~/.dotfiles/powerlevel10k/.p10k.zsh ]] || source ~/.dotfiles/powerlevel10k/.p10k.zsh
