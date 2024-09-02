@@ -14,7 +14,6 @@
 # theme = catppuccin-latte
 macos-titlebar-style = tabs
 window-padding-color = extend
-mouse-hide-while-typing = true
 copy-on-select = clipboard
 
 # Right option key as alt (meta)
