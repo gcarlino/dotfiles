@@ -50,7 +50,7 @@ return {
             "nvim-tree/nvim-web-devicons"
         },
         keys = {
-            { '<leader>n', ':NvimTreeToggle<CR>', desc = "Toggle nvim-tree" }
+            { '<leader>n', ':NvimTreeToggle<CR>', desc = "Toggle nvim-tree", silent = true }
         },
         opts = {
             view = {
