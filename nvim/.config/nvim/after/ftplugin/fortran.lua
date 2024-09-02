@@ -3,7 +3,7 @@ if vim.fn.search("^C", "nw", 500) ~= 0 then
     vim.opt_local.tabstop = 6
     vim.opt_local.shiftwidth = 6
     vim.opt_local.softtabstop = 6
-    vim.bo.commentstring = "C%s"
+    vim.cmd("local c_str = 'C'")
 else
     vim.opt_local.tabstop = 2
     vim.opt_local.shiftwidth = 2
