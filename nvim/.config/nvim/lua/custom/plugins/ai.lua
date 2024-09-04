@@ -2,7 +2,9 @@ return {
 
     {
         "David-Kunz/gen.nvim",
-        cond = vim.fn.has("mac"),
+        cond = function ()
+            return vim.fn.has("mac") == 1
+        end,
         event = "VeryLazy",
         -- lazy = false,
 
