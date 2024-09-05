@@ -22,8 +22,7 @@ return {
                 -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
                 -- Using this option may slow down your editor, and you may see some duplicate highlights.
                 -- Instead of true it can also be a list of languages
-                additional_vim_regex_highlighting = false,
-                disable = { 'fortran' },
+                additional_vim_regex_highlighting = { 'fortran' },
             },
             indent = {
                 enable = true,
@@ -38,6 +37,8 @@ return {
                     node_decremental = "grm",
                 }
             },
+            textobjects = { enable = true },
+
             -- Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
             -- Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
         },
