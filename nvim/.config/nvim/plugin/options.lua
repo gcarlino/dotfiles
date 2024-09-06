@@ -62,7 +62,7 @@ vim.opt.completeopt = 'menu,menuone,noinsert,noselect,preview'
 -- Preview substitutions live
 vim.opt.inccommand= 'split'
 
-vim.opt.conceallevel = 1
+vim.opt.conceallevel = 0
 
 vim.opt.maxmempattern = 9999
 
