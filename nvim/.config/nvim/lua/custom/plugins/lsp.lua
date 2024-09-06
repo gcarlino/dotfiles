@@ -35,16 +35,16 @@ return {
 
     {
         "neovim/nvim-lspconfig",
-        event = "VeryLazy",
+        event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+        dependencies = {
+			{ "williamboman/mason.nvim", config = true },
+            { "williamboman/mason-lspconfig.nvim" },
+			{ "j-hui/fidget.nvim", opts = {} },
+            "hrsh7th/cmp-nvim-lsp",
+        },
         config = function()
             require("custom.lsp")
         end,
-        dependencies = {
-			{ "williamboman/mason.nvim", config = true },
-            "williamboman/mason-lspconfig.nvim",
-            "hrsh7th/cmp-nvim-lsp",
-			{ "j-hui/fidget.nvim", opts = {} },
-        }
     },
 
     -- Currently disabled since python linters are managed by pylsp

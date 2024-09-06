@@ -20,12 +20,6 @@ vim.diagnostic.config({
     }
 })
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = vim.tbl_deep_extend(
-    "force",
-    capabilities,
-    require("cmp_nvim_lsp").default_capabilities()
-)
 
 local servers = {
     -- python lsp server
@@ -85,19 +79,9 @@ local servers = {
     },
     marksman = {},
     r_language_server = {},
-    taplo = {},
+    -- taplo = {},
 }
 
-require("mason").setup()
-require("mason-lspconfig").setup({
-    handlers = {
-        function(server_name)
-            local server = servers[server_name] or {}
-            server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-            require("lspconfig")[server_name].setup(server)
-        end
-    }
-})
 
 -- Add border to some popup window
 -- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
@@ -120,11 +104,12 @@ require("mason-lspconfig").setup({
 -- Use LspAttach autocommand to only map the following keys after the
 -- language server attaches to the current buffer
 vim.api.nvim_create_autocmd('LspAttach', {
-    group = vim.api.nvim_create_augroup('UserLSPConfig', { clear = true }),
+    group = vim.api.nvim_create_augroup('nvim-lsp-config', { clear = true }),
     callback = function(event)
         -- mapping key and description in normal mode
-        local map = function(keys, func, desc)
-            vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
+        local map = function(keys, func, desc, mode)
+            mode = mode or 'n'
+            vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
         end
 
         -- Buffer local mappings.
@@ -154,7 +139,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         -- map('<leader>k', vim.lsp.buf.signature_help, 'signature help')
 
         -- Disabled because of default keymap `gra`
-        -- map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+        map('<leader>la', vim.lsp.buf.code_action, '[C]ode [A]ction', { 'n', 'x' })
 
         map('<leader>lf', function() vim.lsp.buf.format { async = true } end, 'buffer [F]ormat')
 
@@ -173,9 +158,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
         -- When you move your cursor, the highlights will be cleared (the second autocommand).
         local client = vim.lsp.get_client_by_id(event.data.client_id)
-            if client and client.server_capabilities.documentHighlightProvider then
-                local highlight_augroup =
-            vim.api.nvim_create_augroup("nvim-lsp-highlight", { clear = false })
+        -- if client and client.server_capabilities.documentHighlightProvider then
+        if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
+            local highlight_augroup = vim.api.nvim_create_augroup("nvim-lsp-highlight", { clear = false })
 
             vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
                 buffer = event.buf,
@@ -187,6 +172,14 @@ vim.api.nvim_create_autocmd('LspAttach', {
                 buffer = event.buf,
                 group = highlight_augroup,
                 callback = vim.lsp.buf.clear_references,
+            })
+
+            vim.api.nvim_create_autocmd('LspDetach', {
+              group = vim.api.nvim_create_augroup('nvim-lwp-detach', { clear = true }),
+              callback = function(event2)
+                vim.lsp.buf.clear_references()
+                vim.api.nvim_clear_autocmds { group = 'nvim-lsp-highlight', buffer = event2.buf }
+              end,
             })
         end
 
@@ -202,10 +195,29 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end,
 })
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = vim.tbl_deep_extend(
+    "force",
+    capabilities,
+    require("cmp_nvim_lsp").default_capabilities()
+)
+
 vim.api.nvim_create_autocmd("LspDetach", {
     group = vim.api.nvim_create_augroup("nvim-lsp-detach", { clear = true }),
     callback = function(event)
         vim.lsp.buf.clear_references()
         vim.api.nvim_clear_autocmds({ group = "nvim-lsp-highlight", buffer = event.buf })
     end,
+})
+
+require("mason").setup()
+
+require("mason-lspconfig").setup({
+    handlers = {
+        function(server_name)
+            local server = servers[server_name] or {}
+            server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+            require("lspconfig")[server_name].setup(server)
+        end
+    }
 })
