@@ -168,11 +168,11 @@ require 'lualine'.setup {
                 padding = {left = 0, right = 1 },
                 fmt = trunc(92, 0, 92, true),
             },
-            {
-                'filesize',
-                padding = {left = 0, right = 1 },
-                fmt = trunc(92, 0, 92, true),
-            }
+            -- {
+            --     'filesize',
+            --     padding = {left = 0, right = 1 },
+            --     fmt = trunc(92, 0, 92, true),
+            -- }
         },
         lualine_z = {
             {
