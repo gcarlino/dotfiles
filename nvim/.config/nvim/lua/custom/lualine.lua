@@ -9,7 +9,7 @@ local function myLocation()
     local linelength = vim.api.nvim_strwidth(vim.api.nvim_get_current_line())
     local sLinelength = string.format('%-2d', linelength)
     -- return '%l|%L│%3v|' .. linelength
-    return '‖%2v/' .. sLinelength .. ' ≣%3l/%-3L %P'
+    return '⫴%2v/' .. sLinelength .. ' ≣%3l/%-3L %P'
 end
 
 --- Return function that can format the component accordingly
@@ -118,7 +118,7 @@ require 'lualine'.setup {
                 'diagnostics',
                 icon = { '' },
                 sources = { 'nvim_diagnostic' },
-                symbols = { error = '', warn = '', info = '', hint = '' },
+                symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
                 padding = { right = 1 },
                 fmt = trunc(0, 0, 90, true),
                 on_click = function ()
