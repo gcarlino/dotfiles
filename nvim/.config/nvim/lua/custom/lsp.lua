@@ -1,6 +1,4 @@
--- local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
--- local signs = { Error = "🤬", Warn = "🖐️", Hint = "☝️", Info = "🤓" , Other = "🤔"}
-local signs = { Error = '', Warn = '', Info = '', Hint = '', Other = "" }
+local signs = { Error = ' ', Warn = ' ', Info = ' ', Hint = ' ', Other = "" }
 vim.diagnostic.config({
     virtual_text = false,
     signs = {
