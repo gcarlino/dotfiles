@@ -220,5 +220,18 @@ if [[ $OS == "Darwin" ]] {
     export PATH=/usr/local/cuda-12.1/bin${PATH:+:${PATH}}
 } fi
 
+# Display gnuplot output in 'kitten icat' compatible terminal
+function iplot {
+    cat <<EOF | gnuplot
+    set terminal pngcairo enhanced font 'MesloLGS NF,18'
+    set autoscale
+    set samples 1000
+    set output '|kitten icat --stdin yes'
+    set object 1 rectangle from screen 0,0 to screen 1,1 fillcolor rgb"#ffffff" behind
+    plot $@
+    set output '/dev/null'
+EOF
+}
+
 # To customize prompt, run `p10k configure` or edit ~/.dotfiles/powerlevel10k/.p10k.zsh.
 [[ ! -f ~/.dotfiles/powerlevel10k/.p10k.zsh ]] || source ~/.dotfiles/powerlevel10k/.p10k.zsh
