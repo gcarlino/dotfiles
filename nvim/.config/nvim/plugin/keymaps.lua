@@ -79,43 +79,6 @@ set("n", "<leader>tl",
   end,
     { desc = "[T]oggle conceal[L]evel" })
 
--- Toggle backgournd color TODO: move to colorscheme configuration
-vim.api.nvim_set_keymap("n", "<leader>tc", "", {
-    noremap = true,
-    callback = function()
-        local _background = vim.api.nvim_get_option_value("background", {})
-        if (_background == "light") then
-
-            -- If colorscheme is nightfox (catpuccin is automatic)
-            local status = pcall(require, "nightfox")
-            if status then
-                vim.cmd('colorscheme nordfox')
-            end
-
-            local ostatus = pcall(require, "onedarkpro")
-            if ostatus then
-                vim.cmd('colorscheme onedark')
-            end
-
-            vim.api.nvim_set_option_value("background", "dark", {})
-        else
-            -- If colorscheme is nightfox (catpuccin is automatic)
-            local status = pcall(require, 'nightfox')
-            if status then
-                vim.cmd('colorscheme dayfox')
-            end
-
-            local ostatus = pcall(require, 'onedarkpro')
-            if ostatus then
-                vim.cmd('colorscheme onelight')
-            end
-
-            vim.api.nvim_set_option_value("background", "light", {})
-        end
-    end,
-    desc = "[T]oggle background [c]olor."
-})
-
 -- Insert creation date/time of current buffer at cursor position
 set("n", "<LocalLeader>d", function()
     local buf = vim.api.nvim_buf_get_name(0)
