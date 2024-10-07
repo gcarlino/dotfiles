@@ -3,9 +3,9 @@ return {
     {
         "R-nvim/R.nvim",
         lazy = false,
-        config = function ()
+        config = function()
             local opts = {
-                R_args = {"--quiet", "--no-save"},
+                R_args = { "--quiet", "--no-save" },
                 hook = {
                     on_filetype = function()
                         if vim.o.syntax ~= "rbrowser" then

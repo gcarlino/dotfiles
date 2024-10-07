@@ -2,7 +2,7 @@ return {
 
     {
         'mrjones2014/dash.nvim',
-        cond = function ()
+        cond = function()
             return vim.fn.has("mac") == 1
         end,
         build = 'make install',
@@ -13,22 +13,21 @@ return {
     {
         "epwalsh/obsidian.nvim",
         event = "VeryLazy",
-        cond = function ()
+        cond = function()
             return vim.fn.has("mac") == 1
         end,
         version = "*",
-        -- event = "VeryLazy",
         keys = {
             { '<leader>oo', ':ObsidianOpen<CR>', desc = '[O]pen [O]bsidian' },
             { '<leader>on', ':ObsidianNew<CR>', desc = '[O]bsidian [N]ew' },
             { '<leader>ob', ':ObsidianBacklinks<CR>', desc = '[O]bsidian [B]acklinks' },
-            { '<leader>os', ':ObsidianSearch<CR>', desc = '[O]bsidian [S]earch'},
-            { '<leader>ot', ':ObsidianTemplate<CR>', desc = '[O]bsidian [T]emplate'},
-            { '<leader>ow', ':ObsidianWorkspace<CR>', desc = '[O]bsidian [W]orkspace'},
-            { '<leader>op', ':ObsidianPasteImg<CR>', desc = '[O]bsidian [P]aste image'},
-            { '<leader>oc', ':ObsidianToggleCheckbox<CR>', desc = '[O]bsidian toggle [C]heckbox'},
-            { '<leader>oi', ':ObsidianPasteImg<CR>', desc = '[O]bsidian paste [I]mage'},
-            { '<leader>of', ':ObsidianTags<CR>', desc = '[O]bsidian [F]ind tags'},
+            { '<leader>os', ':ObsidianSearch<CR>', desc = '[O]bsidian [S]earch' },
+            { '<leader>ot', ':ObsidianTemplate<CR>', desc = '[O]bsidian [T]emplate' },
+            { '<leader>ow', ':ObsidianWorkspace<CR>', desc = '[O]bsidian [W]orkspace' },
+            { '<leader>op', ':ObsidianPasteImg<CR>', desc = '[O]bsidian [P]aste image' },
+            { '<leader>oc', ':ObsidianToggleCheckbox<CR>', desc = '[O]bsidian toggle [C]heckbox' },
+            { '<leader>oi', ':ObsidianPasteImg<CR>', desc = '[O]bsidian paste [I]mage' },
+            { '<leader>of', ':ObsidianTags<CR>', desc = '[O]bsidian [F]ind tags' },
         },
         dependencies = {
             "nvim-lua/plenary.nvim",
@@ -38,15 +37,15 @@ return {
             workspaces = {
                 {
                     name = "Simularia",
-                    path= "~/Simularia/Notes/",
+                    path = "~/Simularia/Notes/",
                 },
                 {
                     name = "Contatti",
-                    path= "~/Simularia/Contatti/",
+                    path = "~/Simularia/Contatti/",
                 },
                 {
                     name = "no-vault",
-                    path = function ()
+                    path = function()
                         return assert(vim.fn.getcwd())
                     end,
                     overrides = {
@@ -75,7 +74,7 @@ return {
             open_app_foreground = true,
             follow_url_func = function(url)
                 -- Open the URL in the default web browser.
-                vim.fn.jobstart({"open", url})  -- Mac OS
+                vim.fn.jobstart({ "open", url }) -- Mac OS
                 -- vim.fn.jobstart({"xdg-open", url})  -- linux
             end,
 
