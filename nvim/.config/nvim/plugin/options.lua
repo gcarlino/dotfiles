@@ -69,6 +69,7 @@ vim.opt.maxmempattern = 9999
 -- vim.opt.shortmess:append({ S = true }) -- disable search count
 
 -- Spell check is enabled by file type
+vim.opt.spell = false
 vim.opt.spelllang = { 'en_gb', 'it' }
 
 -- Disable netrw (as required by nvim-tree)
