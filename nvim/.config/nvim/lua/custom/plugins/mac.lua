@@ -32,6 +32,8 @@ return {
         dependencies = {
             "nvim-lua/plenary.nvim",
             "hrsh7th/nvim-cmp",
+            "nvim-telescope/telescope.nvim",
+            "nvim-treesitter/nvim-treesitter",
         },
         opts = {
             workspaces = {
@@ -51,9 +53,6 @@ return {
                     overrides = {
                         notes_subdir = vim.NIL,
                         new_notes_location = "current_dir",
-                        templates = {
-                            subdir = vim.NIL,
-                        },
                         disable_frontmatter = true,
                     }
                 }
@@ -65,7 +64,6 @@ return {
             },
             completion = {
                 nvim_cmp = true,
-                -- prepend_note_id = false,
             },
             ui = {
                 enable = true
