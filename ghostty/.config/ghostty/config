@@ -9,7 +9,7 @@
 # font-feature = -liga
 # font-feature = -dlig
 
-#shell-integration-features = cursor,sudo,title
+shell-integration-features = sudo
 
 # theme = catppuccin-latte
 theme = OneHalfDark
