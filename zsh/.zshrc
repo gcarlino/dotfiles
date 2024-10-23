@@ -66,11 +66,13 @@ alias rm='rm -i'
 alias mv='mv -i'
 alias view='nvim -R'
 alias less='less -FRX'
-if type "lsd" > /dev/null ; then
-    alias ls="lsd"
+if type "eza" > /dev/null ; then
+    # alias ls="lsd"
+    alias ls="eza"
 fi
 
-alias ll='ls -Flh'
+# alias ll='ls -Flh'
+alias ll='ls -lh'
 alias lt='ls --tree'
 
 # alias l='clear&&pwd&&ls -FGlh'
