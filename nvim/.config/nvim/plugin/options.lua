@@ -1,8 +1,11 @@
 -- Write the contents of the file, if it has been modified
 -- vim.opt.autowrite = true
 
--- Sync clipboard between OS and neovim
-vim.opt.clipboard = 'unnamedplus'
+-- Sync clipboard between OS and neovim. Schedule the setting after `UIEnter`.
+vim.schedule(function ()
+    vim.opt.clipboard = 'unnamedplus'
+end)
+-- vim.opt.clipboard = 'unnamedplus'
 
 -- This is to preserve creation date of files (see help)
 vim.opt.backupcopy = "yes"
