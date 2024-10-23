@@ -12,7 +12,6 @@
 shell-integration-features = sudo
 
 # theme = catppuccin-latte
-theme = OneHalfDark
 macos-titlebar-style = tabs
 window-padding-color = extend
 copy-on-select = clipboard
