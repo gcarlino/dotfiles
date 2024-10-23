@@ -133,10 +133,11 @@ vim.api.nvim_create_autocmd({ "VimEnter", "BufEnter", "InsertLeave" }, {
 -- })
 
 -- Folding in treesitter
+vim.o.fillchars = [[eob: ,fold: ,foldopen:∨,foldsep: ,foldclose:⟩]]
 -- vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 -- vim.o.fillchars = [[eob: ,fold: ,foldopen:⊟,foldsep: ,foldclose:⊞]]
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.wo.foldmethod = 'expr'
+vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 vim.opt.foldcolumn = "1"
 vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
