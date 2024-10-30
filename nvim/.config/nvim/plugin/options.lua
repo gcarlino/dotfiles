@@ -45,6 +45,7 @@ vim.opt.signcolumn = 'yes'
 
 -- vim.opt.smartindent = true
 vim.opt.breakindent = true
+vim.opt.linebreak = true
 
 vim.opt.splitbelow = true
 vim.opt.splitright = true
