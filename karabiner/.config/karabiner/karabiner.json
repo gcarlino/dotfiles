@@ -8,7 +8,7 @@
             "complex_modifications": {
                 "rules": [
                     {
-                        "description": "Caps Lock → my Hyper Key (⌃shit⌥⌘) (Escape if alone)",
+                        "description": "Caps Lock → my Hyper Key (⌃shit⌥) (Escape if alone)",
                         "manipulators": [
                             {
                                 "from": {
@@ -115,7 +115,8 @@
                 }
             ],
             "name": "Default profile",
-            "selected": true
+            "selected": true,
+            "virtual_hid_keyboard": { "keyboard_type_v2": "ansi" }
         }
     ]
 }
