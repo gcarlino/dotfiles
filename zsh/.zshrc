@@ -37,7 +37,6 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 if [[ -n "$plugins" ]]; then read -A plugins <<< "$plugins"; else
 plugins=(
     aliases
-    isodate
     nmap
     rsync
     sudo
