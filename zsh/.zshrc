@@ -150,7 +150,8 @@ if [[ $OS == "Darwin" ]] {
     alias sn='cd $notes; nvim "$(rg --files $notes | fzf)"'
 
     # Personal bin folders to PATH
-    export PATH=~/bin:~/.local/bin:~/Library/Python/3.12/bin:/opt/local/libexec/gnubin:/opt/local/bin:/opt/local/sbin:/opt/gfortran/bin:$PATH
+    # export PATH=~/bin:~/.local/bin:~/Library/Python/3.12/bin:/opt/local/libexec/gnubin:/opt/local/bin:/opt/local/sbin:/opt/gfortran/bin:$PATH
+    export PATH=~/.local/bin:$PATH
 
     export MANPATH=/opt/local/share/man:$MANPATH
 
