@@ -185,6 +185,20 @@ if [[ $OS == "Darwin" ]] {
         export PATH="$PATH:/Applications/WezTerm.app/Contents/MacOS/"
     fi
 
+    # Select Python version (macports)
+    #
+    # select_py 3.12
+    #
+    function select_py() {
+        local major=$(echo $1 | cut -d . -f 1)
+        local minor=$(echo $1 | cut -d . -f 2)
+        printf "Setting python to version %s.%s\n" $major $minor
+        sudo port select --set python python$major$minor
+        sudo port select --set python$major python$major$minor
+        sudo port select --set  pip pip$major$minor
+        sudo port select --set  pip$major pip$major$minor
+    }
+
 } elif [[ $OS == "Linux" ]] {
 
     # Compilation flags
