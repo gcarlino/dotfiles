@@ -5,7 +5,7 @@ return {
         priority = 1000,
         lazy = false,
         cond = true,
-        config = function()
+        opts = function()
             require('onedark').setup({
                 style = 'dark',
                 toggle_style_key = "<leader>tc",
