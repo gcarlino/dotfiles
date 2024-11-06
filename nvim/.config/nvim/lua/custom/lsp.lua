@@ -118,6 +118,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
         -- grn for rename
         -- gra for code actions
         -- grr for references
+        -- gri for implementation
+        -- gO in Normal mode maps to vim.lsp.buf.document_symbol()
         -- <C-S> (in Insert mode) for signature help
 
         -- Disabled because of default keymap 'grr'
