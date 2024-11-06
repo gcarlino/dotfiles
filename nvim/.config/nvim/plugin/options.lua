@@ -105,7 +105,7 @@ vim.opt.listchars = {
 vim.opt.fillchars = {
     eob = ' ',
     fold = ' ',
-    foldopen = '',
+    foldopen = '∨',
     foldsep = ' ',
     foldclose = '❯',
     diff = '╱'
@@ -134,9 +134,6 @@ vim.api.nvim_create_autocmd({ "VimEnter", "BufEnter", "InsertLeave" }, {
 -- })
 
 -- Folding in treesitter
-vim.o.fillchars = [[eob: ,fold: ,foldopen:∨,foldsep: ,foldclose:⟩]]
--- vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
--- vim.o.fillchars = [[eob: ,fold: ,foldopen:⊟,foldsep: ,foldclose:⊞]]
 vim.wo.foldmethod = 'expr'
 vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 vim.opt.foldcolumn = "1"
