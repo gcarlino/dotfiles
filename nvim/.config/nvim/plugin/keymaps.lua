@@ -58,15 +58,15 @@ set("n", "<leader>tw", ":set wrap!<CR>", { desc = "[T]oggle line [w]rap" })
 
 -- Toggle conceallevel
 set("n", "<leader>tl",
-  function()
-    local cl = vim.api.nvim_get_option_value('conceallevel', {})
-        if cl == 1 then
-            vim.opt.conceallevel = 0
-        else
-            vim.opt.conceallevel = 1
-        end
-  end,
-    { desc = "[T]oggle conceal[L]evel" })
+    function()
+        local cl = vim.api.nvim_get_option_value('conceallevel', {})
+        cl = cl + 1
+        if cl > 2 then cl = 0 end
+        vim.opt.conceallevel = cl
+        print("conceallevel = ", cl)
+    end,
+    { desc = "[T]oggle conceal[L]evel" }
+)
 
 -- Insert creation date/time of current buffer at cursor position
 set("n", "<LocalLeader>d", function()
