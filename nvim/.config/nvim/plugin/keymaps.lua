@@ -47,23 +47,11 @@ set('n', '<ESC>', '<cmd>nohlsearch<CR>')
 -- set('n', '<leader>cd', '<cmd>cd %:p:h<CR>:pwd<CR>',
 --     { noremap = true, silent = true, desc = "Change current directory to working file path." })
 
--- Mappings to make moving in and out of a terminal easier once toggled,
--- whilst still keeping it open
-vim.api.nvim_create_autocmd({ "TermOpen" }, {
-    pattern = "*",
-    callback = function()
-        local opts = { buffer = 0 }
-        set('t', '<Esc>', [[<C-\><C-n>]], opts)
-        set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
-        set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
-        set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
-        set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
-        set('t', '<C-w>', [[<C-\><C-n><C-w>]], opts)
-
-        vim.opt.spell = false
-    end
-})
--- vim.cmd('autocmd! TermOpen term://* lua set_my_terminal_keymaps()')
+-- Mappings to make moving in and out of a terminal easier
+set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], { desc = "Move left from the terminal" })
+set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], { desc = "Move down from the terminal" })
+set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], { desc = "Move up from the terminal" })
+set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], { desc = "Move right from the terminal" })
 
 -- Toggle line wrap
 set("n", "<leader>tw", ":set wrap!<CR>", { desc = "[T]oggle line [w]rap" })
