@@ -17,6 +17,7 @@ window-padding-color = extend
 copy-on-select = clipboard
 
 # Right option key as alt (meta)
+macos-option-as-alt = right
 
 # Quick terminal global keybind
 keybind = global:ctrl+grave_accent=toggle_quick_terminal
