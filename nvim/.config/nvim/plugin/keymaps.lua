@@ -54,7 +54,7 @@ set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], { desc = "Move up from the terminal" })
 set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], { desc = "Move right from the terminal" })
 
 -- Toggle line wrap
-set("n", "<leader>tw", ":set wrap!<CR>", { desc = "[T]oggle line [w]rap" })
+set("n", "<leader>tw", ":set wrap!<CR>", { desc = "Toggle line [w]rap" })
 
 -- Toggle conceallevel
 set("n", "<leader>tl",
@@ -65,7 +65,7 @@ set("n", "<leader>tl",
         vim.opt.conceallevel = cl
         print("conceallevel = ", cl)
     end,
-    { desc = "[T]oggle conceal[L]evel" }
+    { desc = "Toggle conceal[L]evel" }
 )
 
 -- Insert creation date/time of current buffer at cursor position
