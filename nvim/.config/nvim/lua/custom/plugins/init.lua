@@ -13,6 +13,18 @@ return {
        }
     },
 
+    { "nvzone/volt", lazy = true },
+
+    {
+        "nvzone/minty",
+        cmd = { "Shades", "Huefy" },
+        keys = {
+            { "<leader>tc", function () require("minty.shades").open() end, desc = "Toggle [c]olor plaette" },
+        },
+        config = function ()
+        end
+    },
+
     {
         "folke/trouble.nvim",
         event = "VeryLazy",
