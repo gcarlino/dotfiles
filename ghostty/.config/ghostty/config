@@ -23,3 +23,9 @@ macos-option-as-alt = right
 
 # Quick terminal global keybind
 keybind = global:ctrl+grave_accent=toggle_quick_terminal
+
+# Navigate through text with opt/cmd + arrows
+keybind = cmd+right=text:\x05
+keybind = cmd+left=text:\x01
+keybind = alt+left=esc:b
+keybind = alt+right=esc:f
