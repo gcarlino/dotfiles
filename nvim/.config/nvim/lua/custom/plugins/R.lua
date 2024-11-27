@@ -3,6 +3,23 @@ return {
     {
         "R-nvim/R.nvim",
         lazy = false,
+        keys = {
+            {
+                "<LocalLeader>gd",
+                "<cmd>lua require('r.send').cmd('tryCatch(httpgd::hgd_browse(),error=function(e) {httpgd::hgd();httpgd::hgd_browse()})')<CR>",
+                desc = "httpgd",
+            },
+            {
+                "<LocalLeader>cl",
+                "<Cmd>lua require('r.send').cmd('devtools::load_all()')<CR>",
+                { desc = "R devtools [c]ode [l]oad all", silent = true }
+            },
+            {
+                "<LocalLeader>cd",
+                "<Cmd>lua require('r.send').cmd('devtools::document()')<CR>",
+                { desc = "R devtools [c]ode [d]ocument", silent = true }
+            },
+        },
         config = function()
             local opts = {
                 R_args = { "--quiet", "--no-save" },
@@ -11,16 +28,6 @@ return {
                         if vim.o.syntax ~= "rbrowser" then
                             vim.api.nvim_buf_set_keymap(0, "n", "<Enter>", "<Plug>RDSendLine", {})
                             vim.api.nvim_buf_set_keymap(0, "v", "<Enter>", "<Plug>RSendSelection", {})
-                            vim.api.nvim_buf_set_keymap(0, "n",
-                                "<LocalLeader>cl",
-                                "<Cmd>lua require('r.send').cmd('devtools::load_all()')<CR>",
-                                { desc = "R devtools [c]ode [l]oad all", silent = true }
-                            )
-                            vim.api.nvim_buf_set_keymap(0, "n",
-                                "<LocalLeader>cd",
-                                "<Cmd>lua require('r.send').cmd('devtools::document()')<CR>",
-                                { desc = "R devtools [c]ode [d]ocument", silent = true }
-                            )
                         end
                     end,
                 },
