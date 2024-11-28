@@ -72,23 +72,13 @@ require 'lualine'.setup {
     },
     options = {
         theme = 'auto',
-        -- section_separators = { left = '', right = '' },
-        -- component_separators = { left = '', right = '' }
-        -- section_separators = { left = '', right = '' },
-        -- component_separators = { left = '', right = '' },
-        -- section_separators = { left = '', right = '' },
-        -- component_separators = { left = '', right = '' },
         section_separators = "",
         component_separators = "",
-
         disabled_filetypes = {
-            -- statusbar = { 'fugitive' },
-            -- winbar = { 'toggleterm', 'NvimTree', 'fugitive', 'qf',
-            --     'dapui_watches', 'dapui_stacks', 'dapui_breakpoints', 'dapui_scopes',
-            --     'dapui_repl', 'dapui_console', 'dap-repl',
-            --     'DiffviewFiles', 'DiffviewFileHistory',
-            -- }
+            statusbar = {},
+            winbar = {},
         },
+        globalstatus = true,
     },
     sections = {
         lualine_a = {
