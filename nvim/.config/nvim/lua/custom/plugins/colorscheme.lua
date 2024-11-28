@@ -5,6 +5,12 @@ return {
         priority = 1000,
         cond = true,
         config = function()
+            -- Custom color for split line
+            require('tokyonight').setup {
+                on_colors = function(c)
+                    c.border = c.blue0
+                end,
+            }
             vim.cmd.colorscheme('tokyonight-storm')
         end
     },
