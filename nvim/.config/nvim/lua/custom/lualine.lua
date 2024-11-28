@@ -177,10 +177,18 @@ require 'lualine'.setup {
         lualine_z = { myLocation },
     },
     inactive_sections = {
-        lualine_a = {},
+        lualine_a = {
+            {
+                'mode',
+                icons_enabled = true,
+                icon = '',
+                -- fmt = function(str) return str:sub(1,1) end,
+                fmt = function() return " " end,
+            },
+        },
         lualine_b = {},
         lualine_c = { { 'filename', path = 3, shorting_target = 10 } },
-        lualine_x = { 'location' },
+        lualine_x = { myLocation },
         lualine_y = {},
         lualine_z = {}
     },
