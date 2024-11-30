@@ -35,10 +35,6 @@ set({ 'n', 't'}, '<C-S-h>', '5<C-w><', { noremap = false })
 set({ 'n', 't'}, '<C-S-l>', '5<C-w>>', { noremap = false })
 set({ 'n', 't'}, '<C-S-j>', '1<C-w>-', { noremap = false })
 set({ 'n', 't'}, '<C-S-k>', '1<C-w>+', { noremap = false })
--- set({ 'n', 't'}, '<M-h>', '5<C-w><', { noremap = false })
--- set({ 'n', 't'}, '<M-l>', '5<C-w>>', { noremap = false })
--- set({ 'n', 't'}, '<M-j>', '5<C-w>-', { noremap = false })
--- set({ 'n', 't'}, '<M-k>', '5<C-w>+', { noremap = false })
 
 -- Clear highlight
 set('n', '<ESC>', '<cmd>nohlsearch<CR>')
@@ -66,6 +62,15 @@ set("n", "<leader>tl",
         print("conceallevel = ", cl)
     end,
     { desc = "Toggle conceal[L]evel" }
+)
+
+-- Execute the current file
+set("n", "<localleader>x",
+    function ()
+        vim.cmd("source %")
+        print(":source %")
+    end,
+    { desc = "Execute the current file" }
 )
 
 -- Insert creation date/time of current buffer at cursor position
