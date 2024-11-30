@@ -8,8 +8,8 @@ return {
         "emmanueltouzery/decisive.nvim",
         event = "VeryLazy",
         keys = {
-            { "<leader>cca", ":lua require('decisive').align_csv({})<CR>", desc = "Align CSV"},
-            { "<leader>ccA", ":lua require('decisive').align_csv_clear({})<CR>", desc = "Align CSV clear"},
+            { "<leader>ca", ":lua require('decisive').align_csv({})<CR>", desc = "Align CSV"},
+            { "<leader>cA", ":lua require('decisive').align_csv_clear({})<CR>", desc = "Align CSV clear"},
        }
     },
 
