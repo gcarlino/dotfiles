@@ -108,7 +108,8 @@ require 'lualine'.setup {
                 'diagnostics',
                 icon = { '' },
                 sources = { 'nvim_diagnostic' },
-                symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
+                -- symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
+                symbols = { error = 'E', warn = 'W', info = 'I', hint = 'H' },
                 padding = { right = 1 },
                 fmt = trunc(0, 0, 90, true),
                 on_click = function ()
