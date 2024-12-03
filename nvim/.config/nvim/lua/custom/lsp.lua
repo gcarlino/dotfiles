@@ -157,10 +157,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
         map('<leader>wl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
             '[W]orkspace [L]ist folders')
 
-        -- When you move your cursor, the highlights will be cleared (the second autocommand).
+        -- Get the client by id
         local client = vim.lsp.get_client_by_id(event.data.client_id)
-        -- if client and client.server_capabilities.documentHighlightProvider then
-        if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
+
+        -- Highilight references under cursor
+        if client and client:supports_method('textDocument/documentHighlight') then
             local highlight_augroup = vim.api.nvim_create_augroup("nvim-lsp-highlight", { clear = false })
 
             vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
@@ -169,6 +170,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
                 callback = vim.lsp.buf.document_highlight,
             })
 
+            -- When you move your cursor, the highlights will be cleared
             vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
                 buffer = event.buf,
                 group = highlight_augroup,
@@ -183,10 +185,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
                 end,
             })
 
-            if client:supports_method('textDocument/foldingRange') then
-                vim.wo.foldmethod = 'expr'
-                vim.wo.foldexpr = 'v:lua.vim.lsp.foldexpr()'
-            end
+        end
+
+        if client and client:supports_method('textDocument/foldingRange') then
+            vim.wo.foldmethod = 'expr'
+            vim.wo.foldexpr = 'v:lua.vim.lsp.foldexpr()'
         end
 
         -- The following autocommand is used to enable inlay hints in your
