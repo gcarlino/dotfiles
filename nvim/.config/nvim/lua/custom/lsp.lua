@@ -106,14 +106,14 @@ vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('nvim-lsp-config', { clear = true }),
     callback = function(event)
         -- mapping key and description in normal mode
-        local map = function(keys, func, desc, mode)
+        local set = function(keys, func, desc, mode)
             mode = mode or 'n'
             vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
         end
 
         -- Buffer local mappings.
         -- See `:help vim.lsp.*` for documentation on any of the below functions
-        map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+        set('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
 
         -- Default mappings
         -- grn for rename
@@ -126,35 +126,35 @@ vim.api.nvim_create_autocmd('LspAttach', {
         -- Disabled because of default keymap 'grr'
         -- map('gr', require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
 
-        map('gi', require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementations.")
+        set('gi', require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementations.")
 
-        map('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition.')
+        set('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition.')
 
-        map('K', vim.lsp.buf.hover, 'Hover information.')
+        set('K', vim.lsp.buf.hover, 'Hover information.')
 
         -- Disabled because of default keymap `grn`
         -- map('<leader>rn', vim.lsp.buf.rename, 'Buffer [r]e[n]ame')
 
-        map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+        set('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
         -- map('<leader>k', vim.lsp.buf.signature_help, 'signature help')
 
         -- Disabled because of default keymap `gra`
-        map('<leader>la', vim.lsp.buf.code_action, '[C]ode [A]ction', { 'n', 'x' })
+        set('<leader>la', vim.lsp.buf.code_action, '[C]ode [A]ction', { 'n', 'x' })
 
-        map('<leader>lf', function() vim.lsp.buf.format { async = true } end, 'buffer [F]ormat')
+        set('<leader>lf', function() vim.lsp.buf.format { async = true } end, 'buffer [F]ormat')
 
-        map('<leader>ld', require('telescope.builtin').diagnostics, 'document [D]iagnostics')
+        set('<leader>ld', require('telescope.builtin').diagnostics, 'document [D]iagnostics')
 
-        map('<leader>ls', require('telescope.builtin').lsp_document_symbols, "[L]ist document [S]ymbols")
+        set('<leader>ls', require('telescope.builtin').lsp_document_symbols, "[L]ist document [S]ymbols")
 
-        map("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
+        set("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
 
-        map('<leader>wa', vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd folder")
+        set('<leader>wa', vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd folder")
 
-        map('<leader>wr', vim.lsp.buf.remove_workspace_folder, "[W]orkspace [R]emove folder")
+        set('<leader>wr', vim.lsp.buf.remove_workspace_folder, "[W]orkspace [R]emove folder")
 
-        map('<leader>wl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
+        set('<leader>wl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
             '[W]orkspace [L]ist folders')
 
         -- Get the client by id
@@ -195,7 +195,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         -- code, if the language server you are using supports them
         -- This may be unwanted, since they displace some of your code
         if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
-            map("<leader>th", function()
+            set("<leader>th", function()
                 vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
             end, "Toggle Inlay [H]ints")
         end
