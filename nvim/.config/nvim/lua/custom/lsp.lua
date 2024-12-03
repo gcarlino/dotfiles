@@ -182,6 +182,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
                     vim.api.nvim_clear_autocmds { group = 'nvim-lsp-highlight', buffer = event2.buf }
                 end,
             })
+
+            if client:supports_method('textDocument/foldingRange') then
+                vim.wo.foldmethod = 'expr'
+                vim.wo.foldexpr = 'v:lua.vim.lsp.foldexpr()'
+            end
         end
 
         -- The following autocommand is used to enable inlay hints in your
