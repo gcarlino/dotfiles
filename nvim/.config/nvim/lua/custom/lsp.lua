@@ -77,10 +77,10 @@ local servers = {
         filetypes = { 'fortran', 'fortran77' },
     },
     marksman = {},
-    r_language_server = {},
     -- taplo = {},
 }
 
+require'lspconfig'.r_language_server.setup{}
 
 -- Add border to some popup window
 -- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
