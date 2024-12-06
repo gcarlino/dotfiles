@@ -65,9 +65,9 @@ alias rm='rm -i'
 alias mv='mv -i'
 alias view='nvim -R'
 alias less='less -FRX'
-if type "eza" > /dev/null ; then
-    # alias ls="lsd"
-    alias ls="eza"
+if type "lsd" > /dev/null ; then
+    alias ls="lsd"
+    # alias ls="eza"
 fi
 
 # alias ll='ls -Flh'
