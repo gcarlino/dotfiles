@@ -1,13 +1,4 @@
 -- terminal
-vim.api.nvim_create_autocmd("TermOpen", {
-    group = vim.api.nvim_create_augroup("custom-term-open", {}),
-    callback = function ()
-        vim.opt_local.number = false
-        vim.opt_local.relativenumber = false
-        vim.bo.filetype = "terminal"
-    end
-})
-
 vim.keymap.set("t", "<esc><esc>", "<c-\\><c-n>")
 
 -- Open a new terminal at the bottom of the screen
