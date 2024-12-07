@@ -1,5 +1,4 @@
 -- Global mappings
-
 local set = vim.keymap.set
 
 set('n', '<leader>q', vim.diagnostic.setqflist, { desc = "Open diagnostics [Q]uickfix list" })
@@ -65,13 +64,11 @@ set("n", "<leader>tl",
 )
 
 -- Execute the current file
-set("n", "<localleader>x",
-    function ()
-        vim.cmd("source %")
-        print(":source %")
-    end,
+set("n", "<localleader>x", ":source %<CR>",
     { desc = "Execute the current file" }
 )
+-- Execute the current line
+set("n", "<localleader><localleader>x", ":.lua<cr>", { desc = "Execute the current line" })
 
 -- Insert creation date/time of current buffer at cursor position
 set("n", "<LocalLeader>d", function()
@@ -82,3 +79,6 @@ set("n", "<LocalLeader>d", function()
     vim.api.nvim_buf_set_text(0, row - 1, col, row - 1, col, {formattedDateTime})
 end, { desc = "Insert creation datetime of current buffer" } )
 
+-- -- Format markdown table with pandoc
+-- set("v", "<leader>t", "!panoc -t markdown-simple_tables<CR>",
+--     { desc = "Align selected md table using pandoc" })
