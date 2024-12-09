@@ -103,7 +103,11 @@ vim.keymap.set("n", "<leader>f/", function()
     })
 end, { desc = "[/] find in open files" })
 
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = "[f]ind [h]elp" })
+vim.keymap.set('n', '<leader>fh', function ()
+    builtin.help_tags{
+        layout_strategy = 'vertical',
+    }
+end , { desc = "[f]ind [h]elp" })
 
 vim.keymap.set('n', '<leader>ft', builtin.builtin, { desc = "[f]ind builtin [t]elescope" })
 
