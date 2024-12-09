@@ -6,14 +6,13 @@ cmp.setup({
 
     sources = {
         { name = "nvim_lsp" },
+        { name = "lazydev", group_index = 0, },
         { name = 'luasnip' },
         { name = 'nvim_lsp_signature_help' },
         { name = "buffer" },
         { name = "path",
             option = {
-                get_cwd = function ()
-                    return vim.uv.cwd()
-                end
+                get_cwd = vim.uv.cwd
             },
         },
         { name = "cmp_r" },
@@ -72,12 +71,13 @@ cmp.setup({
             mode = "symbol_text",
             maxwidth = 50,
             menu = ({
-                buffer = '[Buffer]',
+                buffer = '[BUF]',
                 nvim_lsp = '[LSP]',
-                luasnip = '[Snippet]',
-                latex_symbols = '[Latex]',
+                lazydev = "[LDEV]",
+                luasnip = '[SNP]',
+                latex_symbols = '[LTEX]',
                 path = '[Path]',
-                cmdline = '[Command]',
+                cmdline = '[CMD]',
                 cmp_r = '[RStats]',
                 vimtex = '[vimtex]',
             }),
