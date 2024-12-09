@@ -1,9 +1,3 @@
--- local function getCWD()
---     local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ":~")
---     return vim.fn.pathshorten(cwd)
--- end
-
-
 -- Get position as <current line>|<total lines>|<cursor column>|<total columns>
 local function myLocation()
     local linelength = vim.api.nvim_strwidth(vim.api.nvim_get_current_line())
@@ -28,19 +22,6 @@ local function trunc(trunc_width, trunc_len, hide_width, no_ellipsis)
         return str
     end
 end
-
-
--- -- External diff source
--- local function diff_source()
---     local gitsigns = vim.b.gitsigns_status_dict
---     if gitsigns then
---         return {
---             added = gitsigns.added,
---             modified = gitsigns.changed,
---             removed = gitsigns.removed
---         }
---     end
--- end
 
 
 local function getLSP()
@@ -96,10 +77,6 @@ require 'lualine'.setup {
             },
             {
                 'diff',
-                -- source = diff_source,
-                -- symbols = { added = ' ', modified = '󱗽 ', removed = ' ' },
-                -- symbols = { added = ' ', modified = ' ', removed = ' ' },
-                -- padding = { left = 1, right = 1 },
                 colored = true,
                 padding = { left = 0, right = 1 },
                 fmt = trunc(0, 0, 90, true),
@@ -108,8 +85,7 @@ require 'lualine'.setup {
                 'diagnostics',
                 icon = { '' },
                 sources = { 'nvim_diagnostic' },
-                -- symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
-                symbols = { error = 'E', warn = 'W', info = 'I', hint = 'H' },
+                symbols = { error = "E", warn = "W", info = "I", hint = "H" },
                 padding = { right = 1 },
                 fmt = trunc(0, 0, 90, true),
                 on_click = function ()
@@ -140,7 +116,6 @@ require 'lualine'.setup {
             {
                 'filetype',
                 icon_only = true,
-                -- colored = false,
                 padding = { left = 0, right = 0 },
             },
             {
@@ -159,11 +134,6 @@ require 'lualine'.setup {
                 padding = {left = 0, right = 1 },
                 fmt = trunc(92, 0, 92, true),
             },
-            -- {
-            --     'filesize',
-            --     padding = {left = 0, right = 1 },
-            --     fmt = trunc(92, 0, 92, true),
-            -- }
         },
         lualine_z = { myLocation },
     },
@@ -173,7 +143,6 @@ require 'lualine'.setup {
                 'mode',
                 icons_enabled = true,
                 icon = '',
-                -- fmt = function(str) return str:sub(1,1) end,
                 fmt = function() return " " end,
             },
         },
