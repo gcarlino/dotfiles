@@ -117,6 +117,7 @@ return {
             char = "│",
             highlight = "iblindent",
             virtcolumn = "80, 120",
+            exclude = { filetypes = { "markdown" } }
         }
     },
 
