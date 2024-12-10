@@ -66,8 +66,6 @@ vim.opt.completeopt = 'menu,menuone,noinsert,noselect,preview'
 -- Preview substitutions live
 vim.opt.inccommand= 'split'
 
-vim.opt.conceallevel = 0
-
 vim.opt.maxmempattern = 9999
 
 -- vim.opt.shortmess:append({ S = true }) -- disable search count
