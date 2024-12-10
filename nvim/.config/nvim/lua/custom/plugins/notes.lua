@@ -1,4 +1,27 @@
 return {
+    {
+        "3rd/image.nvim",
+        event = "VeryLazy",
+        build = false,
+        opts = {
+            backend = "kitty",
+            processor = "magick_cli",
+            integrations = {
+                markdown = {
+                    enabled = true,
+                    clear_in_insert_mode = false,
+                    download_remote_images = true,
+                    only_render_image_at_cursor = false,
+                    filetypes = { "markdown", "vimwiki" },
+                },
+            },
+            max_width = nil,
+            max_height = nil,
+            max_width_window_percentage = nil,
+            max_height_window_percentage = 50,
+            window_overlap_clear_enabled = true,
+        }
+    },
 
     {
         'mrjones2014/dash.nvim',
@@ -68,6 +91,20 @@ return {
             ui = {
                 enable = true
             },
+            mappings = {
+                ["gf"] = {
+                    action = function ()
+                        return require("obsidian").util.gf_passthrough()
+                    end,
+                    opts = { noremap = false, expr = true, buffer = true },
+                },
+                ["<cr>"] = {
+                    action = function ()
+                        return require("obsidian").util.smart_action()
+                    end,
+                    opts = { buffer = true, expr = true },
+                }
+            },
             disable_frontmatter = true,
             open_app_foreground = true,
             follow_url_func = function(url)
@@ -79,4 +116,17 @@ return {
         }
     },
 
+    {
+        "OXY2DEV/markview.nvim",
+        enabled = false,
+        lazy = true,
+        ft = "markdown",
+        dependencies = {
+            "nvim-treesitter/nvim-treesitter",
+            "nvim-tree/nvim-web-devicons"
+        },
+        opts = {
+            modes = { "no" },
+        },
+    },
 }
