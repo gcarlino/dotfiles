@@ -16,7 +16,6 @@ return {
 
     {
         'nvim-telescope/telescope.nvim',
-        event = "VeryLazy",
         config = function()
             require('custom.telescope')
         end,

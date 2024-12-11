@@ -1,5 +1,4 @@
 local telescope = require("telescope")
-local actions = require("telescope.actions")
 local trouble = require("trouble.sources.telescope")
 
 telescope.setup {
@@ -17,9 +16,11 @@ telescope.setup {
         sorting_strategy = 'ascending',
         scroll_strategy = 'cycle',
         layout_strategies = 'flex',
-        layout_config = { prompt_position = 'top', },
+        layout_config = {
+            prompt_position = 'top',
+        },
         dynamic_preview_title = true,
-        file_ignore_patterns = { '^.git/' },
+        file_ignore_patterns = { '^.git/', '/.git/', 'lazy-lock.json', '.DS_Store' },
         vimgrep_arguments = {
             "rg",
             "--color=never",
@@ -29,20 +30,12 @@ telescope.setup {
             "--column",
             "--smart-case",
             "--hidden",
-            "--glob=!**/.git/*" -- It does not seem working
-        }
+            "--glob=!**/.git/*",
+            "--glob=!lazy-lock.json"
+        },
     },
     pickers = {
-        buffers = {
-            -- ignore_current_buffer = true,
-            sort_mru = true,
-            mappings = {
-                i = { ["<c-b>"] = actions.delete_buffer, },
-                n = { ["<c-b>"] = actions.delete_buffer, },
-            },
-        },
         find_files = {
-            -- find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
             no_ignore = true,
             hidden = true,
         },
@@ -52,12 +45,12 @@ telescope.setup {
         }
     },
     extensions = {
+        fzf = {},
         file_browser = {
             hijack_netrw = true,
             respect_gitignore = false,
             hidden = true,
         },
-        -- dash = {},
         ["ui-select"] = {
             require("telescope.themes").get_dropdown()
         },
@@ -66,15 +59,14 @@ telescope.setup {
 
 -- Load extensions
 telescope.load_extension('fzf')
-telescope.load_extension 'file_browser'
+telescope.load_extension('file_browser')
 telescope.load_extension("ui-select")
--- telescope.load_extension("dap")
 
 -- Keymaps
 local builtin = require('telescope.builtin')
 
-vim.keymap.set('n', '<leader>fp', builtin.commands,
-    { desc = "[f]ind [p]lugin/commands" })
+-- vim.keymap.set('n', '<leader>fp', builtin.commands,
+--     { desc = "[f]ind [p]lugin/commands" })
 
 vim.keymap.set('n', '<leader><space>', builtin.buffers,
     { desc = "find in open buffers" })
@@ -91,7 +83,6 @@ vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = "[f]ind [f]iles" 
 
 vim.keymap.set('n', '<leader>/', function()
     builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-        -- winblend = 10,
         previewer = false,
     })
 end, { desc = "[/] fuzzy find in current buffer" })
@@ -106,37 +97,36 @@ end, { desc = "[/] find in open files" })
 vim.keymap.set('n', '<leader>fh', function ()
     builtin.help_tags{
         layout_strategy = 'vertical',
+        layout_config = {
+            mirror = true,
+            width = 120,
+        },
     }
 end , { desc = "[f]ind [h]elp" })
-
-vim.keymap.set('n', '<leader>ft', builtin.builtin, { desc = "[f]ind builtin [t]elescope" })
 
 vim.keymap.set('n', '<leader>fw', builtin.grep_string,
     { desc = "[f]ind [w]ord under cursor in working directory" })
 
 vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = "[f]ind [k]eymaps" })
 
-vim.keymap.set('n', '<leader>fo', builtin.oldfiles,
-    { desc = "[f]ind recently [o]pened/edited files" })
-
--- -- Telescope for git
--- vim.keymap.set('n', '<leader>gc', builtin.git_commits,
---     { desc = " lists commits for current directory with diff preview" })
---
--- vim.keymap.set('n', '<leader>gs', builtin.git_status,
---     { desc = " lists git status for current directory" })
---
--- vim.keymap.set('n', '<leader>gb', builtin.git_bcommits,
---     { desc = " lists commits for current buffer with d--[[  ]]iff preview" })
-
--- Search for dotfiles
+-- Find dotfiles
 vim.keymap.set('n', '<leader>fd',
     function()
         builtin.git_files {
             cwd = "~/.dotfiles/",
-            prompt_title = "~ Edit dotfiles ~",
+            prompt_title = "~ Find dotfiles ~",
             layout_strategies = "horizontal",
         }
     end,
     { desc = "[f]ind [d]otfiles" }
+)
+
+-- Find plugins
+vim.keymap.set("n", "<leader>fp", function ()
+    builtin.find_files {
+        cwd = vim.fs.joinpath(vim.fn.stdpath("data"), "lazy"),
+        prompt_title = "~ Find plugins ~",
+    }
+end,
+    { desc = "[f]ind [p]lugins" }
 )
