@@ -26,35 +26,6 @@ return {
     },
 
     {
-        "folke/trouble.nvim",
-        event = "VeryLazy",
-        dependencies = { "nvim-tree/nvim-web-devicons" },
-        opts = {},
-        keys = {
-            {
-                "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>",
-                desc = "Diagnostics toggle (Trouble)",
-            },
-            {
-                "<leader>xl", "<cmd>Trouble loclist toggle<cr>",
-                desc = "Location list (Trouble)",
-            },
-            {
-                "<leader>xq", "<cmd>Trouble qflist toggle<cr>",
-                desc = "Quickfix list (Trouble)",
-            },
-            {
-                "<leader>xs", "<cmd>Trouble symbols toggle focus=false<cr>",
-                desc = "Symbols (Trouble)",
-            },
-            {
-                "<leader>xd", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-                desc = "LSP definitions / references / ... (Trouble)",
-            },
-        },
-    },
-
-    {
         "nvim-tree/nvim-tree.lua",
         version = "*",
         cmd = 'NvimTreeToggle',

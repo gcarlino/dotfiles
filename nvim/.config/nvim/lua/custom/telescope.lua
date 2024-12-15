@@ -1,16 +1,13 @@
 local telescope = require("telescope")
-local trouble = require("trouble.sources.telescope")
 
 telescope.setup {
     defaults = {
         mappings = {
             i = {
                 ["<M-v>"] = require('telescope.actions.layout').toggle_preview,
-                ["<M-t>"] = trouble.open,
             },
             n = {
                 ["<M-v>"] = require('telescope.actions.layout').toggle_preview,
-                ["<M-t>"] = trouble.open,
             }
         },
         sorting_strategy = 'ascending',
