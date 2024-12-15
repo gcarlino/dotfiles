@@ -21,7 +21,25 @@ vim.fn.sign_define('DapBreakpoint',
 vim.fn.sign_define('DapBreakpointCondition',
     { icon = '●', text = '●', texthl = "DiagnosticSignWarning", linehl = '', numhl = '' })
 
--- Define functions to be called later by keymaps
+-- A debug adapter is a facilitator between nvim-dap (the client), and a
+-- language-specific debugger:
+--
+--
+--     DAP-Client ----- Debug Adapter ------- Debugger ------ Debugee
+--     (nvim-dap)  |   (per language)  |   (per language)    (your app)
+--                 |                   |
+--                 |        Implementation specific communication
+--                 |        Debug adapter and debugger could be the same process
+--                 |
+--          Communication via the Debug Adapter Protocol
+--
+--
+-- To debug applications, you need to configure two things per language:
+--
+-- - A debug adapter (|dap-adapter|).
+-- - How to launch your application to debug or how to attach to a running
+--   application (|dap-configuration|).
+
 local M = {}
 
 -- Function to configure adapters
@@ -47,7 +65,7 @@ function M.config_dap()
         command = vim.fn.stdpath('data') .. '/mason/packages/cpptools/extension/debugAdapters/bin/OpenDebugAD7'
     }
 
-    -- Load local configurations
+    -- Load local json configurations
     require('dap.ext.vscode').load_launchjs('.nvim-dap/launch.json')
 
     -- EXAMPLE configuration
@@ -75,7 +93,7 @@ function M.config_dap()
     -- The main idea behind this is that it avoids having to install debugpy in
     -- every virtualenv you create.
     -- See https://github.com/mfussenegger/nvim-dap-python/issues/79
-    require("dap-python").setup("~/.virtualenvs/debugpy/bin/python")
+    require("dap-python").setup(vim.fn.stdpath('data') .. "/mason/packages/debugpy/venv/bin/python")
 
 end
 
