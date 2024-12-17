@@ -1,15 +1,15 @@
--- local signs = { Error = ' ', Warn = ' ', Info = ' ', Hint = ' ', Other = "" }
-local signs = { Error = 'E', Warn = 'W', Info = 'I', Hint = 'H', Other = "O" }
+-- local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
+-- local signs = { Error = 'E', Warn = 'W', Info = 'I', Hint = 'H', Other = "O" }
 vim.diagnostic.config({
     virtual_text = false,
-    signs = {
-        text = {
-            [vim.diagnostic.severity.ERROR] = signs.Error,
-            [vim.diagnostic.severity.WARN] = signs.Warn,
-            [vim.diagnostic.severity.INFO] = signs.Info,
-            [vim.diagnostic.severity.HINT] = signs.Hint,
-        }
-    },
+    -- signs = {
+    --     text = {
+    --         [vim.diagnostic.severity.ERROR] = signs.Error,
+    --         [vim.diagnostic.severity.WARN] = signs.Warn,
+    --         [vim.diagnostic.severity.INFO] = signs.Info,
+    --         [vim.diagnostic.severity.HINT] = signs.Hint,
+    --     }
+    -- },
     underline = true,
     update_in_insert = false,
     severity_sort = true,
@@ -19,53 +19,16 @@ vim.diagnostic.config({
     }
 })
 
-
 local servers = {
-    -- python lsp server
     basedpyright = {
-        enabled = true
-    },
-    pylsp = {
-        enabled = false,
-        settings = {
-            pylsp = {
-                plugins = {
-                    pycodestyle = {
-                        enabled = false,
-                    },
-                    maccabe = {
-                        enabled = false,
-                    },
-                    pyflakes = {
-                        enabled = false,
-                    },
-                    flake8 = {
-                        enabled = true,
-                        ignore = { 'E203' },
-                        maxLineLength = 88,
-                    }
-                }
-            }
-        }
+        analysis = {
+            typeCheckingMode = false,
+        },
     },
     lua_ls = {
         settings = {
             Lua = {
                 completion = { callSnippet = "Replace" },
-                -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-                runtime = { version = 'LuaJIT', },
-                -- Get the language server to recognize the `vim` global
-                diagnostics = {
-                    globals = { 'vim' },
-                    -- disable = { "missing-fields" },
-                },
-                -- Make the server aware of Neovim runtime files
-                workspace = {
-                    library = vim.api.nvim_get_runtime_file("", true),
-                    checkThirdParty = false
-                },
-                -- Do not send telemetry data containing a randomized but unique identifier
-                telemetry = { enable = false, },
                 hint = { enable = true },
             },
         },
@@ -77,29 +40,11 @@ local servers = {
         filetypes = { 'fortran', 'fortran77' },
     },
     marksman = {},
-    -- taplo = {},
+    r_language_server = {},
 }
 
-require'lspconfig'.r_language_server.setup{}
+require("lspconfig").r_language_server.setup{}
 
--- Add border to some popup window
--- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
---   vim.lsp.handlers.hover, {
---     border = "single",
---   }
--- )
---
--- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
---   vim.lsp.handlers.signature_help, {
---     border = "single",
---   }
--- )
---
--- require('lspconfig.ui.windows').default_options = {
---   border = "single",
--- }
-
--- lspconfig
 -- Use LspAttach autocommand to only map the following keys after the
 -- language server attaches to the current buffer
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -160,40 +105,14 @@ vim.api.nvim_create_autocmd('LspAttach', {
         -- Get the client by id
         local client = vim.lsp.get_client_by_id(event.data.client_id)
 
-        -- Highilight references under cursor
-        -- if client and client:supports_method('textDocument/documentHighlight') then
-        --     local highlight_augroup = vim.api.nvim_create_augroup("nvim-lsp-highlight", { clear = false })
-        --
-        --     vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-        --         buffer = event.buf,
-        --         group = highlight_augroup,
-        --         callback = vim.lsp.buf.document_highlight,
-        --     })
-        --
-        --     -- When you move your cursor, the highlights will be cleared (the second autocommand).
-        --     vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-        --         buffer = event.buf,
-        --         group = highlight_augroup,
-        --         callback = vim.lsp.buf.clear_references,
-        --     })
-        --
-        --     vim.api.nvim_create_autocmd('LspDetach', {
-        --         group = vim.api.nvim_create_augroup('nvim-lwp-detach', { clear = true }),
-        --         callback = function(event2)
-        --             vim.lsp.buf.clear_references()
-        --             vim.api.nvim_clear_autocmds { group = 'nvim-lsp-highlight', buffer = event2.buf }
-        --         end,
-        --     })
-        -- end
-
-        if client and client:supports_method('textDocument/foldingRange') then
+        -- Enable LSP folding if the LSP supports it
+        -- (default is folding with treesitter)
+        if client and client.server_capabilities.foldingRangeProvider then
             vim.wo.foldmethod = 'expr'
             vim.wo.foldexpr = 'v:lua.vim.lsp.foldexpr()'
         end
 
-        -- The following autocommand is used to enable inlay hints in your
-        -- code, if the language server you are using supports them
-        -- This may be unwanted, since they displace some of your code
+        -- Enable inlay hints if the language server supports them
         if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
             set("<leader>th", function()
                 vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
@@ -203,19 +122,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = vim.tbl_deep_extend(
-    "force",
-    capabilities,
+capabilities = vim.tbl_deep_extend("force", capabilities,
     require("cmp_nvim_lsp").default_capabilities()
 )
-
-vim.api.nvim_create_autocmd("LspDetach", {
-    group = vim.api.nvim_create_augroup("nvim-lsp-detach", { clear = true }),
-    callback = function(event)
-        vim.lsp.buf.clear_references()
-        vim.api.nvim_clear_autocmds({ group = "nvim-lsp-highlight", buffer = event.buf })
-    end,
-})
 
 require("mason").setup()
 
