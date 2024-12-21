@@ -2,7 +2,7 @@
 # see
 # `ghostty +show-config --default --docs | nvim -R`
 
-font-family = MesloLGS NF
+# font-family = MesloLGS NF
 
 # Disable ligatures
 # font-feature = -calt
@@ -11,7 +11,8 @@ font-family = MesloLGS NF
 
 shell-integration-features = sudo
 
-theme = light:tokyonight-day,dark:tokyonight-storm
+# theme = light:catppuccin-latte,dark:catppuccin-macchiato
+theme = catppuccin-macchiato
 macos-titlebar-style = tabs
 window-padding-color = extend
 copy-on-select = clipboard
