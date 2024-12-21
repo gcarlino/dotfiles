@@ -45,6 +45,11 @@ local servers = {
 
 require("lspconfig").r_language_server.setup{}
 
+for server, config in pairs(servers) do
+    config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
+    require("lspconfig")[server].setup(config)
+end
+
 -- Use LspAttach autocommand to only map the following keys after the
 -- language server attaches to the current buffer
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -122,9 +127,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = vim.tbl_deep_extend("force", capabilities,
-    require("cmp_nvim_lsp").default_capabilities()
-)
+-- capabilities = vim.tbl_deep_extend("force", capabilities,
+--     require("cmp_nvim_lsp").default_capabilities()
+-- )
 
 require("mason").setup()
 

@@ -27,7 +27,7 @@ return {
                     },
                 },
             },
-            { "hrsh7th/cmp-nvim-lsp" },
+            { 'saghen/blink.cmp' },
 			{ "j-hui/fidget.nvim", opts = {} },
         },
         config = function()
