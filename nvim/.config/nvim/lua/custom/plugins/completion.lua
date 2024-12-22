@@ -44,7 +44,6 @@ return {
                      cmp_r = {
                         name = "cmp_r",
                         module = "blink.compat.source",
-                        score_offset = 100,
                     },
                     latex_symbols = { name = "latex_symbols", module = "blink.compat.source", },
                     vimtex = { name = 'vimtex', module = 'blink.compat.source' },
