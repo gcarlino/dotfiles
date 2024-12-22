@@ -12,7 +12,7 @@ return {
     {
         'saghen/blink.cmp',
         dependencies = {
-            'rafamadriz/friendly-snippets',
+            "rafamadriz/friendly-snippets",
             "R-nvim/cmp-r",
             "micangl/cmp-vimtex",
             'kdheepak/cmp-latex-symbols',
