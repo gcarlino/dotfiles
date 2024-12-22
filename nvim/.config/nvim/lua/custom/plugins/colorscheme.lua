@@ -17,9 +17,10 @@ return {
         config = function()
             -- Custom color for split line
             require('tokyonight').setup {
-                on_colors = function(c)
-                    c.border = c.blue0
-                end,
+                on_highlights = function(hl, colors)
+                    hl.BlinkCmpMenuSelection = { bg = colors.blue0 }
+                    hl.WinSeparator = { fg = colors.fg_dark }
+                end
             }
             vim.cmd.colorscheme('tokyonight-storm')
         end
