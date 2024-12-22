@@ -1,0 +1,12 @@
+{
+    "data.table": {
+        "prefix": "dt",
+        "body": "${1:data.table}[${2}, list(${3}), ${4}]",
+        "description": "data table"
+    },
+    "data.table in-place": {
+        "prefix": "dti",
+        "body": "${1:data.table}[${2}, let(${3}), ${4}]",
+        "description": "data table with in-place substitution"
+    }
+}

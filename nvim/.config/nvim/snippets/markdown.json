@@ -1,0 +1,7 @@
+{
+    "person": {
+        "prefix": "person",
+        "body": "\"[[${1}]]\"",
+        "description": "Insert person"
+    }
+}
