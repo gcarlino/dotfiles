@@ -54,7 +54,6 @@ return {
         },
         dependencies = {
             "nvim-lua/plenary.nvim",
-            -- "hrsh7th/nvim-cmp",
             "nvim-telescope/telescope.nvim",
             "nvim-treesitter/nvim-treesitter",
         },
@@ -85,9 +84,9 @@ return {
                 date_format = "%Y-%m-%d",
                 time_format = "%H:%M",
             },
-            -- completion = {
-            --     nvim_cmp = true,
-            -- },
+            completion = {
+                nvim_cmp = false,
+            },
             ui = {
                 enable = true
             },
