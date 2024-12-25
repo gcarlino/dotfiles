@@ -3,7 +3,7 @@ local function myLocation()
     local linelength = vim.api.nvim_strwidth(vim.api.nvim_get_current_line())
     local sLinelength = string.format('%-2d', linelength)
     -- return '%l|%L│%3v|' .. linelength
-    return '⫼%2v/' .. sLinelength .. ' %3l/%-3L %P'
+    return '‖%2v|' .. sLinelength .. '⎢ %l|%-3L'
 end
 
 --- Return function that can format the component accordingly
@@ -98,7 +98,7 @@ require 'lualine'.setup {
                 'filename',
                 file_status = true,
                 newfile_status = true,
-                path = 3,
+                path = 3,   -- Absolute path with tilde as the home directory
                 shorting_target = 80,
                 symbols =  {
                     modified = '●',
@@ -112,27 +112,34 @@ require 'lualine'.setup {
                 end
             }
         },
-        lualine_x = {
+        lualine_x = {},
+        lualine_y = {
             {
                 'filetype',
                 icon_only = true,
-                padding = { left = 0, right = 0 },
+                padding = { left = 1, right = 0 },
+                colored = false,
             },
             {
                 getLSP,
-                padding = { left = 0, right = 1 },
+                padding = { left = 0, right = 0 },
                 fmt = trunc(92, 0, 92, true),
+                colored = false,
             },
-        },
-        lualine_y = {
             {
                 'fileformat',
                 padding = { left = 1, right = 1 },
+                colored = false,
             },
             {
                 'encoding',
-                padding = {left = 0, right = 1 },
+                padding = {left = 0, right = 0 },
                 fmt = trunc(92, 0, 92, true),
+                colored = false,
+            },
+            {
+                'filesize',
+                colored = false,
             },
         },
         lualine_z = { myLocation },
