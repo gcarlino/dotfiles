@@ -11,3 +11,5 @@
 
 .vscode/
 .vimspector.json
+
+.luarc.json
