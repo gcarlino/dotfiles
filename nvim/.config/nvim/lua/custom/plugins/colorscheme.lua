@@ -9,7 +9,7 @@ return {
             require('tokyonight').setup {
                 on_highlights = function(hl, colors)
                     hl.BlinkCmpMenuSelection = { bg = colors.blue0 }
-                    hl.WinSeparator = { fg = colors.fg_dark }
+                    hl.WinSeparator = { fg = colors.blue7 }
                 end
             }
             vim.cmd.colorscheme('tokyonight-storm')
