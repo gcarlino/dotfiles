@@ -60,11 +60,12 @@ return {
         cmd = { "Oil" },
         opts = {},
         keys = {
+          { "<leader>,", "<cmd>Oil<cr>", desc = "Oil" },
         },
         dependencies = { "nvim-tree/nvim-web-devicons" },
-        config = function()
-            require("oil").setup()
-        end
+        -- config = function()
+        --     require("oil").setup()
+        -- end
     },
 
     {
