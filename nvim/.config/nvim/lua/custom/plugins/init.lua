@@ -59,6 +59,8 @@ return {
         'stevearc/oil.nvim',
         cmd = { "Oil" },
         opts = {},
+        keys = {
+        },
         dependencies = { "nvim-tree/nvim-web-devicons" },
         config = function()
             require("oil").setup()
