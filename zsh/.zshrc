@@ -117,8 +117,7 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS+=(brackets pattern cursor)
 # Set up fzf key bindings and fuzzy completion
 if [[ -d "/opt/local/share/fzf/shell/" ]]  {
     # Mac
-    source /opt/local/share/fzf/shell/key-bindings.zsh
-    source /opt/local/share/fzf/shell/completion.zsh
+    source <(fzf --zsh)
 } elif [[ -d "/usr/share/doc/fzf/examples" ]]  {
     # Linux
     source /usr/share/doc/fzf/examples/completion.zsh
