@@ -131,6 +131,17 @@ vim.api.nvim_create_autocmd({ "VimEnter", "BufEnter", "InsertLeave" }, {
 --     end
 -- })
 
+-- If ghostty set window title to filename.
+vim.api.nvim_create_autocmd({"BufEnter"}, {
+    pattern = "*",
+    callback = function()
+        if vim.fn.getenv("TERM_PROGRAM") == "ghostty" then
+            vim.opt.title = true
+            vim.opt.titlestring = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":.")
+        end
+    end
+})
+
 -- Folding in treesitter
 vim.wo.foldmethod = 'expr'
 vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
