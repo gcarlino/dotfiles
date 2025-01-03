@@ -2,7 +2,7 @@ vim.opt_local.wrap = true
 vim.opt_local.spell = true
 vim.opt_local.shiftwidth = 2
 vim.opt_local.tabstop = 2
-vim.opt_local.conceallevel = 2
+-- vim.opt_local.conceallevel = 2
 -- Highlight syntax inside markdown
 -- vim.g.markdown_fenced_languages = { 'html', 'python', 'vim', 'r', 'sh' }
 

@@ -88,7 +88,7 @@ return {
                 nvim_cmp = false,
             },
             ui = {
-                enable = true
+                enable = false,
             },
             mappings = {
                 ["gf"] = {
